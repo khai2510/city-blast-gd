@@ -1,0 +1,11 @@
+{
+  "name": "city-blast-gd-review",
+  "private": true,
+  "version": "1.0.0",
+  "description": "City Blast! playable build + source + data for a game-design review. Static site: index.html at the root.",
+  "scripts": {
+    "start": "npx --yes http-server@14.1.1 . -p 8080 -c-1",
+    "dev": "npx --yes http-server@14.1.1 . -p 8080 -c-1",
+    "rebuild": "cd src && node tools/build-main.js ../build-check.html"
+  }
+}

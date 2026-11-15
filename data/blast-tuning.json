@@ -1,0 +1,104 @@
+{
+ "_readme": [
+  "Blast and rule constants of the current build (engine block 'levels6 v10' + charges/bonds literals in index.html).",
+  "Charges: imp = specific impulse (N*s per m2 of exposed area) at the charge, falling off as (1 - d/R)^2 with distance d to the nearest point of a body, R = radius (m). Game damage to a member = dmg x (1 - d/R)^1.1 x member.dmg (armor applied inside damage()); d = distance from the charge to the member's nearest point; dmg, imp and R are multiplied by the Upgrades power multipliers (powerMul) unless noUpg. Protected members never take charge damage directly (only from debris/physics). See function blast() in index.html. Only TNT is used on L1-36 (tntOnly: every level's charges become TNT).",
+  "Bonds: joint capacities per 0.384 m2 of contact (t tension N, s shear N, m bending N*m, c crushing N); a 6-DOF spring joint breaks when its measured force exceeds the capacity (PHYSICS-AUDIT.md).",
+  "Rules are fixed for every level (D-blast-THRESH / THRESH-2): PASS 85% of the target mass demolished; protected buildings max 5% damage. The street rule (rubble on the road) is OFF in the default build since D-blast-TAP2 (?tap2=0 restores it). Unlimited blasts (waves) while TNT lasts. Props (trees, cars, crates) are not counted (D-blast-PROPS)."
+ ],
+ "thresholds": {
+  "pass": 0.85,
+  "protectedMax": 0.05,
+  "street": {
+   "at": 3,
+   "max": 0.1
+  },
+  "streetRuleActiveByDefault": false,
+  "maxWaves": "unlimited (L6_MAXW = 99)"
+ },
+ "charges": {
+  "tnt": {
+   "name": "TNT",
+   "css": "#FF4D2E",
+   "color": "#ff4d2e",
+   "kind": "std",
+   "dmg": 260,
+   "radius": 3.8,
+   "imp": 8000
+  },
+  "cut": {
+   "name": "Cutter",
+   "css": "#FFB800",
+   "color": "#ffc21a",
+   "kind": "shaped",
+   "dmg": 300,
+   "radius": 4.6,
+   "imp": 5000,
+   "cone": 70,
+   "coneMul": 2.2,
+   "offMul": 0.3,
+   "pierce": true
+  },
+  "clus": {
+   "name": "Cluster",
+   "css": "#13B5B0",
+   "color": "#13b5b0",
+   "kind": "cluster",
+   "dmg": 170,
+   "radius": 2.8,
+   "imp": 7000,
+   "subs": 4,
+   "spread": 3.4,
+   "subDelay": 0.09,
+   "subScale": 0.65
+  }
+ },
+ "bonds": {
+  "concrete": {
+   "t": 350000,
+   "s": 450000,
+   "m": 200000,
+   "c": 3000000
+  },
+  "core": {
+   "t": 700000,
+   "s": 900000,
+   "m": 400000,
+   "c": 6000000
+  },
+  "panel": {
+   "t": 120000,
+   "s": 200000,
+   "m": 60000,
+   "c": 3000000
+  },
+  "masonry": {
+   "t": 60000,
+   "s": 300000,
+   "m": 80000,
+   "c": 4000000
+  },
+  "glass": {
+   "t": 40000,
+   "s": 60000,
+   "m": 25000,
+   "c": 400000
+  },
+  "steel": {
+   "t": 6000000,
+   "s": 6000000,
+   "m": 5000000,
+   "c": 80000000
+  }
+ },
+ "contactK": 0.948,
+ "tntMeasured": {
+  "dmg": 260,
+  "radius": 3.8
+ },
+ "physics": {
+  "engine": "Rapier 3D 0.19.3 (rapier3d-compat)",
+  "units": "1 unit = 1 m, kg, s, g = 9.81",
+  "step": "fixed 1/60 s with accumulator; slow-mo and hit-stop only change how fast real time feeds it",
+  "deterministic": "same plan = same result (RUNBOOK R-11 procedure, determinism-check.js)"
+ }
+}

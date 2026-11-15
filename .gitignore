@@ -1,0 +1,15 @@
+# local / OS
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+node_modules/
+.env
+.env.*
+# build outputs and captures (never commit these here)
+/tmp/
+shots/
+*.zip
+*.mov
+*.mp4
+build-check.html

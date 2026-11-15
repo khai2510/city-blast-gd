@@ -1,0 +1,2597 @@
+{
+ "N": 2,
+ "rows": [
+  {
+   "L": 1,
+   "name": "Old Whirly",
+   "tier": "T",
+   "pass": 0.85,
+   "lesson": false,
+   "teaches": "Tap a post, then BLAST",
+   "stub": false,
+   "expert": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     94,
+     94
+    ],
+    "codes": [],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     1,
+     1
+    ],
+    "marginMin": 9
+   },
+   "sensible": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     94,
+     94
+    ],
+    "codes": [],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     1,
+     1
+    ]
+   },
+   "naive": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     87,
+     87
+    ],
+    "codes": [],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     3,
+     3
+    ]
+   }
+  },
+  {
+   "L": 2,
+   "name": "Stripey Point",
+   "tier": "T",
+   "pass": 0.85,
+   "lesson": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     86,
+     86
+    ],
+    "codes": [],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     0,
+     0
+    ]
+   },
+   "teaches": null,
+   "stub": false,
+   "expert": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     96,
+     96
+    ],
+    "codes": [],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     0,
+     0
+    ],
+    "marginMin": 11
+   },
+   "sensible": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     96,
+     96
+    ],
+    "codes": [],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     0,
+     0
+    ]
+   },
+   "naive": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     2,
+     2
+    ],
+    "codes": [
+     "~pct",
+     "~pct"
+    ],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     1,
+     1
+    ]
+   }
+  },
+  {
+   "L": 3,
+   "name": "Old Tock",
+   "tier": "N",
+   "pass": 0.85,
+   "lesson": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     81,
+     81
+    ],
+    "codes": [
+     "pct",
+     "pct"
+    ],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     0,
+     0
+    ]
+   },
+   "teaches": null,
+   "stub": false,
+   "expert": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     92,
+     92
+    ],
+    "codes": [],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     0,
+     0
+    ],
+    "marginMin": 7
+   },
+   "sensible": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     88,
+     88
+    ],
+    "codes": [],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     0,
+     0
+    ]
+   },
+   "naive": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     3,
+     3
+    ],
+    "codes": [
+     "~pct",
+     "~pct"
+    ],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     5,
+     5
+    ]
+   }
+  },
+  {
+   "L": 4,
+   "name": "Needle Court",
+   "tier": "N",
+   "pass": 0.85,
+   "lesson": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     89,
+     89
+    ],
+    "codes": [
+     "collateral",
+     "collateral"
+    ],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     0,
+     0
+    ]
+   },
+   "teaches": "Turn the view: blast the open back",
+   "stub": false,
+   "expert": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     93,
+     93
+    ],
+    "codes": [],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     0,
+     0
+    ],
+    "marginMin": 8
+   },
+   "sensible": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     95,
+     95
+    ],
+    "codes": [],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     0,
+     0
+    ]
+   },
+   "naive": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     84,
+     84
+    ],
+    "codes": [
+     "collateral",
+     "collateral"
+    ],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     2,
+     2
+    ]
+   }
+  },
+  {
+   "L": 5,
+   "name": "Doorstop Corner",
+   "tier": "N",
+   "pass": 0.85,
+   "lesson": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     90,
+     90
+    ],
+    "codes": [
+     "collateral",
+     "collateral"
+    ],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     0,
+     0
+    ]
+   },
+   "teaches": null,
+   "stub": false,
+   "expert": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     91,
+     91
+    ],
+    "codes": [],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     0,
+     0
+    ],
+    "marginMin": 6
+   },
+   "sensible": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     90,
+     90
+    ],
+    "codes": [],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     0,
+     0
+    ]
+   },
+   "naive": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     0,
+     0
+    ],
+    "codes": [
+     "~pct",
+     "~pct"
+    ],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     6,
+     6
+    ]
+   }
+  },
+  {
+   "L": 6,
+   "name": "Dome Square",
+   "tier": "N",
+   "pass": 0.85,
+   "lesson": false,
+   "teaches": null,
+   "stub": false,
+   "expert": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     99,
+     99
+    ],
+    "codes": [],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     1,
+     1
+    ],
+    "marginMin": 14
+   },
+   "sensible": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     99,
+     99
+    ],
+    "codes": [],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     1,
+     1
+    ]
+   },
+   "naive": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     5,
+     5
+    ],
+    "codes": [
+     "~pct",
+     "~pct"
+    ],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     7,
+     7
+    ]
+   }
+  },
+  {
+   "L": 7,
+   "name": "Grand Arch",
+   "tier": "H",
+   "pass": 0.85,
+   "lesson": false,
+   "teaches": null,
+   "stub": false,
+   "expert": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     98,
+     98
+    ],
+    "codes": [],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     0,
+     0
+    ],
+    "marginMin": 13
+   },
+   "sensible": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     96,
+     96
+    ],
+    "codes": [
+     "collateral",
+     "collateral"
+    ],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     0,
+     0
+    ]
+   },
+   "naive": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     4,
+     4
+    ],
+    "codes": [
+     "~pct",
+     "~pct"
+    ],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     7,
+     7
+    ]
+   }
+  },
+  {
+   "L": 8,
+   "name": "Rivet Tower",
+   "tier": "R",
+   "pass": 0.85,
+   "lesson": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     4,
+     4
+    ],
+    "codes": [
+     "pct",
+     "pct"
+    ],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     0,
+     0
+    ]
+   },
+   "teaches": "Steel holds: blast the concrete feet",
+   "stub": false,
+   "expert": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     90,
+     90
+    ],
+    "codes": [],
+    "waves": [
+     2,
+     2
+    ],
+    "tntLeft": [
+     0,
+     0
+    ],
+    "marginMin": 5
+   },
+   "sensible": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     90,
+     90
+    ],
+    "codes": [],
+    "waves": [
+     2,
+     2
+    ],
+    "tntLeft": [
+     0,
+     0
+    ]
+   },
+   "naive": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     65,
+     65
+    ],
+    "codes": [
+     "~pct",
+     "~pct"
+    ],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     9,
+     9
+    ]
+   }
+  },
+  {
+   "L": 9,
+   "name": "Twin Saucer",
+   "tier": "N",
+   "pass": 0.85,
+   "lesson": false,
+   "teaches": null,
+   "stub": false,
+   "expert": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     90,
+     90
+    ],
+    "codes": [],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     0,
+     0
+    ],
+    "marginMin": 5
+   },
+   "sensible": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     90,
+     90
+    ],
+    "codes": [],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     0,
+     0
+    ]
+   },
+   "naive": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     2,
+     2
+    ],
+    "codes": [
+     "~pct",
+     "~pct"
+    ],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     7,
+     7
+    ]
+   }
+  },
+  {
+   "L": 10,
+   "name": "Lift Bridge",
+   "tier": "SH",
+   "pass": 0.85,
+   "lesson": false,
+   "teaches": null,
+   "stub": false,
+   "expert": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     95,
+     95
+    ],
+    "codes": [
+     "collateral",
+     "collateral"
+    ],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     1,
+     1
+    ],
+    "marginMin": 10
+   },
+   "sensible": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     96,
+     96
+    ],
+    "codes": [],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     0,
+     0
+    ]
+   },
+   "naive": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     47,
+     47
+    ],
+    "codes": [
+     "collateral",
+     "collateral"
+    ],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     5,
+     5
+    ]
+   }
+  },
+  {
+   "L": 11,
+   "name": "Shell Hall",
+   "tier": "R",
+   "pass": 0.85,
+   "lesson": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     90,
+     90
+    ],
+    "codes": [],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     0,
+     0
+    ]
+   },
+   "teaches": "Blast in steps: clear what hides it, then the piers",
+   "stub": false,
+   "expert": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     91,
+     91
+    ],
+    "codes": [],
+    "waves": [
+     2,
+     2
+    ],
+    "tntLeft": [
+     1,
+     1
+    ],
+    "marginMin": 6
+   },
+   "sensible": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     88,
+     88
+    ],
+    "codes": [],
+    "waves": [
+     2,
+     2
+    ],
+    "tntLeft": [
+     1,
+     1
+    ]
+   },
+   "naive": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     4,
+     4
+    ],
+    "codes": [
+     "pct",
+     "pct"
+    ],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "L": 12,
+   "name": "Star Pedestal",
+   "tier": "N",
+   "pass": 0.85,
+   "lesson": false,
+   "teaches": null,
+   "stub": false,
+   "expert": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     97,
+     97
+    ],
+    "codes": [],
+    "waves": [
+     2,
+     2
+    ],
+    "tntLeft": [
+     0,
+     0
+    ],
+    "marginMin": 12
+   },
+   "sensible": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     97,
+     97
+    ],
+    "codes": [],
+    "waves": [
+     2,
+     2
+    ],
+    "tntLeft": [
+     0,
+     0
+    ]
+   },
+   "naive": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     1,
+     1
+    ],
+    "codes": [
+     "~pct",
+     "~pct"
+    ],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     7,
+     7
+    ]
+   }
+  },
+  {
+   "L": 13,
+   "name": "Harp Span",
+   "tier": "R",
+   "pass": 0.85,
+   "lesson": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     55,
+     55
+    ],
+    "codes": [
+     "~pct",
+     "~pct"
+    ],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     2,
+     2
+    ]
+   },
+   "teaches": "Stack two TNT on a steel leg",
+   "stub": false,
+   "expert": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     95,
+     95
+    ],
+    "codes": [],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     2,
+     2
+    ],
+    "marginMin": 10
+   },
+   "sensible": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     55,
+     55
+    ],
+    "codes": [
+     "pct",
+     "pct"
+    ],
+    "waves": [
+     3,
+     3
+    ],
+    "tntLeft": [
+     0,
+     0
+    ]
+   },
+   "naive": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     39,
+     39
+    ],
+    "codes": [
+     "~pct",
+     "~pct"
+    ],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     8,
+     8
+    ]
+   }
+  },
+  {
+   "L": 14,
+   "name": "Stripey Light",
+   "tier": "N",
+   "pass": 0.85,
+   "lesson": false,
+   "teaches": null,
+   "stub": false,
+   "expert": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     94,
+     94
+    ],
+    "codes": [],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     1,
+     1
+    ],
+    "marginMin": 9
+   },
+   "sensible": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     51,
+     51
+    ],
+    "codes": [
+     "pct",
+     "pct"
+    ],
+    "waves": [
+     2,
+     2
+    ],
+    "tntLeft": [
+     0,
+     0
+    ]
+   },
+   "naive": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     31,
+     31
+    ],
+    "codes": [
+     "~pct",
+     "~pct"
+    ],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     7,
+     7
+    ]
+   }
+  },
+  {
+   "L": 15,
+   "name": "The Sail",
+   "tier": "N",
+   "pass": 0.85,
+   "lesson": false,
+   "teaches": null,
+   "stub": false,
+   "expert": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     94,
+     94
+    ],
+    "codes": [],
+    "waves": [
+     2,
+     2
+    ],
+    "tntLeft": [
+     1,
+     1
+    ],
+    "marginMin": 9
+   },
+   "sensible": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     57,
+     57
+    ],
+    "codes": [
+     "~pct",
+     "~pct"
+    ],
+    "waves": [
+     4,
+     4
+    ],
+    "tntLeft": [
+     1,
+     1
+    ]
+   },
+   "naive": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     1,
+     1
+    ],
+    "codes": [
+     "~pct",
+     "~pct"
+    ],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     3,
+     3
+    ]
+   }
+  },
+  {
+   "L": 16,
+   "name": "Dome Hall",
+   "tier": "H",
+   "pass": 0.85,
+   "lesson": false,
+   "teaches": null,
+   "stub": false,
+   "expert": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     94,
+     94
+    ],
+    "codes": [],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     0,
+     0
+    ],
+    "marginMin": 9
+   },
+   "sensible": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     93,
+     93
+    ],
+    "codes": [
+     "collateral",
+     "collateral"
+    ],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     0,
+     0
+    ]
+   },
+   "naive": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     4,
+     4
+    ],
+    "codes": [
+     "~pct",
+     "~pct"
+    ],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     4,
+     4
+    ]
+   }
+  },
+  {
+   "L": 17,
+   "name": "The Pedestal",
+   "tier": "R",
+   "pass": 0.85,
+   "lesson": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     49,
+     49
+    ],
+    "codes": [
+     "~pct",
+     "~pct"
+    ],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     4,
+     4
+    ]
+   },
+   "teaches": "Dark piers: one TNT on each",
+   "stub": false,
+   "expert": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     97,
+     97
+    ],
+    "codes": [],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     2,
+     2
+    ],
+    "marginMin": 12
+   },
+   "sensible": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     91,
+     91
+    ],
+    "codes": [],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     2,
+     2
+    ]
+   },
+   "naive": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     47,
+     47
+    ],
+    "codes": [
+     "~pct",
+     "~pct"
+    ],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     5,
+     5
+    ]
+   }
+  },
+  {
+   "L": 18,
+   "name": "The Doorstop",
+   "tier": "N",
+   "pass": 0.85,
+   "lesson": false,
+   "teaches": null,
+   "stub": false,
+   "expert": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     92,
+     92
+    ],
+    "codes": [],
+    "waves": [
+     2,
+     2
+    ],
+    "tntLeft": [
+     1,
+     1
+    ],
+    "marginMin": 7
+   },
+   "sensible": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     93,
+     93
+    ],
+    "codes": [],
+    "waves": [
+     2,
+     2
+    ],
+    "tntLeft": [
+     1,
+     1
+    ]
+   },
+   "naive": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     58,
+     58
+    ],
+    "codes": [
+     "~pct",
+     "~pct"
+    ],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     7,
+     7
+    ]
+   }
+  },
+  {
+   "L": 19,
+   "name": "Cube Grove",
+   "tier": "N",
+   "pass": 0.85,
+   "lesson": false,
+   "teaches": null,
+   "stub": false,
+   "expert": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     94,
+     94
+    ],
+    "codes": [],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     1,
+     1
+    ],
+    "marginMin": 9
+   },
+   "sensible": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     45,
+     45
+    ],
+    "codes": [
+     "pct",
+     "pct"
+    ],
+    "waves": [
+     3,
+     3
+    ],
+    "tntLeft": [
+     0,
+     0
+    ]
+   },
+   "naive": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     6,
+     6
+    ],
+    "codes": [
+     "~pct",
+     "~pct"
+    ],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     9,
+     9
+    ]
+   }
+  },
+  {
+   "L": 20,
+   "name": "Big Bow",
+   "tier": "SH",
+   "pass": 0.85,
+   "lesson": false,
+   "teaches": null,
+   "stub": false,
+   "expert": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     98,
+     98
+    ],
+    "codes": [],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     0,
+     0
+    ],
+    "marginMin": 13
+   },
+   "sensible": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     97,
+     97
+    ],
+    "codes": [
+     "collateral",
+     "collateral"
+    ],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     0,
+     0
+    ]
+   },
+   "naive": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     88,
+     88
+    ],
+    "codes": [
+     "collateral",
+     "collateral"
+    ],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     2,
+     2
+    ]
+   }
+  },
+  {
+   "L": 21,
+   "name": "The Stepper",
+   "tier": "R",
+   "pass": 0.85,
+   "lesson": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     92,
+     92
+    ],
+    "codes": [],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     2,
+     2
+    ]
+   },
+   "teaches": "Keep the road clear: fall into the yard",
+   "stub": false,
+   "expert": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     98,
+     98
+    ],
+    "codes": [],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     2,
+     2
+    ],
+    "marginMin": 13
+   },
+   "sensible": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     40,
+     40
+    ],
+    "codes": [
+     "~pct",
+     "~pct"
+    ],
+    "waves": [
+     3,
+     3
+    ],
+    "tntLeft": [
+     1,
+     1
+    ]
+   },
+   "naive": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     39,
+     39
+    ],
+    "codes": [
+     "~pct",
+     "~pct"
+    ],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     3,
+     3
+    ]
+   }
+  },
+  {
+   "L": 22,
+   "name": "The Pencil",
+   "tier": "N",
+   "pass": 0.85,
+   "lesson": false,
+   "teaches": null,
+   "stub": false,
+   "expert": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     96,
+     96
+    ],
+    "codes": [],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     1,
+     1
+    ],
+    "marginMin": 11
+   },
+   "sensible": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     49,
+     49
+    ],
+    "codes": [
+     "pct",
+     "pct"
+    ],
+    "waves": [
+     3,
+     3
+    ],
+    "tntLeft": [
+     0,
+     0
+    ]
+   },
+   "naive": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     36,
+     36
+    ],
+    "codes": [
+     "~pct",
+     "~pct"
+    ],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     6,
+     6
+    ]
+   }
+  },
+  {
+   "L": 23,
+   "name": "Tube Bundle",
+   "tier": "N",
+   "pass": 0.85,
+   "lesson": false,
+   "teaches": null,
+   "stub": false,
+   "expert": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     96,
+     96
+    ],
+    "codes": [],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     2,
+     2
+    ],
+    "marginMin": 11
+   },
+   "sensible": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     53,
+     53
+    ],
+    "codes": [
+     "pct",
+     "pct"
+    ],
+    "waves": [
+     2,
+     2
+    ],
+    "tntLeft": [
+     0,
+     0
+    ]
+   },
+   "naive": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     42,
+     42
+    ],
+    "codes": [
+     "~pct",
+     "~pct"
+    ],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     4,
+     4
+    ]
+   }
+  },
+  {
+   "L": 24,
+   "name": "Deco Needle",
+   "tier": "H",
+   "pass": 0.85,
+   "lesson": false,
+   "teaches": null,
+   "stub": false,
+   "expert": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     99,
+     99
+    ],
+    "codes": [],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     1,
+     1
+    ],
+    "marginMin": 14
+   },
+   "sensible": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     95,
+     95
+    ],
+    "codes": [],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     1,
+     1
+    ]
+   },
+   "naive": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     71,
+     71
+    ],
+    "codes": [
+     "~pct",
+     "~pct"
+    ],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     3,
+     3
+    ]
+   }
+  },
+  {
+   "L": 25,
+   "name": "Glass Point",
+   "tier": "R",
+   "pass": 0.85,
+   "lesson": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     30,
+     30
+    ],
+    "codes": [
+     "~pct",
+     "~pct"
+    ],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     2,
+     2
+    ]
+   },
+   "teaches": "Glass holds nothing: hit the dark frame",
+   "stub": false,
+   "expert": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     97,
+     97
+    ],
+    "codes": [],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     2,
+     2
+    ],
+    "marginMin": 12
+   },
+   "sensible": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     88,
+     88
+    ],
+    "codes": [],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     2,
+     2
+    ]
+   },
+   "naive": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     21,
+     21
+    ],
+    "codes": [
+     "~pct",
+     "~pct"
+    ],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     4,
+     4
+    ]
+   }
+  },
+  {
+   "L": 26,
+   "name": "The Bullet",
+   "tier": "N",
+   "pass": 0.85,
+   "lesson": false,
+   "teaches": null,
+   "stub": false,
+   "expert": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     92,
+     92
+    ],
+    "codes": [],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     1,
+     1
+    ],
+    "marginMin": 7
+   },
+   "sensible": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     60,
+     60
+    ],
+    "codes": [
+     "pct",
+     "pct"
+    ],
+    "waves": [
+     3,
+     3
+    ],
+    "tntLeft": [
+     0,
+     0
+    ]
+   },
+   "naive": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     45,
+     45
+    ],
+    "codes": [
+     "~pct",
+     "~pct"
+    ],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     7,
+     7
+    ]
+   }
+  },
+  {
+   "L": 27,
+   "name": "The Splinter",
+   "tier": "N",
+   "pass": 0.85,
+   "lesson": false,
+   "teaches": null,
+   "stub": false,
+   "expert": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     95,
+     95
+    ],
+    "codes": [],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     1,
+     1
+    ],
+    "marginMin": 10
+   },
+   "sensible": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     43,
+     43
+    ],
+    "codes": [
+     "pct",
+     "pct"
+    ],
+    "waves": [
+     2,
+     2
+    ],
+    "tntLeft": [
+     0,
+     0
+    ]
+   },
+   "naive": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     23,
+     23
+    ],
+    "codes": [
+     "~pct",
+     "~pct"
+    ],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     6,
+     6
+    ]
+   }
+  },
+  {
+   "L": 28,
+   "name": "Sister Spires",
+   "tier": "H",
+   "pass": 0.85,
+   "lesson": false,
+   "teaches": null,
+   "stub": false,
+   "expert": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     100,
+     100
+    ],
+    "codes": [],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     1,
+     1
+    ],
+    "marginMin": 15
+   },
+   "sensible": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     92,
+     92
+    ],
+    "codes": [
+     "collateral",
+     "collateral"
+    ],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     1,
+     1
+    ]
+   },
+   "naive": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     1,
+     1
+    ],
+    "codes": [
+     "~pct",
+     "~pct"
+    ],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     4,
+     4
+    ]
+   }
+  },
+  {
+   "L": 29,
+   "name": "Old Tock Row",
+   "tier": "N",
+   "pass": 0.85,
+   "lesson": false,
+   "teaches": null,
+   "stub": false,
+   "expert": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     92,
+     92
+    ],
+    "codes": [],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     1,
+     1
+    ],
+    "marginMin": 7
+   },
+   "sensible": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     47,
+     47
+    ],
+    "codes": [
+     "pct",
+     "pct"
+    ],
+    "waves": [
+     3,
+     3
+    ],
+    "tntLeft": [
+     0,
+     0
+    ]
+   },
+   "naive": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     16,
+     16
+    ],
+    "codes": [
+     "~pct",
+     "~pct"
+    ],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     9,
+     9
+    ]
+   }
+  },
+  {
+   "L": 30,
+   "name": "Sky Steps",
+   "tier": "SH",
+   "pass": 0.85,
+   "lesson": false,
+   "teaches": null,
+   "stub": false,
+   "expert": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     98,
+     98
+    ],
+    "codes": [],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     0,
+     0
+    ],
+    "marginMin": 13
+   },
+   "sensible": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     46,
+     46
+    ],
+    "codes": [
+     "pct",
+     "pct"
+    ],
+    "waves": [
+     2,
+     2
+    ],
+    "tntLeft": [
+     0,
+     0
+    ]
+   },
+   "naive": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     43,
+     43
+    ],
+    "codes": [
+     "~pct",
+     "~pct"
+    ],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     3,
+     3
+    ]
+   }
+  },
+  {
+   "L": 31,
+   "name": "Stack Tower",
+   "tier": "R",
+   "pass": 0.85,
+   "lesson": false,
+   "teaches": null,
+   "stub": false,
+   "expert": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     89,
+     89
+    ],
+    "codes": [],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     2,
+     2
+    ],
+    "marginMin": 4
+   },
+   "sensible": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     50,
+     50
+    ],
+    "codes": [
+     "pct",
+     "pct"
+    ],
+    "waves": [
+     3,
+     3
+    ],
+    "tntLeft": [
+     0,
+     0
+    ]
+   },
+   "naive": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     41,
+     41
+    ],
+    "codes": [
+     "~pct",
+     "~pct"
+    ],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     8,
+     8
+    ]
+   }
+  },
+  {
+   "L": 32,
+   "name": "Sky Saucer",
+   "tier": "N",
+   "pass": 0.85,
+   "lesson": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     74,
+     74
+    ],
+    "codes": [
+     "pct",
+     "pct"
+    ],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     0,
+     0
+    ]
+   },
+   "teaches": "One TNT by the barrels: they blast for free",
+   "stub": false,
+   "expert": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     88,
+     88
+    ],
+    "codes": [],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     1,
+     1
+    ],
+    "marginMin": 3
+   },
+   "sensible": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     90,
+     90
+    ],
+    "codes": [],
+    "waves": [
+     2,
+     2
+    ],
+    "tntLeft": [
+     1,
+     1
+    ]
+   },
+   "naive": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     2,
+     2
+    ],
+    "codes": [
+     "~pct",
+     "~pct"
+    ],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     7,
+     7
+    ]
+   }
+  },
+  {
+   "L": 33,
+   "name": "Rivet Tower",
+   "tier": "N",
+   "pass": 0.85,
+   "lesson": false,
+   "teaches": null,
+   "stub": false,
+   "expert": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     93,
+     93
+    ],
+    "codes": [],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     1,
+     1
+    ],
+    "marginMin": 8
+   },
+   "sensible": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     39,
+     39
+    ],
+    "codes": [
+     "pct",
+     "pct"
+    ],
+    "waves": [
+     3,
+     3
+    ],
+    "tntLeft": [
+     0,
+     0
+    ]
+   },
+   "naive": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     0,
+     0
+    ],
+    "codes": [
+     "~pct",
+     "~pct"
+    ],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     8,
+     8
+    ]
+   }
+  },
+  {
+   "L": 34,
+   "name": "Tock Yard",
+   "tier": "N",
+   "pass": 0.85,
+   "lesson": false,
+   "teaches": null,
+   "stub": false,
+   "expert": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     94,
+     94
+    ],
+    "codes": [],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     1,
+     1
+    ],
+    "marginMin": 9
+   },
+   "sensible": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     39,
+     39
+    ],
+    "codes": [
+     "pct",
+     "pct"
+    ],
+    "waves": [
+     3,
+     3
+    ],
+    "tntLeft": [
+     0,
+     0
+    ]
+   },
+   "naive": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     19,
+     19
+    ],
+    "codes": [
+     "~pct",
+     "~pct"
+    ],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     8,
+     8
+    ]
+   }
+  },
+  {
+   "L": 35,
+   "name": "Dome Works",
+   "tier": "H",
+   "pass": 0.85,
+   "lesson": false,
+   "teaches": null,
+   "stub": false,
+   "expert": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     89,
+     89
+    ],
+    "codes": [],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     0,
+     0
+    ],
+    "marginMin": 4
+   },
+   "sensible": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     94,
+     94
+    ],
+    "codes": [
+     "collateral",
+     "collateral"
+    ],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     0,
+     0
+    ]
+   },
+   "naive": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     19,
+     19
+    ],
+    "codes": [
+     "~pct",
+     "~pct"
+    ],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     4,
+     4
+    ]
+   }
+  },
+  {
+   "L": 36,
+   "name": "Sail Lot",
+   "tier": "R",
+   "pass": 0.85,
+   "lesson": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     92,
+     92
+    ],
+    "codes": [
+     "collateral",
+     "collateral"
+    ],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     3,
+     3
+    ]
+   },
+   "teaches": "Drop it in the marked lot",
+   "stub": false,
+   "expert": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     95,
+     95
+    ],
+    "codes": [],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     2,
+     2
+    ],
+    "marginMin": 10
+   },
+   "sensible": {
+    "pass": 2,
+    "n": 2,
+    "pct": [
+     94,
+     94
+    ],
+    "codes": [],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     2,
+     2
+    ]
+   },
+   "naive": {
+    "pass": 0,
+    "n": 2,
+    "pct": [
+     0,
+     0
+    ],
+    "codes": [
+     "~pct",
+     "~pct"
+    ],
+    "waves": [
+     1,
+     1
+    ],
+    "tntLeft": [
+     6,
+     6
+    ]
+   }
+  }
+ ],
+ "problems": [
+  "expert 70/72",
+  "L2 lesson-less plan passes 2/2",
+  "L10 Hard sensible 100%",
+  "L11 lesson-less plan passes 2/2",
+  "L13 relief/tutorial sensible 0%",
+  "L21 relief/tutorial sensible 0%",
+  "L21 lesson-less plan passes 2/2",
+  "L24 Hard sensible 100%",
+  "L31 relief/tutorial sensible 0%",
+  "normal sensible 44%"
+ ]
+}

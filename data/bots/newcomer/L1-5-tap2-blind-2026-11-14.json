@@ -1,0 +1,277 @@
+[
+ {
+  "L": 1,
+  "attempts": [
+   {
+    "n": 1,
+    "waves": [
+     {
+      "dots": 0,
+      "legs": 3,
+      "dbl": 1,
+      "pct": 89,
+      "t": 6.4,
+      "firstBreak": 0.17
+     }
+    ],
+    "taps": 4,
+    "aids": {
+     "aids": {
+      "open": "whole",
+      "cue": false,
+      "tip": false,
+      "cleanup": "no",
+      "dots": "none",
+      "fail": "rule"
+     },
+     "tip": "",
+     "dotTip": ""
+    },
+    "ok": true,
+    "code": null,
+    "pct": 89,
+    "tntLeft": 2,
+    "firstBreak": 0.17,
+    "card": " CLEARED! 89% PASS 85% · +4% BONUS Debris coins+0Bonus+10+10 +1 TNT Continue Replay "
+   }
+  ],
+  "won": 1
+ },
+ {
+  "L": 2,
+  "attempts": [
+   {
+    "n": 1,
+    "waves": [
+     {
+      "dots": 0,
+      "legs": 3,
+      "dbl": 1,
+      "pct": 94.4,
+      "t": 10.5,
+      "firstBreak": 0.08
+     }
+    ],
+    "taps": 4,
+    "aids": {
+     "aids": {
+      "open": "whole",
+      "cue": false,
+      "tip": false,
+      "cleanup": "no",
+      "dots": "none",
+      "fail": "rule"
+     },
+     "tip": "Tip the lighthouse\nonto the row.",
+     "dotTip": ""
+    },
+    "ok": true,
+    "code": null,
+    "pct": 94.4,
+    "tntLeft": 2,
+    "firstBreak": 0.08,
+    "card": " CLEARED! 94% PASS 85% · +9% BONUS Debris coins+0Bonus+10+10 +1 TNT Continue Replay "
+   }
+  ],
+  "won": 1
+ },
+ {
+  "L": 3,
+  "attempts": [
+   {
+    "n": 1,
+    "waves": [
+     {
+      "dots": 0,
+      "legs": 3,
+      "dbl": 1,
+      "pct": 88.5,
+      "t": 10.4,
+      "firstBreak": 0.18
+     }
+    ],
+    "taps": 4,
+    "aids": {
+     "aids": {
+      "open": "whole",
+      "cue": false,
+      "tip": false,
+      "cleanup": "no",
+      "dots": "none",
+      "fail": "rule"
+     },
+     "tip": "Topple the row\nlike dominoes.",
+     "dotTip": ""
+    },
+    "ok": true,
+    "code": null,
+    "pct": 88.5,
+    "tntLeft": 4,
+    "firstBreak": 0.18,
+    "card": " CLEARED! 88% PASS 85% · +4% BONUS Debris coins+0Bonus+10+10 +1 TNT Continue Replay "
+   }
+  ],
+  "won": 1
+ },
+ {
+  "L": 4,
+  "attempts": [
+   {
+    "n": 1,
+    "waves": [
+     {
+      "dots": 0,
+      "legs": 2,
+      "dbl": 1,
+      "pct": 83.5,
+      "t": 10.2,
+      "firstBreak": 0.18
+     },
+     {
+      "dots": 0,
+      "legs": 0,
+      "note": "nothing to tap"
+     }
+    ],
+    "taps": 4,
+    "aids": {
+     "aids": {
+      "open": "whole",
+      "cue": false,
+      "tip": false,
+      "cleanup": "no",
+      "dots": "none",
+      "fail": "rule"
+     },
+     "tip": "Turn the view.\nFind the open way.",
+     "dotTip": ""
+    },
+    "ok": false,
+    "code": "collateral",
+    "pct": 83.5,
+    "tntLeft": 5,
+    "firstBreak": 0.18,
+    "card": "HIT THE HOSPITAL! 83% It fell on the hospital. Try another way. Try Again"
+   },
+   {
+    "n": 2,
+    "waves": [
+     {
+      "dots": 0,
+      "legs": 2,
+      "dbl": 1,
+      "pct": 83.5,
+      "t": 10.2,
+      "firstBreak": 0.18
+     }
+    ],
+    "taps": 4,
+    "aids": {
+     "aids": {
+      "open": "whole",
+      "cue": false,
+      "tip": false,
+      "cleanup": "no",
+      "dots": "none",
+      "fail": "rule"
+     },
+     "tip": "Turn the view.\nFind the open way.",
+     "dotTip": ""
+    },
+    "ok": false,
+    "code": "collateral",
+    "pct": 83.5,
+    "tntLeft": 5,
+    "firstBreak": 0.18,
+    "card": "HIT THE HOSPITAL! 83% It fell on the hospital. Try another way. Try Again"
+   }
+  ],
+  "won": 0
+ },
+ {
+  "L": 5,
+  "attempts": [
+   {
+    "n": 1,
+    "waves": [
+     {
+      "dots": 0,
+      "legs": 3,
+      "dbl": 1,
+      "pct": 0.9,
+      "t": 2.9,
+      "firstBreak": 0.05
+     },
+     {
+      "dots": 0,
+      "legs": 3,
+      "dbl": 1,
+      "pct": 78,
+      "t": 9.8,
+      "firstBreak": 0.05
+     }
+    ],
+    "taps": 8,
+    "aids": {
+     "aids": {
+      "open": "whole",
+      "cue": false,
+      "tip": false,
+      "cleanup": "no",
+      "dots": "none",
+      "fail": "rule"
+     },
+     "tip": "Tip it away\nfrom the blue.",
+     "dotTip": ""
+    },
+    "ok": false,
+    "code": "collateral",
+    "pct": 78,
+    "tntLeft": 2,
+    "firstBreak": 0.05,
+    "card": "HIT THE HOSPITAL! 77% It fell on the hospital. Tip it away. Try Again"
+   },
+   {
+    "n": 2,
+    "waves": [
+     {
+      "dots": 0,
+      "legs": 3,
+      "dbl": 1,
+      "pct": 0.9,
+      "t": 2.5,
+      "firstBreak": 0.18
+     },
+     {
+      "dots": 0,
+      "legs": 3,
+      "dbl": 1,
+      "pct": 78.8,
+      "t": 10.3,
+      "firstBreak": 0.05
+     }
+    ],
+    "taps": 8,
+    "aids": {
+     "aids": {
+      "open": "whole",
+      "cue": false,
+      "tip": false,
+      "cleanup": "no",
+      "dots": "none",
+      "fail": "rule"
+     },
+     "tip": "Tip it away\nfrom the blue.",
+     "dotTip": ""
+    },
+    "ok": false,
+    "code": "collateral",
+    "pct": 78.8,
+    "tntLeft": 2,
+    "firstBreak": 0.18,
+    "card": "HIT THE HOSPITAL! 78% It fell on the hospital. Tip it away. Try Again"
+   }
+  ],
+  "won": 0
+ }
+]

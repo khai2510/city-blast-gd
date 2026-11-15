@@ -1,0 +1,5 @@
+Sound files in this folder (except where noted) come from Mixkit (https://mixkit.co/free-sound-effects/) and are used under the
+Mixkit Sound Effects Free License (read 07/11/2026: commercial use incl. video games and online ads; no attribution required;
+the items may not be redistributed on their own, as stock, or in a tool/template). They are part of the City Blast! game build
+and must not be offered as a standalone download. Original Mixkit IDs, titles and processing: games/blast-sfx/samples/manifest.json.
+Files were trimmed, peak-normalised and re-encoded (mono 96 kbps one-shots; stereo 64 kbps ambience loops).

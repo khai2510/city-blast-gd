@@ -1,0 +1,12 @@
+/* ==== boosters2: booster buttons = icon + count badge only (Smash Fest / uiclean direction: no label text) ==== */
+html body #bottom .bst.bst{width:max(56px, calc(116 * var(--us)));grid-template-columns:1fr;grid-template-rows:1fr;padding:0;overflow:visible}
+html body #bottom .bst.bst .bl{display:none}
+html body #bottom .bst.bst .bi,html body #bottom .bst.bst img,html body #bottom .bst.bst[data-k="wreck"]::before{grid-row:1;grid-column:1;width:calc(76 * var(--us));height:calc(76 * var(--us))}
+html body #bottom .bst.bst .bn{position:absolute;grid-row:auto;grid-column:auto;bottom:auto;right:calc(-14 * var(--us));top:calc(-16 * var(--us));min-width:max(22px, calc(46 * var(--us)));height:max(22px, calc(46 * var(--us)));padding:0 calc(8 * var(--us));
+  border-radius:999px;border:calc(5 * var(--us)) solid var(--ul-ink);background:#FB7418;color:#fff;font:700 max(13px, calc(28 * var(--us)))/1 var(--ul-fr);display:grid;place-items:center;box-sizing:border-box}
+html body #bottom .bst.bst .bn::before{content:none}
+html body #bottom .bst.bst .bn.live{background:#2F7CF6;color:#fff}
+html body #bottom .bst.bst .bn.plus{background:#4DBA2F}
+html body #bottom .bst.bst:disabled .bn{background:#B7B0A6;color:#fff}
+#bNew .btag{background:#FB7418;color:#fff}
+/* ==== end boosters2 ==== */

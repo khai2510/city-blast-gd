@@ -1,0 +1,14 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Shop / Coin">
+<circle id="Ellipse" cx="20" cy="20" r="18.75" fill="url(#paint0_linear_0_137)" stroke-width="2.5" stroke="#7A4A00"/>
+<circle id="Ellipse_2" cx="20" cy="20" r="11.75" fill="#FFC633" stroke-width="2.5" stroke="#E59A00"/>
+<ellipse id="Ellipse_3" cx="16.8352" cy="7.2368" rx="6" ry="3.5" transform="rotate(-20 16.8352 7.2368)" fill="white" fill-opacity="0.7"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_0_137" x1="20" y1="0" x2="20" y2="40" gradientUnits="userSpaceOnUse">
+<stop stop-color="#FFE27A"/>
+<stop offset="0.55" stop-color="#FFC633"/>
+<stop offset="1" stop-color="#E59A00"/>
+</linearGradient>
+</defs>
+</svg>

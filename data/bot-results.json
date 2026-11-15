@@ -1,0 +1,2903 @@
+{
+ "_readme": [
+  "Bot gate on the current build (index.html of this repo, same physics as the shipped main build), run 15/11/2026 with levels6/tools/gate-bot.js, N=2 seeds per bot (seeds 800 + 37000k + L). On most levels the seed changes nothing physical, so both seeds repeat one result: read each bot as one deterministic plan, not as a sample.",
+  "Bots: expert = the level's stored solution (sol/solW) + 'hit what still stands' cleanup; sensible = follows the level's bot hints (a tip-reader); naive = all TNT at once on the front-middle ground members; lesson = the plan WITHOUT the level's lesson (must fail on lesson levels). The bots place TNT through the test API (not the tap UI), with the game's real wave/rest rules.",
+  "pct = final clear % of the target (PASS 85). failCodes: pct = below 85 %, ~pct = below 85 % with TNT unused, collateral = a protected building over 5 % damage (fails even at a high clear %).",
+  "allRuns pools every bot run of the level: passPct, bestClear, medianClear; nearLose80to84 = runs that ended at 80-84 % clear; nearWin85to88 = runs that passed at 85-88 %.",
+  "Gate targets (blast-level-standard skill, docs/LEVEL-STANDARD.md): expert wins every seed with margin >= +3; sensible: Normal/Relief/Tutorial wins, Hard/Boss <= 50 %; naive fails from L3; lesson-less fails on lesson levels. Problems the gate itself flagged are in 'gateProblems'.",
+  "Not re-run here: time-bot, foot-bot, search-bot, determinism-check (the last recorded determinism hashes are in docs/MAIN-BUILD.md sections 11-12). Blind 'newcomer' runs (a scripted first-time player, no hints, 2 attempts) are in bots/newcomer/: L1-5 only."
+ ],
+ "run": {
+  "date": "2026-11-15",
+  "tool": "levels6/tools/gate-bot.js",
+  "seeds": 2,
+  "build": "index.html (sources stamp in its first comment)"
+ },
+ "summary": {
+  "expertWins": "70/72 (L10 Lift Bridge: expert plan clears 95 % but hits the protected building: collateral)",
+  "naiveFailsFromL3": "100 %",
+  "sensibleOnNormal": "44 %"
+ },
+ "gateProblems": [
+  "expert 70/72",
+  "L2 lesson-less plan passes 2/2",
+  "L10 Hard sensible 100%",
+  "L11 lesson-less plan passes 2/2",
+  "L13 relief/tutorial sensible 0%",
+  "L21 relief/tutorial sensible 0%",
+  "L21 lesson-less plan passes 2/2",
+  "L24 Hard sensible 100%",
+  "L31 relief/tutorial sensible 0%",
+  "normal sensible 44%"
+ ],
+ "levels": [
+  {
+   "L": 1,
+   "name": "Old Whirly",
+   "tier": "T",
+   "hard": false,
+   "boss": false,
+   "heroId": "F27",
+   "tnt": 5,
+   "teaches": "Tap a post, then BLAST",
+   "allRuns": {
+    "n": 6,
+    "passPct": 100,
+    "bestClear": 94,
+    "medianClear": 94,
+    "nearLose80to84": 0,
+    "nearWin85to88": 2
+   },
+   "bots": {
+    "expert": {
+     "pass": "2/2",
+     "pct": [
+      94,
+      94
+     ],
+     "failCodes": [],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      1,
+      1
+     ],
+     "marginMin": 9
+    },
+    "sensible": {
+     "pass": "2/2",
+     "pct": [
+      94,
+      94
+     ],
+     "failCodes": [],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      1,
+      1
+     ]
+    },
+    "naive": {
+     "pass": "2/2",
+     "pct": [
+      87,
+      87
+     ],
+     "failCodes": [],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      3,
+      3
+     ]
+    }
+   }
+  },
+  {
+   "L": 2,
+   "name": "Stripey Point",
+   "tier": "T",
+   "hard": false,
+   "boss": false,
+   "heroId": "F28",
+   "tnt": 5,
+   "teaches": null,
+   "allRuns": {
+    "n": 8,
+    "passPct": 75,
+    "bestClear": 96,
+    "medianClear": 91,
+    "nearLose80to84": 0,
+    "nearWin85to88": 2
+   },
+   "bots": {
+    "expert": {
+     "pass": "2/2",
+     "pct": [
+      96,
+      96
+     ],
+     "failCodes": [],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      0,
+      0
+     ],
+     "marginMin": 11
+    },
+    "sensible": {
+     "pass": "2/2",
+     "pct": [
+      96,
+      96
+     ],
+     "failCodes": [],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      0,
+      0
+     ]
+    },
+    "naive": {
+     "pass": "0/2",
+     "pct": [
+      2,
+      2
+     ],
+     "failCodes": [
+      "~pct",
+      "~pct"
+     ],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      1,
+      1
+     ]
+    },
+    "lesson": {
+     "pass": "2/2",
+     "pct": [
+      86,
+      86
+     ],
+     "failCodes": [],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "L": 3,
+   "name": "Old Tock",
+   "tier": "N",
+   "hard": false,
+   "boss": false,
+   "heroId": "F01",
+   "tnt": 7,
+   "teaches": null,
+   "allRuns": {
+    "n": 8,
+    "passPct": 50,
+    "bestClear": 92,
+    "medianClear": 84.5,
+    "nearLose80to84": 2,
+    "nearWin85to88": 2
+   },
+   "bots": {
+    "expert": {
+     "pass": "2/2",
+     "pct": [
+      92,
+      92
+     ],
+     "failCodes": [],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      0,
+      0
+     ],
+     "marginMin": 7
+    },
+    "sensible": {
+     "pass": "2/2",
+     "pct": [
+      88,
+      88
+     ],
+     "failCodes": [],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      0,
+      0
+     ]
+    },
+    "naive": {
+     "pass": "0/2",
+     "pct": [
+      3,
+      3
+     ],
+     "failCodes": [
+      "~pct",
+      "~pct"
+     ],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      5,
+      5
+     ]
+    },
+    "lesson": {
+     "pass": "0/2",
+     "pct": [
+      81,
+      81
+     ],
+     "failCodes": [
+      "pct",
+      "pct"
+     ],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "L": 4,
+   "name": "Needle Court",
+   "tier": "N",
+   "hard": false,
+   "boss": false,
+   "heroId": "F16",
+   "tnt": 7,
+   "teaches": "Turn the view: blast the open back",
+   "allRuns": {
+    "n": 8,
+    "passPct": 50,
+    "bestClear": 95,
+    "medianClear": 91,
+    "nearLose80to84": 2,
+    "nearWin85to88": 0
+   },
+   "bots": {
+    "expert": {
+     "pass": "2/2",
+     "pct": [
+      93,
+      93
+     ],
+     "failCodes": [],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      0,
+      0
+     ],
+     "marginMin": 8
+    },
+    "sensible": {
+     "pass": "2/2",
+     "pct": [
+      95,
+      95
+     ],
+     "failCodes": [],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      0,
+      0
+     ]
+    },
+    "naive": {
+     "pass": "0/2",
+     "pct": [
+      84,
+      84
+     ],
+     "failCodes": [
+      "collateral",
+      "collateral"
+     ],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      2,
+      2
+     ]
+    },
+    "lesson": {
+     "pass": "0/2",
+     "pct": [
+      89,
+      89
+     ],
+     "failCodes": [
+      "collateral",
+      "collateral"
+     ],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "L": 5,
+   "name": "Doorstop Corner",
+   "tier": "N",
+   "hard": false,
+   "boss": false,
+   "heroId": "F24",
+   "tnt": 8,
+   "teaches": null,
+   "allRuns": {
+    "n": 8,
+    "passPct": 50,
+    "bestClear": 91,
+    "medianClear": 90,
+    "nearLose80to84": 0,
+    "nearWin85to88": 0
+   },
+   "bots": {
+    "expert": {
+     "pass": "2/2",
+     "pct": [
+      91,
+      91
+     ],
+     "failCodes": [],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      0,
+      0
+     ],
+     "marginMin": 6
+    },
+    "sensible": {
+     "pass": "2/2",
+     "pct": [
+      90,
+      90
+     ],
+     "failCodes": [],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      0,
+      0
+     ]
+    },
+    "naive": {
+     "pass": "0/2",
+     "pct": [
+      0,
+      0
+     ],
+     "failCodes": [
+      "~pct",
+      "~pct"
+     ],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      6,
+      6
+     ]
+    },
+    "lesson": {
+     "pass": "0/2",
+     "pct": [
+      90,
+      90
+     ],
+     "failCodes": [
+      "collateral",
+      "collateral"
+     ],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "L": 6,
+   "name": "Dome Square",
+   "tier": "N",
+   "hard": false,
+   "boss": false,
+   "heroId": "F14",
+   "tnt": 11,
+   "teaches": null,
+   "allRuns": {
+    "n": 6,
+    "passPct": 67,
+    "bestClear": 99,
+    "medianClear": 99,
+    "nearLose80to84": 0,
+    "nearWin85to88": 0
+   },
+   "bots": {
+    "expert": {
+     "pass": "2/2",
+     "pct": [
+      99,
+      99
+     ],
+     "failCodes": [],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      1,
+      1
+     ],
+     "marginMin": 14
+    },
+    "sensible": {
+     "pass": "2/2",
+     "pct": [
+      99,
+      99
+     ],
+     "failCodes": [],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      1,
+      1
+     ]
+    },
+    "naive": {
+     "pass": "0/2",
+     "pct": [
+      5,
+      5
+     ],
+     "failCodes": [
+      "~pct",
+      "~pct"
+     ],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      7,
+      7
+     ]
+    }
+   }
+  },
+  {
+   "L": 7,
+   "name": "Grand Arch",
+   "tier": "H",
+   "hard": true,
+   "boss": false,
+   "heroId": "F10",
+   "tnt": 12,
+   "teaches": null,
+   "allRuns": {
+    "n": 6,
+    "passPct": 33,
+    "bestClear": 98,
+    "medianClear": 96,
+    "nearLose80to84": 0,
+    "nearWin85to88": 0
+   },
+   "bots": {
+    "expert": {
+     "pass": "2/2",
+     "pct": [
+      98,
+      98
+     ],
+     "failCodes": [],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      0,
+      0
+     ],
+     "marginMin": 13
+    },
+    "sensible": {
+     "pass": "0/2",
+     "pct": [
+      96,
+      96
+     ],
+     "failCodes": [
+      "collateral",
+      "collateral"
+     ],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      0,
+      0
+     ]
+    },
+    "naive": {
+     "pass": "0/2",
+     "pct": [
+      4,
+      4
+     ],
+     "failCodes": [
+      "~pct",
+      "~pct"
+     ],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      7,
+      7
+     ]
+    }
+   }
+  },
+  {
+   "L": 8,
+   "name": "Rivet Tower",
+   "tier": "R",
+   "hard": false,
+   "boss": false,
+   "heroId": "F03",
+   "tnt": 10,
+   "teaches": "Steel holds: blast the concrete feet",
+   "allRuns": {
+    "n": 8,
+    "passPct": 50,
+    "bestClear": 90,
+    "medianClear": 77.5,
+    "nearLose80to84": 0,
+    "nearWin85to88": 0
+   },
+   "bots": {
+    "expert": {
+     "pass": "2/2",
+     "pct": [
+      90,
+      90
+     ],
+     "failCodes": [],
+     "blasts": [
+      2,
+      2
+     ],
+     "tntLeft": [
+      0,
+      0
+     ],
+     "marginMin": 5
+    },
+    "sensible": {
+     "pass": "2/2",
+     "pct": [
+      90,
+      90
+     ],
+     "failCodes": [],
+     "blasts": [
+      2,
+      2
+     ],
+     "tntLeft": [
+      0,
+      0
+     ]
+    },
+    "naive": {
+     "pass": "0/2",
+     "pct": [
+      65,
+      65
+     ],
+     "failCodes": [
+      "~pct",
+      "~pct"
+     ],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      9,
+      9
+     ]
+    },
+    "lesson": {
+     "pass": "0/2",
+     "pct": [
+      4,
+      4
+     ],
+     "failCodes": [
+      "pct",
+      "pct"
+     ],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "L": 9,
+   "name": "Twin Saucer",
+   "tier": "N",
+   "hard": false,
+   "boss": false,
+   "heroId": "F04",
+   "tnt": 10,
+   "teaches": null,
+   "allRuns": {
+    "n": 6,
+    "passPct": 67,
+    "bestClear": 90,
+    "medianClear": 90,
+    "nearLose80to84": 0,
+    "nearWin85to88": 0
+   },
+   "bots": {
+    "expert": {
+     "pass": "2/2",
+     "pct": [
+      90,
+      90
+     ],
+     "failCodes": [],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      0,
+      0
+     ],
+     "marginMin": 5
+    },
+    "sensible": {
+     "pass": "2/2",
+     "pct": [
+      90,
+      90
+     ],
+     "failCodes": [],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      0,
+      0
+     ]
+    },
+    "naive": {
+     "pass": "0/2",
+     "pct": [
+      2,
+      2
+     ],
+     "failCodes": [
+      "~pct",
+      "~pct"
+     ],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      7,
+      7
+     ]
+    }
+   }
+  },
+  {
+   "L": 10,
+   "name": "Lift Bridge",
+   "tier": "SH",
+   "hard": false,
+   "boss": true,
+   "heroId": "F09",
+   "tnt": 11,
+   "teaches": null,
+   "allRuns": {
+    "n": 6,
+    "passPct": 33,
+    "bestClear": 96,
+    "medianClear": 95,
+    "nearLose80to84": 0,
+    "nearWin85to88": 0
+   },
+   "bots": {
+    "expert": {
+     "pass": "0/2",
+     "pct": [
+      95,
+      95
+     ],
+     "failCodes": [
+      "collateral",
+      "collateral"
+     ],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      1,
+      1
+     ],
+     "marginMin": 10
+    },
+    "sensible": {
+     "pass": "2/2",
+     "pct": [
+      96,
+      96
+     ],
+     "failCodes": [],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      0,
+      0
+     ]
+    },
+    "naive": {
+     "pass": "0/2",
+     "pct": [
+      47,
+      47
+     ],
+     "failCodes": [
+      "collateral",
+      "collateral"
+     ],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      5,
+      5
+     ]
+    }
+   }
+  },
+  {
+   "L": 11,
+   "name": "Shell Hall",
+   "tier": "R",
+   "hard": false,
+   "boss": false,
+   "heroId": "F05",
+   "tnt": 7,
+   "teaches": "Blast in steps: clear what hides it, then the piers",
+   "allRuns": {
+    "n": 8,
+    "passPct": 75,
+    "bestClear": 91,
+    "medianClear": 89,
+    "nearLose80to84": 0,
+    "nearWin85to88": 2
+   },
+   "bots": {
+    "expert": {
+     "pass": "2/2",
+     "pct": [
+      91,
+      91
+     ],
+     "failCodes": [],
+     "blasts": [
+      2,
+      2
+     ],
+     "tntLeft": [
+      1,
+      1
+     ],
+     "marginMin": 6
+    },
+    "sensible": {
+     "pass": "2/2",
+     "pct": [
+      88,
+      88
+     ],
+     "failCodes": [],
+     "blasts": [
+      2,
+      2
+     ],
+     "tntLeft": [
+      1,
+      1
+     ]
+    },
+    "naive": {
+     "pass": "0/2",
+     "pct": [
+      4,
+      4
+     ],
+     "failCodes": [
+      "pct",
+      "pct"
+     ],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      0,
+      0
+     ]
+    },
+    "lesson": {
+     "pass": "2/2",
+     "pct": [
+      90,
+      90
+     ],
+     "failCodes": [],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "L": 12,
+   "name": "Star Pedestal",
+   "tier": "N",
+   "hard": false,
+   "boss": false,
+   "heroId": "F21",
+   "tnt": 9,
+   "teaches": null,
+   "allRuns": {
+    "n": 6,
+    "passPct": 67,
+    "bestClear": 97,
+    "medianClear": 97,
+    "nearLose80to84": 0,
+    "nearWin85to88": 0
+   },
+   "bots": {
+    "expert": {
+     "pass": "2/2",
+     "pct": [
+      97,
+      97
+     ],
+     "failCodes": [],
+     "blasts": [
+      2,
+      2
+     ],
+     "tntLeft": [
+      0,
+      0
+     ],
+     "marginMin": 12
+    },
+    "sensible": {
+     "pass": "2/2",
+     "pct": [
+      97,
+      97
+     ],
+     "failCodes": [],
+     "blasts": [
+      2,
+      2
+     ],
+     "tntLeft": [
+      0,
+      0
+     ]
+    },
+    "naive": {
+     "pass": "0/2",
+     "pct": [
+      1,
+      1
+     ],
+     "failCodes": [
+      "~pct",
+      "~pct"
+     ],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      7,
+      7
+     ]
+    }
+   }
+  },
+  {
+   "L": 13,
+   "name": "Harp Span",
+   "tier": "R",
+   "hard": false,
+   "boss": false,
+   "heroId": "F17",
+   "tnt": 10,
+   "teaches": "Stack two TNT on a steel leg",
+   "allRuns": {
+    "n": 8,
+    "passPct": 25,
+    "bestClear": 95,
+    "medianClear": 55,
+    "nearLose80to84": 0,
+    "nearWin85to88": 0
+   },
+   "bots": {
+    "expert": {
+     "pass": "2/2",
+     "pct": [
+      95,
+      95
+     ],
+     "failCodes": [],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      2,
+      2
+     ],
+     "marginMin": 10
+    },
+    "sensible": {
+     "pass": "0/2",
+     "pct": [
+      55,
+      55
+     ],
+     "failCodes": [
+      "pct",
+      "pct"
+     ],
+     "blasts": [
+      3,
+      3
+     ],
+     "tntLeft": [
+      0,
+      0
+     ]
+    },
+    "naive": {
+     "pass": "0/2",
+     "pct": [
+      39,
+      39
+     ],
+     "failCodes": [
+      "~pct",
+      "~pct"
+     ],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      8,
+      8
+     ]
+    },
+    "lesson": {
+     "pass": "0/2",
+     "pct": [
+      55,
+      55
+     ],
+     "failCodes": [
+      "~pct",
+      "~pct"
+     ],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      2,
+      2
+     ]
+    }
+   }
+  },
+  {
+   "L": 14,
+   "name": "Stripey Light",
+   "tier": "N",
+   "hard": false,
+   "boss": false,
+   "heroId": "F28",
+   "tnt": 9,
+   "teaches": null,
+   "allRuns": {
+    "n": 6,
+    "passPct": 33,
+    "bestClear": 94,
+    "medianClear": 51,
+    "nearLose80to84": 0,
+    "nearWin85to88": 0
+   },
+   "bots": {
+    "expert": {
+     "pass": "2/2",
+     "pct": [
+      94,
+      94
+     ],
+     "failCodes": [],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      1,
+      1
+     ],
+     "marginMin": 9
+    },
+    "sensible": {
+     "pass": "0/2",
+     "pct": [
+      51,
+      51
+     ],
+     "failCodes": [
+      "pct",
+      "pct"
+     ],
+     "blasts": [
+      2,
+      2
+     ],
+     "tntLeft": [
+      0,
+      0
+     ]
+    },
+    "naive": {
+     "pass": "0/2",
+     "pct": [
+      31,
+      31
+     ],
+     "failCodes": [
+      "~pct",
+      "~pct"
+     ],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      7,
+      7
+     ]
+    }
+   }
+  },
+  {
+   "L": 15,
+   "name": "The Sail",
+   "tier": "N",
+   "hard": false,
+   "boss": false,
+   "heroId": "F30",
+   "tnt": 12,
+   "teaches": null,
+   "allRuns": {
+    "n": 6,
+    "passPct": 33,
+    "bestClear": 94,
+    "medianClear": 57,
+    "nearLose80to84": 0,
+    "nearWin85to88": 0
+   },
+   "bots": {
+    "expert": {
+     "pass": "2/2",
+     "pct": [
+      94,
+      94
+     ],
+     "failCodes": [],
+     "blasts": [
+      2,
+      2
+     ],
+     "tntLeft": [
+      1,
+      1
+     ],
+     "marginMin": 9
+    },
+    "sensible": {
+     "pass": "0/2",
+     "pct": [
+      57,
+      57
+     ],
+     "failCodes": [
+      "~pct",
+      "~pct"
+     ],
+     "blasts": [
+      4,
+      4
+     ],
+     "tntLeft": [
+      1,
+      1
+     ]
+    },
+    "naive": {
+     "pass": "0/2",
+     "pct": [
+      1,
+      1
+     ],
+     "failCodes": [
+      "~pct",
+      "~pct"
+     ],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      3,
+      3
+     ]
+    }
+   }
+  },
+  {
+   "L": 16,
+   "name": "Dome Hall",
+   "tier": "H",
+   "hard": true,
+   "boss": false,
+   "heroId": "F14",
+   "tnt": 8,
+   "teaches": null,
+   "allRuns": {
+    "n": 6,
+    "passPct": 33,
+    "bestClear": 94,
+    "medianClear": 93,
+    "nearLose80to84": 0,
+    "nearWin85to88": 0
+   },
+   "bots": {
+    "expert": {
+     "pass": "2/2",
+     "pct": [
+      94,
+      94
+     ],
+     "failCodes": [],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      0,
+      0
+     ],
+     "marginMin": 9
+    },
+    "sensible": {
+     "pass": "0/2",
+     "pct": [
+      93,
+      93
+     ],
+     "failCodes": [
+      "collateral",
+      "collateral"
+     ],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      0,
+      0
+     ]
+    },
+    "naive": {
+     "pass": "0/2",
+     "pct": [
+      4,
+      4
+     ],
+     "failCodes": [
+      "~pct",
+      "~pct"
+     ],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      4,
+      4
+     ]
+    }
+   }
+  },
+  {
+   "L": 17,
+   "name": "The Pedestal",
+   "tier": "R",
+   "hard": false,
+   "boss": false,
+   "heroId": "F21",
+   "tnt": 10,
+   "teaches": "Dark piers: one TNT on each",
+   "allRuns": {
+    "n": 8,
+    "passPct": 50,
+    "bestClear": 97,
+    "medianClear": 70,
+    "nearLose80to84": 0,
+    "nearWin85to88": 0
+   },
+   "bots": {
+    "expert": {
+     "pass": "2/2",
+     "pct": [
+      97,
+      97
+     ],
+     "failCodes": [],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      2,
+      2
+     ],
+     "marginMin": 12
+    },
+    "sensible": {
+     "pass": "2/2",
+     "pct": [
+      91,
+      91
+     ],
+     "failCodes": [],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      2,
+      2
+     ]
+    },
+    "naive": {
+     "pass": "0/2",
+     "pct": [
+      47,
+      47
+     ],
+     "failCodes": [
+      "~pct",
+      "~pct"
+     ],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      5,
+      5
+     ]
+    },
+    "lesson": {
+     "pass": "0/2",
+     "pct": [
+      49,
+      49
+     ],
+     "failCodes": [
+      "~pct",
+      "~pct"
+     ],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      4,
+      4
+     ]
+    }
+   }
+  },
+  {
+   "L": 18,
+   "name": "The Doorstop",
+   "tier": "N",
+   "hard": false,
+   "boss": false,
+   "heroId": "F24",
+   "tnt": 10,
+   "teaches": null,
+   "allRuns": {
+    "n": 6,
+    "passPct": 67,
+    "bestClear": 93,
+    "medianClear": 92,
+    "nearLose80to84": 0,
+    "nearWin85to88": 0
+   },
+   "bots": {
+    "expert": {
+     "pass": "2/2",
+     "pct": [
+      92,
+      92
+     ],
+     "failCodes": [],
+     "blasts": [
+      2,
+      2
+     ],
+     "tntLeft": [
+      1,
+      1
+     ],
+     "marginMin": 7
+    },
+    "sensible": {
+     "pass": "2/2",
+     "pct": [
+      93,
+      93
+     ],
+     "failCodes": [],
+     "blasts": [
+      2,
+      2
+     ],
+     "tntLeft": [
+      1,
+      1
+     ]
+    },
+    "naive": {
+     "pass": "0/2",
+     "pct": [
+      58,
+      58
+     ],
+     "failCodes": [
+      "~pct",
+      "~pct"
+     ],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      7,
+      7
+     ]
+    }
+   }
+  },
+  {
+   "L": 19,
+   "name": "Cube Grove",
+   "tier": "N",
+   "hard": false,
+   "boss": false,
+   "heroId": "F35",
+   "tnt": 10,
+   "teaches": null,
+   "allRuns": {
+    "n": 6,
+    "passPct": 33,
+    "bestClear": 94,
+    "medianClear": 45,
+    "nearLose80to84": 0,
+    "nearWin85to88": 0
+   },
+   "bots": {
+    "expert": {
+     "pass": "2/2",
+     "pct": [
+      94,
+      94
+     ],
+     "failCodes": [],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      1,
+      1
+     ],
+     "marginMin": 9
+    },
+    "sensible": {
+     "pass": "0/2",
+     "pct": [
+      45,
+      45
+     ],
+     "failCodes": [
+      "pct",
+      "pct"
+     ],
+     "blasts": [
+      3,
+      3
+     ],
+     "tntLeft": [
+      0,
+      0
+     ]
+    },
+    "naive": {
+     "pass": "0/2",
+     "pct": [
+      6,
+      6
+     ],
+     "failCodes": [
+      "~pct",
+      "~pct"
+     ],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      9,
+      9
+     ]
+    }
+   }
+  },
+  {
+   "L": 20,
+   "name": "Big Bow",
+   "tier": "SH",
+   "hard": false,
+   "boss": true,
+   "heroId": "F32",
+   "tnt": 8,
+   "teaches": null,
+   "allRuns": {
+    "n": 6,
+    "passPct": 33,
+    "bestClear": 98,
+    "medianClear": 97,
+    "nearLose80to84": 0,
+    "nearWin85to88": 2
+   },
+   "bots": {
+    "expert": {
+     "pass": "2/2",
+     "pct": [
+      98,
+      98
+     ],
+     "failCodes": [],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      0,
+      0
+     ],
+     "marginMin": 13
+    },
+    "sensible": {
+     "pass": "0/2",
+     "pct": [
+      97,
+      97
+     ],
+     "failCodes": [
+      "collateral",
+      "collateral"
+     ],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      0,
+      0
+     ]
+    },
+    "naive": {
+     "pass": "0/2",
+     "pct": [
+      88,
+      88
+     ],
+     "failCodes": [
+      "collateral",
+      "collateral"
+     ],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      2,
+      2
+     ]
+    }
+   }
+  },
+  {
+   "L": 21,
+   "name": "The Stepper",
+   "tier": "R",
+   "hard": false,
+   "boss": false,
+   "heroId": "F22",
+   "tnt": 10,
+   "teaches": "Keep the road clear: fall into the yard",
+   "allRuns": {
+    "n": 8,
+    "passPct": 50,
+    "bestClear": 98,
+    "medianClear": 66,
+    "nearLose80to84": 0,
+    "nearWin85to88": 0
+   },
+   "bots": {
+    "expert": {
+     "pass": "2/2",
+     "pct": [
+      98,
+      98
+     ],
+     "failCodes": [],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      2,
+      2
+     ],
+     "marginMin": 13
+    },
+    "sensible": {
+     "pass": "0/2",
+     "pct": [
+      40,
+      40
+     ],
+     "failCodes": [
+      "~pct",
+      "~pct"
+     ],
+     "blasts": [
+      3,
+      3
+     ],
+     "tntLeft": [
+      1,
+      1
+     ]
+    },
+    "naive": {
+     "pass": "0/2",
+     "pct": [
+      39,
+      39
+     ],
+     "failCodes": [
+      "~pct",
+      "~pct"
+     ],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      3,
+      3
+     ]
+    },
+    "lesson": {
+     "pass": "2/2",
+     "pct": [
+      92,
+      92
+     ],
+     "failCodes": [],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      2,
+      2
+     ]
+    }
+   }
+  },
+  {
+   "L": 22,
+   "name": "The Pencil",
+   "tier": "N",
+   "hard": false,
+   "boss": false,
+   "heroId": "F26",
+   "tnt": 11,
+   "teaches": null,
+   "allRuns": {
+    "n": 6,
+    "passPct": 33,
+    "bestClear": 96,
+    "medianClear": 49,
+    "nearLose80to84": 0,
+    "nearWin85to88": 0
+   },
+   "bots": {
+    "expert": {
+     "pass": "2/2",
+     "pct": [
+      96,
+      96
+     ],
+     "failCodes": [],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      1,
+      1
+     ],
+     "marginMin": 11
+    },
+    "sensible": {
+     "pass": "0/2",
+     "pct": [
+      49,
+      49
+     ],
+     "failCodes": [
+      "pct",
+      "pct"
+     ],
+     "blasts": [
+      3,
+      3
+     ],
+     "tntLeft": [
+      0,
+      0
+     ]
+    },
+    "naive": {
+     "pass": "0/2",
+     "pct": [
+      36,
+      36
+     ],
+     "failCodes": [
+      "~pct",
+      "~pct"
+     ],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      6,
+      6
+     ]
+    }
+   }
+  },
+  {
+   "L": 23,
+   "name": "Tube Bundle",
+   "tier": "N",
+   "hard": false,
+   "boss": false,
+   "heroId": "F34",
+   "tnt": 11,
+   "teaches": null,
+   "allRuns": {
+    "n": 6,
+    "passPct": 33,
+    "bestClear": 96,
+    "medianClear": 53,
+    "nearLose80to84": 0,
+    "nearWin85to88": 0
+   },
+   "bots": {
+    "expert": {
+     "pass": "2/2",
+     "pct": [
+      96,
+      96
+     ],
+     "failCodes": [],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      2,
+      2
+     ],
+     "marginMin": 11
+    },
+    "sensible": {
+     "pass": "0/2",
+     "pct": [
+      53,
+      53
+     ],
+     "failCodes": [
+      "pct",
+      "pct"
+     ],
+     "blasts": [
+      2,
+      2
+     ],
+     "tntLeft": [
+      0,
+      0
+     ]
+    },
+    "naive": {
+     "pass": "0/2",
+     "pct": [
+      42,
+      42
+     ],
+     "failCodes": [
+      "~pct",
+      "~pct"
+     ],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      4,
+      4
+     ]
+    }
+   }
+  },
+  {
+   "L": 24,
+   "name": "Deco Needle",
+   "tier": "H",
+   "hard": true,
+   "boss": false,
+   "heroId": "F16",
+   "tnt": 7,
+   "teaches": null,
+   "allRuns": {
+    "n": 6,
+    "passPct": 67,
+    "bestClear": 99,
+    "medianClear": 95,
+    "nearLose80to84": 0,
+    "nearWin85to88": 0
+   },
+   "bots": {
+    "expert": {
+     "pass": "2/2",
+     "pct": [
+      99,
+      99
+     ],
+     "failCodes": [],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      1,
+      1
+     ],
+     "marginMin": 14
+    },
+    "sensible": {
+     "pass": "2/2",
+     "pct": [
+      95,
+      95
+     ],
+     "failCodes": [],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      1,
+      1
+     ]
+    },
+    "naive": {
+     "pass": "0/2",
+     "pct": [
+      71,
+      71
+     ],
+     "failCodes": [
+      "~pct",
+      "~pct"
+     ],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      3,
+      3
+     ]
+    }
+   }
+  },
+  {
+   "L": 25,
+   "name": "Glass Point",
+   "tier": "R",
+   "hard": false,
+   "boss": false,
+   "heroId": "F06",
+   "tnt": 10,
+   "teaches": "Glass holds nothing: hit the dark frame",
+   "allRuns": {
+    "n": 8,
+    "passPct": 50,
+    "bestClear": 97,
+    "medianClear": 59,
+    "nearLose80to84": 0,
+    "nearWin85to88": 2
+   },
+   "bots": {
+    "expert": {
+     "pass": "2/2",
+     "pct": [
+      97,
+      97
+     ],
+     "failCodes": [],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      2,
+      2
+     ],
+     "marginMin": 12
+    },
+    "sensible": {
+     "pass": "2/2",
+     "pct": [
+      88,
+      88
+     ],
+     "failCodes": [],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      2,
+      2
+     ]
+    },
+    "naive": {
+     "pass": "0/2",
+     "pct": [
+      21,
+      21
+     ],
+     "failCodes": [
+      "~pct",
+      "~pct"
+     ],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      4,
+      4
+     ]
+    },
+    "lesson": {
+     "pass": "0/2",
+     "pct": [
+      30,
+      30
+     ],
+     "failCodes": [
+      "~pct",
+      "~pct"
+     ],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      2,
+      2
+     ]
+    }
+   }
+  },
+  {
+   "L": 26,
+   "name": "The Bullet",
+   "tier": "N",
+   "hard": false,
+   "boss": false,
+   "heroId": "F25",
+   "tnt": 10,
+   "teaches": null,
+   "allRuns": {
+    "n": 6,
+    "passPct": 33,
+    "bestClear": 92,
+    "medianClear": 60,
+    "nearLose80to84": 0,
+    "nearWin85to88": 0
+   },
+   "bots": {
+    "expert": {
+     "pass": "2/2",
+     "pct": [
+      92,
+      92
+     ],
+     "failCodes": [],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      1,
+      1
+     ],
+     "marginMin": 7
+    },
+    "sensible": {
+     "pass": "0/2",
+     "pct": [
+      60,
+      60
+     ],
+     "failCodes": [
+      "pct",
+      "pct"
+     ],
+     "blasts": [
+      3,
+      3
+     ],
+     "tntLeft": [
+      0,
+      0
+     ]
+    },
+    "naive": {
+     "pass": "0/2",
+     "pct": [
+      45,
+      45
+     ],
+     "failCodes": [
+      "~pct",
+      "~pct"
+     ],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      7,
+      7
+     ]
+    }
+   }
+  },
+  {
+   "L": 27,
+   "name": "The Splinter",
+   "tier": "N",
+   "hard": false,
+   "boss": false,
+   "heroId": "F31",
+   "tnt": 11,
+   "teaches": null,
+   "allRuns": {
+    "n": 6,
+    "passPct": 33,
+    "bestClear": 95,
+    "medianClear": 43,
+    "nearLose80to84": 0,
+    "nearWin85to88": 0
+   },
+   "bots": {
+    "expert": {
+     "pass": "2/2",
+     "pct": [
+      95,
+      95
+     ],
+     "failCodes": [],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      1,
+      1
+     ],
+     "marginMin": 10
+    },
+    "sensible": {
+     "pass": "0/2",
+     "pct": [
+      43,
+      43
+     ],
+     "failCodes": [
+      "pct",
+      "pct"
+     ],
+     "blasts": [
+      2,
+      2
+     ],
+     "tntLeft": [
+      0,
+      0
+     ]
+    },
+    "naive": {
+     "pass": "0/2",
+     "pct": [
+      23,
+      23
+     ],
+     "failCodes": [
+      "~pct",
+      "~pct"
+     ],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      6,
+      6
+     ]
+    }
+   }
+  },
+  {
+   "L": 28,
+   "name": "Sister Spires",
+   "tier": "H",
+   "hard": true,
+   "boss": false,
+   "heroId": "F07",
+   "tnt": 8,
+   "teaches": null,
+   "allRuns": {
+    "n": 6,
+    "passPct": 33,
+    "bestClear": 100,
+    "medianClear": 92,
+    "nearLose80to84": 0,
+    "nearWin85to88": 0
+   },
+   "bots": {
+    "expert": {
+     "pass": "2/2",
+     "pct": [
+      100,
+      100
+     ],
+     "failCodes": [],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      1,
+      1
+     ],
+     "marginMin": 15
+    },
+    "sensible": {
+     "pass": "0/2",
+     "pct": [
+      92,
+      92
+     ],
+     "failCodes": [
+      "collateral",
+      "collateral"
+     ],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      1,
+      1
+     ]
+    },
+    "naive": {
+     "pass": "0/2",
+     "pct": [
+      1,
+      1
+     ],
+     "failCodes": [
+      "~pct",
+      "~pct"
+     ],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      4,
+      4
+     ]
+    }
+   }
+  },
+  {
+   "L": 29,
+   "name": "Old Tock Row",
+   "tier": "N",
+   "hard": false,
+   "boss": false,
+   "heroId": "F01",
+   "tnt": 11,
+   "teaches": null,
+   "allRuns": {
+    "n": 6,
+    "passPct": 33,
+    "bestClear": 92,
+    "medianClear": 47,
+    "nearLose80to84": 0,
+    "nearWin85to88": 0
+   },
+   "bots": {
+    "expert": {
+     "pass": "2/2",
+     "pct": [
+      92,
+      92
+     ],
+     "failCodes": [],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      1,
+      1
+     ],
+     "marginMin": 7
+    },
+    "sensible": {
+     "pass": "0/2",
+     "pct": [
+      47,
+      47
+     ],
+     "failCodes": [
+      "pct",
+      "pct"
+     ],
+     "blasts": [
+      3,
+      3
+     ],
+     "tntLeft": [
+      0,
+      0
+     ]
+    },
+    "naive": {
+     "pass": "0/2",
+     "pct": [
+      16,
+      16
+     ],
+     "failCodes": [
+      "~pct",
+      "~pct"
+     ],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      9,
+      9
+     ]
+    }
+   }
+  },
+  {
+   "L": 30,
+   "name": "Sky Steps",
+   "tier": "SH",
+   "hard": false,
+   "boss": true,
+   "heroId": "F12",
+   "tnt": 8,
+   "teaches": null,
+   "allRuns": {
+    "n": 6,
+    "passPct": 33,
+    "bestClear": 98,
+    "medianClear": 46,
+    "nearLose80to84": 0,
+    "nearWin85to88": 0
+   },
+   "bots": {
+    "expert": {
+     "pass": "2/2",
+     "pct": [
+      98,
+      98
+     ],
+     "failCodes": [],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      0,
+      0
+     ],
+     "marginMin": 13
+    },
+    "sensible": {
+     "pass": "0/2",
+     "pct": [
+      46,
+      46
+     ],
+     "failCodes": [
+      "pct",
+      "pct"
+     ],
+     "blasts": [
+      2,
+      2
+     ],
+     "tntLeft": [
+      0,
+      0
+     ]
+    },
+    "naive": {
+     "pass": "0/2",
+     "pct": [
+      43,
+      43
+     ],
+     "failCodes": [
+      "~pct",
+      "~pct"
+     ],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      3,
+      3
+     ]
+    }
+   }
+  },
+  {
+   "L": 31,
+   "name": "Stack Tower",
+   "tier": "R",
+   "hard": false,
+   "boss": false,
+   "heroId": "F19",
+   "tnt": 10,
+   "teaches": null,
+   "allRuns": {
+    "n": 6,
+    "passPct": 33,
+    "bestClear": 89,
+    "medianClear": 50,
+    "nearLose80to84": 0,
+    "nearWin85to88": 0
+   },
+   "bots": {
+    "expert": {
+     "pass": "2/2",
+     "pct": [
+      89,
+      89
+     ],
+     "failCodes": [],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      2,
+      2
+     ],
+     "marginMin": 4
+    },
+    "sensible": {
+     "pass": "0/2",
+     "pct": [
+      50,
+      50
+     ],
+     "failCodes": [
+      "pct",
+      "pct"
+     ],
+     "blasts": [
+      3,
+      3
+     ],
+     "tntLeft": [
+      0,
+      0
+     ]
+    },
+    "naive": {
+     "pass": "0/2",
+     "pct": [
+      41,
+      41
+     ],
+     "failCodes": [
+      "~pct",
+      "~pct"
+     ],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      8,
+      8
+     ]
+    }
+   }
+  },
+  {
+   "L": 32,
+   "name": "Sky Saucer",
+   "tier": "N",
+   "hard": false,
+   "boss": false,
+   "heroId": "F04",
+   "tnt": 9,
+   "teaches": "One TNT by the barrels: they blast for free",
+   "allRuns": {
+    "n": 8,
+    "passPct": 50,
+    "bestClear": 90,
+    "medianClear": 81,
+    "nearLose80to84": 0,
+    "nearWin85to88": 2
+   },
+   "bots": {
+    "expert": {
+     "pass": "2/2",
+     "pct": [
+      88,
+      88
+     ],
+     "failCodes": [],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      1,
+      1
+     ],
+     "marginMin": 3
+    },
+    "sensible": {
+     "pass": "2/2",
+     "pct": [
+      90,
+      90
+     ],
+     "failCodes": [],
+     "blasts": [
+      2,
+      2
+     ],
+     "tntLeft": [
+      1,
+      1
+     ]
+    },
+    "naive": {
+     "pass": "0/2",
+     "pct": [
+      2,
+      2
+     ],
+     "failCodes": [
+      "~pct",
+      "~pct"
+     ],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      7,
+      7
+     ]
+    },
+    "lesson": {
+     "pass": "0/2",
+     "pct": [
+      74,
+      74
+     ],
+     "failCodes": [
+      "pct",
+      "pct"
+     ],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "L": 33,
+   "name": "Rivet Tower",
+   "tier": "N",
+   "hard": false,
+   "boss": false,
+   "heroId": "F03",
+   "tnt": 9,
+   "teaches": null,
+   "allRuns": {
+    "n": 6,
+    "passPct": 33,
+    "bestClear": 93,
+    "medianClear": 39,
+    "nearLose80to84": 0,
+    "nearWin85to88": 0
+   },
+   "bots": {
+    "expert": {
+     "pass": "2/2",
+     "pct": [
+      93,
+      93
+     ],
+     "failCodes": [],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      1,
+      1
+     ],
+     "marginMin": 8
+    },
+    "sensible": {
+     "pass": "0/2",
+     "pct": [
+      39,
+      39
+     ],
+     "failCodes": [
+      "pct",
+      "pct"
+     ],
+     "blasts": [
+      3,
+      3
+     ],
+     "tntLeft": [
+      0,
+      0
+     ]
+    },
+    "naive": {
+     "pass": "0/2",
+     "pct": [
+      0,
+      0
+     ],
+     "failCodes": [
+      "~pct",
+      "~pct"
+     ],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      8,
+      8
+     ]
+    }
+   }
+  },
+  {
+   "L": 34,
+   "name": "Tock Yard",
+   "tier": "N",
+   "hard": false,
+   "boss": false,
+   "heroId": "F01",
+   "tnt": 10,
+   "teaches": null,
+   "allRuns": {
+    "n": 6,
+    "passPct": 33,
+    "bestClear": 94,
+    "medianClear": 39,
+    "nearLose80to84": 0,
+    "nearWin85to88": 0
+   },
+   "bots": {
+    "expert": {
+     "pass": "2/2",
+     "pct": [
+      94,
+      94
+     ],
+     "failCodes": [],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      1,
+      1
+     ],
+     "marginMin": 9
+    },
+    "sensible": {
+     "pass": "0/2",
+     "pct": [
+      39,
+      39
+     ],
+     "failCodes": [
+      "pct",
+      "pct"
+     ],
+     "blasts": [
+      3,
+      3
+     ],
+     "tntLeft": [
+      0,
+      0
+     ]
+    },
+    "naive": {
+     "pass": "0/2",
+     "pct": [
+      19,
+      19
+     ],
+     "failCodes": [
+      "~pct",
+      "~pct"
+     ],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      8,
+      8
+     ]
+    }
+   }
+  },
+  {
+   "L": 35,
+   "name": "Dome Works",
+   "tier": "H",
+   "hard": true,
+   "boss": false,
+   "heroId": "F14",
+   "tnt": 8,
+   "teaches": null,
+   "allRuns": {
+    "n": 6,
+    "passPct": 33,
+    "bestClear": 94,
+    "medianClear": 89,
+    "nearLose80to84": 0,
+    "nearWin85to88": 0
+   },
+   "bots": {
+    "expert": {
+     "pass": "2/2",
+     "pct": [
+      89,
+      89
+     ],
+     "failCodes": [],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      0,
+      0
+     ],
+     "marginMin": 4
+    },
+    "sensible": {
+     "pass": "0/2",
+     "pct": [
+      94,
+      94
+     ],
+     "failCodes": [
+      "collateral",
+      "collateral"
+     ],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      0,
+      0
+     ]
+    },
+    "naive": {
+     "pass": "0/2",
+     "pct": [
+      19,
+      19
+     ],
+     "failCodes": [
+      "~pct",
+      "~pct"
+     ],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      4,
+      4
+     ]
+    }
+   }
+  },
+  {
+   "L": 36,
+   "name": "Sail Lot",
+   "tier": "R",
+   "hard": false,
+   "boss": false,
+   "heroId": "F30",
+   "tnt": 10,
+   "teaches": "Drop it in the marked lot",
+   "allRuns": {
+    "n": 8,
+    "passPct": 50,
+    "bestClear": 95,
+    "medianClear": 93,
+    "nearLose80to84": 0,
+    "nearWin85to88": 0
+   },
+   "bots": {
+    "expert": {
+     "pass": "2/2",
+     "pct": [
+      95,
+      95
+     ],
+     "failCodes": [],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      2,
+      2
+     ],
+     "marginMin": 10
+    },
+    "sensible": {
+     "pass": "2/2",
+     "pct": [
+      94,
+      94
+     ],
+     "failCodes": [],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      2,
+      2
+     ]
+    },
+    "naive": {
+     "pass": "0/2",
+     "pct": [
+      0,
+      0
+     ],
+     "failCodes": [
+      "~pct",
+      "~pct"
+     ],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      6,
+      6
+     ]
+    },
+    "lesson": {
+     "pass": "0/2",
+     "pct": [
+      92,
+      92
+     ],
+     "failCodes": [
+      "collateral",
+      "collateral"
+     ],
+     "blasts": [
+      1,
+      1
+     ],
+     "tntLeft": [
+      3,
+      3
+     ]
+    }
+   }
+  }
+ ]
+}

@@ -1,0 +1,166 @@
+{
+ "_readme": [
+  "Economy of the current build: step 'tap2' (win coins) + step 'shop' (src/main/shop.js, D-blast-SHOP / D-blast-COIN). Full rationale, Figma states and the sanity check: docs/SHOP-SPEC.md.",
+  "Real money is HIDDEN in the default build (build constant IAP_READY = false): the Shop shows no prices until the store products exist. ?iapdev=1 simulates the store, ?adsdev=1 stub ads.",
+  "Upgrades are permanent and paid with coins only. Upgrades make levels easier (Blast Power raises TNT damage, impulse and radius via powerMul; Starting TNT adds TNT): bot gates are run at zero upgrades."
+ ],
+ "winCoins": {
+  "normal": 10,
+  "hard": 20,
+  "boss": 30,
+  "loss": 0,
+  "source": "D-blast-COIN (tap2 R3); debris coins fly as a show only"
+ },
+ "coinBonus": "Coin Bonus upgrade: win reward x (1 + 0.1 x level), level 0-5",
+ "upgrades": {
+  "power": {
+   "name": "Blast Power",
+   "max": 8,
+   "effect": "+8 % per level (damage / impulse / radius multiplier)",
+   "priceByLevel": [
+    40,
+    55,
+    80,
+    110,
+    155,
+    215,
+    300,
+    420
+   ]
+  },
+  "charge": {
+   "name": "Starting TNT",
+   "max": 2,
+   "effect": "+1 TNT per level",
+   "priceByLevel": [
+    250,
+    600
+   ]
+  },
+  "magnet": {
+   "name": "Coin Bonus",
+   "max": 5,
+   "effect": "+10 % win coins per level",
+   "priceByLevel": [
+    50,
+    70,
+    100,
+    140,
+    195
+   ]
+  },
+  "pocket": {
+   "name": "Booster Pocket",
+   "max": 3,
+   "effect": "N free boosters granted when a Hard / Boss level opens (locked until the first booster unlocks)",
+   "priceByLevel": [
+    150,
+    250,
+    400
+   ]
+  },
+  "slowmo": {
+   "name": "Slow-mo",
+   "max": 6,
+   "effect": "slow-motion length 0.8 s + 0.1 s per level",
+   "priceByLevel": [
+    40,
+    55,
+    80,
+    110,
+    155,
+    215
+   ]
+  }
+ },
+ "iapCatalogue_hiddenUntilStoreReady": [
+  {
+   "id": "cb.starter",
+   "coins": 1200,
+   "boostersEach": 2,
+   "usd": 2.99,
+   "note": "one-time, shown from L10"
+  },
+  {
+   "id": "cb.noads",
+   "usd": 6.99,
+   "note": "removes interstitials; rewarded stays"
+  },
+  {
+   "id": "cb.coins.600",
+   "coins": 600,
+   "usd": 1.99
+  },
+  {
+   "id": "cb.coins.1700",
+   "coins": 1700,
+   "usd": 4.99
+  },
+  {
+   "id": "cb.coins.3800",
+   "coins": 3800,
+   "usd": 9.99,
+   "badge": "POPULAR"
+  },
+  {
+   "id": "cb.coins.8500",
+   "coins": 8500,
+   "usd": 19.99
+  },
+  {
+   "id": "cb.coins.24000",
+   "coins": 24000,
+   "usd": 49.99
+  },
+  {
+   "id": "cb.bundle.small",
+   "coins": 1000,
+   "boostersEach": 2,
+   "usd": 4.99
+  },
+  {
+   "id": "cb.bundle.builder",
+   "coins": 2500,
+   "boostersEach": 4,
+   "usd": 9.99,
+   "badge": "POPULAR"
+  },
+  {
+   "id": "cb.bundle.mega",
+   "coins": 6000,
+   "boostersEach": 10,
+   "usd": 19.99
+  },
+  {
+   "id": "cb.failoffer",
+   "coins": 1000,
+   "tnt": 1,
+   "usd": 4.99,
+   "note": "Hard / Boss lose card only"
+  }
+ ],
+ "boosterShopPrice": {
+  "wreck": {
+   "pack": 3,
+   "coins": 360
+  },
+  "net": {
+   "pack": 3,
+   "coins": 300
+  },
+  "sky": {
+   "pack": 3,
+   "coins": 300
+  }
+ },
+ "ads": {
+  "provider": "none in the default build (no SDK); facade only",
+  "interstitialFromLevel": 15,
+  "rules": "no interstitial after a loss, after a rewarded video, or with No Ads (full rules docs/SHOP-SPEC.md section 5.3)",
+  "rewarded": [
+   "x2 win coins",
+   "+1 TNT on the lose card (rescue)"
+  ],
+  "continueAfterLose": "NOT done (D-blast-0115 item 7)"
+ }
+}

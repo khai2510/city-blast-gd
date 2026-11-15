@@ -1,0 +1,147 @@
+{
+ "_readme": [
+  "What each level introduces, read from the running game (window.__blast.intro.sched(), src/main/intro.js INTRO_SCHED, after the tap2 / D-blast-SCHED changes). how: hand = tutorial hand only (0 words); card = 'New: <thing>' card + forced tap on it; swipe = gesture lesson; booster = Unlocked card + Claim x2 + forced use. One new thing per level (D-blast-SCHED / MATERIAL-CURVE.md). Status and open issues: docs/TUTORIAL-STATUS.md."
+ ],
+ "schedule": [
+  {
+   "lv": 1,
+   "kind": "charge",
+   "id": "tnt",
+   "name": "TNT",
+   "how": "hand"
+  },
+  {
+   "lv": 1,
+   "kind": "material",
+   "id": "timber",
+   "name": "Wood",
+   "how": "hand"
+  },
+  {
+   "lv": 1,
+   "kind": "lesson",
+   "id": "dbltap",
+   "name": "Double tap a post",
+   "how": "hand"
+  },
+  {
+   "lv": 2,
+   "kind": "lesson",
+   "id": "blast",
+   "name": "BLAST",
+   "how": "card",
+   "noForce": 1,
+   "line": "Tap to place. BLAST to blow them all."
+  },
+  {
+   "lv": 3,
+   "kind": "material",
+   "id": "brick",
+   "name": "Brick",
+   "how": "card",
+   "fam": "brick",
+   "line": "Brick: one TNT per pier."
+  },
+  {
+   "lv": 4,
+   "kind": "material",
+   "id": "concrete",
+   "name": "Concrete",
+   "how": "card",
+   "fam": "concrete",
+   "line": "Grey columns: one TNT each."
+  },
+  {
+   "lv": 5,
+   "kind": "obstacle",
+   "id": "keep",
+   "name": "Blue Building",
+   "how": "card",
+   "pick": "keep",
+   "line": "Keep the blue building safe.",
+   "look": 1
+  },
+  {
+   "lv": 6,
+   "kind": "lesson",
+   "id": "rotate",
+   "name": "Turn the view",
+   "how": "swipe",
+   "label": "Swipe to turn"
+  },
+  {
+   "lv": 8,
+   "kind": "material",
+   "id": "steel",
+   "name": "Steel",
+   "how": "card",
+   "fam": "steel",
+   "line": "Steel holds. Break what it stands on."
+  },
+  {
+   "lv": 11,
+   "kind": "booster",
+   "id": "wreck",
+   "k": "wreck",
+   "how": "card"
+  },
+  {
+   "lv": 11,
+   "kind": "lesson",
+   "id": "steps",
+   "name": "Blast in steps",
+   "how": "wave",
+   "upto": 15,
+   "label": "Blast again!"
+  },
+  {
+   "lv": 17,
+   "kind": "material",
+   "id": "rc",
+   "name": "Dark Pier",
+   "how": "card",
+   "fam": "rc",
+   "line": "Reinforced concrete takes more TNT."
+  },
+  {
+   "lv": 21,
+   "kind": "booster",
+   "id": "net",
+   "k": "net",
+   "how": "card"
+  },
+  {
+   "lv": 25,
+   "kind": "material",
+   "id": "glass",
+   "name": "Glass",
+   "how": "card",
+   "fam": "glass",
+   "line": "Glass holds nothing. Find what carries it."
+  },
+  {
+   "lv": 31,
+   "kind": "booster",
+   "id": "sky",
+   "k": "sky",
+   "how": "card"
+  },
+  {
+   "lv": 32,
+   "kind": "obstacle",
+   "id": "barrels",
+   "name": "Barrels",
+   "how": "card",
+   "pick": "barrel",
+   "line": "Barrels blast for free."
+  },
+  {
+   "lv": 35,
+   "kind": "lesson",
+   "id": "trap",
+   "name": "Trap barrels",
+   "how": "look",
+   "label": "Every barrel blasts"
+  }
+ ]
+}

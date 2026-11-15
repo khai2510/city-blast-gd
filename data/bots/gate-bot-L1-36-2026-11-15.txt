@@ -1,0 +1,39 @@
+L1 Old Whirly       T  PASS 85  expert 2/2 (94,94; m +9; blasts 1,1; left 1,1)  sensible 2/2 (94,94)  naive 2/2
+L2 Stripey Point    T  PASS 85  expert 2/2 (96,96; m +11; blasts 1,1; left 0,0)  sensible 2/2 (96,96)  naive 0/2  lesson-less 2/2 (86,86 )
+L3 Old Tock         N  PASS 85  expert 2/2 (92,92; m +7; blasts 1,1; left 0,0)  sensible 2/2 (88,88)  naive 0/2  lesson-less 0/2 (81,81 pct)
+L4 Needle Court     N  PASS 85  expert 2/2 (93,93; m +8; blasts 1,1; left 0,0)  sensible 2/2 (95,95)  naive 0/2  lesson-less 0/2 (89,89 collateral)
+L5 Doorstop Corner  N  PASS 85  expert 2/2 (91,91; m +6; blasts 1,1; left 0,0)  sensible 2/2 (90,90)  naive 0/2  lesson-less 0/2 (90,90 collateral)
+L6 Dome Square      N  PASS 85  expert 2/2 (99,99; m +14; blasts 1,1; left 1,1)  sensible 2/2 (99,99)  naive 0/2
+L7 Grand Arch       H  PASS 85  expert 2/2 (98,98; m +13; blasts 1,1; left 0,0)  sensible 0/2 (96,96)  naive 0/2  sensible fails: collateral,collateral
+L8 Rivet Tower      R  PASS 85  expert 2/2 (90,90; m +5; blasts 2,2; left 0,0)  sensible 2/2 (90,90)  naive 0/2  lesson-less 0/2 (4,4 pct)
+L9 Twin Saucer      N  PASS 85  expert 2/2 (90,90; m +5; blasts 1,1; left 0,0)  sensible 2/2 (90,90)  naive 0/2
+L10 Lift Bridge      SH PASS 85  expert 0/2 (95,95; m +10; blasts 1,1; left 1,1)  sensible 2/2 (96,96)  naive 0/2
+L11 Shell Hall       R  PASS 85  expert 2/2 (91,91; m +6; blasts 2,2; left 1,1)  sensible 2/2 (88,88)  naive 0/2  lesson-less 2/2 (90,90 )
+L12 Star Pedestal    N  PASS 85  expert 2/2 (97,97; m +12; blasts 2,2; left 0,0)  sensible 2/2 (97,97)  naive 0/2
+L13 Harp Span        R  PASS 85  expert 2/2 (95,95; m +10; blasts 1,1; left 2,2)  sensible 0/2 (55,55)  naive 0/2  lesson-less 0/2 (55,55 ~pct)  sensible fails: pct,pct
+L14 Stripey Light    N  PASS 85  expert 2/2 (94,94; m +9; blasts 1,1; left 1,1)  sensible 0/2 (51,51)  naive 0/2  sensible fails: pct,pct
+L15 The Sail         N  PASS 85  expert 2/2 (94,94; m +9; blasts 2,2; left 1,1)  sensible 0/2 (57,57)  naive 0/2  sensible fails: ~pct,~pct
+L16 Dome Hall        H  PASS 85  expert 2/2 (94,94; m +9; blasts 1,1; left 0,0)  sensible 0/2 (93,93)  naive 0/2  sensible fails: collateral,collateral
+L17 The Pedestal     R  PASS 85  expert 2/2 (97,97; m +12; blasts 1,1; left 2,2)  sensible 2/2 (91,91)  naive 0/2  lesson-less 0/2 (49,49 ~pct)
+L18 The Doorstop     N  PASS 85  expert 2/2 (92,92; m +7; blasts 2,2; left 1,1)  sensible 2/2 (93,93)  naive 0/2
+L19 Cube Grove       N  PASS 85  expert 2/2 (94,94; m +9; blasts 1,1; left 1,1)  sensible 0/2 (45,45)  naive 0/2  sensible fails: pct,pct
+L20 Big Bow          SH PASS 85  expert 2/2 (98,98; m +13; blasts 1,1; left 0,0)  sensible 0/2 (97,97)  naive 0/2  sensible fails: collateral,collateral
+L21 The Stepper      R  PASS 85  expert 2/2 (98,98; m +13; blasts 1,1; left 2,2)  sensible 0/2 (40,40)  naive 0/2  lesson-less 2/2 (92,92 )  sensible fails: ~pct,~pct
+L22 The Pencil       N  PASS 85  expert 2/2 (96,96; m +11; blasts 1,1; left 1,1)  sensible 0/2 (49,49)  naive 0/2  sensible fails: pct,pct
+L23 Tube Bundle      N  PASS 85  expert 2/2 (96,96; m +11; blasts 1,1; left 2,2)  sensible 0/2 (53,53)  naive 0/2  sensible fails: pct,pct
+L24 Deco Needle      H  PASS 85  expert 2/2 (99,99; m +14; blasts 1,1; left 1,1)  sensible 2/2 (95,95)  naive 0/2
+L25 Glass Point      R  PASS 85  expert 2/2 (97,97; m +12; blasts 1,1; left 2,2)  sensible 2/2 (88,88)  naive 0/2  lesson-less 0/2 (30,30 ~pct)
+L26 The Bullet       N  PASS 85  expert 2/2 (92,92; m +7; blasts 1,1; left 1,1)  sensible 0/2 (60,60)  naive 0/2  sensible fails: pct,pct
+L27 The Splinter     N  PASS 85  expert 2/2 (95,95; m +10; blasts 1,1; left 1,1)  sensible 0/2 (43,43)  naive 0/2  sensible fails: pct,pct
+L28 Sister Spires    H  PASS 85  expert 2/2 (100,100; m +15; blasts 1,1; left 1,1)  sensible 0/2 (92,92)  naive 0/2  sensible fails: collateral,collateral
+L29 Old Tock Row     N  PASS 85  expert 2/2 (92,92; m +7; blasts 1,1; left 1,1)  sensible 0/2 (47,47)  naive 0/2  sensible fails: pct,pct
+L30 Sky Steps        SH PASS 85  expert 2/2 (98,98; m +13; blasts 1,1; left 0,0)  sensible 0/2 (46,46)  naive 0/2  sensible fails: pct,pct
+L31 Stack Tower      R  PASS 85  expert 2/2 (89,89; m +4; blasts 1,1; left 2,2)  sensible 0/2 (50,50)  naive 0/2  sensible fails: pct,pct
+L32 Sky Saucer       N  PASS 85  expert 2/2 (88,88; m +3; blasts 1,1; left 1,1)  sensible 2/2 (90,90)  naive 0/2  lesson-less 0/2 (74,74 pct)
+L33 Rivet Tower      N  PASS 85  expert 2/2 (93,93; m +8; blasts 1,1; left 1,1)  sensible 0/2 (39,39)  naive 0/2  sensible fails: pct,pct
+L34 Tock Yard        N  PASS 85  expert 2/2 (94,94; m +9; blasts 1,1; left 1,1)  sensible 0/2 (39,39)  naive 0/2  sensible fails: pct,pct
+L35 Dome Works       H  PASS 85  expert 2/2 (89,89; m +4; blasts 1,1; left 0,0)  sensible 0/2 (94,94)  naive 0/2  sensible fails: collateral,collateral
+L36 Sail Lot         R  PASS 85  expert 2/2 (95,95; m +10; blasts 1,1; left 2,2)  sensible 2/2 (94,94)  naive 0/2  lesson-less 0/2 (92,92 collateral)
+
+expert 70/72 · naive fails 100% of L3+ runs · normal sensible 44%
+MISSED: expert 70/72; L2 lesson-less plan passes 2/2; L10 Hard sensible 100%; L11 lesson-less plan passes 2/2; L13 relief/tutorial sensible 0%; L21 relief/tutorial sensible 0%; L21 lesson-less plan passes 2/2; L24 Hard sensible 100%; L31 relief/tutorial sensible 0%; normal sensible 44%

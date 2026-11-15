@@ -1,0 +1,29 @@
+<style>
+#lvBtn{position:fixed;left:8px;bottom:calc(8px + env(safe-area-inset-bottom));z-index:99999;min-width:48px;height:48px;border-radius:14px;border:3px solid #1d2a4a;background:#FFB400;color:#1d2a4a;font:800 16px system-ui,sans-serif;box-shadow:0 3px 0 #1d2a4a}
+#lvPanel{position:fixed;inset:0;z-index:99999;background:rgba(15,22,40,.88);display:none;overflow:auto;padding:56px 16px 24px}
+#lvPanel.on{display:block}
+#lvPanel h3{color:#fff6e0;font:800 20px system-ui,sans-serif;margin:0 0 12px;text-align:center}
+#lvGrid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;max-width:420px;margin:0 auto}
+#lvGrid button{height:48px;border-radius:12px;border:3px solid #1d2a4a;background:#fff6e0;color:#1d2a4a;font:800 16px system-ui,sans-serif}
+#lvGrid button.h{background:#8a5cf6;color:#fff}#lvGrid button.b{background:#FF6A1A;color:#fff}
+#lvClose{position:fixed;top:12px;right:12px;width:48px;height:48px;border-radius:24px;border:0;background:#fff6e0;font:800 20px system-ui}
+</style>
+<button id="lvBtn" aria-label="Chọn màn">LV</button>
+<div id="lvPanel"><button id="lvClose" aria-label="Đóng">✕</button><h3>Chọn màn để test</h3><div id="lvGrid"></div></div>
+<script>
+(function(){
+  function go(i){document.getElementById('lvPanel').classList.remove('on');try{window.__blast.start(i);}catch(e){alert('Lỗi: '+e.message);}}
+  function build(){
+    var g=document.getElementById('lvGrid');g.innerHTML='';
+    var L=(window.__blast&&window.__blast.levels)?window.__blast.levels():null;
+    var n=36;try{if(typeof LEVELS!=='undefined')n=LEVELS.length;}catch(e){}
+    for(var i=0;i<n;i++){var b=document.createElement('button');b.textContent=i+1;
+      try{var d=LEVELS[i];var t=(d&&(d.tier||d.kind||d.diff||''))+'';if(/boss/i.test(t))b.className='b';else if(/hard/i.test(t))b.className='h';}catch(e){}
+      (function(k){b.onclick=function(){go(k);};})(i);g.appendChild(b);}
+  }
+  document.getElementById('lvBtn').onclick=function(){build();document.getElementById('lvPanel').classList.add('on');};
+  document.getElementById('lvClose').onclick=function(){document.getElementById('lvPanel').classList.remove('on');};
+  var q=new URLSearchParams(location.search).get('lv');
+  if(q){var t=setInterval(function(){if(window.__blast&&window.__blast.start){clearInterval(t);setTimeout(function(){go((q|0)-1);},600);}},200);}
+})();
+</script>

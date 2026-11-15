@@ -1,0 +1,240 @@
+[
+ {
+  "L": 3,
+  "attempts": [
+   {
+    "n": 1,
+    "waves": [
+     {
+      "dots": 0,
+      "legs": 1,
+      "pct": 0.3,
+      "t": 1,
+      "firstBreak": 0.02
+     },
+     {
+      "dots": 0,
+      "legs": 2,
+      "pct": 65.9,
+      "t": 9.8,
+      "firstBreak": 0.95
+     },
+     {
+      "dots": 0,
+      "legs": 0,
+      "note": "nothing to tap"
+     }
+    ],
+    "taps": 6,
+    "aids": {
+     "aids": {
+      "open": "whole",
+      "cue": false,
+      "tip": false,
+      "cleanup": "no",
+      "dots": "none",
+      "fail": "rule"
+     },
+     "tip": "Topple the row\nlike dominoes.",
+     "dotTip": ""
+    },
+    "ok": false,
+    "code": null,
+    "pct": 65.9,
+    "tntLeft": 4,
+    "firstBreak": 0.02,
+    "card": " DEMOLISHED! 0% +1 TNT NEXT Replay "
+   },
+   {
+    "n": 2,
+    "waves": [
+     {
+      "dots": 0,
+      "legs": 1,
+      "pct": 0.3,
+      "t": 1,
+      "firstBreak": 0.02
+     },
+     {
+      "dots": 0,
+      "legs": 2,
+      "pct": 75.8,
+      "t": 9.5,
+      "firstBreak": 0.93
+     },
+     {
+      "dots": 0,
+      "legs": 0,
+      "note": "nothing to tap"
+     }
+    ],
+    "taps": 6,
+    "aids": {
+     "aids": {
+      "open": "whole",
+      "cue": false,
+      "tip": false,
+      "cleanup": "no",
+      "dots": "none",
+      "fail": "rule"
+     },
+     "tip": "Topple the row\nlike dominoes.",
+     "dotTip": ""
+    },
+    "ok": false,
+    "code": null,
+    "pct": 75.7,
+    "tntLeft": 4,
+    "firstBreak": 0.02,
+    "card": " DEMOLISHED! 0% +1 TNT NEXT Replay "
+   }
+  ],
+  "won": 0
+ },
+ {
+  "L": 4,
+  "attempts": [
+   {
+    "n": 1,
+    "waves": [
+     {
+      "dots": 0,
+      "legs": 3,
+      "pct": 83.5,
+      "t": 9.7,
+      "firstBreak": 0.02
+     },
+     {
+      "dots": 0,
+      "legs": 0,
+      "note": "nothing to tap"
+     }
+    ],
+    "taps": 3,
+    "aids": {
+     "aids": {
+      "open": "whole",
+      "cue": false,
+      "tip": false,
+      "cleanup": "no",
+      "dots": "none",
+      "fail": "rule"
+     },
+     "tip": "Turn the view.\nFind the open way.",
+     "dotTip": ""
+    },
+    "ok": false,
+    "code": null,
+    "pct": 83.5,
+    "tntLeft": 4,
+    "firstBreak": 0.02,
+    "card": " DEMOLISHED! 0% +1 TNT NEXT Replay "
+   },
+   {
+    "n": 2,
+    "waves": [
+     {
+      "dots": 0,
+      "legs": 3,
+      "pct": 85.5,
+      "t": 10.3,
+      "firstBreak": 0.02
+     }
+    ],
+    "taps": 3,
+    "aids": {
+     "aids": {
+      "open": "whole",
+      "cue": false,
+      "tip": false,
+      "cleanup": "no",
+      "dots": "none",
+      "fail": "rule"
+     },
+     "tip": "Turn the view.\nFind the open way.",
+     "dotTip": ""
+    },
+    "ok": true,
+    "code": null,
+    "pct": 85.5,
+    "tntLeft": 4,
+    "firstBreak": 0.02,
+    "card": " CLEARED! 85% PASS 85% Debris coins+169Bonus+40Damage to the hospital0% / 5%+209 +1 TNT Continue Replay "
+   }
+  ],
+  "won": 2
+ },
+ {
+  "L": 5,
+  "attempts": [
+   {
+    "n": 1,
+    "waves": [
+     {
+      "dots": 0,
+      "legs": 2,
+      "pct": 74,
+      "t": 10.2,
+      "firstBreak": 0.03
+     }
+    ],
+    "taps": 3,
+    "aids": {
+     "aids": {
+      "open": "whole",
+      "cue": false,
+      "tip": false,
+      "cleanup": "no",
+      "dots": "none",
+      "fail": "rule"
+     },
+     "tip": "Tip it away\nfrom the blue.",
+     "dotTip": ""
+    },
+    "ok": false,
+    "code": "collateral",
+    "pct": 74,
+    "tntLeft": 6,
+    "firstBreak": 0.03,
+    "card": "HIT THE HOSPITAL! 74% It fell on the hospital. Tip it away. Try Again"
+   },
+   {
+    "n": 2,
+    "waves": [
+     {
+      "dots": 0,
+      "legs": 2,
+      "pct": 73.3,
+      "t": 10.2,
+      "firstBreak": 0.02
+     },
+     {
+      "dots": 0,
+      "legs": 0,
+      "note": "nothing to tap"
+     }
+    ],
+    "taps": 3,
+    "aids": {
+     "aids": {
+      "open": "whole",
+      "cue": false,
+      "tip": false,
+      "cleanup": "no",
+      "dots": "none",
+      "fail": "rule"
+     },
+     "tip": "Tip it away\nfrom the blue.",
+     "dotTip": ""
+    },
+    "ok": false,
+    "code": null,
+    "pct": 75.1,
+    "tntLeft": 6,
+    "firstBreak": 0.02,
+    "card": " HIT THE HOSPITAL! 74% You damaged the hospital (76%). Steer the fall the other way. It fell on the hospital. Tip it away. Debris coins+80Damage to the hospital76% / 5%+80 +1 TNT Try Again Skip for Now "
+   }
+  ],
+  "won": 0
+ }
+]

@@ -1,0 +1,37 @@
+n,name,tier,tierName,hard,boss,heroId,tnt,parts,protected,barrels,teaches,base_default,yaw,members_total
+1,"Old Whirly",T,Tutorial,false,false,F27,5,2,0,0,"Tap a post, then BLAST",weak,0.3,144
+2,"Stripey Point",T,Tutorial,false,false,F28,5,4,0,0,"",weak,1.1,329
+3,"Old Tock",N,Normal,false,false,F01,7,6,0,0,"",weak,1.15,313
+4,"Needle Court",N,Normal,false,false,F16,7,5,3,0,"Turn the view: blast the open back",weak,0.25,273
+5,"Doorstop Corner",N,Normal,false,false,F24,8,4,2,0,"",weak,0.3,453
+6,"Dome Square",N,Normal,false,false,F14,11,2,1,0,"",weak,0.3,156
+7,"Grand Arch",H,Hard (purple),true,false,F10,12,3,3,0,"",weak,0.7,276
+8,"Rivet Tower",R,Relief/teach,false,false,F03,10,3,0,0,"Steel holds: blast the concrete feet",weak,0.3,120
+9,"Twin Saucer",N,Normal,false,false,F04,10,6,0,0,"",weak,0.3,382
+10,"Lift Bridge",SH,Boss (orange),false,true,F09,11,4,4,0,"",weak,0.65,225
+11,"Shell Hall",R,Relief/teach,false,false,F05,7,2,2,0,"Blast in steps: clear what hides it, then the piers",weak,0.55,96
+12,"Star Pedestal",N,Normal,false,false,F21,9,4,0,0,"",weak,0.55,256
+13,"Harp Span",R,Relief/teach,false,false,F17,10,4,0,0,"Stack two TNT on a steel leg",,0.8,94
+14,"Stripey Light",N,Normal,false,false,F28,9,5,0,0,"",,0.3,254
+15,"The Sail",N,Normal,false,false,F30,12,3,0,0,"",,0.3,270
+16,"Dome Hall",H,Hard (purple),true,false,F14,8,3,1,0,"",,0.35,169
+17,"The Pedestal",R,Relief/teach,false,false,F21,10,3,0,0,"Dark piers: one TNT on each",,0.35,180
+18,"The Doorstop",N,Normal,false,false,F24,10,4,0,0,"",,0.45,356
+19,"Cube Grove",N,Normal,false,false,F35,10,6,0,0,"",,0.25,67
+20,"Big Bow",SH,Boss (orange),false,true,F32,8,3,3,0,"",,0.4,215
+21,"The Stepper",R,Relief/teach,false,false,F22,10,3,0,0,"Keep the road clear: fall into the yard",,0.3,223
+22,"The Pencil",N,Normal,false,false,F26,11,4,0,0,"",,0.35,258
+23,"Tube Bundle",N,Normal,false,false,F34,11,4,0,0,"",,0.75,332
+24,"Deco Needle",H,Hard (purple),true,false,F16,7,4,2,0,"",,0.3,230
+25,"Glass Point",R,Relief/teach,false,false,F06,10,3,0,0,"Glass holds nothing: hit the dark frame",,0.3,200
+26,"The Bullet",N,Normal,false,false,F25,10,4,0,0,"",,0.3,190
+27,"The Splinter",N,Normal,false,false,F31,11,5,0,0,"",,0.3,278
+28,"Sister Spires",H,Hard (purple),true,false,F07,8,7,2,0,"",,0.35,260
+29,"Old Tock Row",N,Normal,false,false,F01,11,6,0,0,"",,0.25,297
+30,"Sky Steps",SH,Boss (orange),false,true,F12,8,3,1,0,"",,0.4,178
+31,"Stack Tower",R,Relief/teach,false,false,F19,10,4,0,0,"",,0.3,236
+32,"Sky Saucer",N,Normal,false,false,F04,9,4,0,16,"One TNT by the barrels: they blast for free",,0.3,409
+33,"Rivet Tower",N,Normal,false,false,F03,9,5,0,3,"",,0.3,207
+34,"Tock Yard",N,Normal,false,false,F01,10,4,0,3,"",,0.3,193
+35,"Dome Works",H,Hard (purple),true,false,F14,8,3,1,10,"",,0.35,165
+36,"Sail Lot",R,Relief/teach,false,false,F30,10,4,2,0,"Drop it in the marked lot",,0.35,219

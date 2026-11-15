@@ -1,0 +1,42 @@
+{
+ "_readme": [
+  "Boosters of the current build (steps boosters2 + glue-intro + prelevel; docs/BOOSTERS.md for the original design, docs/PRELEVEL-STATUS.md for the pre-level offer). Only TNT is a charge on L1-36 (tntOnly).",
+  "A booster is the reward for beating a boss: won on L10 / L20 / L30, introduced and first usable on L11 / L21 / L31 with an 'Unlocked!' card, 'Claim x2' (2 free uses) and a forced first use. The tray shows locked 'Lv.N' slots from L1 (polish step hides locked chips in play).",
+  "Pre-level offer: before a Hard (purple) or Boss (orange) level a popup offers the 3 boosters (owned count / + to buy / locked Lv.N); each pick spends 1 use at level start."
+ ],
+ "boosters": [
+  {
+   "key": "wreck",
+   "name": "Wrecking Ball",
+   "wonOn": 10,
+   "introducedOn": 11,
+   "freeOnUnlock": 2,
+   "line": "Smash a whole chunk.",
+   "what": "aim view; 1 use = 2 throws of a heavy ball that smashes members it hits"
+  },
+  {
+   "key": "net",
+   "name": "Safety Net",
+   "wonOn": 20,
+   "introducedOn": 21,
+   "freeOnUnlock": 2,
+   "line": "Catches flying rubble.",
+   "what": "fences that catch debris on BLAST (protects neighbours / street); does not hold buildings"
+  },
+  {
+   "key": "sky",
+   "name": "Sky Strike",
+   "wonOn": 30,
+   "introducedOn": 31,
+   "freeOnUnlock": 2,
+   "line": "Drop it from the sky.",
+   "what": "tap a building: a strike from above drops and breaks members"
+  }
+ ],
+ "notInTray": {
+  "tnt1": "+1 TNT: lose-card rescue only (rewarded ad / Fail Offer)",
+  "quake": "Aftershock: measured and rejected (BOOSTERS.md 4.3)",
+  "scan": "Blueprint: hidden, not built"
+ },
+ "pocketUpgrade": "Booster Pocket upgrade grants 1-3 free boosters when a Hard / Boss level opens"
+}
