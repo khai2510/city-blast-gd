@@ -1,0 +1,113 @@
+[
+ {
+  "name": "Tram Depot",
+  "bp": "E03",
+  "tier": "N",
+  "f": 7,
+  "kind": "scene",
+  "hero": "A",
+  "heroId": "G7-E03",
+  "teaches": "drums",
+  "target": 0.85,
+  "yaw": 0.12,
+  "d": 1,
+  "fillMax": 0.73,
+  "hard7": true,
+  "hit7": {
+   "keys": [],
+   "drums": true
+  },
+  "sf": [],
+  "pattern": "drums: a row of red drums along the depot front; one TNT sets the row off and the sheds tip forward one by one; the heavy roof pieces land whole and need one more",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7depot",
+    "x": 0,
+    "z": 0,
+    "n": 3,
+    "hx": 3.8,
+    "hz": 7,
+    "ph": 8.5,
+    "hold": 1.2,
+    "bg0": 61,
+    "hw": 1.5
+   },
+   {
+    "id": "B",
+    "kind": "g7cabin",
+    "x": -15.799999999999997,
+    "z": 1,
+    "hx": 2.3,
+    "hz": 3,
+    "nb": 2,
+    "side": -1,
+    "bg": 66
+   },
+   {
+    "id": "C",
+    "kind": "g7cabin",
+    "x": 15.799999999999997,
+    "z": 1,
+    "hx": 2.3,
+    "hz": 3,
+    "nb": 2,
+    "side": 1,
+    "bg": 67
+   }
+  ],
+  "tanks": [
+   [
+    -10.5,
+    7.55
+   ],
+   [
+    -8.4,
+    7.55
+   ],
+   [
+    -6.3,
+    7.55
+   ],
+   [
+    -4.2,
+    7.55
+   ],
+   [
+    -2.1,
+    7.55
+   ],
+   [
+    0,
+    7.55
+   ],
+   [
+    2.1,
+    7.55
+   ],
+   [
+    4.2,
+    7.55
+   ],
+   [
+    6.3,
+    7.55
+   ],
+   [
+    8.4,
+    7.55
+   ],
+   [
+    10.5,
+    7.55
+   ]
+  ],
+  "charges": {
+   "tnt": 40
+  },
+  "tip": "",
+  "ftip": "Red drums blast for free. Heavy pieces still count.",
+  "sol": [],
+  "tntStart": 19
+ }
+]

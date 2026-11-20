@@ -80,6 +80,14 @@ File này là **bộ nhớ chung** của mọi máy và mọi agent làm màn Ci
   - Kiểm bằng `pipeline7/closeup.mjs` (camera cận cảnh) và `floatcheck.mjs` (khe hở tĩnh). Dùng `hangcheck.mjs` để tìm khối còn treo trên cao sau khi nổ.
 - **Lõi nhiều tầng (Màn 5):** trụ lõi tầng trên mà dùng `rc` (khối cứng) thì nằm trong đống đổ nát vẫn bị tính là "còn đứng", nên không thắng nổi. Còn dùng bê tông thường thì 1 lần nổ cắt ngang thân tháp là xong. Giải pháp là key `core7`: bóc 1 nấc mỗi lần nổ (layer7) nhưng tính là đã đổ khi rơi xuống.
 - `T.chargeHosts` không tồn tại; dùng `__blast.chargeHosts()`, `__blast.members()`, `__blast.test.pickAt(x, y)`.
+- **Thư mục repo dùng chung (20/11, gói dễ):** máy ảo có nhiều agent cùng làm trong `/home/user/city-blast-gd` (agent tích hợp bản chính để sửa dở trong `src/` và build đọc thẳng `city-blast/pipeline7/engine.js` trong thư mục đó). **Không checkout nhánh khác trong thư mục chung.** Làm màn trong worktree riêng: `git worktree add <thư mục> level/<nhánh>`.
+- **`hit7.armor: 0` không có nghĩa là "TNT phá bình thường"** (E02/E06): engine viết `L.hit7.armor || 0.97`, nên 0 bị đổi thành 0.97 và khối hit7 miễn nhiễm TNT. Muốn khối vừa bị toà đổ đè phá, vừa bị TNT phá: đặt `armor: 0.001`. Lưu ý thêm: khối đang rơi mà có key nằm trong `hit7.keys` thì không tính là "vật đè", nên toà đổ và toà bị đè phải khác key (E06: gạch ống khói dùng key riêng `g7bk` / `g7bkw`).
+- **Khối nặng (hard7v) giấu trong toà còn đứng làm máy chơi kẹt** (E06 lượt đầu: nồi hơi đặt trong nhà lò). Máy chơi đánh "chân" là khối thấp nhất, tức là nồi hơi nằm sau tường, nên không chạm được và kẹt ở 47–50% với 40 TNT. Khối nặng phải đặt trên cao hoặc nhìn thấy được (két nước trên mái).
+- **Cảnh rộng quá ~35 m thì chân nhỏ trên màn hình** (E06 hai ống khói, 42 m): quả bom (sprite ≥ 34 px) che luôn chân bên cạnh, lần chạm sau chọn trúng quả bom chứ không đặt quả mới. Người chơi thật cũng bị vậy. Giữ cảnh ≤ 35 m hoặc chân cách nhau ≥ 3 m.
+- **Mái gỗ nhẹ rơi xuống còn nguyên tấm che mất khối nặng** (E03 lượt D: máy chơi còn 11 TNT mà không chạm được két nước nằm dưới tấm mái). Mái kho xe điện dùng key `g7roofD` (vỡ khi chạm đất, `shatter` 3.5).
+- **allFoot trúng cả khối nặng đang rơi** (E03): bom trong một lần nổ nổ cách nhau 0,2 giây, nên với 17+ quả, mấy quả cuối trúng két nước vừa rơi xuống chân và làm vỡ nó. Cách giữ allFoot < 80%: phần khối nặng ≥ 30% khối lượng, ngân sách sát.
+- **Probe lỗi giữa chừng để lại Chrome mồ côi** (20/11, `curveprobe.mjs` gặp exception trước `proc.kill()`): vòng chờ "chỉ một Chrome" của mọi agent kẹt theo. Thấy Chrome chạy lâu mà không có node nào của mình thì kiểm `--user-data-dir` rồi kill đúng tiến trình đó.
+- **Màn dạy luật nghiêng không đạt được "không nhảy quá 40 điểm"** (E02): 1 bom ở chân thì 1%, 2 bom cạnh nhau thì cả tháp đổ (56%). Cú nhảy đó chính là bài học. Muốn đạt thì phải thêm rất nhiều khối nặng (+8 TNT dọn dẹp). Chờ Khai quyết.
 
 ## 6. Trạng thái các màn khó (20/11). Mã H1–H5 không phải vị trí; vị trí do Agents-Game (main) quyết định
 
@@ -91,6 +99,7 @@ File này là **bộ nhớ chung** của mọi máy và mọi agent làm màn Ci
 | H4 | Canal Row (dãy nhà phố) | domino đối xứng: phá tháp giữa trước, đẩy hai dãy vào trong | PASS, 21 TNT, SH; mái là khối thật |
 | H5 | Glass Spine (tháp kính lõi bê tông) | bóc vỏ bệ, đục lõi 3 lần nổ | PASS, 26 TNT, SH |
 | E01 | Long Legs (gói dễ, toà ở nâng trên cột) | đánh vào chân; chuỗi: khối đầu đổ, thùng đỏ nổ, nhà câu lạc bộ sập | PASS, 19 TNT, N, nhánh `level/easy-pack`; kế hoạch E02–E10 ở `levels-gd/EASY-PACK.md` |
+| E03 | Tram Depot (gói dễ, slot 4, FEEL: kho xe điện 3 gian, 2 trạm tín hiệu) | thùng đỏ nổ miễn phí: 1 TNT cạnh thùng, 11 thùng nổ dây chuyền dọc mặt tiền, 3 gian đổ về trước; két nước trên mái rơi nguyên và vẫn tính | PASS (thanh gói dễ), 19 TNT, N, lượt H và I; oneBomb 51%, allFoot 72%, đường cong nhảy tối đa +31 |
 
 Link test (artifact, private): https://claude.ai/artifact/CDNLd5gsjLaTaPGT7W4pes. Không sửa artifact chính W6863… khi chưa có OK của Khai.
 
