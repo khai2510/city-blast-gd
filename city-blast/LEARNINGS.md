@@ -87,6 +87,7 @@ File này là **bộ nhớ chung** của mọi máy và mọi agent làm màn Ci
 - **Mái gỗ nhẹ rơi xuống còn nguyên tấm che mất khối nặng** (E03 lượt D: máy chơi còn 11 TNT mà không chạm được két nước nằm dưới tấm mái). Mái kho xe điện dùng key `g7roofD` (vỡ khi chạm đất, `shatter` 3.5).
 - **allFoot trúng cả khối nặng đang rơi** (E03): bom trong một lần nổ nổ cách nhau 0,2 giây, nên với 17+ quả, mấy quả cuối trúng két nước vừa rơi xuống chân và làm vỡ nó. Cách giữ allFoot < 80%: phần khối nặng ≥ 30% khối lượng, ngân sách sát.
 - **Probe lỗi giữa chừng để lại Chrome mồ côi** (20/11, `curveprobe.mjs` gặp exception trước `proc.kill()`): vòng chờ "chỉ một Chrome" của mọi agent kẹt theo. Thấy Chrome chạy lâu mà không có node nào của mình thì kiểm `--user-data-dir` rồi kill đúng tiến trình đó.
+- **Khối nặng rơi ra ngoài khung hình thì máy chơi kẹt** (E04: nắp đá nặng trên nhà cân ở mép cảnh lăn ra ngoài, máy chơi dừng ở 83–84% còn 26 TNT). Khối nặng phải nằm ở giữa cảnh hoặc rơi vào trong.
 - **Màn dạy luật nghiêng không đạt được "không nhảy quá 40 điểm"** (E02): 1 bom ở chân thì 1%, 2 bom cạnh nhau thì cả tháp đổ (56%). Cú nhảy đó chính là bài học. Muốn đạt thì phải thêm rất nhiều khối nặng (+8 TNT dọn dẹp). Chờ Khai quyết.
 
 ## 6. Trạng thái các màn khó (20/11). Mã H1–H5 không phải vị trí; vị trí do Agents-Game (main) quyết định
@@ -102,6 +103,7 @@ File này là **bộ nhớ chung** của mọi máy và mọi agent làm màn Ci
 | E03 | Tram Depot (gói dễ, slot 4, FEEL: kho xe điện 3 gian, 2 trạm tín hiệu) | thùng đỏ nổ miễn phí: 1 TNT cạnh thùng, 11 thùng nổ dây chuyền dọc mặt tiền, 3 gian đổ về trước; két nước trên mái rơi nguyên và vẫn tính | PASS (thanh gói dễ), 19 TNT, N, lượt H và I; oneBomb 51%, allFoot 72%, đường cong nhảy tối đa +31 |
 | E02 | Shot Tower (gói dễ, slot 6, TEACH: tháp bắn chì trên 8 chân, 2 kho hàng gỗ hai bên) | phá 2 chân cạnh nhau thì tháp đổ về phía đó; đổ sang bên thì đè bẹp kho; đổ ra trước thì rơi xuống bãi trống | PASS thanh gói dễ trừ đường cong (1 → 2 bom: +54, chờ Khai), 23 TNT, N |
 | E06 | Boiler Stack (gói dễ, slot 7, COMBINE: ống khói gạch trên 8 chân cạnh nhà lò hơi) | chân + hướng đổ: mở phía nhà lò thì ống khói nằm dọc mái, 1 cú đổ phá 2 toà (48% so với 33%) | PASS (thanh gói dễ), 17 TNT, N, lượt B và C; đường cong nhảy tối đa +32 |
+| E04 | Market Hall (gói dễ, slot 9, TEACH: chợ gỗ 3 gian sau dãy vòm gạch, 2 nhà cân) | gỗ đổ dễ, gạch là lá chắn: 1 TNT vào gỗ gập cả gian, 1 TNT vào gạch chỉ mất một trụ; mái ngói rơi nguyên và vẫn tính | PASS (thanh gói dễ), 19 TNT, N, lượt I và J; đường cong nhảy tối đa +26 |
 
 Link test (artifact, private): https://claude.ai/artifact/CDNLd5gsjLaTaPGT7W4pes. Không sửa artifact chính W6863… khi chưa có OK của Khai.
 

@@ -1015,7 +1015,7 @@ try{ (function(){
     MEMBERS.g7bkw = Object.assign({}, MEMBERS.bkw); MATS.g7bkw = MATS.bkw;
     function stackKeys(st){ st.piers.forEach(function(p){ setKey(p, "g7bk"); }); st.walls.forEach(function(w){ setKey(w, "g7bkw"); }); plainDeck(st.decks, "mdC"); }
     // a heavy tiled roof (E04): the timber frame folds easily, the roof lands whole and still counts until a bomb cracks it
-    MEMBERS.hard7t = Object.assign({}, MEMBERS.hard7v, { density:+(window.__g7tileD || 1050), color:K.tile }); MATS.hard7t = MATS.hard7v || MATS.concrete;
+    MEMBERS.hard7t = Object.assign({}, MEMBERS.hard7v, { density:+(window.__g7tileT || 1200), color:K.tile }); MATS.hard7t = MATS.hard7v || MATS.concrete;
     var isH7 = LV7.isHard7; LV7.isHard7 = function(b){ return isH7(b) || b.key === "hard7t"; };
     // pitched roof decor over an attic block `at` (top at y), ridge along x (ax = 1) or z (ax = 0), rise r, flush with the block
     function slopes(at, cx, cz, y, hx, hz, r, col, colD, ax){
