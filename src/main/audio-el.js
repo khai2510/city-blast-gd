@@ -112,7 +112,10 @@ try{ (function(){
     });
     chain.then(function(){ A.ready = true; sched(); });
   }
+  // Owner 20/11: the ambience bed is a constant hum and annoys; off by default (?amb=1 brings it back)
+  var AMB_ON = /[?&]amb=1(&|$)/.test(location.search);
   function startAmb(){
+    if(!AMB_ON) return;
     if(A.amb || !A.buf.amb || !ctx) return; var s = ctx.createBufferSource(); s.buffer = A.buf.amb; s.loop = true; s.connect(g.amb); s.start(0); A.amb = true;
   }
   function init(){
