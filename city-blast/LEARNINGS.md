@@ -71,6 +71,9 @@ File này là **bộ nhớ chung** của mọi máy và mọi agent làm màn Ci
 - **Kẽ hở "nổ một lần"**: hai chuỗi cùng đổ vào một lúc kẹp tháp đứng yên mà vẫn thắng. Chân nhà khởi động phải là hrc (cần nhiều lần nổ).
 - **Bộ test treo**: không có lệnh `timeout` trên Mac. Dùng `perl -e 'alarm 2700; exec @ARGV' node run.mjs`. **Không chạy 2 Chrome headless song song**: chậm và dễ treo.
 - **Đồng bộ (20/11):** máy ảo đã sửa `cdp.mjs`, còn Mac lại copy từ thư mục cũ sang repo nên suýt ghi đè sửa đổi đó. Từ nay **làm thẳng trong repo** (Mac: `~/Desktop/games/blast/{levels-gd,pipeline7}` là symlink vào repo) và **`git pull --rebase` trước mỗi lần push**. Tester trên Linux: `CHROME=<đường dẫn chromium>` (máy ảo: `/opt/pw-browsers/chromium-1243/chrome-linux64/chrome`).
+- **Máy ảo Linux không tải được three.js và rapier (20/11, E01):** proxy chặn cdnjs và jsdelivr, nên trang game không có `__blast`. Sửa trong `cdp.mjs`: đặt `CB_LIBS=<thư mục>` có `three-r128.min.js` và `rapier3d-compat-0.19.3.mjs`, cdp sẽ chặn hai request CDN và trả file local (DevTools `Fetch`). Không đặt `CB_LIBS` thì chạy như cũ (Mac). Trên máy ảo dùng `timeout 2700` thay cho perl alarm.
+- **Sàn hero chống nổ (`a1mdC`, do `boxSt` tự đổi `mdC`) nằm trong đống đổ nát thì không bom nào phá được** (E01 lượt A: máy chơi kẹt ở 82–84% dù có 40 TNT, vì sàn nằm cao hơn 1.5 m vẫn bị tính một nửa). Màn dễ: đổi sàn về `mdC` thường và bật `drop7 {keys:['mdC']}`. Sàn còn đứng thì miễn nhiễm TNT, nên bom vào mặt tiền chỉ được 2%; sàn đã rơi thì 1 TNT là vỡ.
+- **Chân còn đứng bị đống đổ nát che** thì không chạm được từ góc mở màn, nhưng vẫn bị tính đủ khối lượng. Máy chơi không bao giờ nhắm tới chúng (pha "heap" chỉ nhắm khối đã đổ). Giữ chân nhẹ (E01: trụ 1.05 m) để chân sót lại không giữ % ở dưới ngưỡng.
 - `T.chargeHosts` không tồn tại; dùng `__blast.chargeHosts()`, `__blast.members()`, `__blast.test.pickAt(x, y)`.
 
 ## 6. Trạng thái các màn (20/11)
@@ -82,6 +85,7 @@ File này là **bộ nhớ chung** của mọi máy và mọi agent làm màn Ci
 | 3 | Grand Stage (nhà hát) | giữ toà xanh: dỡ sảnh và khán phòng, tháp đổ dọc trục | PASS, 24 TNT, bố cục v2 đối xứng |
 | 4 | Canal Row (dãy nhà phố) | domino đối xứng: phá tháp giữa trước, đẩy hai dãy vào trong | PASS, 24 TNT, SH |
 | 5 | (kế hoạch) bóc vỏ thấy lõi (layer7, che khuất) | | chưa làm |
+| E01 | Long Legs (gói dễ, toà ở nâng trên cột) | đánh vào chân; chuỗi: khối đầu đổ, thùng đỏ nổ, nhà câu lạc bộ sập | PASS, 19 TNT, N, nhánh `level/easy-pack`; kế hoạch E02–E10 ở `levels-gd/EASY-PACK.md` |
 
 Link test (artifact, private): https://claude.ai/artifact/CDNLd5gsjLaTaPGT7W4pes. Không sửa artifact chính W6863… khi chưa có OK của Khai.
 

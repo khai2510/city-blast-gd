@@ -1,0 +1,100 @@
+[
+ {
+  "name": "Long Legs",
+  "bp": "E01",
+  "tier": "N",
+  "tntStart": 19,
+  "f": 7,
+  "kind": "scene",
+  "hero": "A",
+  "heroId": "G7-E01",
+  "teaches": "legs",
+  "target": 0.85,
+  "yaw": 0.12,
+  "d": 1,
+  "fillMax": 0.73,
+  "hard7": true,
+  "hit7": {
+   "keys": [],
+   "drums": true
+  },
+  "drop7": {
+   "keys": [
+    "mdC"
+   ],
+   "fall": 1.5,
+   "armor": 0.97
+  },
+  "sf": [],
+  "pattern": "legs: a raised slab on pilotis, three sections; bombs on the legs drop a section, the heavy roof pieces land whole and need one more",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7slab",
+    "x": 0,
+    "z": 0,
+    "hx": 3.5,
+    "hz": 4.5,
+    "secs": 3,
+    "legH": 6,
+    "floors": 5,
+    "bg0": 81,
+    "softDeck": 1
+   },
+   {
+    "id": "B",
+    "kind": "g7stilt",
+    "x": -14.799999999999999,
+    "z": 0,
+    "hx": 2.6,
+    "hz": 3,
+    "legH": 4,
+    "side": -1,
+    "bg": 84
+   },
+   {
+    "id": "C",
+    "kind": "g7stilt",
+    "x": 14.799999999999999,
+    "z": 0,
+    "hx": 2.6,
+    "hz": 3,
+    "legH": 4,
+    "side": 1,
+    "bg": 85
+   }
+  ],
+  "tanks": [
+   [
+    -10.1,
+    -0.55
+   ],
+   [
+    -10.1,
+    0.55
+   ],
+   [
+    -9.2,
+    0
+   ],
+   [
+    10.1,
+    -0.55
+   ],
+   [
+    10.1,
+    0.55
+   ],
+   [
+    9.2,
+    0
+   ]
+  ],
+  "charges": {
+   "tnt": 40
+  },
+  "tip": "",
+  "ftip": "Hit the legs. Heavy pieces still count.",
+  "sol": []
+ }
+]
