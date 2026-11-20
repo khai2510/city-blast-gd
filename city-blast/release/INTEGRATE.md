@@ -38,7 +38,7 @@ Còn lại đều chỉ bật khi level có trường tương ứng: `drop7`, `l
 Thêm **một bước mới ở cuối chuỗi** (sau mọi bước hiện có, vì engine g7 bọc các hàm của bản cuối), ví dụ `g7-hard`. Bước này làm đúng những gì `pipeline7/build.mjs` đang làm (`test=false`):
 - **Engine:** chèn nội dung `pipeline7/engine.js` ngay trước chuỗi neo `} // main\n})();` (neo phải xuất hiện đúng 1 lần).
 - **Dữ liệu màn:** chèn khối `main/levels7-data.js`, gồm `LV7DEFS = <release/g7-hard-levels.json>` đẩy vào `LEVELS`, đặt `window.__lv7base`, ngay trước `try{\n// ---- UILAYOUT v2`.
-- Bỏ phần `test=true` (nút chọn màn, nhảy thẳng tới màn 37).
+- Bỏ phần `test=true` (nút chọn màn, nhảy thẳng tới màn khó đầu tiên).
 - Cờ URL: `?lv7=0` tắt 5 màn; `?pack7=1` nhảy thẳng tới màn khó đầu tiên.
 - **Vị trí màn: Agents-Game (main) quyết định.** Có thể đặt H1–H5 xen giữa, theo thứ tự hay đổi thứ tự, tuỳ đường độ khó của cả game. `build.mjs` chỉ nối tạm vào cuối danh sách để test. Số bom và bậc đã cân cho từng màn riêng lẻ, không phụ thuộc vị trí.
 - Base của gói là bản 18/11 (`pipeline7/base-1811.html` = W6863 lúc 18/11, chưa có fix4). Nếu bản chính đã đổi thì chạy lại build và `packcheck`. Neo không khớp thì dừng lại và báo vào `SYNC.md`, đừng sửa neo theo cảm tính.
