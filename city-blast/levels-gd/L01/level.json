@@ -1,0 +1,236 @@
+[
+ {
+  "name": "Clock Tower",
+  "bp": "L01",
+  "tier": "N",
+  "f": 7,
+  "kind": "scene",
+  "hero": "A",
+  "heroId": "F04",
+  "teaches": null,
+  "target": 0.85,
+  "yaw": 0.35,
+  "d": 1,
+  "fillMax": 0.73,
+  "hard7": true,
+  "sf": [
+   131,
+   152,
+   165,
+   121,
+   134
+  ],
+  "pattern": "corners + heavy cap",
+  "story": "Gothic clock tower (inspired): dark corner posts, brick body, heavy belfry with two vaults; a wooden annex.",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "mass",
+    "x": 0,
+    "z": 0,
+    "tiers": [
+     {
+      "f": 1,
+      "cx": 3,
+      "cz": 3,
+      "mat": "brick",
+      "skin": "alt",
+      "faces": {
+       "z+": "sp"
+      },
+      "cols": {
+       "0,0": "hrc",
+       "2,0": "hrc",
+       "0,2": "hrc",
+       "2,2": "hrc"
+      }
+     },
+     {
+      "f": 1,
+      "cx": 3,
+      "cz": 3,
+      "mat": "brick",
+      "skin": "alt",
+      "faces": {
+       "z+": "sp"
+      },
+      "cols": {
+       "0,0": "hrc",
+       "2,0": "hrc",
+       "0,2": "hrc",
+       "2,2": "hrc"
+      }
+     },
+     {
+      "f": 1,
+      "cx": 3,
+      "cz": 3,
+      "mat": "brick",
+      "skin": "alt",
+      "faces": {
+       "z+": "sp"
+      },
+      "cols": {
+       "0,0": "hrc",
+       "2,0": "hrc",
+       "0,2": "hrc",
+       "2,2": "hrc"
+      }
+     },
+     {
+      "f": 1,
+      "cx": 3,
+      "cz": 3,
+      "mat": "brick",
+      "skin": "alt",
+      "faces": {
+       "z+": "sp"
+      },
+      "cols": {
+       "0,0": "hrc",
+       "2,0": "hrc",
+       "0,2": "hrc",
+       "2,2": "hrc"
+      },
+      "slab": "hard7s"
+     },
+     {
+      "f": 1,
+      "cx": 3,
+      "cz": 3,
+      "mat": "brick",
+      "skin": "alt",
+      "faces": {
+       "z+": "sp"
+      },
+      "cols": {
+       "0,0": "hrc",
+       "2,0": "hrc",
+       "0,2": "hrc",
+       "2,2": "hrc"
+      }
+     },
+     {
+      "f": 1,
+      "cx": 3,
+      "cz": 3,
+      "mat": "brick",
+      "skin": "alt",
+      "faces": {
+       "z+": "sp"
+      },
+      "cols": {
+       "0,0": "hrc",
+       "2,0": "hrc",
+       "0,2": "hrc",
+       "2,2": "hrc"
+      }
+     },
+     {
+      "f": 1,
+      "cx": 3,
+      "cz": 3,
+      "mat": "conc",
+      "skin": "full",
+      "cols": {
+       "0,0": "hrc",
+       "2,0": "hrc",
+       "0,2": "hrc",
+       "2,2": "hrc"
+      },
+      "slab": "hard7s"
+     }
+    ],
+    "fh": 2.7
+   },
+   {
+    "id": "B",
+    "kind": "mass",
+    "x": -8.8,
+    "z": 0.6,
+    "tiers": [
+     {
+      "f": 3,
+      "cx": 2,
+      "cz": 2,
+      "mat": "wood",
+      "skin": "alt"
+     }
+    ],
+    "fh": 2.7
+   },
+   {
+    "id": "Av0",
+    "kind": "vault7",
+    "x": -1.35,
+    "z": 1.3499999999999996,
+    "y": 17.01,
+    "fl": 6,
+    "w": 1.9,
+    "h": 1.6,
+    "d": 1.9
+   },
+   {
+    "id": "Av1",
+    "kind": "vault7",
+    "x": 1.3499999999999996,
+    "z": 1.3499999999999996,
+    "y": 17.01,
+    "fl": 6,
+    "w": 1.9,
+    "h": 1.6,
+    "d": 1.9
+   },
+   {
+    "id": "Bv0",
+    "kind": "vault7",
+    "x": -8.8,
+    "z": 0.6,
+    "y": 8.910000000000002,
+    "fl": 3,
+    "w": 1.9,
+    "h": 1.6,
+    "d": 1.9
+   }
+  ],
+  "tanks": [
+   [
+    -4.3,
+    2.4
+   ],
+   [
+    -4.3,
+    3.5
+   ],
+   [
+    -3.3,
+    4.3
+   ]
+  ],
+  "charges": {
+   "tnt": 40
+  },
+  "tip": "Dark posts crack slowly.\nRed drums help.",
+  "ftip": "Break the dark blocks too.",
+  "sol": [
+   [
+    "tnt",
+    "A:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "A:z+",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "A:z+",
+    0,
+    2
+   ]
+  ]
+ }
+]

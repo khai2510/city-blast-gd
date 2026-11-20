@@ -1,0 +1,248 @@
+[
+ {
+  "name": "Canal Row",
+  "bp": "L04",
+  "tier": "SH",
+  "tntStart": 26,
+  "f": 7,
+  "kind": "scene",
+  "hero": "T",
+  "heroId": "G7-04",
+  "teaches": "domino",
+  "target": 0.85,
+  "yaw": 0.1,
+  "d": 1,
+  "fillMax": 0.73,
+  "hard7": true,
+  "sf": [],
+  "pattern": "domino x2 inward: take the middle tower out to the front first (3 blasts), then tip both end houses inwards",
+  "hit7": {
+   "keys": [
+    "hard7i"
+   ],
+   "armor": 0.97,
+   "f": 0,
+   "reach": 0
+  },
+  "layer7": {
+   "keys": [
+    "hrc"
+   ],
+   "n": 3
+  },
+  "dom7": {
+   "parts": [
+    "A",
+    "B",
+    "C",
+    "T",
+    "F",
+    "E",
+    "D"
+   ],
+   "dv": 3,
+   "m": 500,
+   "reach": 0.4
+  },
+  "parts": [
+   {
+    "id": "T",
+    "kind": "g7house",
+    "x": 0,
+    "z": 0,
+    "w": 5.4,
+    "d": 6,
+    "n": 7,
+    "c": 6,
+    "legs": "hrc",
+    "hold": 1.5,
+    "spire": 1,
+    "bg": 60
+   },
+   {
+    "id": "C",
+    "kind": "g7house",
+    "x": -8.8,
+    "z": 0,
+    "w": 4.2,
+    "d": 6,
+    "n": 3,
+    "c": 4,
+    "legs": "hard7i",
+    "hold": 1.5,
+    "bg": 61
+   },
+   {
+    "id": "B",
+    "kind": "g7house",
+    "x": -15.600000000000001,
+    "z": 0,
+    "w": 4.2,
+    "d": 6,
+    "n": 4,
+    "c": 2,
+    "legs": "hard7i",
+    "hold": 1.5,
+    "bg": 62
+   },
+   {
+    "id": "A",
+    "kind": "g7house",
+    "x": -22.400000000000002,
+    "z": 0,
+    "w": 4.2,
+    "d": 6,
+    "n": 5,
+    "c": 0,
+    "legs": "hrc",
+    "hold": 1.5,
+    "bg": 63
+   },
+   {
+    "id": "D",
+    "kind": "g7house",
+    "x": 8.8,
+    "z": 0,
+    "w": 4.2,
+    "d": 6,
+    "n": 3,
+    "c": 3,
+    "legs": "hard7i",
+    "hold": 1.5,
+    "bg": 64
+   },
+   {
+    "id": "E",
+    "kind": "g7house",
+    "x": 15.600000000000001,
+    "z": 0,
+    "w": 4.2,
+    "d": 6,
+    "n": 4,
+    "c": 1,
+    "legs": "hard7i",
+    "hold": 1.5,
+    "bg": 65
+   },
+   {
+    "id": "F",
+    "kind": "g7house",
+    "x": 22.400000000000002,
+    "z": 0,
+    "w": 4.2,
+    "d": 6,
+    "n": 5,
+    "c": 5,
+    "legs": "hrc",
+    "hold": 1.5,
+    "bg": 66
+   }
+  ],
+  "keeps": [
+   {
+    "kind": "keep6",
+    "x": -30.750000000000004,
+    "z": 0,
+    "floors": 4,
+    "cx": 3,
+    "cz": 3,
+    "name": "the school",
+    "role": "school",
+    "fixType": "school"
+   },
+   {
+    "kind": "keep6",
+    "x": 30.750000000000004,
+    "z": 0,
+    "floors": 4,
+    "cx": 3,
+    "cz": 3,
+    "name": "the hospital",
+    "role": "hospital",
+    "fixType": "hospital"
+   }
+  ],
+  "keep": {
+   "name": "the school",
+   "sides": [],
+   "type": "school",
+   "role": "school",
+   "full": 1
+  },
+  "seqRoutes": {
+   "right": [
+    [
+     {
+      "part": "T",
+      "f": [
+       0,
+       1
+      ]
+     },
+     {
+      "part": "A",
+      "f": [
+       1,
+       0
+      ]
+     },
+     {
+      "part": "F",
+      "f": [
+       -1,
+       0
+      ]
+     }
+    ]
+   ],
+   "wrong": [
+    [
+     {
+      "part": "A",
+      "f": [
+       1,
+       0
+      ]
+     },
+     {
+      "part": "F",
+      "f": [
+       -1,
+       0
+      ]
+     }
+    ],
+    [
+     {
+      "part": "T",
+      "f": [
+       0,
+       1
+      ]
+     },
+     {
+      "part": "A",
+      "f": [
+       -1,
+       0
+      ]
+     },
+     {
+      "part": "F",
+      "f": [
+       1,
+       0
+      ]
+     }
+    ]
+   ]
+  },
+  "tanks": [],
+  "charges": {
+   "tnt": 40
+  },
+  "tip": "",
+  "ftip": "Clear the middle first. Then push them in.",
+  "sol": []
+ }
+]

@@ -1,0 +1,177 @@
+{
+ "when": "2026-11-19T15:26:50.488Z",
+ "rule": {
+  "oneBombPct": 70,
+  "oneBombCollapse": 101,
+  "spare": {
+   "N": [
+    2,
+    5
+   ],
+   "H": [
+    1,
+    3
+   ],
+   "SH": [
+    1,
+    3
+   ]
+  },
+  "minWaves": {
+   "N": 2,
+   "H": 3,
+   "SH": 3
+  },
+  "estSec": {
+   "N": [
+    20,
+    75
+   ],
+   "H": [
+    30,
+    90
+   ],
+   "SH": [
+    40,
+    120
+   ]
+  },
+  "keepMax": 0.05,
+  "footMax": 80
+ },
+ "results": [
+  {
+   "id": "L01v4",
+   "lv": 37,
+   "name": "Five Eaves",
+   "tier": "SH",
+   "sf": [
+    131,
+    121,
+    125,
+    145,
+    124
+   ],
+   "pattern": "tiered blocks + shield + drop-first",
+   "story": "",
+   "sfMetric": {},
+   "metrics": {
+    "members": 164,
+    "hard": 34,
+    "soft": 130,
+    "hardPct": 21,
+    "main": {
+     "members": 134,
+     "hard": 29,
+     "soft": 105,
+     "hardPct": 22,
+     "pos": {
+      "top": 9,
+      "mid": 8,
+      "bottom": 12,
+      "edge": 4,
+      "core": 25,
+      "front": 1,
+      "back": 1
+     },
+     "core": "yes",
+     "hardLayers": 6,
+     "depthRows": 15,
+     "frontHard": 1,
+     "backHard": 1,
+     "floors": 6
+    },
+    "stacks": 5,
+    "parts": [
+     "A",
+     "S",
+     "B",
+     "T",
+     null
+    ]
+   },
+   "oneBomb": {
+    "pct": 5,
+    "collapse": 5,
+    "at": "bkw@S:f0",
+    "tried": 20
+   },
+   "lazy": {
+    "pct": 4,
+    "collapse": 5
+   },
+   "fairOpen": {
+    "win": true,
+    "res": "WIN",
+    "pct": 85,
+    "used": 22,
+    "left": 18,
+    "waves": 8,
+    "firstWave": 1,
+    "keep": 0,
+    "estSec": 87,
+    "log": "bld1=1 bld1=2 bld2=4 bld6=23 bld6=28 bld2=30 bld1=66 heap3=85"
+   },
+   "tnt": 37,
+   "fair": [
+    {
+     "win": true,
+     "res": "WIN",
+     "pct": 87,
+     "used": 30,
+     "left": 7,
+     "waves": 10,
+     "firstWave": 1,
+     "keep": 0,
+     "estSec": 115,
+     "log": "bld2=1 bld1=3 bld7=21 bld6=27 bld3=30 bld1=66 heap3=72 heap3=79 bld1=82 heap3=87"
+    },
+    {
+     "win": true,
+     "res": "WIN",
+     "pct": 90,
+     "used": 29,
+     "left": 8,
+     "waves": 9,
+     "firstWave": 1,
+     "keep": 0,
+     "estSec": 102,
+     "log": "bld2=1 bld1=3 bld7=21 bld6=27 bld3=30 bld1=70 heap3=79 heap3=81 heap3=90"
+    },
+    {
+     "win": true,
+     "res": "WIN",
+     "pct": 87,
+     "used": 33,
+     "left": 4,
+     "waves": 12,
+     "firstWave": 1,
+     "keep": 0,
+     "estSec": 129,
+     "log": "bld1=1 bld1=2 bld2=4 bld6=23 bld6=27 bld4=29 bld2=70 heap3=76 bld1=80 heap3=81 bld1=83 heap3=87"
+    }
+   ],
+   "spare": 4,
+   "allFoot": {
+    "pct": 34,
+    "used": 37,
+    "collapse": 36
+   },
+   "footOnly": {
+    "pct": 80,
+    "waves": 5,
+    "left": 10
+   },
+   "oneWave": {
+    "pct": 74,
+    "used": 37,
+    "reach": 115,
+    "collapse": 93
+   },
+   "verdict": "FAIL",
+   "issues": [
+    "FOOT-ONLY play reaches 80%"
+   ]
+  }
+ ]
+}

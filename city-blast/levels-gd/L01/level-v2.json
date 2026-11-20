@@ -1,0 +1,244 @@
+[
+ {
+  "name": "Clock Tower",
+  "bp": "L01v2",
+  "tier": "H",
+  "f": 5,
+  "kind": "scene",
+  "hero": "A",
+  "heroId": "F04",
+  "teaches": null,
+  "target": 0.85,
+  "yaw": 0.35,
+  "d": 1,
+  "fillMax": 0.73,
+  "hard7": true,
+  "sf": [
+   131,
+   121,
+   125,
+   145,
+   124
+  ],
+  "pattern": "stacked blocks + shield + side roles",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "mass",
+    "x": 0,
+    "z": 0,
+    "bg": 1,
+    "tiers": [
+     {
+      "f": 1,
+      "cx": 3,
+      "cz": 3,
+      "mat": "brick",
+      "skin": "alt",
+      "faces": {
+       "z+": "sp"
+      },
+      "cols": {
+       "0,0": "hrc",
+       "2,0": "hrc",
+       "0,2": "hrc",
+       "2,2": "hrc"
+      }
+     },
+     {
+      "f": 1,
+      "cx": 3,
+      "cz": 3,
+      "mat": "brick",
+      "skin": "alt",
+      "faces": {
+       "z+": "sp"
+      },
+      "cols": {
+       "0,0": "rc",
+       "2,0": "rc",
+       "0,2": "rc",
+       "2,2": "rc"
+      }
+     }
+    ],
+    "fh": 2.7
+   },
+   {
+    "id": "A2",
+    "kind": "mass",
+    "x": 0,
+    "z": 0,
+    "y": 5.4,
+    "bg": 2,
+    "tiers": [
+     {
+      "f": 1,
+      "cx": 3,
+      "cz": 3,
+      "mat": "brick",
+      "skin": "alt",
+      "faces": {
+       "z+": "sp"
+      },
+      "cols": {
+       "0,0": "rc",
+       "2,0": "rc",
+       "0,2": "rc",
+       "2,2": "rc"
+      }
+     },
+     {
+      "f": 1,
+      "cx": 3,
+      "cz": 3,
+      "mat": "brick",
+      "skin": "alt",
+      "faces": {
+       "z+": "sp"
+      },
+      "cols": {
+       "0,0": "rc",
+       "2,0": "rc",
+       "0,2": "rc",
+       "2,2": "rc"
+      }
+     },
+     {
+      "f": 1,
+      "cx": 3,
+      "cz": 3,
+      "mat": "conc",
+      "skin": "full",
+      "cols": {
+       "0,0": "rc",
+       "2,0": "rc",
+       "0,2": "rc",
+       "2,2": "rc"
+      },
+      "slab": "hard7s"
+     }
+    ],
+    "fh": 2.7
+   },
+   {
+    "id": "A2",
+    "kind": "vault7",
+    "x": -1.35,
+    "z": 1.35,
+    "y": 11.71,
+    "fl": 4,
+    "w": 2.3,
+    "h": 1.8,
+    "d": 2.3
+   },
+   {
+    "id": "A2",
+    "kind": "vault7",
+    "x": 1.35,
+    "z": -1.35,
+    "y": 11.71,
+    "fl": 4,
+    "w": 2.3,
+    "h": 1.8,
+    "d": 2.3
+   },
+   {
+    "id": "S",
+    "kind": "mass",
+    "x": 0,
+    "z": 5.6,
+    "bg": 3,
+    "tiers": [
+     {
+      "f": 1,
+      "cx": 4,
+      "cz": 2,
+      "mat": "brick",
+      "skin": "alt",
+      "faces": {
+       "z+": "glass"
+      }
+     }
+    ],
+    "fh": 3.2,
+    "roof": {
+     "sign": 1
+    }
+   },
+   {
+    "id": "W",
+    "kind": "mass",
+    "x": 9,
+    "z": -1,
+    "bg": 5,
+    "tiers": [
+     {
+      "f": 3,
+      "cx": 2,
+      "cz": 2,
+      "mat": "conc",
+      "skin": "open",
+      "cols": {
+       "0,0": "rc",
+       "0,1": "rc",
+       "1,0": "rc",
+       "1,1": "rc"
+      }
+     }
+    ],
+    "fh": 2.7
+   },
+   {
+    "id": "W",
+    "kind": "vault7",
+    "x": 9,
+    "z": -1,
+    "y": 9.100000000000001,
+    "fl": 3,
+    "w": 2.4,
+    "h": 1.8,
+    "d": 2.4
+   }
+  ],
+  "tanks": [
+   [
+    -2.6,
+    2.6
+   ],
+   [
+    -3.4,
+    3
+   ],
+   [
+    -2.6,
+    3.4
+   ]
+  ],
+  "charges": {
+   "tnt": 40
+  },
+  "tip": "Clear the shops first.\nRed drums wait behind.",
+  "ftip": "Break the dark blocks too.",
+  "sol": [
+   [
+    "tnt",
+    "S:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "S:z+",
+    0,
+    2
+   ],
+   [
+    "tnt",
+    "K:z+",
+    0,
+    0
+   ]
+  ]
+ }
+]

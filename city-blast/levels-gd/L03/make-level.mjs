@@ -1,0 +1,28 @@
+// L03 "Grand Stage" (protect the blue buildings: open the hall first, then tip the stage tower away). See 1-GD-SPEC.md.
+// Hero kit g7fly / g7aud / g7lobby (pipeline7/engine.js).
+import { writeFileSync } from 'node:fs';
+const lvl = {
+  name: 'Grand Stage', bp: 'L03', tier: 'H', tntStart: 23, f: 7, kind: 'scene', hero: 'A', heroId: 'G7-03', teaches: 'keep', target: 0.85, yaw: +(process.env.YAW || 0.08), d: 1, fillMax: 0.73,
+  hard7: true, sf: [], pattern: 'protect: peel the hall, then tip the stage tower away from the hospital and the school',
+  // one axis (x = 0), front to back: lobby, auditorium, stage tower, scenery dock. The two protected buildings stand
+  // symmetric left and right of the tower, same size, same gap (3.5 m), front edges in line with the tower.
+  parts: [
+    { id: 'A', kind: 'g7fly', x: 0, z: -9.5, bg: 41, hx: 5, hz: 4, hold: 2.0 },
+    { id: 'R', kind: 'g7aud', x: 0, z: 0, bg: 42, hx: 7.5, hz: 5, stage: 'z-' },
+    { id: 'F', kind: 'g7lobby', x: 0, z: 9, bg: 43, hx: 8, hz: 3 },
+    { id: 'D', kind: 'g7dock', x: 0, z: -16, bg: 44, hx: 5, hz: 2 }
+  ],
+  keeps: [
+    { kind: 'keep6', x: -12.2, z: -8.65, floors: 4, cx: 3, cz: 3, name: 'the hospital', role: 'hospital', fixType: 'hospital' },
+    { kind: 'keep6', x: 12.2, z: -8.65, floors: 4, cx: 3, cz: 3, name: 'the school', role: 'school', fixType: 'school' }
+  ],
+  keep: { name: 'the hospital', sides: [], type: 'hospital', role: 'hospital', full: 1 },
+  tanks: [],
+  keepRoutes: { right: [['FR', [0, 1]]], wrong: [[1, 0], [-1, 0]] },
+  charges: { tnt: 40 },
+  tip: '',
+  ftip: 'Bring it down away from the blue.',
+  sol: []
+};
+writeFileSync(new URL('./level.json', import.meta.url), JSON.stringify([lvl], null, 1));
+console.log('ok');

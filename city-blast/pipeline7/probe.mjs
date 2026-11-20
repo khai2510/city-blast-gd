@@ -1,0 +1,12 @@
+import { launch, open } from './cdp.mjs';
+import { createServer } from 'node:http';
+import { readFileSync } from 'node:fs';
+const html = readFileSync(process.argv[2]);
+const srv = createServer((q, s) => { if(q.url.startsWith('/index') || q.url === '/' || q.url.startsWith('/?')){ s.writeHead(200, {'content-type':'text/html'}); s.end(html); } else { s.writeHead(404); s.end(); } }).listen(8790);
+const { proc, port } = await launch();
+const pg = await open(port, 'http://127.0.0.1:8790/');
+await new Promise(r => setTimeout(r, 9000));
+console.log(await pg.evaluate('JSON.stringify({n:__blast.levels().length, scr:__blast.state().screen, base:__blast.lv7&&__blast.lv7.base})'));
+const t0 = Date.now();
+console.log(await pg.evaluate(`(async()=>{ const T=__blast.test; T.play(36,1); T.run(6); T.solve(__blast.lv7.L()[36].sol); T.fire(); const r=T.run(25); return JSON.stringify({pct:r.pct, ph:r.phase}); })()`), 'ms', Date.now() - t0);
+proc.kill(); srv.close(); process.exit(0);

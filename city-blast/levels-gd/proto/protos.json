@@ -1,0 +1,407 @@
+[
+ {
+  "name": "P3 row",
+  "bp": "P3 row",
+  "tier": "N",
+  "f": 7,
+  "kind": "scene",
+  "hero": "A",
+  "heroId": "F04",
+  "teaches": null,
+  "target": 0.85,
+  "yaw": 0.35,
+  "d": 1,
+  "fillMax": 0.73,
+  "hard7": true,
+  "parts": [
+   {
+    "id": "A",
+    "kind": "mass",
+    "x": 0,
+    "z": 3.5,
+    "bg": 1,
+    "tiers": [
+     {
+      "f": 3,
+      "cx": 3,
+      "cz": 2,
+      "mat": "brick",
+      "skin": "alt"
+     }
+    ],
+    "fh": 2.7
+   },
+   {
+    "id": "B",
+    "kind": "mass",
+    "x": 0,
+    "z": 0,
+    "bg": 2,
+    "tiers": [
+     {
+      "f": 5,
+      "cx": 3,
+      "cz": 2,
+      "mat": "conc",
+      "skin": "alt"
+     }
+    ],
+    "fh": 2.7
+   },
+   {
+    "id": "C",
+    "kind": "mass",
+    "x": 0,
+    "z": -3.5,
+    "bg": 3,
+    "tiers": [
+     {
+      "f": 7,
+      "cx": 3,
+      "cz": 2,
+      "mat": "conc",
+      "skin": "alt",
+      "cols": {
+       "0,0": "hrc",
+       "2,0": "hrc",
+       "0,1": "hrc",
+       "2,1": "hrc"
+      }
+     }
+    ],
+    "fh": 2.7
+   },
+   {
+    "id": "Cv0",
+    "kind": "vault7",
+    "x": -1.35,
+    "z": -3.5,
+    "y": 19.71,
+    "fl": 7,
+    "w": 1.9,
+    "h": 1.6,
+    "d": 1.9
+   },
+   {
+    "id": "Cv1",
+    "kind": "vault7",
+    "x": 1.35,
+    "z": -3.5,
+    "y": 19.71,
+    "fl": 7,
+    "w": 1.9,
+    "h": 1.6,
+    "d": 1.9
+   },
+   {
+    "id": "Bv0",
+    "kind": "vault7",
+    "x": 0,
+    "z": 0,
+    "y": 14.31,
+    "fl": 5,
+    "w": 1.9,
+    "h": 1.6,
+    "d": 1.9
+   }
+  ],
+  "charges": {
+   "tnt": 40
+  },
+  "tip": "proto",
+  "sol": [
+   [
+    "tnt",
+    "A:z+",
+    0,
+    0
+   ]
+  ]
+ },
+ {
+  "name": "P4 shell",
+  "bp": "P4 shell",
+  "tier": "N",
+  "f": 7,
+  "kind": "scene",
+  "hero": "A",
+  "heroId": "F04",
+  "teaches": null,
+  "target": 0.85,
+  "yaw": 0.35,
+  "d": 1,
+  "fillMax": 0.73,
+  "hard7": true,
+  "parts": [
+   {
+    "id": "A",
+    "kind": "mass",
+    "x": 0,
+    "z": 0,
+    "bg": 1,
+    "tiers": [
+     {
+      "f": 1,
+      "cx": 4,
+      "cz": 4,
+      "mat": "conc",
+      "skin": "full",
+      "hole": {
+       "i": [
+        0,
+        3
+       ],
+       "j": [
+        0,
+        3
+       ]
+      }
+     },
+     {
+      "f": 1,
+      "cx": 4,
+      "cz": 4,
+      "mat": "conc",
+      "skin": "full",
+      "hole": {
+       "i": [
+        0,
+        3
+       ],
+       "j": [
+        0,
+        3
+       ]
+      }
+     },
+     {
+      "f": 1,
+      "cx": 4,
+      "cz": 4,
+      "mat": "conc",
+      "skin": "full",
+      "hole": {
+       "i": [
+        0,
+        3
+       ],
+       "j": [
+        0,
+        3
+       ]
+      }
+     },
+     {
+      "f": 1,
+      "cx": 4,
+      "cz": 4,
+      "mat": "conc",
+      "skin": "full",
+      "hole": {
+       "i": [
+        0,
+        3
+       ],
+       "j": [
+        0,
+        3
+       ]
+      }
+     },
+     {
+      "f": 1,
+      "cx": 4,
+      "cz": 4,
+      "mat": "conc",
+      "skin": "full",
+      "hole": {
+       "i": [
+        0,
+        3
+       ],
+       "j": [
+        0,
+        3
+       ]
+      }
+     },
+     {
+      "f": 1,
+      "cx": 4,
+      "cz": 4,
+      "mat": "conc",
+      "skin": "full",
+      "hole": {
+       "i": [
+        0,
+        3
+       ],
+       "j": [
+        0,
+        3
+       ]
+      }
+     }
+    ],
+    "fh": 2.7
+   },
+   {
+    "id": "B",
+    "kind": "mass",
+    "x": 0,
+    "z": 0,
+    "bg": 2,
+    "tiers": [
+     {
+      "f": 7,
+      "cx": 2,
+      "cz": 2,
+      "mat": "brick",
+      "skin": "alt",
+      "cols": {
+       "0,0": "hrc",
+       "1,0": "hrc",
+       "0,1": "hrc",
+       "1,1": "hrc"
+      }
+     }
+    ],
+    "fh": 2.7
+   },
+   {
+    "id": "Bv0",
+    "kind": "vault7",
+    "x": 0,
+    "z": 0,
+    "y": 19.71,
+    "fl": 7,
+    "w": 1.9,
+    "h": 1.6,
+    "d": 1.9
+   }
+  ],
+  "charges": {
+   "tnt": 40
+  },
+  "tip": "proto",
+  "sol": [
+   [
+    "tnt",
+    "A:z+",
+    0,
+    0
+   ]
+  ]
+ },
+ {
+  "name": "P1 stilts",
+  "bp": "P1 stilts",
+  "tier": "N",
+  "f": 7,
+  "kind": "scene",
+  "hero": "A",
+  "heroId": "F04",
+  "teaches": null,
+  "target": 0.85,
+  "yaw": 0.35,
+  "d": 1,
+  "fillMax": 0.73,
+  "hard7": true,
+  "parts": [
+   {
+    "id": "A",
+    "kind": "mass",
+    "x": 0,
+    "z": 0,
+    "bg": 1,
+    "tiers": [
+     {
+      "f": 2,
+      "cx": 3,
+      "cz": 3,
+      "mat": "conc",
+      "skin": "open",
+      "cols": {
+       "0,0": "hrc",
+       "0,1": "hrc",
+       "0,2": "hrc",
+       "1,0": "hrc",
+       "1,1": "none",
+       "1,2": "hrc",
+       "2,0": "hrc",
+       "2,1": "hrc",
+       "2,2": "hrc"
+      },
+      "slab": "hard7s"
+     },
+     {
+      "f": 4,
+      "cx": 3,
+      "cz": 3,
+      "mat": "brick",
+      "skin": "alt",
+      "cols": {
+       "0,0": "hrc",
+       "2,0": "hrc",
+       "0,2": "hrc",
+       "2,2": "hrc"
+      }
+     }
+    ],
+    "fh": 2.7
+   },
+   {
+    "id": "B",
+    "kind": "mass",
+    "x": 0,
+    "z": 0,
+    "bg": 2,
+    "tiers": [
+     {
+      "f": 2,
+      "cx": 2,
+      "cz": 2,
+      "mat": "brick",
+      "skin": "alt"
+     }
+    ],
+    "fh": 2.6,
+    "bay": 2
+   },
+   {
+    "id": "Av0",
+    "kind": "vault7",
+    "x": -1.35,
+    "z": 1.35,
+    "y": 17.01,
+    "fl": 6,
+    "w": 1.9,
+    "h": 1.6,
+    "d": 1.9
+   },
+   {
+    "id": "Av1",
+    "kind": "vault7",
+    "x": 1.35,
+    "z": -1.35,
+    "y": 17.01,
+    "fl": 6,
+    "w": 1.9,
+    "h": 1.6,
+    "d": 1.9
+   }
+  ],
+  "charges": {
+   "tnt": 40
+  },
+  "tip": "proto",
+  "sol": [
+   [
+    "tnt",
+    "A:z+",
+    0,
+    0
+   ]
+  ]
+ }
+]
