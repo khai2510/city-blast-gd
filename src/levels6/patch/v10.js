@@ -387,7 +387,12 @@ function l6KdWrite(b, P, Q){
 var l6FB0 = frameBox; frameBox = function(){ var bx = l6FB0.apply(this, arguments);
   blocks.forEach(function(b){ if(!b.kd || b.anchor) return; b.kd.forEach(function(p){ var t = b.spawn.y + p.o.y + p.s.y/2; if(t > bx.y1) bx.y1 = t; }); }); return bx; };
 var l6BI0 = buildInstances; buildInstances = function(){ var r = l6BI0.apply(this, arguments); l6KdBuild(); return r; };
-var l6WM0 = writeMatrix; writeMatrix = function(b, yOff){ l6WM0(b, yOff); if(b.kd && b.im) l6KdWrite(b, _p, _q); };
+// 18/11 (feedback/2026-11-18/l32-swap/REPORT.md §2, Owner: L20 arch floats, L32 skin vanishes): materials-fx draws a BENT member itself and
+// returns before the base sets _p / _q, so its decor was drawn at the previous member's pose (jumping) or at y = -50 (gone). For a bent
+// member the pose is computed here, as the base does for every other member.
+var l6WM0 = writeMatrix; writeMatrix = function(b, yOff){ l6WM0(b, yOff); if(b.kd && b.im){
+  if(b.bent){ if(b.dead && !b.rubble){ _p.set(0, -50, 0); _q.set(0, 0, 0, 1); } else { _p.copy(b.P0).lerp(b.P, alpha); _p.y += (yOff || 0); _q.copy(b.Q0).slerp(b.Q, alpha); } }
+  l6KdWrite(b, _p, _q); } };
 // float check (qa-float style): the largest gap between a decor piece and its member or another piece of the same member (m)
 function l6KdGap(){
   var box = function(c, h){ return { x0:c.x - h.x, x1:c.x + h.x, y0:c.y - h.y, y1:c.y + h.y, z0:c.z - h.z, z1:c.z + h.z }; };

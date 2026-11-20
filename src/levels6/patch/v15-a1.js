@@ -155,10 +155,14 @@ var A1 = { on:true, info:{} };
         tp:s ? (red ? RD : WH) : WH, td:red ? 0xC94B32 : 0xE4DDCB, tw:s ? (red ? RD : WH) : 0xB9483A, dk:0.4, th:0.3 }); sts.push(st);
       if(s === 0 && P.rule !== 0) btag(st, P.hold);
       var hosts = st.walls.concat(st.decks), D = 2*R;
-      ring(hosts, "sec", s ? (red ? RD : WH) : 0xB9483A, s ? y0 : RK, H, D); if(!s) y0 = RK;
+      // legSkin (16/11, tester round GD-12 / UX-15): the foot's round skin rides the nearest LEG, not the wall / slab behind it, so a
+      // tap anywhere on the visible base puts the TNT on a leg (main/tap2.js snaps a tap on dress onto its member). Decor only:
+      // no body, no physics change.
+      var h0 = !s && P.legSkin ? st.piers : hosts;
+      ring(h0, "sec", s ? (red ? RD : WH) : 0xB9483A, s ? y0 : RK, H, D); if(!s) y0 = RK;
       if(s === 0){   // the foot: a white pilaster over each pier (it goes with its pier), a stone ring, the door at the front
         st.piers.forEach(function(p){ var a = Math.atan2(p.spawn.x, p.spawn.z), x = Math.sin(a)*(R - 0.1), z = Math.cos(a)*(R - 0.1); kd(p, "box", WH, x, y0 + H/2, z, 1.9, H, 0.7, 0, a, 0); kd(p, "box", 0xC9CCD1, x, y0 + 0.5, z, 2.3, 1.0, 0.9, 0, a, 0); });
-        ring(hosts, "sec", WH, y0 + H - 0.6, 0.6, D + 0.6);
+        ring(h0, "sec", WH, y0 + H - 0.6, 0.6, D + 0.6);
         var fw = st.walls.filter(function(w){ return w.a1face === "z+"; })[0] || st.decks[0];
         kd(fw, "box", 0x4A5B6C, 1.9, y0 + 1.8, Math.sqrt(R*R - 1.9*1.9) + 0.06, 1.9, 3.6, 0.2, 0, 0.25, 0); kd(fw, "lit", C.amber, 1.9, y0 + 4.1, Math.sqrt(R*R - 1.9*1.9) + 0.1, 0.9, 0.4, 0.1, 0, 0.25, 0); }
       else {   // small windows up the front and the back, lit portholes round the red bands (the twist)
@@ -315,7 +319,7 @@ var A1 = { on:true, info:{} };
   // ---- L2 "Stripey Point" (T, experience: tip it onto the row). The lighthouse falls like a tree towards the face whose legs are gone:
   // two legs side by side on the row's side (the third gives way), and it lands on the row of three boathouses. The two far ones
   // take one TNT each as well (the fall alone left one of them standing in some runs); the near one is the fall's.
-  (function(){ var Lv = set(1, { base:{ A:"stiff-tip", "*":"weak" }, f:11, parts:solo([{ id:"A", kind:"a1light", x:0, z:-24, hold:XQ("lhold", 2.5) },
+  (function(){ var Lv = set(1, { base:{ A:"stiff-tip", "*":"weak" }, f:11, parts:solo([{ id:"A", kind:"a1light", x:0, z:-24, hold:XQ("lhold", 2.5), legSkin:XQ("lskin", 1) },
       M("B", 0, -5 + XQ("rz", 0), [{ f:XQ("bf", 5), cx:XQ("rc", 3), cz:2, mat:"wood", skin:"alt" }], big({ fh:3.2 })), M("C", 0, 5 + XQ("rz", 0), [{ f:XQ("cf", 4), cx:XQ("rc", 3), cz:2, mat:"wood", skin:"alt" }], big({ fh:3.2, roof:{ ac:1 } })),
       M("E", 0, 15 + XQ("rz", 0), [{ f:XQ("ef", 4), cx:XQ("rc", 3), cz:2, mat:"wood", skin:"alt" }], big({ fh:3.2 })), M("G", 20, -14, [{ f:XQ("gf", 3), cx:2, cz:2, mat:"wood", skin:"alt" }], big({ fh:3.2 }))].slice(0, 4)),
       charges:{ tnt:5 }, hint:"A:z+", tip:"Tip the lighthouse\nonto the row.", dotTip:"Tap the dots. Then BLAST!", dud:"Not yet. Two legs side by side!" });
@@ -330,28 +334,39 @@ var A1 = { on:true, info:{} };
   // takes its own TNT. (World: the row runs along +z, the row's side of the tower is its z+ face.)
   (function(){ var Lv = set(2, { base:{ A:"stiff-tip", "*":"weak" }, f:12, parts:solo([{ id:"A", kind:"a1tock", x:0, z:-28, dk:XQ("tdk", 0.45), core:XQ("tcore", 0), hold:XQ("thold", 2.5) },
       M("B", 0, -9, [{ f:XQ("b3f", 6), cx:2, cz:2, mat:["brick", "conc", "wood"][XQ("b3m", 0)], skin:"alt" }], big({ fh:3.4, roof:{ tank:1 } })), M("C", 0, 2, [{ f:XQ("c3f", 5), cx:2, cz:2, mat:"wood", skin:"alt" }], big({ fh:3.2, roof:{ ac:1 } })),
-      M("D", 0, 13, [{ f:4, cx:2, cz:2, mat:"brick", skin:"alt" }], big({ fh:3.2 })), M("E", 0, 23, [{ f:4, cx:2, cz:2, mat:"brick", skin:"alt" }], big({ fh:3.2 }))].concat(XQ("l3f", 1) ? [M("F", -26, 4, [{ f:XQ("f3f", 1), cx:2, cz:2, mat:"brick", skin:"alt" }], big({ fh:3.2 }))] : [])),   // F: a brick house off the row that the 7 TNT do not reach (round 2: the expert margin was +9, over the N band)
-      charges:{ tnt:7 }, hint:"A:z+", tip:"Start the row\nfrom the right.", dotTip:"Fill the dots. Then BLAST!", dud:"Not yet. Two legs side by side, facing the row!", a1cue2:1 });
+      M("D", 0, 13, [{ f:4, cx:2, cz:2, mat:"brick", skin:"alt" }], big({ fh:3.2 })), M("E", 0, 40, [{ f:5, cx:2, cz:2, mat:"brick", skin:"alt" }], big({ fh:3.2 }))].concat(XQ("l3f", 1) ? [M("F", -26, 4, [{ f:XQ("f3f", 1), cx:2, cz:2, mat:"brick", skin:"alt" }], big({ fh:3.2 }))] : [])),   // F: a brick house off the row that the 7 TNT do not reach (round 2: the expert margin was +9, over the N band)
+      charges:{ tnt:5 }, hint:"A:z+", tip:"Start the row\nfrom the right.", dotTip:"Fill the dots. Then BLAST!", dud:"Not yet. Two legs side by side, facing the row!", a1cue2:1 });
     fin(Lv, { yaw:1.15, zoom:0.6, y:10, lotK:2.4 });
-    Lv.sol = [T("A:z+", 0, 0), T("A:z+", 0, 1), T("A:z+", 0, 2), T("D:z+", 0, 0), T("D:z+", 0, 1), T("E:z+", 0, 0), T("E:z+", 0, 1)];
-    Lv.lesson = { check:[[T("A:z-", 0, 0), T("A:z-", 0, 1), T("A:z-", 0, 2), T("D:z+", 0, 0), T("D:z+", 0, 1), T("E:z+", 0, 0), T("E:z+", 0, 1)]] };
-    Lv.bot = { hints:[["A", "A:z+", 1], ["A", "A:z+", 1], ["A", "A:z+", 1], ["A", "D:z+", 1], ["A", "E:z+", 1], ["A", "D:z+", 1], ["A", "E:z+", 1]] };
-    Lv.ftip = "Fill the dots on the legs facing the row.";
+    // GD-38 / GD-9 (20/11 tester round): the domino took every stack (3 tower legs alone won 93%, 4 spare): the brick card ("one TNT
+    // per pier") was never needed. The far brick stack E moved 23 -> 40 m down the row (past the domino reach) and up one floor (4 -> 5):
+    // the tower alone now fails (74%), the tower + the wooden block too (76%); a TNT on the bricks is needed (tower + E 90-91%,
+    // tower + D 90%). TNT 7 -> 5 (expert 5, 0 spare: the three legs + the two piers of the brick stack D, in sight at the opening, main/frame.js
+    // OVR[3]). Lesson-less = no TNT on brick (the tower + the wooden block).
+    Lv.sol = [T("A:z+", 0, 0), T("A:z+", 0, 1), T("A:z+", 0, 2), T("D:z+", 0, 0), T("D:z+", 0, 1)];
+    Lv.lesson = { check:[[T("A:z+", 0, 0), T("A:z+", 0, 1), T("A:z+", 0, 2), T("C:z+", 0, 0), T("C:z+", 0, 1)]] };
+    Lv.bot = { hints:[["A", "A:z+", 1], ["A", "A:z+", 1], ["A", "A:z+", 1], ["A", "D:z+", 1], ["A", "E:z+", 1]] };
+    Lv.ftip = "Brick stacks stand until each pier is hit.";   // 18/11 (GD-26): the old line ("A falling tower can knock down the row.", via NOHINT_TEXT) blamed the row; the fails were the brick stacks left standing (the level's own lesson)
   })();
-  // ---- L4 "Needle Court" (N teach: turn around, blast the back). A hospital in front, a school at each front corner: the tower may
-  // only fall BACK (schools right at its sides, x 26 / z 6, shut the side falls too: leg-foot 0/16, but the dots follower's own
-  // back-fall then clipped a school, 16 %, twice: kept at the front corners). Two back legs side by side (the third gives way) and it
-  // turns over backwards; two timber blocks stand behind, clear of the fall.
+  // ---- L4 "Needle Court" (N teach: grey columns, one TNT each). Round 3 (16/11, tester round GD-1 / GD-13: L4 needed rotate, taught
+  // on L6, and a protected hospital on the forward fall line, taught on L5): it OPENS facing the back (yaw 3.39), so the grey columns
+  // the player sees are the back legs and the tower falls back, away from everything kept; the hospital moved off the forward fall
+  // line to the far front-left corner (-34, 34); the two far sheds behind are gone and the right-hand timber block is one floor lower,
+  // so the naive plan (the three visible grey columns) passes at Blast Power 0 and 1. Two legs side by side (the third gives way) and
+  // it turns over that way; a school at each side still shuts the side falls.
+  // Round 4 (18/11, tester round GD-27: 3 TNT on the visible grey corners won in one wave at 90.5 % with 4 TNT spare; bots: expert
+  // 99 % (+14), naive and lesson-less plans won): the two timber stacks B / C at the sides go from 3 to 6 floors (surroundings only;
+  // tower, TNT 7, yaw 3.39 and the opening view unchanged). They stand off the tower's fall line, so the tower alone stays under PASS
+  // (harness: 3 corners 79 %, 2 corners 76 %); the plan needs the stacks too (expert 7 TNT, 0 spare).
   (function(){ var Lv = set(3, { base:{ A:"stiff-tip", "*":"weak" }, f:14, parts:solo([{ id:"A", kind:"a1needle", x:0, z:0, hold:XQ("nhold", 2.5) },
-      M("B", -30, -18, [{ f:3, cx:2, cz:2, mat:"wood", skin:"alt" }], big({ fh:3.2 })),
-      M("C", 30, -20, [{ f:XQ("c4f", 4), cx:3, cz:2, mat:XQ("c4b", 0) ? "brick" : "wood", skin:"alt" }], big({ fh:3.4, roof:{ cap:1 } }))].concat(XQ("l4s", 2) > 0 ? [M("D", -36, -38, [{ f:1, cx:2, cz:2, mat:"wood", skin:"alt" }], big({ fh:3.2 }))] : [], XQ("l4s", 2) > 1 ? [M("E", 38, -40, [{ f:1, cx:2, cz:2, mat:"wood", skin:"alt" }], big({ fh:3.2 }))] : [])),   // D, E: two low sheds far behind that the 7 TNT need not reach (round 2: they thin out a blind foot plan and trim the expert margin)
-      keeps:[K(0, XQ("kz", 25), XQ("kf", 2), 3, 2, "the hospital", "hospital"), K(-XQ("kx", 40), XQ("ksz", 2), XQ("ksf", 3), 2, 3, "the left school", "school"), K(XQ("kx", 40), XQ("ksz", 2), XQ("ksf", 3), 2, 3, "the right school", "school")], keep:KEEP("the hospital", "hospital"),
-      charges:{ tnt:7 }, hint:"A:z-", teaches:"Turn the view: blast the open back", tip:"Turn around.\nBlast the back.", dotTip:"Fill the dots. Then BLAST!", dud:"Not yet. Two back legs side by side!", ctip:"It fell on {hit}. Blast the BACK legs." });
-    fin(Lv, { yaw:0.25, zoom:0.6, y:10, lotK:2.6 });
+      M("B", XQ("b4x", -30), XQ("b4z", -18), [{ f:XQ("b4f", 6), cx:2, cz:2, mat:"wood", skin:"alt" }], big({ fh:3.2 })),
+      M("C", XQ("c4x", 30), XQ("c4z", -20), [{ f:XQ("c4f", 6), cx:3, cz:2, mat:XQ("c4b", 0) ? "brick" : "wood", skin:"alt" }], big({ fh:3.4, roof:{ cap:1 } }))].concat(XQ("l4s", 0) > 0 ? [M("D", -36, -38, [{ f:1, cx:2, cz:2, mat:"wood", skin:"alt" }], big({ fh:3.2 }))] : [], XQ("l4s", 0) > 1 ? [M("E", 38, -40, [{ f:1, cx:2, cz:2, mat:"wood", skin:"alt" }], big({ fh:3.2 }))] : [])),   // D, E: two low sheds far behind that the 7 TNT need not reach (round 2: they thin out a blind foot plan and trim the expert margin)
+      keeps:[K(XQ("khx", -34), XQ("kz", 34), XQ("kf", 2), 3, 2, "the hospital", "hospital"), K(-XQ("kx", 40), XQ("ksz", 2), XQ("ksf", 3), 2, 3, "the left school", "school"), K(XQ("kx", 40), XQ("ksz", 2), XQ("ksf", 3), 2, 3, "the right school", "school")], keep:KEEP("the hospital", "hospital"),
+      charges:{ tnt:7 }, hint:"A:z-", teaches:"Grey columns: one TNT each", tip:"Grey columns:\none TNT each.", dotTip:"Fill the dots. Then BLAST!", dud:"Not yet. Two legs side by side!", ctip:"It fell on {hit}. Tip it the other way." });
+    fin(Lv, { yaw:XQ("y4", 3.39), zoom:0.6, y:10, lotK:2.6 });
     Lv.sol = [T("A:z-", 0, 0), T("A:z-", 0, 1), T("A:z-", 0, 2), T("C:z+", 0, 0), T("C:z+", 0, 2), T("B:z+", 0, 0), T("B:z+", 0, 1)];
     Lv.lesson = { check:[[T("A:z+", 0, 0), T("A:z+", 0, 1), T("A:z+", 0, 2), T("C:z+", 0, 0), T("C:z+", 0, 2), T("B:z+", 0, 0), T("B:z+", 0, 1)]] };
     Lv.bot = { hints:[["A", "A:z-", 1], ["A", "C:z+", 1], ["A", "A:z-", 1], ["A", "C:z+", 1], ["A", "A:z-", 1], ["A", "B:z+", 1], ["A", "B:z+", 1]] };
-    Lv.ftip = "Turn around. Fill the dots on the back legs.";
+    Lv.ftip = "Two columns side by side: it tips that way.";
   })();
   // ---- L5 "Doorstop Corner" (N practice: fall away from the blue). A hospital on the right, a school in front of the nose: the block
   // may only fall LEFT. The three left legs of its wide end bring all of it down that way.
@@ -360,11 +375,16 @@ var A1 = { on:true, info:{} };
       M("C", -4, -34, [{ f:5, cx:3, cz:2, mat:"conc", g:"open" }], big({ fh:3.4, roof:{ cap:1, ac:1 } }))].concat(XQ("l5d", 1) ? [M("D", 27, -30, [{ f:XQ("df", 2), cx:2, cz:2, mat:"brick", skin:"alt" }], big({ fh:3.2 }))] : [])),
       keeps:[K(+(QS15.get("kx") || 17), -4, 3, 2, 4, "the hospital", "hospital"), K(10, 36, 1, 3, 2, "the school", "school")], keep:KEEP("the hospital", "hospital"),
       charges:{ tnt:8 }, hint:"A:x-", tip:"Tip it away\nfrom the blue.", dotTip:"Fill the dots. Then BLAST!", dud:"Not yet. Three legs in a row on one side!", ctip:"It fell on {hit}. Blast the far side.", a1cue2:1 });
-    fin(Lv, { yaw:0.3, zoom:0.6, y:10, lotK:2.6 });
+    // Round 2 (17/11, tester round GD-19 / DIGEST fix 1, camera only as L4 on 16/11): it opened at yaw 0.3, where the three left legs
+    // of the plan (A:x-) are hidden and every visible leg (A:x+) folds the nose onto a blue building (4 live fails: the level needed the
+    // rotate taught on L6). It now opens at yaw 5.93 (main/frame.js keeps it: 2 pi - 0.35): the three A:x- legs, the two front legs
+    // and both blue buildings are on screen. Naive plans on the visible legs (wave 1 = any 2-5 of them, the rest on the neighbours):
+    // 17/26 win (at yaw 0.3: 4/26); every row of 2-3 legs on the left face wins; the hidden right face (lesson.check) still fails.
+    fin(Lv, { yaw:XQ("y5", 5.93), zoom:0.6, y:10, lotK:2.6 });
     Lv.sol = [T("A:x-", 0, 0), T("A:x-", 0, 1), T("A:x-", 0, 2), T("B:z+", 0, 0), T("B:z+", 0, 1), T("C:z-", 0, 0), T("C:z-", 0, 1), T("C:z-", 0, 2)];
     Lv.lesson = { check:[[T("A:x+", 0, 0), T("A:x+", 0, 1), T("A:x+", 0, 2), T("B:z+", 0, 0), T("B:z+", 0, 1), T("C:z-", 0, 0), T("C:z-", 0, 1), T("C:z-", 0, 2)]] };
     Lv.bot = { hints:[["A", "A:x-", 1], ["A", "A:x-", 1], ["A", "A:x-", 1], ["A", "B:z+", 1], ["A", "B:z+", 1], ["A", "C:z-", 1], ["A", "C:z-", 1], ["A", "C:z-", 1]] };
-    Lv.ftip = "Fill the dots on the three left legs.";
+    Lv.ftip = "It tips toward the legs you break.";   // 17/11: the old line named dots (gone since D-blast-NOHINT) and a spot
   })();
   // ------------------------------------------------------------------ run time (A1 levels only: L.a1)
   // dots: the members of the level's own plan are dot targets (cue dots where the tier's aids allow them; with a1cue2 from the second attempt)

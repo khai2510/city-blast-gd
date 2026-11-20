@@ -6,7 +6,9 @@
 //    tap on it is the use (the booster's own flow takes over), then input is released.
 // 4. L1 teaches with the hand only: no tip words on L1.
 // 5. New material / obstacle: a "New: <thing>" card (one line, Got It), then dim + hand + forced tap on one such piece
-//    (the tap only marks it: it places nothing, so no level result changes).
+//    (the tap only marks it: it places nothing, so no level result changes). 16/11: with place:1 (L3 Brick, L4 Concrete) the
+//    spotlight sits on a visible, pickable member of that family (one of the level's own plan first) and its tap places a TNT
+//    there, as the gold circle on L1 (tester round UX-14 / GD-14).
 // Never in the test harness (manual), never with ?boosters=1 / ?boost (all boosters), off with ?intro=0.
 // The schedule (INTRO_SCHED) is the ONE table of what is introduced where, L1-36. Taken from the built curriculum
 // (levels6/LEVEL-NEEDS.md "new" column + the boosters2 boss-reward schedule, first use L11 / L21 / L31); see MAIN-BUILD.md §9.
@@ -16,11 +18,11 @@ var INTRO_SCHED = [
   { lv:1,  kind:"material", id:"timber",   name:"Wood",          how:"hand" },
   { lv:1,  kind:"lesson",   id:"dbltap",   name:"Double tap a post", how:"hand" },        // D-blast-TAP2 (amended 14/11 04:25): L1 = double tap, no BLAST button (main/tap2.js H1)
   { lv:2,  kind:"lesson",   id:"blast",    name:"BLAST",         how:"card", noForce:1,  line:"Tap to place. BLAST to blow them all." },   // TAP2: single tap + BLAST; the hand taps leg A, leg B, BLAST (tap2.js H2)
-  { lv:3,  kind:"material", id:"brick",    name:"Brick",         how:"card", fam:"brick",    line:"Brick: one TNT per pier." },     // D-blast-SCHED: the L2-6 cards move one level later (L2 -> L3)
-  { lv:4,  kind:"material", id:"concrete", name:"Concrete",      how:"card", fam:"concrete", line:"Grey columns: one TNT each." },  // L3 -> L4
-  { lv:5,  kind:"obstacle", id:"keep",     name:"Blue Building", how:"card", pick:"keep",    line:"Keep the blue building safe.", look:1 }, // L4 -> L5; look:1 = spotlight + hand, NO forced tap on it (tutorial audit 15/11: never ask for a tap on what must stay safe)
+  { lv:3,  kind:"material", id:"brick",    name:"Brick",         how:"card", fam:"brick",    line:"Brick: one TNT per pier.", place:1 },     // D-blast-SCHED: the L2-6 cards move one level later (L2 -> L3)
+  { lv:4,  kind:"material", id:"concrete", name:"Concrete",      how:"card", fam:"concrete", line:"Grey columns: one TNT each.", place:1 },  // L3 -> L4
+  { lv:5,  kind:"obstacle", id:"keep",     name:"Blue Building", how:"card", pick:"keep",    line:"Keep the blue buildings safe.", look:1 }, // L4 -> L5; look:1 = spotlight + hand, NO forced tap on it (tutorial audit 15/11: never ask for a tap on what must stay safe)
   { lv:6,  kind:"lesson",   id:"rotate",   name:"Turn the view", how:"swipe", label:"Swipe to turn" },                       // tutorial audit 15/11: was a "tip" nothing showed; L6 = MATERIAL-CURVE "Rotate (blast the back)", one new thing per level (L5 has the blue building). Swipe hand, ends on the first turn
-  { lv:8,  kind:"material", id:"steel",    name:"Steel",         how:"card", fam:"steel",    line:"Steel holds. Break what it stands on." },
+  { lv:8,  kind:"material", id:"steel",    name:"Steel",         how:"card", fam:"steel",    line:"Steel holds. Break what it stands on.", place:1, aim:"concrete" },   // 17/11 (UX-23 / GD-23): the gold circle always means "tap here = TNT": the spotlight aims at a concrete foot the steel stands on (the card's own words) and its tap places a TNT there, as on L1 / L3 / L4
   { lv:11, kind:"booster",  id:"wreck",    k:"wreck",            how:"card" },             // won on L10 (boss), first use L11
   { lv:11, kind:"lesson",   id:"steps",    name:"Blast in steps", how:"wave", upto:15, label:"Blast again!" },   // tutorial 15/11: was a "tip" nothing showed. Shown the FIRST time a blast is not enough (multi-wave rule: the rest still stands, TNT left = plan + BLAST again), L11-15; label + gold pulse on the TNT count, then on BLAST once a TNT is placed; ends (saved) at the next BLAST. No spot, nothing blocked (inStep)
   // (L13 "Stack two TNT" removed: D-blast-NOSTACK)
@@ -59,7 +61,7 @@ var IN_ART = {
   lot:"data:image/webp;base64,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"
 };
 // ---- VISUALS (D-blast-INTRO-PREMIUM, Owner 14/11): ALL in this one style block (#introCss) + the --in-* tokens; Figma page
-// "Intro cards premium (14/11)" (file <figma-file>, node 95:2): item art = 3D renders (IN_ART, design/intro-premium/),
+// "Intro cards premium (14/11)" (file ZrGEsdJfokXjKgZrZroJ6y, node 95:2): item art = 3D renders (IN_ART, design/intro-premium/),
 // card frame with bevel, blue header ribbon with tails + gold title, glossy Go button, rotating glow rays, sparkle burst, hand bob + ripple.
 // Motion is CSS only (transform / opacity / scale): scrim 150 ms, card pop .6 -> 1.06 -> .98 -> 1 (420 ms spring), art drop + bounce,
 // rays 12 s spin, sparkles 700 ms, button idle pulse, dismiss = fly to the tray slot (booster) / shrink (material) 300 ms.
@@ -284,7 +286,12 @@ function inPlace(t){
   IN.t = t; var h = $("inHole"), d = Math.round(t.r*2);
   h.style.width = h.style.height = d + "px"; h.style.left = Math.round(t.x - t.r) + "px"; h.style.top = Math.round(t.y - t.r) + "px";
   var hd = $("inHand"), up = t.y > innerHeight*0.6;     // the hand comes from below on the field, from above on the tray
-  hd.style.left = Math.round(t.x - 18) + "px"; hd.style.top = Math.round(up ? t.y - t.r - 58 : t.y + t.r*0.35) + "px";
+  // 18/11 (UX-34): the fingertip (svg 25,4 of 56 = 29,5 px of 64) sits INSIDE the circle both ways. A field target low on the screen (L8
+  // Steel, y > 60 %) had the turned hand parked above the ring (fingertip at the ring's top edge, ~50 px over the centre: on the steel
+  // leg). Turned 180 deg the tip is at (35, 59): left / top put it 10 px right of and 21 px above the centre, the mirror of the
+  // hand from below (10 px right, 21 px below). The tray (boosters, t.btn) keeps the hand above the chip.
+  var fld = up && !t.btn;
+  hd.style.left = Math.round(fld ? t.x - 25 : t.x - 18) + "px"; hd.style.top = Math.round(fld ? t.y - 80 : up ? t.y - t.r - 58 : t.y + t.r*0.35) + "px";
   hd.style.transformOrigin = "30% 10%"; hd.firstChild.style.transform = up ? "rotate(180deg)" : ""; hd.style.setProperty("--dir", up ? -1 : 1);   // the press goes toward the target
   var rp = $("inRip"); rp.style.left = Math.round(t.x) + "px"; rp.style.top = Math.round(t.y) + "px";
 }
@@ -294,15 +301,28 @@ function inTarget(e, keep){
     var r = b.getBoundingClientRect(); if(!r.width || b.disabled) return null;
     return { x:r.left + r.width/2, y:r.top + r.height/2, r:Math.max(30, Math.max(r.width, r.height)/2 + 8), btn:b };
   }
-  if(keep && IN.t && IN.t.p){ var s0 = toScreen(IN.t.p); return s0.on ? { x:s0.x, y:s0.y, r:IN.t.r, p:IN.t.p } : IN.t; }
+  if(keep && IN.t && IN.t.p){ var s0 = toScreen(IN.t.p); return s0.on ? { x:s0.x, y:s0.y, r:IN.t.r, p:IN.t.p, i:IN.t.i } : IN.t; }
   var tp = $("top") ? $("top").getBoundingClientRect() : { bottom:120 }, bt = $("bottom") ? $("bottom").getBoundingClientRect() : { top:innerHeight - 200 };
   var y0 = Math.max(150, tp.bottom + 60), y1 = Math.min(innerHeight - 220, bt.top - 50), cx = innerWidth/2, cy = (y0 + y1)/2, best = null, bd = 1e9;
   var test = function(P){ var s = toScreen(P); if(!s.on || s.x < 56 || s.x > innerWidth - 56 || s.y < y0 || s.y > y1) return; var d = Math.hypot(s.x - cx, (s.y - cy)*1.3); if(d < bd){ bd = d; best = { x:s.x, y:s.y, r:46, p:P.clone() }; } };
   if(e.pick === "street"){ if(streetZ == null) return null; for(var x = -14; x <= 14; x += 2) test(new THREE.Vector3(x, 0.05, streetZ + 1.5)); return best; }
+  // 16/11 (tester round UX-14 / GD-14): a material spotlight aims at a member of that family that an exact tap really reaches (the
+  // point main/tap2.js visPt finds on its visible face; before, the member's centre: on L3 a brick wall mid-shaft, on L4 glass in
+  // front of a column, and the tap did nothing). With e.place the spotlight tap is a normal tap there (= a TNT on it, as the gold
+  // circle on L1), and members of the level's own plan come first, so that TNT is never a wasted one (L3 / L4 give 0 spare).
+  var vis = window.__blast.tap2 && window.__blast.tap2.visPt, solSet = null;
+  var fam = e.aim || e.fam;   // 17/11: the family the spotlight points at (L8: the card is Steel, the circle sits on a concrete foot)
+  if(fam && e.place && L.sol){ solSet = new Set(); L.sol.forEach(function(q){ var m = selectMembers(q[1], q[2])[q[3]]; if(m && m.b) solSet.add(m.b); }); }
+  var testV = function(i){ var v = vis(i); if(!v || v.x < 56 || v.x > innerWidth - 56 || v.y < y0 || v.y > y1) return; var d = Math.hypot(v.x - cx, (v.y - cy)*1.3); if(d < bd){ bd = d; best = { x:v.x, y:v.y, r:46, p:v.p.clone(), i:i }; } };
+  // passes (the first that finds one wins): 0 the plan's own members (e.place), 1 a pier / column of the family on a ground storey,
+  // 2 any pier / column of the family, 3 any member of the family (walls / panels / panes last: the card says "pier" / "column")
+  var WALLK = { bkw:1, cpan:1, wwall:1, mglass:1 };
+  for(var pass=solSet ? 0 : (fam && vis ? 1 : 3); pass<4 && !best; pass++)
   for(var i=0;i<blocks.length;i++){ var B = blocks[i]; if(B.dead) continue;
-    var ok = e.fam ? (!B.keep && !B.prop && !B.anchor && mfxClassOf(B.key) === e.fam)
+    var ok = fam ? (!B.keep && !B.prop && !B.anchor && mfxClassOf(B.key) === fam)
       : e.pick === "keep" ? !!B.keep : e.pick === "barrel" ? !!(B.def && B.def.volatile) : e.pick === "lot" ? B.key === "lotpad" : false;
-    if(ok) test(B.P);
+    if(!ok) continue;
+    if(fam && vis){ if(pass === 0 ? !solSet.has(B) : pass < 3 && (WALLK[B.key] || (pass === 1 && B.floor))) continue; testV(i); } else test(B.P);
   }
   return best;
 }
@@ -314,10 +334,13 @@ dim.addEventListener("click", function(x){
   x.stopPropagation(); x.preventDefault();
   var e = IN.forced, t = IN.t; if(!e || !t) return;
   if(e.look){ clearTimeout(IN.lt); inRelease(); IN.log.push("lookTap:" + e.id); inDone(e); return; }
-  if(Math.hypot(x.clientX - t.x, x.clientY - t.y) > t.r + 6){ IN.log.push("blocked"); IN.blocked = (IN.blocked || 0) + 1; return; }
+  if(Math.hypot(x.clientX - t.x, x.clientY - t.y) > t.r + 6){
+    if(e.place && phase === "plan" && IN.pass && IN.pass(x.clientX, x.clientY, e)){ inRelease(); audioInit(); IN.log.push("pass:" + e.id); onTap(x.clientX, x.clientY); inDone(e); return; }   // R20 (polish.js GD-43): a tap on another valid member places there, the hand goes
+    IN.log.push("blocked"); IN.blocked = (IN.blocked || 0) + 1; return; }
   inRelease(); audioInit();
   var p = document.createElement("div"); p.id = "inPing"; p.style.left = Math.round(t.x) + "px"; p.style.top = Math.round(t.y) + "px"; document.body.appendChild(p); setTimeout(function(){ p.remove(); }, 500);
   if(e.kind === "booster"){ IN.log.push("use:" + e.id); t.btn.click(); }
+  else if(e.place && phase === "plan"){ IN.log.push("place:" + e.id); onTap(t.x, t.y); }   // = the player's own tap on that spot: a TNT there (tap2 T1)
   else { snd("ui_tap"); try{ if(window.SFX && SFX.haptic) SFX.haptic("ui_tap", 1); }catch(z){} IN.log.push("tap:" + e.id); }
   inDone(e);
 }, true);
@@ -346,6 +369,7 @@ var swCss = document.createElement("style"); swCss.id = "inSwipeCss"; swCss.text
 function inSwipeOff(){ cancelAnimationFrame(IN.swRaf); IN.sw = null; sw.classList.add("hidden"); }
 function inSwipe(e, n){
   if(screen !== "game" || levelIdx !== IN.lv || IN.q[0] !== e) return;
+  if(inS(e.id).f){ IN.q.shift(); setTimeout(inNext, 0); return; }   // 17/11: already turned once (any level): never shown again
   if(phase !== "plan" || n < 8){ clearTimeout(IN.wt); IN.wt = setTimeout(function(){ inSwipe(e, phase === "plan" ? n + 1 : 0); }, 100); return; }   // after the opening camera
   IN.sw = e; IN.swYaw = baseYaw; IN.swT = performance.now(); $("inSwL").textContent = e.label || ""; sw.classList.remove("hidden"); IN.log.push("swipe:" + e.id);
   (function loop(){ if(IN.sw !== e) return;
@@ -353,6 +377,19 @@ function inSwipe(e, n){
     if(phase !== "plan" || screen !== "game" || performance.now() - IN.swT > 12000){ IN.log.push("swipeHide:" + e.id); inSwipeOff(); if(IN.q[0] === e) IN.q.shift(); setTimeout(inNext, 350); return; }   // not done: shows again next level
     IN.swRaf = requestAnimationFrame(loop); })();
 }
+// 17/11 (tester round UX-19 / GD-23 / DIGEST fix 2: "Swipe to turn" came back on L7 and L8 after the player had turned on L6): the
+// lesson is done the first time the PLAYER turns the view (a drag / two-finger turn that moves the yaw), on any level and at any moment
+// in a level, not only while the hint is on screen (it hides after 12 s, and at 3 fps a turn often came after that). Saved like the
+// hint's own "done" (save.intro.rotate.f); camera moves the game makes (opening, retry, BLAST) never count: only a turn between a
+// pointer down and up on the game view.
+// Both listeners sit on the game view itself (the game's own pointerup there runs first: registered earlier), so a press that ends
+// elsewhere (a card, the dim layer, a button) never counts, and a game camera move (the Wrecking Ball view) never counts either.
+var turnY0 = null;
+renderer.domElement.addEventListener("pointerdown", function(){ turnY0 = phase === "plan" ? baseYaw : null; }, { capture:true, passive:true });
+renderer.domElement.addEventListener("pointercancel", function(){ turnY0 = null; }, { passive:true });
+renderer.domElement.addEventListener("pointerup", function(){ if(turnY0 == null) return; var d = Math.abs(baseYaw - turnY0); turnY0 = null;
+  if(d < 0.5 || !IN.on || manual || screen !== "game" || phase !== "plan") return;
+  inSchedOf("swipe").forEach(function(e){ if(inS(e.id).f) return; inMark(e.id, "f"); IN.log.push("turnedAny:" + e.id); }); });
 // ---- moment lessons (tutorial 15/11): the schedule rows that were "tip" and that nothing showed. Not in the intro queue (they wait for
 // their moment, never for a tap), pointer-events none (taps / drags reach the game), no hand on a member, no spot named (D-blast-NOHINT).
 // Figma: page "Intro cards premium (14/11)", frames 147:308 (L11 steps) and 147:323 (L35 trap).
@@ -465,6 +502,7 @@ window.__blast.intro = {
   on:function(){ return IN.on; },
   state:function(){ var h = IN.t; return { on:IN.on, card:IN.card ? IN.card.id : null, forced:IN.forced ? IN.forced.id : null, hole:IN.forced && h ? { x:h.x, y:h.y, r:h.r } : null,
     queue:IN.q.map(function(e){ return e.id; }), swipe:IN.sw ? IN.sw.id : null, moment:IN.mo ? IN.mo.id : null, blocked:IN.blocked || 0, log:IN.log.slice(-30), seen:JSON.parse(JSON.stringify(save.intro || {})), l1:document.body.classList.contains("inL1") }; },
-  lockLv:function(k){ return boosterLv(k); }
+  lockLv:function(k){ return boosterLv(k); },
+  setPass:function(f){ IN.pass = typeof f === "function" ? f : null; }   // main/polish.js R20
 };
 })(); }catch(e){ console.error("main/intro.js", e); }

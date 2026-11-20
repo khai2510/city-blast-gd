@@ -21,7 +21,11 @@
     var Qf = new URLSearchParams(location.search), OFF = Qf.get("frame") === "0" || Qf.get("hints") === "1";   // ?hints=1 (old STD-v2 aids, comparison only) keeps the old opening too
     var CF = { fillH:+(Qf.get("framefh") || 0.72), fillW:+(Qf.get("framefw") || 0.68), pitch:0.26, yawMin:0.35, yawMax:0.50, dur:1.0, wide:1.22, tilt:0.17 };
     // per-level overrides (level number -> fields of CF), only where the generic rule looks bad (FRAME-STATUS.md §3)
-    var OVR = {};
+    // 25: GD-33 (19/11/2026, tester round): the opening faces three of the four dark corners and both brick towers' bases; that yaw (4.0,
+    // level data L.yaw) is off the 3/4-view band of the generic rule (it would clamp to 4.21, which hides two corners)
+    // 3: GD-38 (20/11/2026): the brick lesson needs a brick stack of the row; at the generic framing the row's bricks (D, E) were off the
+    // left edge. Hero at 50% of the height and the view turned 0.3 rad toward the row: B, C and the brick stack D are in sight
+    var OVR = { 3:{ fillH:0.5, yaw:0.85 }, 25:{ yaw:4.0 } };
     var FR = { on:!OFF, cf:CF, S:null, W:0, n:0 };
     var API = window.__blast.frame = { on:function(){ return FR.on; }, cfg:function(){ return CF; }, state:function(){ var S = FR.S; return S ? { lv:S.lv, live:S.live, W:+FR.W.toFixed(3), zOpen:+S.zOpen.toFixed(4), zFrom:+S.zFrom.toFixed(4), t:+S.t.toFixed(2), easing:S.t < S.dur, yawOpen:+S.yawOpen.toFixed(3), yawD:+S.yawD.toFixed(3), sx:Math.round(S.sx), sy:Math.round(S.sy), fitW:S.fitW, fitH:S.fitH, bind:S.bind } : null; }, measure:null };
     var TILT = CF.tilt;   // v14-monument.js updateCamera: the view levels out by TILT x close when zoomed in (pitch - TILT x tiltK)
