@@ -90,6 +90,8 @@ File này là **bộ nhớ chung** của mọi máy và mọi agent làm màn Ci
 
 Link test (artifact, private): https://claude.ai/artifact/CDNLd5gsjLaTaPGT7W4pes. Không sửa artifact chính W6863… khi chưa có OK của Khai.
 
+- **20/11 (Agents-Game):** H1–H5 đã vào bản chính (bước `g7-hard`, `dde36bb`), base mới = `src/` (floormen 20/11). Vị trí: H2 = 4, H3 = 6, H1 = 8, H4 = 10, H5 = 12, màn cũ xen giữa (SYNC.md). `run.mjs` trên base mới: H1–H3 PASS, H4 FAIL (cả trên base-1811), H5 FAIL 83% (PASS trên base-1811). Bài học: chạy tester trên đúng base sẽ đăng; và không chuyển nhánh trong thư mục repo người khác đang dùng (một lần build đã đọc nhầm engine.js của nhánh khác).
+
 ## 7. Chia việc giữa máy chủ (Mac) và máy ảo
 
 - **Repo này là nguồn sự thật.** Bắt đầu phiên thì `git pull`. Xong một việc thì commit và push (không force).

@@ -4,10 +4,26 @@ Cách dùng: ghi việc cần bên kia làm vào mục của bên đó, kèm ng�
 
 ## Việc cho Agents-Game
 
-- [ ] (20/11, Mac) **Tích hợp 5 màn khó vào bản chính** theo `city-blast/release/INTEGRATE.md`: thêm bước `g7-hard` vào `src/tools/build-main.js`, dựng, chạy `packcheck` và `run.mjs` (5/5 PASS). Đăng bản build lên link test và báo Khai. **Đăng lên W6863 chỉ khi Khai OK.**
-- [ ] (20/11, Mac) Commit và push mọi thay đổi đang chỉ có trên máy ảo, ghi một dòng trạng thái vào `LEARNINGS.md` mục 6.
-- [ ] (20/11, Mac) Quyết định vị trí H1–H5 trong game và ghi lại ở đây. Nếu bản chính đổi base so với 18/11, ghi base mới để Mac dựng màn tiếp theo trên đúng base đó.
+- [x] (20/11, Mac) **Tích hợp 5 màn khó vào bản chính** theo `city-blast/release/INTEGRATE.md`: thêm bước `g7-hard` vào `src/tools/build-main.js`, dựng, chạy `packcheck` và `run.mjs` (5/5 PASS). Đăng bản build lên link test và báo Khai. **Đăng lên W6863 chỉ khi Khai OK.**
+  - (20/11, Agents-Game) Xong, commit `dde36bb`: bước `g7-hard` cuối `src/tools/build-main.js` (`src/g7hard/patch.js`), 2 neo khớp đúng 1 lần, engine.js + JSON băm vào build stamp. `packcheck`: 5/5 màn 0 khối chết, tip "". `run.mjs` trên base bản chính: **3/5 PASS** (H4, H5 FAIL, xem "Việc cho Mac"). Bản build đã giao Lead để đăng link test; W6863 chỉ khi Khai OK.
+- [x] (20/11, Mac) Commit và push mọi thay đổi đang chỉ có trên máy ảo, ghi một dòng trạng thái vào `LEARNINGS.md` mục 6.
+  - (20/11, Agents-Game) Xong: `src/` đồng bộ với nguồn floormen 20/11 (`0a7ec45`, `b723519`), bước g7 (`dde36bb`). Dòng trạng thái ở LEARNINGS mục 6.
+- [x] (20/11, Mac) Quyết định vị trí H1–H5 trong game và ghi lại ở đây. Nếu bản chính đổi base so với 18/11, ghi base mới để Mac dựng màn tiếp theo trên đúng base đó.
+  - (20/11, Agents-Game, Lead quyết) Xem mục "Vị trí màn khó" ngay dưới.
+
+## Vị trí màn khó và base của bản chính (20/11, Agents-Game, Lead quyết)
+
+- **Thứ tự:** 1–3 = màn cũ L1–L3 (dạy chơi) · 4 = **H2** · 5 = L4 · 6 = **H3** · 7 = L5 · 8 = **H1** · 9 = L6 · 10 = **H4** · 11 = L7 · 12 = **H5** · 13–41 = màn cũ L8–L36 (cộng 5). Không bỏ màn nào.
+- **Lý do:** màn dạy chơi giữ số 1–3; màn khó tăng dần (H trước SH), mỗi màn khó có một màn cũ xen sau để nghỉ. Thứ tự này thay cho cách tạm "H1–H5 = 37–41". Khi có 10 màn dễ E01–E10 sẽ xếp lại.
+- **Cách làm:** dữ liệu vẫn nối vào cuối như `build.mjs`; cuối `main()` bước `g7-hard` sắp lại `LEVELS`. Mọi thứ gắn với SỐ màn (thẻ giới thiệu, tay chỉ, mở khoá booster, camera, quảng cáo, seed vật lý) vẫn theo màn gốc qua bảng `LV7O` (`src/g7hard/order-early.js`). Màn khó: không thẻ, không tay, không tip. Seed của H giống hệt khi nối cuối, nên vật lý giống bản Mac test.
+- **Cờ URL:** `?lv7=0` = game cũ 36 màn · `?lv7ord=0` = H1–H5 ở 37–41 (bố cục của Mac, dùng cho công cụ `pipeline7`) · `?pack7=1` = vào màn khó đầu tiên (L4).
+- **Base cho màn tiếp theo:** bản chính giờ dựng từ `src/` (floormen 20/11, build stamp floormen `a935d5222bee`), KHÔNG còn là `base-1811.html`. Lấy base: `KEEP=<thư mục> node src/tools/build-main.js /tmp/x.html`, rồi dùng `<thư mục>/31-polish.html` (đầu ra trước bước g7) làm `CB_BASE` cho `pipeline7` (`build.mjs` đọc `CB_BASE`, đường dẫn tương đối với `pipeline7/`).
 
 ## Việc cho Mac
 
 - (trống)
+- [ ] (20/11, Agents-Game) **H4 Canal Row FAIL** ở `run.mjs` trên máy ảo, cả trên `base-1811.html` (engine.js của `origin/main`): `KEEP route Tv A> F< fails` (75%, blue 30%), trên base bản chính 77%/blue 63%. Lúc engine còn bản tạm (có khối E01) thì H4 PASS 18 TNT/9 lần nổ. Nhờ Mac kiểm lại H4 với engine.js hiện tại.
+- [ ] (20/11, Agents-Game) **H5 Glass Spine FAIL trên base bản chính** (PASS trên `base-1811`: core 86%): `KEEP route core fails (83%, blue 0%)`, `spare 0 TNT`. Không do R20 (`?r20=0` vẫn 83%). Màn sát ngưỡng 85%: nhờ Mac chỉnh lại H5 trên base mới (mục trên).
+- [ ] (20/11, Agents-Game) `pipeline7/cdp.mjs` trên `main` chưa có `CB_LIBS` (proxy máy ảo chặn CDN). Máy ảo đang dùng bản trên nhánh `level/easy-pack`. Nhờ Mac đưa lên `main`.
+- (20/11, Agents-Game) Đã kiểm thay đổi toàn game của engine (bom bám khối, bỏ vòng đỏ) bằng `check-main` (flow, tap2, r20, lv; `?lv7ord=0`): 69 PASS, 1 FAIL `T13` (bài đếm thưởng 10/20/30 trên mọi màn và chờ đúng 36 màn; 5 màn khó làm thành 41). Không do engine g7.
+
