@@ -1,0 +1,89 @@
+[
+ {
+  "name": "Shot Tower",
+  "bp": "E02",
+  "tier": "N",
+  "f": 7,
+  "kind": "scene",
+  "hero": "A",
+  "heroId": "G7-E02",
+  "teaches": "tip",
+  "target": 0.85,
+  "yaw": 0.12,
+  "d": 1,
+  "fillMax": 0.73,
+  "hard7": true,
+  "hit7": {
+   "keys": [
+    "wpost",
+    "wwall",
+    "mdW",
+    "g7roofL"
+   ],
+   "armor": 0.001,
+   "f": 3,
+   "reach": 1
+  },
+  "drop7": {
+   "keys": [
+    "mdB"
+   ],
+   "fall": 1.5,
+   "armor": 0.97
+  },
+  "sf": [],
+  "pattern": "tip: a tall tower on 8 legs; two legs side by side gone = it lies down that way; a long goods shed on each side is the target",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7shot",
+    "x": 0,
+    "z": 0,
+    "hx": 3.4,
+    "legH": 5,
+    "n": 7,
+    "hold": 2,
+    "bg": 41,
+    "hop": [
+     0,
+     2,
+     4,
+     6
+    ],
+    "hopW": 2.6,
+    "hopH": 2.2,
+    "cis": 2.8
+   },
+   {
+    "id": "B",
+    "kind": "g7gshed",
+    "x": -12.9,
+    "z": 0,
+    "hx": 7,
+    "hz": 4,
+    "nx": 5,
+    "side": -1,
+    "bg": 42
+   },
+   {
+    "id": "C",
+    "kind": "g7gshed",
+    "x": 12.9,
+    "z": 0,
+    "hx": 7,
+    "hz": 4,
+    "nx": 5,
+    "side": 1,
+    "bg": 43
+   }
+  ],
+  "tanks": [],
+  "charges": {
+   "tnt": 40
+  },
+  "tip": "",
+  "ftip": "Neighbouring legs tip it. Heavy pieces still count.",
+  "sol": [],
+  "tntStart": 23
+ }
+]
