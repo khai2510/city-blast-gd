@@ -1,0 +1,625 @@
+[
+ {
+  "name": "Five Eaves",
+  "bp": "L01v4",
+  "tier": "SH",
+  "tntStart": 31,
+  "f": 6,
+  "kind": "scene",
+  "hero": "A",
+  "heroId": "G7-01",
+  "teaches": null,
+  "target": 0.85,
+  "yaw": 0.35,
+  "d": 1,
+  "fillMax": 0.73,
+  "hard7": true,
+  "drop7": {
+   "keys": [
+    "hard7v",
+    "hard7e"
+   ],
+   "fall": 1.5,
+   "armor": 0.97
+  },
+  "sf": [
+   131,
+   121,
+   125,
+   145,
+   124
+  ],
+  "pattern": "tiered blocks + shield + drop-first",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7pag",
+    "x": 0,
+    "z": 0,
+    "bg0": 11
+   },
+   {
+    "id": "S",
+    "kind": "g7gate",
+    "x": 0,
+    "z": 16,
+    "bg": 21
+   },
+   {
+    "id": "B",
+    "kind": "g7bell",
+    "x": 15,
+    "z": 3,
+    "bg": 22
+   },
+   {
+    "id": "T",
+    "kind": "g7tea",
+    "x": -14,
+    "z": 5,
+    "bg": 23
+   }
+  ],
+  "tanks": [
+   [
+    -5.6,
+    9
+   ],
+   [
+    -6.4,
+    9.6
+   ],
+   [
+    -5.4,
+    10.1
+   ]
+  ],
+  "charges": {
+   "tnt": 37
+  },
+  "tip": "",
+  "ftip": "Some pieces only break once they are down.",
+  "sol": []
+ },
+ {
+  "name": "Watch Keep",
+  "bp": "L02",
+  "tier": "H",
+  "tntStart": 24,
+  "f": 7,
+  "kind": "scene",
+  "hero": "A",
+  "heroId": "G7-02",
+  "teaches": "aim",
+  "target": 0.85,
+  "yaw": 0.35,
+  "d": 1,
+  "fillMax": 0.73,
+  "hard7": true,
+  "hit7": {
+   "keys": [
+    "hard7i"
+   ],
+   "armor": 0.97,
+   "self": true,
+   "f": 6,
+   "fuel": 4,
+   "reach": 1.5,
+   "drums": true
+  },
+  "layer7": {
+   "keys": [
+    "hrc"
+   ],
+   "n": 3
+  },
+  "sf": [],
+  "pattern": "aim the fall -> chain: hall progressive collapse -> hidden powder store -> gate tower",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7keep",
+    "x": -17,
+    "z": 0,
+    "bg": 31,
+    "hold": 2.5
+   },
+   {
+    "id": "R",
+    "kind": "g7hall",
+    "x": 2.5,
+    "z": 0,
+    "bg": 32,
+    "hx": 9,
+    "hz": 5.5,
+    "storeL": 2,
+    "store": [
+     [
+      -0.6,
+      -2.6
+     ],
+     [
+      0.6,
+      -2
+     ],
+     [
+      2.8,
+      2.2
+     ],
+     [
+      4,
+      2.6
+     ],
+     [
+      1.6,
+      0.9
+     ]
+    ]
+   },
+   {
+    "id": "G",
+    "kind": "g7gtow",
+    "x": 17,
+    "z": 0,
+    "bg": 34,
+    "hx": 3
+   },
+   {
+    "id": "W",
+    "kind": "g7cwall",
+    "x": -28.5,
+    "z": 0,
+    "bg": 33,
+    "len": 7
+   }
+  ],
+  "tanks": [],
+  "aimFace": [
+   1,
+   0
+  ],
+  "charges": {
+   "tnt": 25
+  },
+  "tip": "",
+  "ftip": "Two legs side by side: it falls that way.",
+  "sol": []
+ },
+ {
+  "name": "Grand Stage",
+  "bp": "L03",
+  "tier": "H",
+  "tntStart": 23,
+  "f": 7,
+  "kind": "scene",
+  "hero": "A",
+  "heroId": "G7-03",
+  "teaches": "keep",
+  "target": 0.85,
+  "yaw": 0.08,
+  "d": 1,
+  "fillMax": 0.73,
+  "hard7": true,
+  "sf": [],
+  "pattern": "protect: peel the hall, then tip the stage tower away from the hospital and the school",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7fly",
+    "x": 0,
+    "z": -9.5,
+    "bg": 41,
+    "hx": 5,
+    "hz": 4,
+    "hold": 2
+   },
+   {
+    "id": "R",
+    "kind": "g7aud",
+    "x": 0,
+    "z": 0,
+    "bg": 42,
+    "hx": 7.5,
+    "hz": 5,
+    "stage": "z-"
+   },
+   {
+    "id": "F",
+    "kind": "g7lobby",
+    "x": 0,
+    "z": 9,
+    "bg": 43,
+    "hx": 8,
+    "hz": 3
+   },
+   {
+    "id": "D",
+    "kind": "g7dock",
+    "x": 0,
+    "z": -16,
+    "bg": 44,
+    "hx": 5,
+    "hz": 2
+   }
+  ],
+  "keeps": [
+   {
+    "kind": "keep6",
+    "x": -12.2,
+    "z": -8.65,
+    "floors": 4,
+    "cx": 3,
+    "cz": 3,
+    "name": "the hospital",
+    "role": "hospital",
+    "fixType": "hospital"
+   },
+   {
+    "kind": "keep6",
+    "x": 12.2,
+    "z": -8.65,
+    "floors": 4,
+    "cx": 3,
+    "cz": 3,
+    "name": "the school",
+    "role": "school",
+    "fixType": "school"
+   }
+  ],
+  "keep": {
+   "name": "the hospital",
+   "sides": [],
+   "type": "hospital",
+   "role": "hospital",
+   "full": 1
+  },
+  "tanks": [],
+  "keepRoutes": {
+   "right": [
+    [
+     "FR",
+     [
+      0,
+      1
+     ]
+    ]
+   ],
+   "wrong": [
+    [
+     1,
+     0
+    ],
+    [
+     -1,
+     0
+    ]
+   ]
+  },
+  "charges": {
+   "tnt": 24
+  },
+  "tip": "",
+  "ftip": "Bring it down away from the blue.",
+  "sol": []
+ },
+ {
+  "name": "Canal Row",
+  "bp": "L04",
+  "tier": "SH",
+  "tntStart": 20,
+  "f": 7,
+  "kind": "scene",
+  "hero": "T",
+  "heroId": "G7-04",
+  "teaches": "domino",
+  "target": 0.85,
+  "yaw": 0.1,
+  "d": 1,
+  "fillMax": 0.73,
+  "hard7": true,
+  "sf": [],
+  "pattern": "domino x2 inward: take the middle tower out to the front first (3 blasts), then tip both end houses inwards",
+  "hit7": {
+   "keys": [
+    "hard7i"
+   ],
+   "armor": 0.97,
+   "f": 0,
+   "reach": 0
+  },
+  "layer7": {
+   "keys": [
+    "hrc"
+   ],
+   "n": 3
+  },
+  "dom7": {
+   "parts": [
+    "A",
+    "B",
+    "C",
+    "T",
+    "F",
+    "E",
+    "D"
+   ],
+   "dv": 3,
+   "m": 500,
+   "reach": 0.4
+  },
+  "parts": [
+   {
+    "id": "T",
+    "kind": "g7house",
+    "x": 0,
+    "z": 0,
+    "w": 5.4,
+    "d": 6,
+    "n": 7,
+    "c": 6,
+    "legs": "hrc",
+    "hold": 1.5,
+    "spire": 1,
+    "bg": 60
+   },
+   {
+    "id": "C",
+    "kind": "g7house",
+    "x": -8.8,
+    "z": 0,
+    "w": 4.2,
+    "d": 6,
+    "n": 3,
+    "c": 4,
+    "legs": "hard7i",
+    "hold": 1.5,
+    "bg": 61
+   },
+   {
+    "id": "B",
+    "kind": "g7house",
+    "x": -15.600000000000001,
+    "z": 0,
+    "w": 4.2,
+    "d": 6,
+    "n": 4,
+    "c": 2,
+    "legs": "hard7i",
+    "hold": 1.5,
+    "bg": 62
+   },
+   {
+    "id": "A",
+    "kind": "g7house",
+    "x": -22.400000000000002,
+    "z": 0,
+    "w": 4.2,
+    "d": 6,
+    "n": 5,
+    "c": 0,
+    "legs": "hrc",
+    "hold": 1.5,
+    "bg": 63
+   },
+   {
+    "id": "D",
+    "kind": "g7house",
+    "x": 8.8,
+    "z": 0,
+    "w": 4.2,
+    "d": 6,
+    "n": 3,
+    "c": 3,
+    "legs": "hard7i",
+    "hold": 1.5,
+    "bg": 64
+   },
+   {
+    "id": "E",
+    "kind": "g7house",
+    "x": 15.600000000000001,
+    "z": 0,
+    "w": 4.2,
+    "d": 6,
+    "n": 4,
+    "c": 1,
+    "legs": "hard7i",
+    "hold": 1.5,
+    "bg": 65
+   },
+   {
+    "id": "F",
+    "kind": "g7house",
+    "x": 22.400000000000002,
+    "z": 0,
+    "w": 4.2,
+    "d": 6,
+    "n": 5,
+    "c": 5,
+    "legs": "hrc",
+    "hold": 1.5,
+    "bg": 66
+   }
+  ],
+  "keeps": [
+   {
+    "kind": "keep6",
+    "x": -30.750000000000004,
+    "z": 0,
+    "floors": 4,
+    "cx": 3,
+    "cz": 3,
+    "name": "the school",
+    "role": "school",
+    "fixType": "school"
+   },
+   {
+    "kind": "keep6",
+    "x": 30.750000000000004,
+    "z": 0,
+    "floors": 4,
+    "cx": 3,
+    "cz": 3,
+    "name": "the hospital",
+    "role": "hospital",
+    "fixType": "hospital"
+   }
+  ],
+  "keep": {
+   "name": "the school",
+   "sides": [],
+   "type": "school",
+   "role": "school",
+   "full": 1
+  },
+  "seqRoutes": {
+   "right": [
+    [
+     {
+      "part": "T",
+      "f": [
+       0,
+       1
+      ]
+     },
+     {
+      "part": "A",
+      "f": [
+       1,
+       0
+      ]
+     },
+     {
+      "part": "F",
+      "f": [
+       -1,
+       0
+      ]
+     }
+    ]
+   ],
+   "wrong": [
+    [
+     {
+      "part": "A",
+      "f": [
+       1,
+       0
+      ]
+     },
+     {
+      "part": "F",
+      "f": [
+       -1,
+       0
+      ]
+     }
+    ],
+    [
+     {
+      "part": "T",
+      "f": [
+       0,
+       1
+      ]
+     },
+     {
+      "part": "A",
+      "f": [
+       -1,
+       0
+      ]
+     },
+     {
+      "part": "F",
+      "f": [
+       1,
+       0
+      ]
+     }
+    ]
+   ]
+  },
+  "tanks": [],
+  "charges": {
+   "tnt": 21
+  },
+  "tip": "",
+  "ftip": "Clear the middle first. Then push them in.",
+  "sol": []
+ },
+ {
+  "name": "Glass Spine",
+  "bp": "L05",
+  "tier": "SH",
+  "tntStart": 25,
+  "f": 7,
+  "kind": "scene",
+  "hero": "A",
+  "heroId": "G7-05",
+  "teaches": "core",
+  "target": 0.85,
+  "yaw": 0.12,
+  "d": 1,
+  "fillMax": 0.73,
+  "hard7": true,
+  "layer7": {
+   "keys": [
+    "hrc",
+    "core7"
+   ],
+   "n": 3
+  },
+  "sf": [],
+  "pattern": "peel the podium to find the core, chip the 4 core piers over 3 blasts, the tower drops",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7spine",
+    "x": 0,
+    "z": 0,
+    "bg": 71,
+    "ph": 9,
+    "th": 6,
+    "n": 9,
+    "pod": 2
+   },
+   {
+    "id": "L",
+    "kind": "g7spine",
+    "x": -18,
+    "z": 0,
+    "bg": 72,
+    "ph": 4,
+    "th": 4,
+    "n": 3,
+    "pod": 0,
+    "noCore": 1,
+    "hrc": false
+   },
+   {
+    "id": "R",
+    "kind": "g7spine",
+    "x": 18,
+    "z": 0,
+    "bg": 73,
+    "ph": 4,
+    "th": 4,
+    "n": 3,
+    "pod": 0,
+    "noCore": 1,
+    "hrc": false
+   }
+  ],
+  "coreTest": {
+   "part": "A"
+  },
+  "tanks": [],
+  "charges": {
+   "tnt": 26
+  },
+  "tip": "",
+  "ftip": "Find what really holds it up.",
+  "sol": []
+ }
+]
