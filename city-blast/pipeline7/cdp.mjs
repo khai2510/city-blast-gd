@@ -3,11 +3,11 @@ import { spawn } from 'node:child_process';
 import { mkdtempSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-const CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
+const CHROME = process.env.CHROME || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'; // Linux VM: CHROME=/opt/pw-browsers/chromium-1243/chrome-linux64/chrome
 export async function launch(port = 9333){
   const dir = mkdtempSync(join(tmpdir(), 'cb-headless-'));
   const p = spawn(CHROME, ['--headless=new', `--remote-debugging-port=${port}`, `--user-data-dir=${dir}`, '--no-first-run', '--no-default-browser-check',
-    '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--window-size=430,932', '--autoplay-policy=no-user-gesture-required', '--mute-audio', 'about:blank'], { stdio: 'ignore' });
+    '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--window-size=430,932', '--autoplay-policy=no-user-gesture-required', '--mute-audio', ...(process.platform === 'linux' ? ['--no-sandbox'] : []), 'about:blank'], { stdio: 'ignore' });
   for(let i = 0; i < 60; i++){ try{ await fetch(`http://127.0.0.1:${port}/json/version`); break; }catch(e){ await new Promise(r => setTimeout(r, 250)); } }
   return { proc: p, port };
 }
