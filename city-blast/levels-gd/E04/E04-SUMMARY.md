@@ -28,7 +28,7 @@
   - a weigh-house pier: 3 % (weigh house 26 % down, still standing);
   - a timber post at a section joint: 24 % in one run, 9–11 % in another. Two or three sections fold (hall 67–100 % down), and the tiled roofs land whole.
   One TNT on timber folds a whole section; one TNT on brick takes one pier.
-- **Build:** 149 counted members (hall 81, arcade 30, weigh houses 19 each). Nothing moves or breaks at rest after 8 s. The heavy tiled roofs are 46 % of the mass.
+- **Build:** 145 counted members in the tester (hall 81, arcade 26, weigh houses 19 each). Nothing moves or breaks at rest after 8 s. The heavy tiled roofs are 46 % of the mass.
 
 ## Screenshots
 - `shot-open.jpg`: opening frame (the tiled market roofs behind the brick arcade, a weigh house at each end).
