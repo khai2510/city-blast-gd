@@ -101,6 +101,7 @@ File này là **bộ nhớ chung** của mọi máy và mọi agent làm màn Ci
 | E01 | Long Legs (gói dễ, toà ở nâng trên cột) | đánh vào chân; chuỗi: khối đầu đổ, thùng đỏ nổ, nhà câu lạc bộ sập | PASS, 19 TNT, N, nhánh `level/easy-pack`; kế hoạch E02–E10 ở `levels-gd/EASY-PACK.md` |
 | E03 | Tram Depot (gói dễ, slot 4, FEEL: kho xe điện 3 gian, 2 trạm tín hiệu) | thùng đỏ nổ miễn phí: 1 TNT cạnh thùng, 11 thùng nổ dây chuyền dọc mặt tiền, 3 gian đổ về trước; két nước trên mái rơi nguyên và vẫn tính | PASS (thanh gói dễ), 19 TNT, N, lượt H và I; oneBomb 51%, allFoot 72%, đường cong nhảy tối đa +31 |
 | E02 | Shot Tower (gói dễ, slot 6, TEACH: tháp bắn chì trên 8 chân, 2 kho hàng gỗ hai bên) | phá 2 chân cạnh nhau thì tháp đổ về phía đó; đổ sang bên thì đè bẹp kho; đổ ra trước thì rơi xuống bãi trống | PASS thanh gói dễ trừ đường cong (1 → 2 bom: +54, chờ Khai), 23 TNT, N |
+| E06 | Boiler Stack (gói dễ, slot 7, COMBINE: ống khói gạch trên 8 chân cạnh nhà lò hơi) | chân + hướng đổ: mở phía nhà lò thì ống khói nằm dọc mái, 1 cú đổ phá 2 toà (48% so với 33%) | PASS (thanh gói dễ), 17 TNT, N, lượt B và C; đường cong nhảy tối đa +32 |
 
 Link test (artifact, private): https://claude.ai/artifact/CDNLd5gsjLaTaPGT7W4pes. Không sửa artifact chính W6863… khi chưa có OK của Khai.
 
