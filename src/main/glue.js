@@ -41,6 +41,14 @@ const STAGES = {
   ],
   // ---- last step, after levels6/tools/src-l32.js
   final: [
+    // C8 (18/11, feedback/2026-11-18/l32-swap/REPORT.md §1, Owner on device: "L32 shows two levels"): the base starts its render loop with
+    // a plain `animate();` INSIDE main(), before every later patch runs. The first frame's pbTick() prebuilds the Home level from the
+    // UNPATCHED LEVELS[save.level], and Play adopts that prebuild (warm -> pbSwap): after a relaunch with save.level = 31 the first L32 was
+    // the old one (TNT 10, no RC hero), L36 kept the lot pad tap2 removes. The first frame now waits for the next animation frame, when
+    // main() (every patch included) has finished; animate() re-arms itself as before.
+    { name: 'C8 first frame after every patch (no prebuild from unpatched level data)',
+      find: '\nwarmUp();\nanimate();\n',
+      replace: '\nwarmUp();\nrequestAnimationFrame(function(){ animate(); });   // main/glue.js C8: after main() and every patch (stale prebuild of LEVELS[n])\n' },
     // C3: uiclean hides the zoom hint in play ("no zoom hint", S3); the L32 monument (v14) uses that same pill to teach its new camera
     // ("Drag up / down to look ..."). Both kept: no hint on ordinary levels (uiclean), and on a monument level (L.mon) the pill shows
     // once at the start, in uiclean's bubble style, cut to <= 6 words (v31 text rule). Appended last in main(), so nothing in

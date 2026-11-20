@@ -37,7 +37,7 @@ try{ (function(){
   var _bc = buildChips; buildChips = function(){ var r = _bc.apply(this, arguments); bombN = null; uicBomb(); return r; };
   // S3: in-play words. Toasts in a level: only the empty-tap nudge; the pop words (COMBO / TIMBER! / CLEARED! ...) not at all
   // (their sounds, flashes and coins stay). Menus (Home, map, shop, settings) keep their toasts.
-  var NUDGE = { "Tap a building":1, "Tap the building":1 };
+  var NUDGE = { "Tap a building":1, "Tap the building":1, "Protected! Hands off.":1 };   // 18/11 (UX-30 / GD-28): a tap on a blue building says why nothing was placed
   var _toast = toast; toast = function(msg){ if(screen === "game" && !NUDGE[msg]) return; return _toast.apply(this, arguments); };
   var _pop = popText; popText = function(){ if(screen === "game") return; return _pop.apply(this, arguments); };
   // S1: a won level has no card (Smash Fest): coins fly from the rubble to the pill, "+N" once, then Home by itself

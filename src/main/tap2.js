@@ -31,7 +31,7 @@
     var api = window.__blast.tap2 = {
       on:function(){ return T2.on; },
       flags:function(){ return { on:T2.on, street:T2.street, lot:T2.lot, coin:T2.coin, soon:T2.soon, dblMs:DBL_MS, dblPx:DBL_PX, nearPx:NEAR_PX }; },
-      stats:function(){ return { dbl:T2.dbl, single:T2.single, ignored:T2.ignored, blasts:T2.blasts, log:T2.log.slice(-20) }; },
+      stats:function(){ return { dbl:T2.dbl, single:T2.single, ignored:T2.ignored, blasts:T2.blasts, ringOff:T2.ringOff || 0, log:T2.log.slice(-20) }; },
       // screen position of every unfired placed TNT (tools: double tap a placed TNT = BLAST without placing)
       charges:function(){ return charges.filter(function(c){ return !c.fired; }).map(function(c){ var s = toScreen(c.mesh.position); return { x:s.x, y:s.y, on:s.on, p:c.mesh.position.toArray(), host:blocks.indexOf(c.host) }; }); },
       noBlast:function(){ return t2NoBlast(); },
@@ -61,12 +61,24 @@
       // ---- T1 exact pick: the first thing the ray meets. Members (glass panes and decor members included) take the TNT on
       // their own surface; a hero-kit dress piece (visual only, no body) takes it on its surface too, carried by its member.
       var _kdIdx = null, _kdN = -1;
+      var pickOpt = api.pickOpt = { kdThrough:false, miss:null, busy:false };   // set by main/polish.js R20 (?r20=0 leaves both off = the old pick)
       var kdHost = function(mesh, ii){
         if(!L6_KD || !L6_KD.list) return null;
         if(_kdIdx === null || _kdN !== L6_KD.list.length || !_kdIdx.has(mesh)){ _kdIdx = new Map(); _kdN = L6_KD.list.length;
           L6_KD.list.forEach(function(q){ if(!q.im) return; var a = _kdIdx.get(q.im); if(!a){ a = []; _kdIdx.set(q.im, a); } a[q.ii] = q; }); }
         var a = _kdIdx.get(mesh); return a && a[ii] ? a[ii].host : null;
       };
+      // 16/11 (tester round UX-15 / GD-12, L2 "2 % live vs 94 % in the harness"):
+      //  (a) NOPICK: a blast-proof floor plate hidden inside a hero's skin is never a tap target, nor is the dress it carries (the
+      //      lighthouse's round skin rides its `a1lite` slabs: most taps on the visible base put the TNT on slab #9, which a blast
+      //      cannot hurt). The ray goes on to what is behind it (the wall, the leg).
+      //  (b) a tap on DRESS (a hero-kit piece with no body) puts the TNT on the member that carries it, at that member's point
+      //      nearest the tap, when the dress sits within DRESS_SNAP m of it (the lighthouse's white pilaster is its leg's skin,
+      //      2.5 m out from the pier: TNT left on the pilaster face did a third of a leg). main/occlude.js still DRAWS it on the
+      //      dress the finger touched. Far dress (sails, crowns) keeps the old exact point. The bots / test API never use this path.
+      var NOPICK = { a1lite:1 }, DRESS_SNAP = 3.0;
+      var noPick = function(b){ return !!(b && (NOPICK[b.key] || b.noPick)); };
+      api.noPick = function(){ return Object.keys(NOPICK); };
       t2Pick = function(cx, cy){
         ndc.x = ((cx - VX)/VW)*2 - 1; ndc.y = -((cy - VY)/VH)*2 + 1;
         ray.setFromCamera(ndc, camera);
@@ -74,17 +86,22 @@
         Object.keys(inst).forEach(function(k){ if(k !== "base" && k !== "kbase" && k !== "crate" && inst[k] && inst[k].mesh && inst[k].mesh.visible) meshes.push(inst[k].mesh); });
         if(MB.mesh && MB.mesh.visible) meshes.push(MB.mesh);
         if(typeof L6_KD !== "undefined" && L6_KD.mesh) Object.keys(L6_KD.mesh).forEach(function(g){ var q = L6_KD.mesh[g]; if(q && q.visible){ kd.add(q); meshes.push(q); } });
-        var hits = ray.intersectObjects(meshes, false);
+        var hits = ray.intersectObjects(meshes, false), kdA = null;
         for(var i=0;i<hits.length;i++){
           var h = hits[i], b, n;
-          if(kd.has(h.object)){ b = kdHost(h.object, h.instanceId); if(!b || b.dead) continue; if(b.anchor) return null;   // dress on the ground slab: not a building
-            n = ray.ray.direction.clone().negate(); return { block:b, point:h.point.clone(), normal:n, kd:true }; }
+          if(kd.has(h.object)){ b = kdHost(h.object, h.instanceId); if(!b || b.dead) continue; if(b.anchor){ if(pickOpt.kdThrough){ if(!kdA) kdA = h.point.clone(); continue; } return null; }   // dress on the ground slab: not a building (R20 kdThrough: the ray goes on, polish.js U-2)
+            if(noPick(b)) continue;
+            n = ray.ray.direction.clone().negate();
+            var mp = nearestPoint(b, h.point, new THREE.Vector3()), gap = mp.distanceTo(h.point);
+            if(gap > 1e-3 && gap <= DRESS_SNAP){ var no = h.point.clone().sub(mp).normalize(); return { block:b, point:mp, normal:no, kd:true, snap:gap }; }
+            return { block:b, point:h.point.clone(), normal:n, kd:true }; }
           b = h.object.userData && h.object.userData.list ? h.object.userData.list[h.instanceId] : null;
-          if(!b || b.dead) continue;
+          if(!b || b.dead || noPick(b)) continue;
           n = h.face ? h.face.normal.clone().applyQuaternion(b.Q).normalize() : ray.ray.direction.clone().negate();
           if(n.dot(ray.ray.direction) > 0) n.negate();   // always the face toward the finger
           return { block:b, point:h.point.clone(), normal:n };
         }
+        if(pickOpt.miss && !pickOpt.busy){ pickOpt.busy = true; try{ return pickOpt.miss(cx, cy, t2Pick, kdA) || null; } finally { pickOpt.busy = false; } }   // R20 (polish.js U-2): a tap in a gap inside a building
         return null;
       };
       pick = t2Pick;
@@ -98,7 +115,9 @@
       // "on / near a placed TNT": within NEAR_PX of it on the SAME member the finger is on, or within NEAR_ANY px whatever is under the
       // finger (two legs side by side are ~16 px apart in an opening view: a tap on the next leg must still place)
       var NEAR_ANY = 10;
-      var nearCharge = function(x, y){ var h = null, hd = false;
+      var nearHook = null;   // main/polish.js R20 (D-blast-NOSTACK per member): api.setNear(fn) replaces the pixel rule below
+      api.setNear = function(f){ nearHook = typeof f === "function" ? f : null; };
+      var nearCharge = function(x, y){ if(nearHook) return nearHook(x, y); var h = null, hd = false;
         for(var q=0;q<charges.length;q++){ var c = charges[q]; if(c.fired || (c.def && c.def.kind === "wreck")) continue;
           var s = toScreen(c.mesh.position); if(!s.on) continue; var d = Math.hypot(s.x - x, s.y - y);
           if(d <= NEAR_ANY) return c;
@@ -108,7 +127,7 @@
       var placeAt = function(x, y){
         var h = t2Pick(x, y);
         if(!h){ tapRing(x, y); snd("ui_tap", { gain:0.4 }); if(levelIdx !== 0) toast("Tap a building"); return "miss"; }
-        if(h.block.keep){ toast("Protected! Hands off."); snd("protected_hit"); pulseShields(h.block.P, 0.5); return "keep"; }
+        if(h.block.keep){ tapRing(x, y); toast("Protected! Hands off."); snd("protected_hit"); pulseShields(h.block.P, 0.5); return "keep"; }   // 18/11 (UX-30 / GD-28): + the tap ring (the toast is let through in a level: uiclean NUDGE)
         T2.exact = true; var r; try{ r = placeCharge(h.block, h.point, h.normal); } finally { T2.exact = false; }
         if(r === "empty"){ tapRing(x, y); if(!t2NoBlast()) toast("Tap BLAST!"); }
         return r;
@@ -117,9 +136,10 @@
       onTap = function(x, y){
         if(typeof v5UnlockOpen === "function" && v5UnlockOpen()) return;
         var t = evT != null ? evT : performance.now(); evT = null;
-        if(phase !== "plan"){ T2.last = null; return; }        // the fuse is not stopped by a tap (nothing to move or remove); BLAST fires it now
+        if(phase !== "plan"){ T2.last = null; if(screen === "game" && !manual){ tapRing(x, y); T2.ringOff = (T2.ringOff || 0) + 1; } return; }   // the fuse is not stopped by a tap (nothing to move or remove); BLAST fires it now. 18/11 (UX-30 / GD-28): a tap while the rubble falls / settles places nothing: the tap ring answers it
         if(selC) selectCharge(null);
         if(bstTap(x, y)){ T2.last = null; return; }            // boosters: their own aim / throw flows
+        var mg = magnet(x, y); if(mg){ x = mg.x; y = mg.y; }    // H3 tutorial magnetism (17/11): a tap near the hand point = a tap on it
         var L0 = T2.last, tw = tutL1() ? TUT_DBL : null, dbl = !!(L0 && t - L0.t <= (tw ? tw.ms : dblMs()) && t >= L0.t && Math.hypot(x - L0.x, y - L0.y) <= (tw ? tw.px : DBL_PX));
         if(dbl){
           T2.last = null; T2.dbl++;
@@ -130,7 +150,7 @@
           return;
         }
         var cur = T2.last = { t:t, x:x, y:y, placed:false };
-        if(nearCharge(x, y)){ T2.ignored++; logT("near" + (L0 ? ":" + Math.round(t - L0.t) : "")); return; }   // NOSTACK
+        if(nearCharge(x, y)){ T2.ignored++; tapRing(x, y); logT("near" + (L0 ? ":" + Math.round(t - L0.t) : "")); return; }   // NOSTACK (18/11: + the tap ring, a tap that places nothing)
         T2.single++;
         var r = placeAt(x, y); cur.placed = r === "ok"; logT("tap:" + r);
       };
@@ -144,24 +164,76 @@
       var solM = function(k){ var e = L.sol && L.sol[k]; if(!e) return null; var m = selectMembers(e[1], e[2])[e[3]]; return m && m.b && !m.b.dead ? m.b : null; };
       var lastLive = function(){ for(var q=charges.length-1;q>=0;q--){ var c = charges[q]; if(!c.fired && c.def && c.def.kind !== "wreck") return c; } return null; };
       var blastPt = function(){ var bb = $("blast").getBoundingClientRect(); return bb.width ? { x:bb.left + bb.width*0.62, y:bb.top + bb.height*0.45 } : null; };
+      // H3 (17/11, tester round GD-20 / UX-24 / DIGEST fix 2: "the L2 hand target is a few pixels wide"; a natural thumb tap lands 4-8 px
+      // below / right of the fingertip and put the TNT on the wall next to the leg, then that TNT sat under the finger and blocked a retry):
+      //  (a) MAGNET: while the L1 / L2 tutorial hand points at a member, a tap within MAG_PX (24 pt = CSS px) of the hand point is taken as a
+      //      tap ON the hand point (= on that member: the point is one an exact tap maps to it), unless a TNT already sits there.
+      //  (b) the hand never sits on a placed TNT: a candidate point within NEAR_ANY + 6 (16 px: the TNT sprite, and more than the 10 px a
+      //      tap on any TNT is ignored within) of an unfired TNT on screen is skipped (the hand moves to another visible spot of the same
+      //      leg, else to the next leg; two legs side by side are ~16 px apart in the opening view, so a wider ring would hide leg B). Only player taps go through here: bots / the test
+      //      API place through their own path (determinism unchanged).
+      var MAG = { pt:null, b:null, on:true }, MAG_PX = 24;
+      T2.mag = 0;
+      var nearTnt = function(sx, sy, px){ for(var q=0;q<charges.length;q++){ var c = charges[q]; if(c.fired || (c.def && c.def.kind === "wreck")) continue;
+        var s = toScreen(c.mesh.position); if(s.on && Math.hypot(s.x - sx, s.y - sy) <= px) return true; } return false; };
+      var magnet = function(x, y, dry){ var m = MAG; if(!m.on || !m.pt || !m.b || m.b.dead || phase !== "plan") return null;
+        var d = Math.hypot(x - m.pt.x, y - m.pt.y); if(d > MAG_PX || d < 0.5) return null;
+        var h = t2Pick(m.pt.x, m.pt.y); if(!h || h.block !== m.b || nearCharge(m.pt.x, m.pt.y)) return null;
+        if(!dry){ T2.mag++; logT("mag:" + Math.round(d)); } return { x:m.pt.x, y:m.pt.y }; };
+      // test hooks: the member a player tap at (x, y) would take a TNT on right now (magnet included; no TNT placed), and the magnet switch
+      api.tapTarget = function(x, y){ var mg = magnet(x, y, true), q = mg || { x:x, y:y }; if(nearCharge(q.x, q.y)) return { near:true, mag:!!mg, i:-1 };
+        var h = t2Pick(q.x, q.y); return { near:false, mag:!!mg, i:h ? blocks.indexOf(h.block) : -1, key:h ? h.block.key : null }; };
+      api.magOn = function(on){ MAG.on = on !== false; return MAG.on; };
+      api.mag = function(){ return { pt:MAG.pt ? { x:Math.round(MAG.pt.x), y:Math.round(MAG.pt.y) } : null, i:MAG.b ? blocks.indexOf(MAG.b) : -1, n:T2.mag, px:MAG_PX }; };
+      // H2 (16/11, tester round GD-12 / UX-15: "the hand shows one spot"): the hand points where a tap really lands on the leg. It
+      // used to point at the member's centre, which is inside the tower: the pixel showed the round skin / a hidden slab, and a
+      // tap there put the TNT on that. Now: the legs of the level's own plan (the sol entries on sol[0]'s face) that are not
+      // charged yet, in plan order, skipping a leg the opening view can not reach (behind the silhouette); the hand sits on a
+      // spot of that leg's visible dress that t2Pick maps to the leg itself. Two legs charged -> BLAST.
+      var hasC = function(b){ for(var q=0;q<charges.length;q++){ var c = charges[q]; if(!c.fired && c.host === b) return true; } return false; };
+      var LH = { key:"", tgt:null, pt:null };
+      var legVis = function(m){
+        var cx = 0, cz = 0, k = 0;
+        blocks.forEach(function(o){ if(o.key === m.key && o.floor === m.floor && !o.anchor && !o.keep && Math.hypot(o.spawn.x - m.spawn.x, o.spawn.z - m.spawn.z) < 20){ cx += o.spawn.x; cz += o.spawn.z; k++; } });
+        var d = new THREE.Vector3(m.P.x - cx/k, 0, m.P.z - cz/k); if(d.lengthSq() < 1e-6) d.set(0, 0, 1); d.normalize();
+        var hs = [0.3, 0.55, 0.1, 0.75], ks = [0, 0.6, 1.2, 1.8, 2.4, 2.9, 3.4], i, j;
+        for(j=0;j<hs.length;j++) for(i=0;i<ks.length;i++){ var w = new THREE.Vector3(m.P.x + d.x*ks[i], m.P.y + hs[j]*m.half[1], m.P.z + d.z*ks[i]), s = toScreen(w);
+          if(!s.on || nearTnt(s.x, s.y, NEAR_ANY + 6)) continue; var h = t2Pick(s.x, s.y); if(h && h.block === m) return w; }   // H3 (b)
+        return null; };
+      var l2Leg = function(){
+        if(!L.sol || !L.sol.length) return null;
+        var face = L.sol[0][1], got = 0, list = [], q;
+        for(q=0;q<L.sol.length;q++){ if(L.sol[q][1] !== face) continue; var m = solM(q); if(m && list.indexOf(m) < 0) list.push(m); }
+        var key = camera.position.toArray().map(function(v){ return v.toFixed(1); }).join() + "|" + charges.length;
+        if(LH.key !== key){ LH.key = key; LH.tgt = null; LH.pt = null;
+          for(q=0;q<list.length;q++){ if(hasC(list[q])){ got++; continue; } if(!LH.pt){ var w = legVis(list[q]); if(w){ LH.tgt = list[q]; LH.pt = w; } } }
+          if(got >= 2){ LH.tgt = null; LH.pt = null; } }
+        if(!LH.pt) return null;
+        var s = toScreen(LH.pt); return s.on ? s : null; };
+      // a visible point of member i that an exact tap maps to i itself (main/intro.js: the material spotlight aims there), or null
+      api.visPt = function(i){ var m = blocks[i]; if(!m || m.dead || m.anchor) return null; var w = legVis(m); if(!w) return null; var s = toScreen(w); return s.on ? { x:s.x, y:s.y, p:w } : null; };
+      api.l2Leg = function(){ var s = l2Leg(); return s ? { x:s.x, y:s.y, i:blocks.indexOf(LH.tgt) } : null; };
       var sh0 = stepHand, inCardEl = $("inCard");
       stepHand = function(){
+        MAG.pt = null; MAG.b = null;
         if(tutRef()) return;
         if(manual || screen !== "game" || levelIdx > 1 || tutDone(levelIdx) || wave > 1 ){ setMode(""); tutStep(null); return levelIdx > 1 || !tutDone(levelIdx) ? sh0.apply(this, arguments) : hand(null); }
         if(inCardEl && !inCardEl.classList.contains("hidden")){ setMode(""); hand(null); tutStep(null); return; }   // under an intro card: no hand
         var n = placedCount(), pt = null, m;
         if(levelIdx === 0){
-          if(phase === "plan"){ if(n === 0){ m = solM(0); if(m){ var s0 = toScreen(v5HandPoint(m)); pt = s0.on ? s0 : null; } }
+          if(phase === "plan"){ if(n === 0){ m = solM(0); if(m){ var s0 = toScreen(v5HandPoint(m)); pt = s0.on ? s0 : null; if(pt){ MAG.pt = pt; MAG.b = m; } } }
             else { var c = lastLive(); if(c){ var s1 = toScreen(c.mesh.position); pt = s1.on ? s1 : null; } } }
           setMode(pt ? "dbl" : ""); hand(pt); tutStep(phase === "plan" ? pt : null, n); return;
         }
-        if(phase === "plan" && n < 2){ m = solM(n); if(m){ var s2 = toScreen(v5HandPoint(m)); pt = s2.on ? s2 : null; } }
-        else if(phase === "plan" || (phase === "count" && autoCount)) pt = blastPt();
+        if(phase === "plan"){ pt = l2Leg(); if(pt && LH.tgt){ MAG.pt = pt; MAG.b = LH.tgt; }
+          if(!pt && n < 2){ m = solM(n); if(m){ var s2 = toScreen(v5HandPoint(m)); pt = s2.on ? s2 : null; } }   // no reachable leg found: the old point
+          if(!pt) pt = blastPt(); }
+        else if(phase === "count" && autoCount) pt = blastPt();
         setMode(pt ? "tap" : ""); hand(pt); tutStep(null); tutPop();
       };
       api.hand = function(){ var r = handEl2.getBoundingClientRect(); return { on:!handEl2.classList.contains("hidden"), mode:handMode, x:r.left + 18, y:r.top + 4 }; };
       // ---- TUTORIAL v2 (15/11/2026, Owner on TestFlight build 3: "L1 did not teach the double tap, nothing introduced BLAST").
-      // Figma <figma-file> page "Intro cards premium (14/11)": 128:1100 (L1 v2), 128:1121 (L2 BLAST pop). Status: TUTORIAL-STATUS.md.
+      // Figma ZrGEsdJfokXjKgZrZroJ6y page "Intro cards premium (14/11)": 128:1100 (L1 v2), 128:1121 (L2 BLAST pop). Status: TUTORIAL-STATUS.md.
       //   K1 the L1 / L2 teach is keyed by its own "done" mark (save.intro.t2l1 / t2l2), no longer by save.level: replaying L1 / L2 with an
       //      old save teaches until the lesson is DONE (the first blast on L1, the first BLAST on L2), not merely seen.
       //   K2 tutorial version (save.tutv = TUT_V): a save from an older build (no / lower tutv) gets the changed lessons once more:
@@ -287,6 +359,15 @@
     var lt0 = levelTip; levelTip = function(){ return clean(lt0.apply(this, arguments)); };
     var ft0 = failTip; failTip = function(r){ return clean(ft0.apply(this, arguments)); };
     api.clean = clean;
+    // ---- R5 (16/11, tester round GD-15 / UX-16: L4 sat in planning at a gold 89 % and never ended). waveEnd() judges once, as the
+    // wave ends; the rubble then keeps settling through the rest procedure (levels6 l6RestStep, up to 150 fixed steps) and the
+    // score can cross the target there. When that rest is reached in planning and the verdict is now a pass, the attempt ends as
+    // a win (finish), as if the wave had ended there. Decided on the same fixed step in the game and the harness (deterministic).
+    if(!OFF && typeof l6RestStep === "function"){ var rs0 = l6RestStep; T2.lateWin = 0;
+      l6RestStep = function(){ var r = rs0.apply(this, arguments);
+        if(l6Rest === 0 && phase === "plan" && structureLive && !noFinish){ var v = verdict(); if(v.ok){ T2.lateWin++; T2.log.push("lateWin:" + Math.round(score()*100)); updateLiveHUD(); finish(); } }
+        return r; };
+      api.lateWins = function(){ return T2.lateWin; }; }
     // ---- R2 no Target Lot
     if(T2.lot && V5_PARTS.lot6){ V5_PARTS.lot6 = function(P){ return { w:P.w || 8, d:P.d || 8 }; }; }
     // ---- R3 coins

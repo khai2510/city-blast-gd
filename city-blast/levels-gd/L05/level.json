@@ -1,0 +1,76 @@
+[
+ {
+  "name": "Glass Spine",
+  "bp": "L05",
+  "tier": "SH",
+  "tntStart": 25,
+  "f": 7,
+  "kind": "scene",
+  "hero": "A",
+  "heroId": "G7-05",
+  "teaches": "core",
+  "target": 0.85,
+  "yaw": 0.12,
+  "d": 1,
+  "fillMax": 0.73,
+  "hard7": true,
+  "layer7": {
+   "keys": [
+    "hrc",
+    "core7"
+   ],
+   "n": 3
+  },
+  "sf": [],
+  "pattern": "peel the podium to find the core, chip the 4 core piers over 3 blasts, the tower drops",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7spine",
+    "x": 0,
+    "z": 0,
+    "bg": 71,
+    "ph": 9,
+    "th": 6,
+    "n": 9,
+    "pod": 2
+   },
+   {
+    "id": "L",
+    "kind": "g7spine",
+    "x": -18,
+    "z": 0,
+    "bg": 72,
+    "ph": 4,
+    "th": 4,
+    "n": 3,
+    "pod": 0,
+    "noCore": 1,
+    "hrc": false
+   },
+   {
+    "id": "R",
+    "kind": "g7spine",
+    "x": 18,
+    "z": 0,
+    "bg": 73,
+    "ph": 4,
+    "th": 4,
+    "n": 3,
+    "pod": 0,
+    "noCore": 1,
+    "hrc": false
+   }
+  ],
+  "coreTest": {
+   "part": "A"
+  },
+  "tanks": [],
+  "charges": {
+   "tnt": 40
+  },
+  "tip": "",
+  "ftip": "Find what really holds it up.",
+  "sol": []
+ }
+]

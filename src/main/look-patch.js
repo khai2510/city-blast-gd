@@ -24,4 +24,4 @@ if (js.includes('__LK_COIN__')) { console.error('coin placeholder not replaced')
 let out = src.replace(A, '\n' + js + A);
 out = out.slice(0, t) + MARK + out.slice(t);
 fs.writeFileSync(OUT, out);
-console.log('ok   K1 calm world (sage lawn + distance haze, sand contrast, skyline -30% sat / +haze) · K2 collapse framing (hero + debris ~50% of the play area) · K3 gloss + AO x1.5 on concrete / brick, softer higher sun · K4 white rim on charged members + TNT · K5 Upgrades icons  -> ' + path.basename(OUT));
+console.log('ok   K1 calm world (old green lawn, ?lkgrass=1 = sage; sand contrast, skyline -30% sat / +haze) · K2 collapse framing + K2b keep the wreck (D-blast-TF6: off, ?collcam=1 / k2) · K3 gloss + AO x1.5 on concrete / brick, softer higher sun · K4 white rim (D-blast-TF6: off, ?lookrim=1) · K5 Upgrades icons  -> ' + path.basename(OUT));

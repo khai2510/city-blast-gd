@@ -221,9 +221,9 @@ BODY_CAP = 1e9;   // Owner 12/11: no body-count limit
     "Shed first. Then the piers.":"Clear what is in the way first.",
     "Save one TNT for the core.":"Save TNT for what still stands.",
     // L13-L36 (levels6 levels-v6-l13-36.json)
-    "Two TNT on one steel leg.":"Steel needs two TNT stacked.",
-    "Two TNT per steel leg.":"Steel needs two TNT stacked.",
-    "Hall first. Then the steel legs.":"Clear the cover first. Steel needs two.",
+    "Two TNT on one steel leg.":"Steel is tough. Hit more legs, one TNT each.",
+    "Two TNT per steel leg.":"Steel is tough. Hit more legs, one TNT each.",
+    "Hall first. Then the steel legs.":"Clear the cover first. Then one TNT per leg.",
     "Outer side of each. The hall: its whole back.":"Everything must fall away from the blue.",
     "One TNT on every dark pier.":"Every pier that carries it must break.",
     "Keep two TNT for the core.":"Save TNT for what still stands.",
@@ -234,17 +234,17 @@ BODY_CAP = 1e9;   // Owner 12/11: no body-count limit
     "Blast its back. The row follows.":"One falling tower can push the row.",
     "Blast the whole back row.":"Only one way down is open.",
     "TNT on the four dark piers.":"Glass holds nothing. The frame carries it.",
-    "Two TNT on each steel leg.":"Steel needs two TNT stacked.",
+    "Two TNT on each steel leg.":"Steel is tough. Hit more legs, one TNT each.",
     "Hit its frame on the row side.":"It falls toward the side you break.",
     "Left spire left. The others back.":"Each spire has one safe way down.",
     "Tip the clock tower right.":"One push can topple the whole row.",
-    "Tower back. Mast back: stack.":"Steel needs two stacked. Fall away from the road.",
+    "Tower back. Mast back: stack.":"Steel is tough. Hit more legs, one TNT each.",
     "One TNT on each dark pier.":"Every pier that carries it must break.",
     "One TNT next to the barrels.":"Barrels blast for free.",
     "TNT by the barrels. Then the rest.":"Barrels blast for free.",
     "Tip the clock tower at the barrels.":"Barrels can start the fall.",
     "Outer sides only. Mind the barrels.":"Some barrels hurt the blue. Fall away from it.",
-    "Blast the back: land on the yellow lot.":"Drop it in the yellow lot.",
+    "Blast the back: land on the yellow lot.":"Find the gap between the blue buildings.",
     // the level tips (the pill under the HUD) of L6-36 that name a spot (L6-12 src-l1-12, L13-36 json, v31 tips)
     "Knock out the back.\nMind the school.":"Mind the school.\nIt falls toward the break.",
     "Steel holds.\nHit the grey feet.":"Steel holds.\nBreak what it stands on.",
@@ -254,9 +254,16 @@ BODY_CAP = 1e9;   // Owner 12/11: no body-count limit
     "Look behind it.\nDark piers: TNT on each.":"Turn the view.\nFind what carries it.",
     "Road in front.\nBlast every back.":"Keep the road clear.",
     "Glass holds nothing.\nHit the dark frame.":"Glass holds nothing.\nFind the frame.",
-    "Dark piers: one each.\nSteel: stack.":"Find what carries it.\nSteel: stack.",
+    "Dark piers: one each.\nSteel: stack.":"Find what carries it.\nSteel is tough.",
     "Row, then barrels.":"Barrels can\nstart the fall.",
-    "Steel behind glass:\nstack on it.":"Glass hides steel.\nStack on it.",
+    "Steel behind glass:\nstack on it.":"Glass hides steel.\nFind what carries it.",
+    // 19/11 (GD-41 / GD-34, D-blast-NOSTACK / NOLOT): tips and fail lines that taught stacking or the removed lot -> one TNT per member
+    "Steel leg?\nStack two TNT.":"Steel is tough.\nOne TNT per leg.",
+    "Tip it down the row.\nStack on steel.":"Tip it down the row.\nSteel is tough.",
+    "Open the hall.\nThen stack on steel.":"Open the hall.\nThen the steel legs.",
+    "One pole, one TNT.\nSteel: stack.":"One pole, one TNT.\nSteel is tough.",
+    "Drop it in the lot.":"Find the gap\nbetween the blue buildings.",
+    "Break two legs side by side: it falls.":"Reinforced: keep hitting the same legs.",
     // the base game's general fail line (street)
     "Hit the BACK first.":"Keep the debris off the road."
   };
@@ -446,8 +453,10 @@ BODY_CAP = 1e9;   // Owner 12/11: no body-count limit
     // middle pier of its front (z+) side. They do about 40% / 32% to those two piers for free (round 3: 49% / 44%; lowered in round 4 so that one TNT on each pier + a third
     // on the pane between them can never finish both: no 3-TNT plan drops the tower), so two TNT on each (instead of three) break them, and two
     // neighbouring piers gone = the tower falls (storey rule). Every other side still takes three TNT per pier.
-    // expert, one blast, 8 of 9 (Owner: a skilled player ends with 0 or 1 TNT left): two TNT on each barrel pier, one TNT by the barrels of each block, one on each barrel leg of the tank tower
-    Lv.sol = T2(P1).concat(T2(P2), [T("B:x+", 0), T("C:x-", 0), T("E:z-", 0), T("E:z-", 1)]); delete Lv.solW;
+    // expert (round 6): one blast, 8 of 9, two TNT on each barrel pier (stacked: replaced on 19/11, see below)
+    // GD-32 (19/11, D-blast-NOSTACK): no 2 + 2 stack (a player cannot place it). The RC damage stays between blasts, so: blast 1 = one TNT on each
+    // barrel pier + by the barrels + the tank legs, blast 2 = the two cracked piers again (the gate's sensible line). 8 of 9 TNT, 2 blasts.
+    Lv.sol = [T(P1), T(P2), T("B:x+", 0), T("C:x-", 0), T("E:z-", 0), T("E:z-", 1)]; Lv.solW = [Lv.sol, [T(P1), T(P2)]];
     // the 9 TNT without the lesson (never next to a barrel): three per pier on the far side, two on one block, one on the other, none left for the steel legs
     Lv.lesson = { check:[[0, 0, 0, 1, 1, 1].map(function(i){ return T("A:x-", i); }).concat([T("B:x-", 0), T("B:x-", 1), T("C:x+", 0)])] };
     // a player who reads the tip: one TNT on each barrel pier and by every barrel, then the two cracked piers again

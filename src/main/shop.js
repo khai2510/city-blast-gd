@@ -1,5 +1,5 @@
 // ---- main/shop.js (build step "shop", main/shop-patch.js; D-blast-SHOP, Owner 15/11/2026 "Tất cả các thiết kế đều ok rồi, để lên đi").
-// Shop · Upgrades · No Ads, as designed in games/blast/design/shop/SPEC.md (Figma <figma-file> page 131:2).
+// Shop · Upgrades · No Ads, as designed in games/blast/design/shop/SPEC.md (Figma ZrGEsdJfokXjKgZrZroJ6y page 131:2).
 // Appended at the end of main() after every other step, so it wraps the final showResult / goHome / bstPlay / renderShop.
 //  S1 Shop screen (left tab): Starter Pack (from L10, 48 h after first view, once), No Ads, 5 coin packs, 3 booster bundles,
 //     Restore Purchases, footnote. One price button per card; Pending / Owned / offline states; success card; error toast.

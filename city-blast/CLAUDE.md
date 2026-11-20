@@ -1,5 +1,11 @@
 # city-blast/: hướng dẫn cho agent (mọi máy)
 
+**Chia việc (Khai 20/11, chi tiết ở `OWNERS.md`):**
+- Mac làm **màn khó** (mã H1, H2…), chỉ làm màn, không quyết định vị trí.
+- **Agents-Game** (máy ảo) làm mọi thứ còn lại và màn dễ, xếp vị trí mọi màn, dựng và đăng bản chính.
+- Việc cần bên kia làm: ghi vào `SYNC.md`. Công cụ: `TOOLS.md`. Bàn giao màn khó: `release/INTEGRATE.md`.
+
+
 1. **Trước khi làm:**
    - Chạy `git pull`.
    - Đọc `city-blast/LEARNINGS.md` từ đầu đến cuối.

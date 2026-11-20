@@ -745,14 +745,21 @@ try{ (function(){
       // shop front: a striped awning and a sign board
       var g0 = sts[0].decks[0]; for(var i = 0; i < 4; i++) kq(g0, "box", i % 2 ? K.white : col, -hx + 0.55 + i*(2*hx - 1.1)/3, 3.25, hz + 0.6, (2*hx - 0.4)/4, 0.08, 1.2, 0, 0.35, 0);
       kd(g0, "box", K.wood, 0, 3.8, hz + 0.08, 2*hx - 0.6, 0.45, 0.08);
-      // the gable: stepped (even c) or bell (odd c), a hoist beam and a small attic window; a pitched roof behind it
-      var d = sts[sts.length - 1].decks[0], gh = P.gable || 3.2;
-      if((P.c || 0) % 2 === 0){ for(var k = 0; k < 4; k++){ var ww = 2*hx - k*(2*hx/4.4); kd(d, "box", col, 0, y + k*gh/4 + gh/8, hz - 0.15, ww, gh/4, 0.3); kd(d, "box", K.white, 0, y + (k + 1)*gh/4 - 0.04, hz - 0.15, ww + 0.08, 0.08, 0.36); } }
-      else { kd(d, "prism", col, 0, y + gh/2, hz - 0.15, 2*hx, gh, 0.3); kd(d, "dome", col, 0, y + gh - 0.1, hz - 0.15, 1.2, 0.8, 0.3); kd(d, "box", K.white, 0, y + 0.05, hz - 0.15, 2*hx + 0.1, 0.12, 0.36); }
-      kd(d, "box", K.wood, 0, y + gh*0.72, hz + 0.45, 0.16, 0.16, 0.9); kd(d, "box", K.iron, 0, y + gh*0.72 - 0.4, hz + 0.85, 0.04, 0.8, 0.04);
-      kd(d, "box", K.glass, 0, y + gh*0.4, hz + 0.02, 0.7, 0.8, 0.06); kd(d, "box", K.white, 0, y + gh*0.4, hz + 0.0, 0.85, 0.95, 0.04);
-      [-1, 1].forEach(function(sg){ kq(d, "box", K.slate, sg*hx/2, y + gh*0.45, -0.4, hx + 0.2, 0.22, 2*hz - 0.6, 0, 0, -sg*0.95); });
-      if(P.spire){ kd(d, "box", col, 0, y + gh + 1.2, 0, 2.4, 2.4, 2.4); kd(d, "lit", K.lit, 0, y + gh + 1.2, 1.22, 1.0, 1.4, 0.06); kd(d, "cone", K.copper, 0, y + gh + 4.2, 0, 2.8, 3.6, 2.8); kd(d, "box", K.gold, 0, y + gh + 6.4, 0, 0.1, 1.0, 0.1); }
+      // the roof is a REAL body (Khai 20/11: roofs floated after the fall when they were decor on the top floor): an attic block
+      // as wide and deep as the house; the gable (stepped for even c, bell for odd c), the hoist beam and the roof slopes are
+      // decor flush on THAT block, inside its outline, so they fall, tumble and land with it.
+      var gh = P.gable || 3.2, ah = gh*0.6, at = addBlock(0, y + ah/2, 0, 2*hx - 0.1, ah, 2*hz - 0.1, "wwall", {floor:n + 1}); at.tint = col;
+      var ay = y + ah;   // top of the attic block
+      if((P.c || 0) % 2 === 0){ for(var k = 0; k < 3; k++){ var ww = 2*hx - 0.4 - k*(2*hx/4.4), sh = (gh - ah)/3; kd(at, "box", col, 0, ay + k*sh + sh/2, hz - 0.2, ww, sh, 0.3); kd(at, "box", K.white, 0, ay + (k + 1)*sh - 0.04, hz - 0.2, ww + 0.08, 0.08, 0.34); } }
+      else { kd(at, "prism", col, 0, ay + (gh - ah)/2, hz - 0.2, 2*hx - 0.3, gh - ah, 0.3); kd(at, "dome", col, 0, ay + (gh - ah) - 0.05, hz - 0.2, 1.0, 0.6, 0.3); }
+      kd(at, "box", K.white, 0, y + 0.05, hz - 0.03, 2*hx, 0.12, 0.08); kd(at, "box", K.white, 0, ay - 0.05, hz - 0.03, 2*hx - 0.1, 0.1, 0.08);
+      kd(at, "box", K.glass, 0, y + ah*0.5, hz - 0.03, 0.7, 0.8, 0.06); kd(at, "box", K.white, 0, y + ah*0.5, hz - 0.04, 0.85, 0.95, 0.05);
+      kd(at, "box", K.wood, 0, y + ah*0.8, hz - 0.03, 0.16, 0.16, 0.12);
+      // slopes: two slate planes from the eaves (sides of the block) up to a ridge just above it (flush, never overhanging)
+      var rise = gh - ah, run = hx - 0.1, sl = Math.atan2(rise, run);
+      [-1, 1].forEach(function(sg){ kq(at, "box", K.slate, sg*run/2, ay + rise/2, -0.2, Math.hypot(run, rise), 0.18, 2*hz - 0.7, 0, 0, -sg*sl); });
+      kd(at, "box", K.slate, 0, ay + rise - 0.05, -0.2, 0.3, 0.18, 2*hz - 0.7);
+      if(P.spire){ kd(at, "box", col, 0, ay + rise + 0.9, -0.4, 1.8, 1.8, 1.8); kd(at, "cone", K.copper, 0, ay + rise + 3.0, -0.4, 2.1, 2.6, 2.1); kd(at, "box", K.gold, 0, ay + rise + 4.6, -0.4, 0.1, 0.8, 0.1); }
       if(P.bg) bgSet(n0, P.bg); return { w:2*hx + 0.6, d:2*hz + 2.4 };
     };
     // the warehouse at the end of the row: a long brick hall, 3 storeys, arched loading doors, a crane gable, a sawtooth roof
@@ -775,6 +782,58 @@ try{ (function(){
     };
   })();
 
+  // ==================================================================================================================
+  // g7 L05 "Glass Spine" (peel the shell, find the core). A glass office tower on a stone podium; the floors hang on a
+  // concrete core of 4 piers in the middle. The facade posts are slender (they carry almost nothing). The core's ground
+  // piers are massive RC (layer7: one layer per blast) and sit deep inside the podium, behind shop fronts and walls.
+  // Two identical glass pavilions flank it on the axis. Inspired by a modern glass tower with a concrete core (LANDMARKS #8).
+  // ==================================================================================================================
+  (function(){
+    if(typeof A1 === "undefined" || !A1.h || typeof M14 === "undefined") return;
+    var H = A1.h, kd = l6KdAdd, api = M14.api, kq = H.kq;
+    var K = { stone:0xD8D2C4, stoneD:0x9A9384, core:0x8E9196, glass:0x86B7D6, glassD:0x5E8FB3, frame:0x3E4A5A, white:0xF4F6F8, lit:0xFFE7A8, green:0x6FA86A, wood:0x8A5A33, gold:0xE8B23A };
+    var FN = { "z+":[0, 1], "z-":[0, -1], "x+":[1, 0], "x-":[-1, 0] };
+    function onF(b, g, c, u, v, w, h, t){ var n = FN[b.a1face]; if(!n) return; var X = !!n[0]; t = t || 0.06; var d = (X ? b.half[0] : b.half[2]) + t/2;
+      kd(b, g, c, b.spawn.x + (X ? n[0]*d : u), b.spawn.y + v, b.spawn.z + (X ? u : n[1]*d), X ? t : w, h, X ? w : t); }
+    var bgSet = function(n0, g){ for(var q = n0; q < blocks.length; q++) if(!blocks[q].anchor) blocks[q].bg = g; };
+    var DECK = MEMBERS.a1lite ? "a1lite" : "mdC";
+    // the core above the ground: concrete that peels one layer per blast (L.layer7 lists it) but counts as down once it falls
+    MEMBERS.core7 = Object.assign({}, MEMBERS.concrete, { hp:200, color:K.core }); MATS.core7 = MATS.concrete;
+    V5_PARTS.g7spine = function(P){
+      var n0 = blocks.length, ph = P.ph || 9, th = P.th || 6, cw = P.cw || 1.5, cx = P.cr || 1.7, n = P.n || 9, pod = P.pod == null ? 2 : P.pod, y = 0, s, sts = [];
+      var core = [[-cx, -cx], [cx, -cx], [-cx, cx], [cx, cx]];
+      var base = addBlock(0, -0.25, 0, 2*Math.max(ph, th) + 2, 0.5, 2*Math.max(ph, th) + 2, "base", {anchor:true}); kd(base, "box", K.stoneD, 0, 0.1, 0, 2*Math.max(ph, th) + 1.6, 0.2, 2*Math.max(ph, th) + 1.6);
+      for(s = 0; s < pod + n; s++){ var isPod = s < pod, hh = isPod ? 4.6 : 3.6, hx = isPod ? ph : th;
+        var inner = P.noCore ? [] : core.map(function(q){ return [q[0], q[1], cw]; });
+        var st = H.boxSt({ y0:y, h:hh, hx:hx, hz:hx, nx:isPod ? 5 : (P.noCore ? 3 : 4), nz:isPod ? 5 : (P.noCore ? 3 : 4), pw:isPod ? 0.9 : 0.55, mw:isPod ? 0.8 : 0.45, fl:s, MT:api.mat("concrete"), deck:DECK, skin:isPod ? "wall" : "glass", wall:"cpan", split:isPod ? [3, 3] : [2, 2], dk:0.4, inner:inner,
+          tp:isPod ? K.stoneD : K.frame, td:K.stoneD, tw:K.stone });
+        sts.push(st);
+        st.piers.forEach(function(p){ if(p.gi >= 20){ p.core7 = 1; p.tint = K.core; if(s === 0 && P.hrc !== false){ p.key = "hrc"; p.def = MEMBERS.hrc; p.hp = p.hp0 = MEMBERS.hrc.hp; } else if(P.hrc !== false){ p.key = "core7"; p.def = MEMBERS.core7; p.hp = p.hp0 = MEMBERS.core7.hp; } } });   // upper core: core7 (layered, soft)
+        if(isPod){ st.walls.forEach(function(w, k){ onF(w, "box", K.stoneD, 0, -hh*0.44, 2*Math.max(w.half[0], w.half[2]), 0.35, 0.1);
+            if(s === 0){ onF(w, "box", K.glassD, 0, 0.1, 2.2, 2.8, 0.08); onF(w, "lit", K.lit, 0, -0.2, 1.8, 1.8, 0.1); onF(w, "box", [0xC8463E, 0x3F7FBF, 0x5FA35F, 0xE0A23A][k % 4], 0, 1.75, 2.4, 0.5, 0.12); }
+            else { for(var q = -1; q <= 1; q += 2) onF(w, "box", K.glass, q*0.7, 0.2, 0.9, 2.2, 0.08); } });
+          kd(st.decks[0], "box", K.white, 0, y + hh - 0.15, 0, 2*hx + 0.4, 0.3, 2*hx + 0.4); }
+        else { st.panes.forEach(function(g){ H.paneDress(g, y, hh, s); });
+          if(s === pod) st.decks.forEach(function(d){ kd(d, "ibush", K.green, d.spawn.x*1.35, y + 0.5, d.spawn.z*1.35, 1.2, 0.9, 1.2); });   // podium roof garden
+          kd(st.decks[0], "box", K.frame, 0, y + hh - 0.12, 0, 2*hx + 0.15, 0.22, 2*hx + 0.15); }
+        // the core inside: dark concrete walls (decor on the core piers) with a lift door, so a broken facade shows it
+        var cp = st.piers.filter(function(p){ return p.core7; }); if(P.noCore && s === 0) st.panes.forEach(function(g){ kd(g, "lit", K.lit, g.spawn.x, y + 1.2, g.spawn.z, 0.6, 0.6, 0.6); });
+        cp.forEach(function(p, k){ var sx = Math.sign(p.spawn.x), sz = Math.sign(p.spawn.z); kd(p, "box", K.core, p.spawn.x - sx*cx/2, y + (hh - 0.4)/2, p.spawn.z, cx, hh - 0.5, 0.25); });
+        y += hh;
+      }
+      // crown: a set-back glass lantern, a mast with a light
+      var d = sts[sts.length - 1].decks[0]; kd(d, "box", K.glassD, 0, y + 1.3, 0, 2*th - 3, 2.6, 2*th - 3); kd(d, "box", K.frame, 0, y + 2.7, 0, 2*th - 2.6, 0.25, 2*th - 2.6);
+      kd(d, "box", K.frame, 0, y + 5.0, 0, 0.18, 4.6, 0.18); kd(d, "lit", 0xFF5A4A, 0, y + 7.4, 0, 0.35, 0.35, 0.35);
+      // podium entrance: a canopy and steps on the front, planters
+      var g0 = sts[0]; kd(g0.decks[0], "box", K.frame, 0, 3.6, ph + 1.2, 6, 0.2, 2.4); for(var i = 0; i < 3; i++) kd(base, "box", K.stone, 0, 0.1 + i*0.12, ph + 0.5 + i*0.35, 7 - i*0.6, 0.2, 0.4);
+      [-1, 1].forEach(function(sx){ kd(base, "box", K.stoneD, sx*4.6, 0.4, ph + 1.0, 1.4, 0.8, 1.4); kd(base, "ibush", K.green, sx*4.6, 1.1, ph + 1.0, 1.3, 0.9, 1.3); });
+      if(P.bg) bgSet(n0, P.bg); LV7.g7info = Object.assign(LV7.g7info || {}, { spine:{ top:y, members:blocks.length - n0 } });
+      return { w:2*Math.max(ph, th) + 2, d:2*Math.max(ph, th) + 2 };
+    };
+  })();
+
+  LV7.kdGap = function(){ return typeof l6KdGap === 'function' ? l6KdGap() : null; };
+  LV7.closeUp = function(x, y, z, d, yw, pt){ focus.set(x, y, z); focusY = y; camFocusY = y; dist = d; camDist = d; zoomK = zoomT = 1; if(yw != null){ baseYaw = yaw = yw; } if(pt != null) pitch = pt; for(var i = 0; i < 30; i++) updateCamera(0.1); camera.updateMatrixWorld(true); return [camera.position.x, camera.position.y, camera.position.z]; };
   // test hook: turn the view a quarter at a time, like the player's swipe (k = 0..3), and settle the camera at once
   LV7.view = function(k){ var y0 = (L && L.yaw != null) ? L.yaw : 0.55; baseYaw = y0 + (k || 0)*QUARTER; yaw = baseYaw; for(var i = 0; i < 40; i++) updateCamera(0.1); yaw = baseYaw; updateCamera(0.001); camera.updateMatrixWorld(true); return baseYaw; };
 

@@ -1,5 +1,5 @@
 // ---- main/prelevel.js (build step "prelevel", main/prelevel-patch.js; D-blast-ADOPT, Owner 14/11/2026 "ok adopt": the pre-level
-// booster offer before a Hard / Boss level). Figma: <figma-file> page "Booster Intro (13/11)", component set
+// booster offer before a Hard / Boss level). Figma: ZrGEsdJfokXjKgZrZroJ6y page "Booster Intro (13/11)", component set
 // "Pre-Level Offer" 85:237, frames 6a Hard / 6b Boss / 6c Teach / 6d before any unlock (design/booster-intro/SPEC.md §3).
 // D-blast-NONEW: no new popup. This EXTENDS the existing boosters2 "Select Booster" card (#bPick, bstPlay / bstPickRender) and
 // restyles it in the premium intro-card style (main/intro.js #introCss): cream bevel card, tier-coloured header, 3D art tiles.
@@ -208,6 +208,7 @@ window.__blast.pre = {
       tiles:[].map.call(PICK.querySelectorAll(".bpt.pre"), function(b){ var lv = b.querySelector(".preLv"), bn = b.querySelector(".bn"); return { k:b.dataset.k, lock:b.classList.contains("lock"), lv:lv ? lv.textContent.trim() : null, n:bn ? bn.textContent : null, sel:b.classList.contains("sel"), teach:b.classList.contains("teach") }; }),
       teach:PRE.teach, hand:!handEl.classList.contains("hidden"), paid:Object.assign({}, PRE.paid), last:PRE.last, shown:PRE.shown, taught:Object.assign({}, preS().t), log:PRE.log.slice(-30) };
   },
-  pick:function(){ return Object.assign({}, bstPick); }
+  pick:function(){ return Object.assign({}, bstPick); },
+  art:function(k){ return ART[k] || null; }   // the tile art (data URI): main/polish.js R20 uses the same chain-ball on the HUD chip (UX-55)
 };
 })(); }catch(e){ console.error("main/prelevel.js", e); }

@@ -9,7 +9,7 @@ const xs = [TW/2 + PG + W/2, TW/2 + PG + W/2 + (W + G), TW/2 + PG + W/2 + 2*(W +
 const H = (id, x, n, legs, c, o) => Object.assign({ id, kind: 'g7house', x, z: 0, w: W, d: D, n, c, legs, hold: 1.5 }, o || {});
 const edge = xs[2] + W/2 + G + 3.65;
 const lvl = {
-  name: 'Canal Row', bp: 'L04', tier: 'SH', tntStart: +(process.env.TNT || 23), f: 7, kind: 'scene', hero: 'T', heroId: 'G7-04', teaches: 'domino', target: 0.85, yaw: +(process.env.YAW || 0.1), d: 1, fillMax: 0.73,
+  name: 'Canal Row', bp: 'L04', tier: 'SH', tntStart: +(process.env.TNT || 20), f: 7, kind: 'scene', hero: 'T', heroId: 'G7-04', teaches: 'domino', target: 0.85, yaw: +(process.env.YAW || 0.1), d: 1, fillMax: 0.73,
   hard7: true, sf: [], pattern: 'domino x2 inward: take the middle tower out to the front first (3 blasts), then tip both end houses inwards',
   hit7: { keys: ['hard7i'], armor: 0.97, f: 0, reach: 0 }, layer7: { keys: ['hrc'], n: 3 },
   dom7: { parts: ['A', 'B', 'C', 'T', 'F', 'E', 'D'], dv: 3, m: 500, reach: 0.4 },

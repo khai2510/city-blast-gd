@@ -74,17 +74,22 @@ File này là **bộ nhớ chung** của mọi máy và mọi agent làm màn Ci
 - **Máy ảo Linux không tải được three.js và rapier (20/11, E01):** proxy chặn cdnjs và jsdelivr, nên trang game không có `__blast`. Sửa trong `cdp.mjs`: đặt `CB_LIBS=<thư mục>` có `three-r128.min.js` và `rapier3d-compat-0.19.3.mjs`, cdp sẽ chặn hai request CDN và trả file local (DevTools `Fetch`). Không đặt `CB_LIBS` thì chạy như cũ (Mac). Trên máy ảo dùng `timeout 2700` thay cho perl alarm.
 - **Sàn hero chống nổ (`a1mdC`, do `boxSt` tự đổi `mdC`) nằm trong đống đổ nát thì không bom nào phá được** (E01 lượt A: máy chơi kẹt ở 82–84% dù có 40 TNT, vì sàn nằm cao hơn 1.5 m vẫn bị tính một nửa). Màn dễ: đổi sàn về `mdC` thường và bật `drop7 {keys:['mdC']}`. Sàn còn đứng thì miễn nhiễm TNT, nên bom vào mặt tiền chỉ được 2%; sàn đã rơi thì 1 TNT là vỡ.
 - **Chân còn đứng bị đống đổ nát che** thì không chạm được từ góc mở màn, nhưng vẫn bị tính đủ khối lượng. Máy chơi không bao giờ nhắm tới chúng (pha "heap" chỉ nhắm khối đã đổ). Giữ chân nhẹ (E01: trụ 1.05 m) để chân sót lại không giữ % ở dưới ngưỡng.
+- **Mái lơ lửng (Khai 20/11, Màn 4):**
+  - Lỗi: mái dốc và đầu hồi cao hơn 3 m chỉ là decor gắn vào sàn trên cùng nên trông hở ngay lúc mở màn, và nhô ra không trung khi nhà đổ.
+  - Luật mới: **mái là một khối thật** (tầng áp mái, `wwall`), còn decor mái phải **nằm sát, trong đường bao của khối nó gắn vào**. Không để decor lớn chìa ra khỏi khối chủ.
+  - Kiểm bằng `pipeline7/closeup.mjs` (camera cận cảnh) và `floatcheck.mjs` (khe hở tĩnh). Dùng `hangcheck.mjs` để tìm khối còn treo trên cao sau khi nổ.
+- **Lõi nhiều tầng (Màn 5):** trụ lõi tầng trên mà dùng `rc` (khối cứng) thì nằm trong đống đổ nát vẫn bị tính là "còn đứng", nên không thắng nổi. Còn dùng bê tông thường thì 1 lần nổ cắt ngang thân tháp là xong. Giải pháp là key `core7`: bóc 1 nấc mỗi lần nổ (layer7) nhưng tính là đã đổ khi rơi xuống.
 - `T.chargeHosts` không tồn tại; dùng `__blast.chargeHosts()`, `__blast.members()`, `__blast.test.pickAt(x, y)`.
 
-## 6. Trạng thái các màn (20/11)
+## 6. Trạng thái các màn khó (20/11). Mã H1–H5 không phải vị trí; vị trí do Agents-Game (main) quyết định
 
-| Màn | Tên | Bài học | Trạng thái |
+| Mã | Tên | Bài học | Trạng thái |
 |---|---|---|---|
-| 1 | Five Eaves (chùa 5 mái) | làm rơi trước, phá sau | PASS, 37 TNT, Khai duyệt |
-| 2 | Watch Keep | ngắm hướng đổ, chuỗi đè sảnh, kho thuốc súng | PASS, 25 TNT |
-| 3 | Grand Stage (nhà hát) | giữ toà xanh: dỡ sảnh và khán phòng, tháp đổ dọc trục | PASS, 24 TNT, bố cục v2 đối xứng |
-| 4 | Canal Row (dãy nhà phố) | domino đối xứng: phá tháp giữa trước, đẩy hai dãy vào trong | PASS, 24 TNT, SH |
-| 5 | (kế hoạch) bóc vỏ thấy lõi (layer7, che khuất) | | chưa làm |
+| H1 | Five Eaves (chùa 5 mái) | làm rơi trước, phá sau | PASS, 37 TNT, Khai duyệt |
+| H2 | Watch Keep | ngắm hướng đổ, chuỗi đè sảnh, kho thuốc súng | PASS, 25 TNT |
+| H3 | Grand Stage (nhà hát) | giữ toà xanh: dỡ sảnh và khán phòng, tháp đổ dọc trục | PASS, 24 TNT, bố cục v2 đối xứng |
+| H4 | Canal Row (dãy nhà phố) | domino đối xứng: phá tháp giữa trước, đẩy hai dãy vào trong | PASS, 21 TNT, SH; mái là khối thật |
+| H5 | Glass Spine (tháp kính lõi bê tông) | bóc vỏ bệ, đục lõi 3 lần nổ | PASS, 26 TNT, SH |
 | E01 | Long Legs (gói dễ, toà ở nâng trên cột) | đánh vào chân; chuỗi: khối đầu đổ, thùng đỏ nổ, nhà câu lạc bộ sập | PASS, 19 TNT, N, nhánh `level/easy-pack`; kế hoạch E02–E10 ở `levels-gd/EASY-PACK.md` |
 
 Link test (artifact, private): https://claude.ai/artifact/CDNLd5gsjLaTaPGT7W4pes. Không sửa artifact chính W6863… khi chưa có OK của Khai.

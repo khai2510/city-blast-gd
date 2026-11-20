@@ -23,7 +23,10 @@ const STREET = { at: 3, max: 0.1 };   // the engine fixes these on every level (
 // never brings it down (Owner: foot bombs must not win). Measured: stack on the two legs of one side -> it falls that way, 0-4% left.
 // ls = the side AWAY from the legs the plan stacks on: only that half stands loose (v12 P.loose), so no 4 m steel stubs stay up after the fall
 const SF = (id, x, z, f, skin, roof, ls) => M(id, x, [{ f: f || 8, cx: 2, cz: 2, mat: 'conc', skin: skin || 'full', g: 'open', cols: all(2, 2, 'steel') }], hero({ z: z || 0, loose: ls, roof: roof || { crown: { t: 'tank' } } }));
-const ST2 = (id, side) => [T(id + ':' + side, 0, 0), T(id + ':' + side, 0, 0), T(id + ':' + side, 0, 1), T(id + ':' + side, 0, 1)];
+// D-blast-NOSTACK (19/11/2026, GD-32): a player cannot put two TNT on one member, so the plans no longer stack. ST2 = one TNT on each of the
+// two legs of one face at the foot AND one TNT on each of the same two legs one storey up (4 members, 4 TNT). Measured (gate expert, one blast):
+// it drops the steel-legged tower like the old 2 + 2 stack did; the foot + the storey above is what breaks the steel leg (a TNT higher up does not).
+const ST2 = (id, side) => [T(id + ':' + side, 0, 0), T(id + ':' + side, 0, 1), T(id + ':' + side, 1, 0), T(id + ':' + side, 1, 1)];
 // ---- kit generators (v12 "kit6" parts: explicit member lists; every box is a real member)
 const r2 = (v) => Math.round(v * 1000) / 1000;
 const KIT = (id, x, z, m, o) => Object.assign({ id, kind: 'kit6', x, z: z || 0, m: m.map(q => q.map(v => typeof v === 'number' ? r2(v) : v)) }, o || {});
@@ -85,15 +88,19 @@ const LEVELS = [
   // v12 kit: every leg segment, crossbeam, deck plate and end pier is a real member, the fan cables are drawn). The bridge is plain
   // concrete: one TNT on the front leg of each pylon and on each end pier. The LESSON stands beside it (Owner 12/11: tune with the
   // surroundings, never the hero): a tank tower on steel legs behind the bridge: one TNT never breaks steel, two on the same leg do.
-  { name: 'Harp Span', f: 10, tier: 'R', kind: 'scene', arch: 'legs', hero: 'A,S,E', heroId: 'F17', teaches: 'Stack two TNT on a steel leg',
+  { name: 'Harp Span', f: 10, tier: 'R', kind: 'scene', arch: 'legs', hero: 'A,S,E', heroId: 'F17', teaches: 'Steel is tough: legs on two storeys, one blast',   // 19/11 GD-41: no stacking (D-blast-NOSTACK); 20/11 GD-42: the two-storey rule
     parts: [PYL('A', 0, 0, { s0: 2.4, n: 8, dz: 0.54, kb: 3, sf: 0, lw: 1.3, ld: 1.5, dress: { t: 'G17' } }),
       DECK('S', 0, 0, { x0: -17, x1: 17, cuts: [-12, -7, 0, 7, 12], y: 12.1, wd: 4.4, fl: 3, dress: { t: 'G17d' } }),
       PIERS('E', 0, 0, { xs: [-16.3, 16.3], h: 11.6, dress: { t: 'G17p' } }),
       SF('F', 0, -14, 6, 'full', undefined, 'z+')],
-    charges: { tnt: 10 }, target: 0.85, yaw: 0.8, hint: 'F:z-', tip: 'Steel leg?\nStack two TNT.', ftip: 'Two TNT on one steel leg.',
-    sol: [T('A:z+', 0, 0), T('A:z+', 0, 1), T('E:x-', 0, 0), T('E:x+', 0, 0), T('F:z-', 0, 0), T('F:z-', 0, 0), T('F:z-', 0, 1), T('F:z-', 0, 1)],
+    // GD-42 (20/11 tester round): the old fail line ("Steel is tough. Hit more legs, one TNT each.") sent a player to more legs, spread over
+    // blasts (steel resets at every BLAST) or all four feet: both fail (53-55%). What breaks this tower (and every steel-legged tower of
+    // L14-34, ST2) is two legs AND the same legs one storey up, in ONE blast. The fail line and the tip now say that; the gate's sensible
+    // reading follows it (old hints = the removed "stack two" tip). Relief band: TNT 10 -> 9 (expert 8, 1 spare).
+    charges: { tnt: 9 }, target: 0.85, yaw: 0.8, hint: 'F:z-', tip: 'Steel is tough.\nTwo storeys, one blast.', ftip: 'Steel: hit its legs on two storeys, one blast.',
+    sol: [T('A:z+', 0, 0), T('A:z+', 0, 1), T('E:x-', 0, 0), T('E:x+', 0, 0), T('F:z-', 0, 0), T('F:z-', 0, 1), T('F:z-', 1, 0), T('F:z-', 1, 1)],
     lesson: { check: [[T('A:z+', 0, 0), T('A:z+', 0, 1), T('E:x-', 0, 0), T('E:x+', 0, 0), T('F:z-', 0, 0), T('F:z-', 0, 1), T('F:z+', 0, 0), T('F:z+', 0, 1)]] },
-    bot: { hints: [['A', 'A:z+', 1], ['A', 'A:z+', 1], ['A', 'E:x-', 1], ['A', 'E:x+', 1], ['A', 'F:z-', 1, 2], ['A', 'F:z-', 1, 2]] }, d: 1 },
+    bot: { hints: [['A', 'A:z+', 1], ['A', 'A:z+', 1], ['A', 'E:x-', 1], ['A', 'E:x+', 1], ['A', 'F:z-', 1], ['A', 'F:z-', 1], ['A', '@1:F:z-', 1], ['A', '@1:F:z-', 1]] }, d: 1 },
   // 14 N · practise the stack + DOMINO. "Stripey Light" (F28: a FAT banded lighthouse: real 5 m shaft, 4 m bays) at the left end of a
   // boathouse row; it tips down the row. At the far end a gantry crane on steel legs: stack. A brick hall behind (one TNT in the middle of
   // each long side takes its whole ground storey).
@@ -103,7 +110,7 @@ const LEVELS = [
       M('D', 10.2, [ST(2, 2, 2), { f: 4, cx: 2, cz: 2, mat: 'conc', skin: 'full' }], hero({ loose: 'x-', roof: { cap: 1, ac: 1 } })),
       M('E', 0, [{ f: 5, cx: 3, cz: 2, mat: 'brick', skin: 'alt' }], WING({ z: -12, roof: { cap: 1 } }))],
     charges: { tnt: 9 }, target: 0.85, yaw: 0.3, hint: 'A:x+', tip: 'Tip it down the row.\nStack on steel.', ftip: 'Two TNT per steel leg.',
-    sol: [T('A:x+', 0, 0), T('A:x+', 0, 1), T('D:x+', 0, 0), T('D:x+', 0, 0), T('D:x+', 0, 1), T('D:x+', 0, 1), T('E:z-', 0, 1), T('E:z+', 0, 1)],
+    sol: [T('A:x+', 0, 0), T('A:x+', 0, 1), T('D:x+', 0, 0), T('D:x+', 0, 1), T('D:x+', 1, 0), T('D:x+', 1, 1), T('E:z-', 0, 1), T('E:z+', 0, 1)],
     bot: { hints: [['A', 'A:x+', 1], ['A', 'A:x+', 1], ['A', 'D:x+', 1, 2], ['A', 'D:x+', 1, 2], ['A', 'E:z-', 1], ['A', 'E:z-', 1], ['A', 'E:z-', 1]] }, d: 1 },
   // 15 N · practise the stack + BLAST IN STEPS. "The Sail" (F30: TWO sail towers on one solid podium, as on the tile: plain concrete, no
   // special legs). The practice stands beside it (Owner 12/11: surroundings only): a steel-legged tank tower inside a closed timber boat
@@ -114,7 +121,7 @@ const LEVELS = [
       SF('Q', 12, -2, 6, 'full', undefined, 'z+')],
     charges: { tnt: 12 }, target: 0.85, yaw: 0.3, hint: 'S:z+', tip: 'Open the hall.\nThen stack on steel.', ftip: 'Hall first. Then the steel legs.',
     sol: [T('A:z-', 0, 0), T('A:z-', 0, 1), T('A:z-', 0, 2), T('A:z-', 0, 3), T('A:z-', 0, 4), T('S:z+', 0, 1), T('S:z+', 0, 3)],
-    solW: [[T('A:z-', 0, 0), T('A:z-', 0, 1), T('A:z-', 0, 2), T('A:z-', 0, 3), T('A:z-', 0, 4), T('S:z+', 0, 1), T('S:z+', 0, 3)], [T('Q:z-', 0, 0), T('Q:z-', 0, 0), T('Q:z-', 0, 1), T('Q:z-', 0, 1)]],
+    solW: [[T('A:z-', 0, 0), T('A:z-', 0, 1), T('A:z-', 0, 2), T('A:z-', 0, 3), T('A:z-', 0, 4), T('S:z+', 0, 1), T('S:z+', 0, 3)], [T('Q:z-', 0, 0), T('Q:z-', 0, 1), T('Q:z-', 1, 0), T('Q:z-', 1, 1)]],
     bot: { hints: [['A', 'A:z-', 1], ['A', 'A:z-', 1], ['A', 'A:z-', 1], ['A', 'A:z-', 1], ['A', 'A:z-', 1], ['A', 'S:z+', 1], ['A', 'S:z+', 1], ['A', 'Q:z-', 2, 2], ['A', 'Q:z-', 2, 2]] }, d: 1 },
   // 16 H · Hard (rotate + protected; nothing new) · a hall and two blocks round a hospital. "Dome Hall" (F14: a wide low hall of six bays, a drum
   // and a big dome with a real lantern core, a small dome on each wing: REAL masses) stands behind a blue hospital, a timber block on each
@@ -156,7 +163,7 @@ const LEVELS = [
     parts: [CUBEK('A', 0, 3), CUBEK('B', -8, 1.2), CUBEK('C', 8, 1.2), CUBEK('E', -15.5, -3.2), CUBEK('F', 15.5, -3.2),
       SF('D', 0, -11, 4, 'full', undefined, 'z+')],
     charges: { tnt: 10 }, target: 0.85, yaw: 0.25, hint: 'A:g:1:1', tip: 'One pole, one TNT.\nSteel: stack.', ftip: 'TNT right on each pole.',
-    sol: [T('A:g:1:1', 0, 0), T('B:g:1:1', 0, 0), T('C:g:1:1', 0, 0), T('E:g:1:1', 0, 0), T('F:g:1:1', 0, 0), T('D:z-', 0, 0), T('D:z-', 0, 0), T('D:z-', 0, 1), T('D:z-', 0, 1)],
+    sol: [T('A:g:1:1', 0, 0), T('B:g:1:1', 0, 0), T('C:g:1:1', 0, 0), T('E:g:1:1', 0, 0), T('F:g:1:1', 0, 0), T('D:z-', 0, 0), T('D:z-', 0, 1), T('D:z-', 1, 0), T('D:z-', 1, 1)],
     bot: { hints: [['A', 'A:g:1:1', 1], ['A', 'B:g:1:1', 1], ['A', 'C:g:1:1', 1], ['A', 'E:g:1:1', 1], ['A', 'F:g:1:1', 1], ['A', 'D:z-', 1, 2], ['A', 'D:z-', 1, 2]] }, d: 1 },
   // 20 SH · BOSS (protected + rotate; nothing new). "Big Bow" (F32: steel arch bridge, twin arches, between two squat sandstone pylon
   // PAIRS: each end is one solid stone base, as on the tile, carrying two towers; the road passes between them). Left base: a school in
@@ -166,9 +173,14 @@ const LEVELS = [
     parts: [M('A', -13, [{ f: 3, cx: 2, cz: 4, mat: 'conc', skin: 'full', cols: { '1,1': 'none', '1,2': 'none' }, colsF: 1 }, { f: 3, cx: 2, cz: 2, oz: 0, on: 0, mat: 'conc', skin: 'full' }, { f: 3, cx: 2, cz: 2, oz: 2, on: 0, mat: 'conc', skin: 'full' }], BOW({ fh: 3.0, dress: { t: 'G32' } })),
       M('Q', 13, [{ f: 3, cx: 2, cz: 4, mat: 'conc', skin: 'full', cols: { '0,1': 'none', '0,2': 'none' }, colsF: 1 }, { f: 3, cx: 2, cz: 2, oz: 0, on: 0, mat: 'conc', skin: 'full' }, { f: 3, cx: 2, cz: 2, oz: 2, on: 0, mat: 'conc', skin: 'full' }], BOW({ fh: 3.0, dress: { t: 'G32' } })),
       { id: 'S', kind: 'arch6', x: 0, z: 0, y: 9 / 2.7, len: 22.1, wd: 2.2, n: 3, rise: 15, span: 22, az: 2.5 }],
-    keeps: [K(-13, 9.6, 2, 2, 2, 'school'), K(-13.6, -9.6, 2, 2, 2, 'school'), K(13.6, -9.6, 2, 2, 2, 'hospital')], keep: KEEP('school'),
-    charges: { tnt: 8 }, target: 0.85, yaw: 0.4, hint: 'A:x-', tip: 'BOSS! Each pylon\nhas one way down.', ftip: 'Both fall outward: the whole outer row.',
-    sol: [T('A:x-', 0, 0), T('A:x-', 0, 1), T('A:x-', 0, 2), T('A:x-', 0, 3), T('Q:x+', 0, 0), T('Q:x+', 0, 1), T('Q:x+', 0, 2), T('Q:x+', 0, 3)],
+    keeps: [K(-13, 9.6, 2, 2, 2, 'school'), K(-13.6, -9.6, 2, 2, 2, 'school'), K(-4, -5.5, 2, 2, 2, 'hospital')], keep: KEEP('school'),
+    // GD-31 (19/11): the hospital moved from behind the right pylon to between the pylons, behind the arch (in sight at the opening):
+    // it now takes the left pylon's inward fall, so the visible faces alone (inner legs + front legs, 4-6 TNT) no longer win
+    // GD-44 (20/11): TNT 8 -> 6 (D-blast-TNTTIGHT: the expert's spare 0-1 holds on every tier and beats the boss TNT band of 12, which would
+    // be all spare here). Three legs of each outer row win (98%); two per pylon fail on blue (28%), one row alone 29%. The margin stays +13:
+    // once both pylons fall outward everything is down (no volume the plan cannot reach); see the 20/11 report.
+    charges: { tnt: 6 }, target: 0.85, yaw: 0.4, hint: 'A:x-', tip: 'BOSS! Each pylon\nhas one way down.', ftip: 'Both fall outward: the whole outer row.',
+    sol: [T('A:x-', 0, 0), T('A:x-', 0, 1), T('A:x-', 0, 3), T('Q:x+', 0, 0), T('Q:x+', 0, 1), T('Q:x+', 0, 3)],
     bot: { hints: [['A', 'A:z+', 1], ['A', 'A:z+', 1], ['A', 'A:x-', 1], ['A', 'A:x-', 1], ['A', 'Q:z-', 1], ['A', 'Q:z-', 1], ['A', 'Q:x+', 1], ['A', 'Q:x+', 1]] }, d: 2 },
   // ---- DOWNTOWN (L21-30) ----
   // 21 R · LESSON 7: KEEP THE ROAD CLEAR (street rubble max 10%). "The Stepper" (F22: setback tower with a lantern top: the setbacks are
@@ -217,11 +229,16 @@ const LEVELS = [
   // 25 R · LESSON 8: GLASS holds nothing. "Glass Point" (F06, F1b tile: a stepped glass pyramid before two palace wings). The pyramid
   // is REAL (v12 kit ZIG): four steps, each a deck on four corner piers with glass hung outside the deck edge. TNT on a pane only breaks
   // glass; the four dark piers of the ground step carry all of it. Two brick palace wings behind (the tile's wings): plain TNT.
-  { name: 'Glass Point', f: 10, tier: 'R', kind: 'scene', arch: 'inner', hero: 'A,B,C', heroId: 'F06', teaches: 'Glass holds nothing: hit the dark frame',
+  // GD-33 / GD-9 (20/11): the brick wings stood on bare physics: a TNT on an end pier left a stub, so the gate's sensible plan (and the
+  // tester, 87.8%) won by +3. Base type 'weak' (D-blast-MATCURVE, as every L6-12 ladder neighbour): one lost pier and a wing goes that
+  // way: sensible 97%, the frame (4 dark piers) still needed (3 corners + bricks 79%). TNT 10 -> 8 (relief band 7-9; expert 8, 0 spare).
+  { name: 'Glass Point', f: 10, tier: 'R', kind: 'scene', arch: 'inner', hero: 'A,B,C', heroId: 'F06', teaches: 'Glass holds nothing: hit the dark frame', base: { B: 'weak', C: 'weak' },
     parts: [ZIG('A', 0, 2.5, { h: 4.8, dress: { t: 'G06' } }),
       M('B', -8.8, [{ f: 5, cx: 3, cz: 2, mat: 'brick', skin: 'alt' }], WING({ z: -13, dress: { t: 'G06w' } })),
       M('C', 8.8, [{ f: 5, cx: 3, cz: 2, mat: 'brick', skin: 'alt' }], WING({ z: -13, dress: { t: 'G06w' } }))],
-    charges: { tnt: 10 }, target: 0.85, yaw: 0.3, hint: 'A:x-', tip: 'Glass holds nothing.\nHit the dark frame.', ftip: 'TNT on the four dark piers.',
+    // GD-33 (19/11): opening yaw 0.3 -> 4.0 (main/frame.js OVR[25]): three of the four dark corners (#3, #1, #2) and both brick towers'
+    // bases face the camera; the hidden corner (#4) is the one the level is still won without
+    charges: { tnt: 8 }, target: 0.85, yaw: 4.0, hint: 'A:x-', tip: 'Glass holds nothing.\nHit the dark frame.', ftip: 'TNT on the four dark piers.',
     sol: [T('A:x-', 0, 0), T('A:x-', 0, 1), T('A:x+', 0, 0), T('A:x+', 0, 1), T('B:z-', 0, 1), T('B:z+', 0, 1), T('C:z-', 0, 1), T('C:z+', 0, 1)],
     lesson: { check: [[T('A:wx-', 0, 0), T('A:wx-', 0, 1), T('A:wz+', 0, 0), T('A:wz+', 0, 1), T('B:z-', 0, 1), T('B:z+', 0, 1), T('C:z-', 0, 1), T('C:z+', 0, 1)]] },
     bot: { hints: [['A', 'A:x-', 1], ['A', 'A:x-', 1], ['A', 'A:x+', 1], ['A', 'A:x+', 1], ['A', 'B:z-', 1], ['A', 'B:z-', 1], ['A', 'C:z-', 1], ['A', 'C:z-', 1]] }, d: 1 },
@@ -234,7 +251,7 @@ const LEVELS = [
       M('C', -11.5, [{ f: 4, cx: 2, cz: 2, mat: 'brick', skin: 'alt' }], big({ loose: 1, roof: { cap: 1 } })),
       M('D', 0, [{ f: 3, cx: 3, cz: 2, mat: 'wood', skin: 'alt' }], { bay: 3.0, fh: 4.0, z: -13 })],
     charges: { tnt: 10 }, target: 0.85, yaw: 0.3, hint: 'B:x+', tip: 'Steel behind glass:\nstack on it.', ftip: 'Two TNT on each steel leg.',
-    sol: [T('A:z-', 0, 0), T('A:z-', 0, 1), T('B:x+', 0, 0), T('B:x+', 0, 0), T('B:x+', 0, 1), T('B:x+', 0, 1), T('C:x-', 0, 0), T('C:x-', 0, 1), T('D:z-', 0, 1)],
+    sol: [T('A:z-', 0, 0), T('A:z-', 0, 1), T('B:x+', 0, 0), T('B:x+', 0, 1), T('B:x+', 1, 0), T('B:x+', 1, 1), T('C:x-', 0, 0), T('C:x-', 0, 1), T('D:z-', 0, 1)],
     bot: { hints: [['A', 'A:z-', 1], ['A', 'A:z-', 1], ['A', 'B:x+', 1, 2], ['A', 'B:x+', 1, 2], ['A', 'C:x-', 1], ['A', 'C:x-', 1], ['A', 'D:z-', 1]] }, d: 1 },
   // 27 N · practise glass + DOMINO through three materials. "The Splinter" (F31: tall glass shard that really tapers, 3x3 -> 2x2 bays,
   // split point) tips down a row: a glass block, a brick block, a timber hall.
@@ -272,9 +289,15 @@ const LEVELS = [
       M('D', 5.8, [{ f: 5, cx: 2, cz: 2, mat: 'brick', skin: 'alt' }], hero({ bay: 3.0, roof: { cap: 1 } })),
       M('E', 12, [{ f: 4, cx: 2, cz: 2, mat: 'wood', skin: 'alt' }], { bay: 3.2, fh: 4.0 }),
       SF('G', 0, -14, 6, 'full', undefined, 'z+')],
-    charges: { tnt: 11 }, target: 0.85, yaw: 0.25, hint: 'A:x+', tip: 'One push.\nThe whole row goes.', ftip: 'Tip the clock tower right.',
-    sol: [T('A:x+', 0, 0), T('A:x+', 0, 1), T('E:x+', 0, 0), T('D:x+', 0, 0), T('C:x+', 0, 0), T('C:x+', 0, 1)].concat(ST2('G', 'z-')),
-    bot: { hints: [['A', 'A:x+', 1], ['A', 'A:x+', 1], ['A', 'E:x+', 1], ['A', 'D:x+', 1], ['A', 'C:x+', 1], ['A', 'C:x+', 1], ['A', 'G:z-', 1, 2], ['A', 'G:z-', 1, 2]] }, d: 1 },
+    // GD-9 (20/11): TNT 11 -> 10 (expert 10, 0 spare). Shorter plans (7 TNT) land at 84-86%: the row's last stubs decide, so the
+    // expert keeps the full row
+    charges: { tnt: 10 }, target: 0.85, yaw: 0.25, hint: 'A:x+', tip: 'One push.\nThe whole row goes.', ftip: 'Tip the clock tower right.',
+    // GD-32 (19/11, D-blast-NOSTACK): two blasts, the steel tank tower first (foot + storey above, one TNT per member), then the row
+    sol: ST2('G', 'z-'),
+    solW: [ST2('G', 'z-'), [T('A:x+', 0, 0), T('A:x+', 0, 1), T('E:x+', 0, 0), T('D:x+', 0, 0), T('C:x+', 0, 0), T('C:x+', 0, 1)]],
+    // sensible (20/11): the old hints read the removed "stack two" tip (2 TNT on the tank tower, 47%). A player reads the row tip (blast 1),
+    // then applies the L13 steel rule (GD-42: two legs on two storeys, one blast) to the tank tower (blast 2): 86%
+    bot: { hints: [['A', 'A:x+', 1], ['A', 'A:x+', 1], ['A', 'E:x+', 1], ['A', 'D:x+', 1], ['A', 'C:x+', 1], ['A', 'C:x+', 1], ['A', 'G:z-', 2], ['A', 'G:z-', 2], ['A', '@1:G:z-', 2], ['A', '@1:G:z-', 2]] }, d: 1 },
   // 30 SH · BOSS (glass + stack + road + protected; nothing new). "Sky Steps" (F12: super-tall setback tower with a needle; the setbacks
   // are REAL tiers, 3 -> 2 bays, symmetric; plain concrete frame behind the glass, as on the tile). Road in front, a school on its right:
   // the tower falls BACK. Left: a steel-legged mast: stack, and it must fall back too (the road). A timber shed behind the school.
@@ -285,7 +308,7 @@ const LEVELS = [
       M('C', 10.6, [{ f: 4, cx: 2, cz: 2, mat: 'wood', skin: 'alt' }], { bay: 3.4, fh: 4.0, z: -10 })],
     keeps: [K(8.6, 0, 2, 2, 2, 'school')], keep: KEEP('school'),
     street: STREET, charges: { tnt: 8 }, target: 0.85, yaw: 0.4, hint: 'A:z-', tip: 'BOSS! Road, school,\nglass, steel.', ftip: 'Tower back. Mast back: stack.',
-    sol: [T('A:z-', 0, 0), T('A:z-', 0, 1), T('A:z-', 0, 2), T('C:z-', 0, 0), T('Q:z-', 0, 0), T('Q:z-', 0, 0), T('Q:z-', 0, 1), T('Q:z-', 0, 1)],
+    sol: [T('A:z-', 0, 0), T('A:z-', 0, 1), T('A:z-', 0, 2), T('C:z-', 0, 0), T('Q:z-', 0, 0), T('Q:z-', 0, 1), T('Q:z-', 1, 0), T('Q:z-', 1, 1)],
     bot: { hints: [['A', 'A:z-', 1], ['A', 'A:z-', 1], ['A', 'A:z-', 1], ['A', 'C:z-', 1], ['A', 'Q:z+', 1, 2], ['A', 'Q:z+', 1, 2]] }, d: 2 },
   // ---- RAIL YARD (L31-36) ----
   // 31 R · relief after the boss (Sky Strike's first level in the boosters2 build: a tall soft top to drop it on; plays without it).
@@ -313,7 +336,7 @@ const LEVELS = [
   // 33 N · practise barrels. "Rivet Tower" (F03, F1b: a lattice tower on THREE splayed steel legs, a glass cabin on top; v12 kit: the
   // legs, decks and posts are real members, the lattice is drawn): barrels stand round ONE leg only: that is the way it falls, down a row
   // of sheds. A block behind has no barrels: plain TNT.
-  { name: 'Rivet Tower', f: 10, tier: 'N', kind: 'scene', arch: 'row', hero: 'A', heroId: 'F03', teaches: null,
+  { name: 'Rivet Depot', f: 10, tier: 'N', kind: 'scene', arch: 'row', hero: 'A', heroId: 'F03', teaches: null,   // 19/11 GD-34: was "Rivet Tower" (= L8)
     parts: [TRI('A', -10, 0, { loose: 'x-', dress: { t: 'G03' } }),
       M('B', 1.5, [{ f: 5, cx: 2, cz: 2, mat: 'brick', skin: 'alt' }], hero({ bay: 3.2, roof: { cap: 1 } })),
       M('C', 8, [{ f: 4, cx: 2, cz: 2, mat: 'wood', skin: 'alt' }], { bay: 3.4, fh: 4.0 }),
@@ -348,7 +371,7 @@ const LEVELS = [
     bot: { hints: [['A', 'A:z-', 1], ['A', 'A:z-', 1], ['A', 'A:z-', 1], ['A', 'A:z-', 1], ['A', 'A:z-', 1], ['A', 'A:z-', 1], ['A', 'B:x-', 1], ['A', 'C:x+', 1]] }, d: 2 },
   // 36 R · LESSON 10: DROP IT IN THE LOT. "The Sail" (F30: twin sail towers on one podium, REAL masses) between a school and a hospital,
   // the road in front: the marked lot behind it is the only place to land. (The rule is the road + the protected buildings: no new meter.)
-  { name: 'Sail Lot', f: 10, tier: 'R', kind: 'scene', arch: 'zone', hero: 'A', heroId: 'F30', teaches: 'Drop it in the marked lot',
+  { name: 'Sail Lot', f: 10, tier: 'R', kind: 'scene', arch: 'zone', hero: 'A', heroId: 'F30', teaches: 'Find the gap between the blue buildings',   // 19/11 GD-34: was the removed lot (D-blast-NOLOT)
     parts: [M('A', 0, [{ f: 1, cx: 5, cz: 2, mat: 'conc', skin: 'sp' }, { f: 8, cx: 2, cz: 2, ox: 0, on: 0, mat: 'conc', skin: 'full' }, { f: 8, cx: 2, cz: 2, ox: 3, on: 0, mat: 'conc', skin: 'full' }], TWIN({ dress: { t: 'G30' } })),
       M('B', -13, [{ f: 4, cx: 2, cz: 2, mat: 'brick', skin: 'alt' }], big({ z: -15, roof: { cap: 1 } })),
       M('F', 0, [{ f: 1, cx: 3, cz: 2, mat: 'wood', skin: 'alt' }], { bay: 2.7, fh: 3.4, z: 8.5 }),

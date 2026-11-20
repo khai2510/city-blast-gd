@@ -210,9 +210,13 @@ const LEVELS = [
       M('B', 0, [{ f: 6, cx: 3, cz: 2, mat: 'conc', skin: 'full', g: 'alt' }], { z: -9.6, fh: 3.4, roof: { cap: 1 } }),
       M('C', 0, [{ f: 3, cx: 3, cz: 2, mat: 'brick', skin: 'full' }], { z: 17, fh: 3.0 })],
     keeps: KT(['hospital', 'school', 'hospital'], [K(-17.2, -2.5, 3, 2, 4), K(17.2, -2.5, 3, 2, 4), K(0, -5.0, 1, 2, 2)]), keep: KEEP('the library'),
-    charges: { tnt: 12 }, target: 0.85, yaw: 0.7, hint: 'A:z+', tip: 'HARD. Fall along\nthe street.', ftip: 'Arch forward, tower back.',
-    sol: [T('A:z+', 0, 0), T('A:z+', 0, 1), T('A:z+', 0, 2), T('A:z+', 0, 3), T('A:z+', 0, 4), T('A:z+', 0, 5), T('A:z+', 0, 6), T('A:z+', 0, 7), T('B:z-', 0, 0), T('B:z-', 0, 2), T('B:z-', 0, 1), T('C:z+', 0, 1)],
-    bot: { hints: [['A', 'A:z+', 1], ['A', 'B:z+', 1], ['A', 'C:z+', 1], ['A', 'A:z+', 1], ['A', 'B:z+', 1], ['A', 'A:z+', 1], ['A', 'A:z+', 1], ['A', 'B:z+', 1], ['A', 'A:z+', 1], ['A', 'A:z+', 1], ['A', 'A:z+', 1], ['A', 'A:z+', 1]] }, d: 0 },
+    // U-2 (19/11): opening yaw 0.7 (opened at 0.5) -> 5.93: the left hospital and the school behind the arch are in sight at the opening
+    // GD-22 / U-5 (20/11): TNT 12 -> 10, the expert's full plan (all 8 arch legs, one on the tower's back, one on the brick block): 96%.
+    // With 10 there is no TNT for a second try at the same blast: any arch leg left out fails (7 legs 66%, 6 legs + 2 on the tower 66%
+    // or blue 9-45%); the 19/11 live first-try plan (7 + 4) no longer fits
+    charges: { tnt: 10 }, target: 0.85, yaw: 5.93, hint: 'A:z+', tip: 'HARD. Fall along\nthe street.', ftip: 'Arch forward, tower back.',
+    sol: [T('A:z+', 0, 0), T('A:z+', 0, 1), T('A:z+', 0, 2), T('A:z+', 0, 3), T('A:z+', 0, 4), T('A:z+', 0, 5), T('A:z+', 0, 6), T('A:z+', 0, 7), T('B:z-', 0, 1), T('C:z+', 0, 1)],
+    bot: { hints: [['A', 'A:z+', 1], ['A', 'B:z+', 1], ['A', 'C:z+', 1], ['A', 'A:z+', 1], ['A', 'B:z+', 1], ['A', 'A:z+', 1], ['A', 'A:z+', 1], ['A', 'B:z+', 1], ['A', 'A:z+', 1], ['A', 'A:z+', 1]] }, d: 0 },
   // 8 R · LESSON 3 (relief): STEEL HOLDS. "Rivet Tower" (F03): a steel lattice tower on three splayed legs, each on a grey concrete
   // foot; a steel water tower on concrete feet; a timber hall behind. One TNT never breaks steel: hit the grey feet. The two back feet
   // first: the tower lands on the hall.
@@ -220,11 +224,13 @@ const LEVELS = [
     parts: [RIVET('A', 0, 0),
       M('W', -16, [{ f: 1, cx: 2, cz: 2, mat: 'conc', skin: 'open' }, { f: 3, cx: 2, cz: 2, mat: 'steel', skin: 'open' }], { roof: { cap: 1, tank: 1 } }),
       M('C', 0, [{ f: 4, cx: 3, cz: 2, mat: 'wood', skin: 'alt' }], big({ fh: 3.2, z: -17.0 }))],
-    charges: { tnt: 10 }, target: 0.85, yaw: 0.3, hint: 'A:z+', tip: 'Steel holds.\nHit the grey feet.', ftip: 'TNT on the concrete feet.',
+    // GD-9 / U-5 (20/11): TNT 10 -> 8 (relief band 7-9): blast 1 the two back feet + the water tower's four feet, blast 2 the last foot + one
+    // TNT on the hall: 89%, 0 spare. With 7 the gate's sensible second blast has only the foot (73%)
+    charges: { tnt: 8 }, target: 0.85, yaw: 0.3, hint: 'A:z+', tip: 'Steel holds.\nHit the grey feet.', ftip: 'TNT on the concrete feet.',
     sol: [T('A:z-', 0, 0), T('A:z-', 0, 1), T('W:z-', 0, 0), T('W:z-', 0, 1), T('W:z+', 0, 0), T('W:z+', 0, 1)],
-    solW: [[T('A:z-', 0, 0), T('A:z-', 0, 1), T('W:z-', 0, 0), T('W:z-', 0, 1), T('W:z+', 0, 0), T('W:z+', 0, 1)], [T('A:z+', 0, 0), T('C:z+', 0, 0), T('C:z+', 0, 2), T('C:z+', 0, 1)]],
+    solW: [[T('A:z-', 0, 0), T('A:z-', 0, 1), T('W:z-', 0, 0), T('W:z-', 0, 1), T('W:z+', 0, 0), T('W:z+', 0, 1)], [T('A:z+', 0, 0), T('C:z+', 0, 1)]],
     lesson: { check: [[T('A:z+', 3, 0), T('A:z-', 3, 0), T('A:z-', 3, 1), T('W:z-', 1, 0), T('W:z-', 1, 1), T('W:z+', 1, 0), T('W:z+', 1, 1), T('C:z+', 0, 0), T('C:z+', 0, 2), T('C:z+', 0, 1)]] },
-    bot: { hints: [['A', 'A:z-', 1], ['A', 'A:z-', 1], ['A', 'W:z-', 1], ['A', 'W:z-', 1], ['A', 'W:z+', 1], ['A', 'W:z+', 1], ['A', 'A:z+', 2], ['A', 'C:z+', 2], ['A', 'C:z+', 2], ['A', 'C:z+', 2]] }, d: 0 },
+    bot: { hints: [['A', 'A:z-', 1], ['A', 'A:z-', 1], ['A', 'W:z-', 1], ['A', 'W:z-', 1], ['A', 'W:z+', 1], ['A', 'W:z+', 1], ['A', 'A:z+', 2], ['A', 'C:z+', 2]] }, d: 0 },
   // 9 N · practise steel + domino. "Twin Saucer" (F04): the concrete saucer tower at the end of a row: it takes the row down. A steel
   // water tower on grey concrete feet stands apart (the L8 lesson again, on a side building); a massive block behind.
   { name: 'Twin Saucer', base: { A: 'keep', '*': 'weak' }, hero: 'A', heroId: 'F04', f: 11, tier: 'N', kind: 'scene', arch: 'legs-row', teaches: null,
@@ -245,8 +251,13 @@ const LEVELS = [
       M('C', -8.0, [{ f: 3, cx: 3, cz: 2, mat: 'brick', skin: 'alt' }], big({ fh: 3.4, z: -18.0 }))],
     keeps: KT(['hospital', 'hospital', 'school', 'hospital'], [K(-9, 8.9, 1, 2, 2), K(9, 8.9, 1, 2, 2), K(-19.5, 0, 2, 2, 2), K(19.5, 0, 2, 2, 2)]),
     keep: KEEP('the school'),
-    charges: { tnt: 11 }, target: 0.85, yaw: 0.65, hint: 'A:x+', tip: 'BOSS! Find where\nit can fall.', ftip: 'Inner sides: they fall together.',
-    sol: [T('A:x+', 0, 0), T('A:x+', 0, 1), T('B:x-', 0, 0), T('B:x-', 0, 1), T('F:z-', 0, 0), T('F:z-', 0, 1), T('F:z-', 0, 2), T('C:z-', 0, 0), T('C:z-', 0, 1), T('C:z-', 0, 2)],
+    // GD-44 / U-5 (20/11): TNT 11 -> 6. The sensible fronts-first plan won the boss with 11 (96%); with 6 it lands on a blue building
+    // (87%, blue 9%). Expert: one TNT on the back of each block, then the four inner legs: 91%, 0 spare
+    charges: { tnt: 6 }, target: 0.85, yaw: 0.65, hint: 'A:x+', tip: 'BOSS! Find where\nit can fall.', ftip: 'Inner sides: they fall together.',
+    // GD-17 (19/11): all in one blast the towers' fall nicked a blue building (9.1%, fail). Two blasts: the blocks behind first, then the
+    // inner sides of the towers (blue 0%)
+    sol: [T('F:z-', 0, 1), T('C:z-', 0, 1)],
+    solW: [[T('F:z-', 0, 1), T('C:z-', 0, 1)], [T('A:x+', 0, 0), T('A:x+', 0, 1), T('B:x-', 0, 0), T('B:x-', 0, 1)]],
     bot: { hints: [['A', 'A:z+', 1], ['A', 'B:z+', 1], ['A', 'F:z+', 1], ['A', 'C:z+', 1], ['A', 'A:z+', 1], ['A', 'B:z+', 1], ['A', 'F:z+', 1], ['A', 'C:z+', 1], ['A', 'F:z+', 1], ['A', 'C:z+', 1], ['A', 'A:x-', 1]] }, d: 1 },
   // 11 R · LESSON 4 (relief): SEQUENCE, blast in steps. "Shell Hall" (F05): the hall on its podium of piers, a timber market shed across
   // its front, a school and a hospital at its ends. Blast 1: the shed. Blast 2: the front piers of the podium, now in sight: the hall
@@ -255,7 +266,8 @@ const LEVELS = [
     parts: [SHELL('A', 0, 0),
       M('S', 0, [{ f: 2, cx: 5, cz: 2, mat: 'wood', skin: 'alt' }], { bay: 3.6, fh: 3.2, z: 11.6 })],
     keeps: KT(['school', 'hospital'], [K(-14.2, 0, 2, 2, 3), K(14.2, 0, 2, 2, 3)]), keep: KEEP('the school'),
-    charges: { tnt: 7 }, target: 0.85, yaw: 0.55, hint: 'S:z+', tip: 'Clear the shed,\nthen the hall.', ftip: 'Shed first. Then the piers.',
+    // U-5 (20/11): TNT 7 -> 6 (expert 6, 0 spare)
+    charges: { tnt: 6 }, target: 0.85, yaw: 0.55, hint: 'S:z+', tip: 'Clear the shed,\nthen the hall.', ftip: 'Shed first. Then the piers.',
     sol: [T('S:z+', 0, 0), T('S:z+', 0, 4)],
     solW: [[T('S:z+', 0, 0), T('S:z+', 0, 4)], [T('A:z+', 0, 0), T('A:z+', 0, 1), T('A:z+', 0, 2), T('A:z+', 0, 3)]],
     lesson: { check: [[T('S:z+', 0, 0), T('S:z+', 0, 4), T('A:z+', 1, 0), T('A:z+', 1, 1), T('A:z+', 1, 2), T('A:z+', 1, 3), T('A:z+', 1, 4)]] },

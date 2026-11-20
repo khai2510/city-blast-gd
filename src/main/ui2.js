@@ -202,7 +202,7 @@ window.__blast.ui2 = {
 //     real insets). Runs even with ?ui2=0 / ?safe=0 so the old layout can be shot under the same insets. No ?sa = nothing changes.
 //  SA1-SA3 below run with ui2 on, unless ?safe=0 (= the layout before this section, for before / after shots). Audit (14/11, 4 iPhones):
 //     the top row already sits under the inset (uiclean --ut, pause >= inset + 2) and nothing is under the island / notch; the bottom
-//     controls were 4-6 pt from the home-indicator zone. Figma: page "Safe areas (14/11)" in <figma-file>.
+//     controls were 4-6 pt from the home-indicator zone. Figma: page "Safe areas (14/11)" in ZrGEsdJfokXjKgZrZroJ6y.
 //  SA1 play: the bottom stack (tray, TNT badge, BLAST) rises so BLAST clears the home-indicator zone by >= 8 pt (only when there is one:
 //      min(6px, inset) = 0 on iPhone SE / Android without an inset).
 //  SA2 Home / Map tab bar: the bar still bleeds to the bottom edge; its tabs (and the gold plate) sit >= 8 pt above the indicator zone.

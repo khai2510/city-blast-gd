@@ -169,7 +169,7 @@ Câu chuyện chung của cả gói là **nổ từ từ, mỗi lần nổ có m
 | **2** | **Ngắm hướng đổ:** quật tháp lên toà đích mà TNT không phá được | tip, **hit7** | tháp canh pháo đài | đổ sai hướng (về 3 phía còn lại) thì < 80% |
 | 3 ✅ | **Tránh toà xanh:** nổ từng ít một, kéo toà đổ ra xa toà xanh | keep6 sát bên, tip | nhà hát kiểu Pháp thuộc | oneWave và "nổ to một lần" đều làm hư toà xanh nên thua; nổ từng phần thì thắng |
 | 4 ✅ | **Đổ dây chuyền:** đổ toà đầu, nó quật toà thứ hai, toà thứ hai quật toà thứ ba | hit7 ở chân các toà sau, tip | dãy nhà phố cổ | bắt đầu sai đầu dãy thì không thắng |
-| 5 | **Bóc vỏ thấy lõi:** vỏ ngoài che lõi; lõi mỗi lần nổ chỉ bóc một lớp | layer7, che khuất | hội trường mái vỏ | lõi phải qua ≥ 3 lần nổ |
+| 5 ✅ | **Bóc vỏ thấy lõi:** vỏ ngoài che lõi; lõi mỗi lần nổ chỉ bóc một lớp | layer7, che khuất | hội trường mái vỏ | lõi phải qua ≥ 3 lần nổ |
 | 6 | **Tổng hợp:** kíp nổ chỉ có n chỗ, có toà xanh, có khối phải rơi trước | cap7, keep6, drop7 | thành cổ, cổng pháo đài | mọi bài trên |
 
 Thứ tự công trình có thể đổi ở bước 1 của từng màn, nhưng bài học giữ nguyên.
