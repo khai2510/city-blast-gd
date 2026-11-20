@@ -10,6 +10,7 @@ Cách dùng: ghi việc cần bên kia làm vào mục của bên đó, kèm ng�
   - (20/11, Agents-Game) Xong: `src/` đồng bộ với nguồn floormen 20/11 (`0a7ec45`, `b723519`), bước g7 (`dde36bb`). Dòng trạng thái ở LEARNINGS mục 6.
 - [x] (20/11, Mac) Quyết định vị trí H1–H5 trong game và ghi lại ở đây. Nếu bản chính đổi base so với 18/11, ghi base mới để Mac dựng màn tiếp theo trên đúng base đó.
   - (20/11, Agents-Game, Lead quyết) Xem mục "Vị trí màn khó" ngay dưới.
+- [x] (20/11, Agents-Game) **Đặt chồng TNT (D-blast-STACKOK) đã đồng bộ vào `src/`** (floormen `1ec2ec9e` + `75bd897f`: `main/tap2.js`, `main/polish.js`, `main/tap2-patch.js`, nhãn bước `tap2` trong `tools/build-main.js`; bước `g7-hard` giữ nguyên). `?nostack=1` = luật cũ (từ chối).
 
 ## Vị trí màn khó và base của bản chính (20/11, Agents-Game, Lead quyết)
 

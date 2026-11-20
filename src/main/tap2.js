@@ -6,7 +6,10 @@
   //      piece's member; no snap to thin columns, no jump from a pane to the pier behind, no forgiving rings (feel Q2 off), no
   //      lower-third height snap). Bots / the test API keep their own placement (determinism unchanged).
   //   T2 placed TNT is permanent: no tap-to-select, no x button, no undo, no move.
-  //   T3 a tap on / within 24 px of a placed TNT does nothing (no stacking).
+  //   T3 (D-blast-STACKOK, Owner 20/11, replaces D-blast-NOSTACK) a tap on / next to a placed TNT places another one: stacking is
+  //      allowed, any number per member. A TNT tapped onto a member that already holds a live one near that spot is drawn
+  //      STACK_PX (20 px, >= 16 px apart on screen) along the member's face (it stays on the member: same contact distance, same damage), so 2+ charges show.
+  //      ?nostack=1 = the old rule (a tap on a member holding an unfired TNT does nothing; main/polish.js R20 T1 per member).
   //   T4 double tap (2 taps <= 300 ms, <= 24 px apart) = a TNT there (once: the first tap already placed it) + BLAST every placed TNT
   //      (the same call as the BLAST button). Double tap no longer resets the camera; BLAST still does.
   //   T5 L1 has no BLAST button (the tutorial teaches the double tap); BLAST shows from L2. Boosters keep their own flows.
@@ -23,15 +26,15 @@
   (function(){
     var Qt = new URLSearchParams(location.search), OFF = Qt.get("tap2") === "0";
     var T2 = { on:!OFF, exact:false, dbl:0, single:0, ignored:0, blasts:0, log:[], last:null,
-      street:!OFF && Qt.get("street") !== "1", lot:!OFF && Qt.get("lot") !== "1", coin:!OFF && Qt.get("coin") !== "0", soon:!OFF && Qt.get("soon") !== "1" };
+      stack:!OFF && Qt.get("nostack") !== "1", stacks:0, street:!OFF && Qt.get("street") !== "1", lot:!OFF && Qt.get("lot") !== "1", coin:!OFF && Qt.get("coin") !== "0", soon:!OFF && Qt.get("soon") !== "1" };
     var DBL_MS = 300, DBL_PX = 24, NEAR_PX = 24;
     var dblMs = function(){ return DBL_MS; };   // main/polish.js X9 (UX-9): L1 outside the lesson = 400 ms, via api.setDblMs
     var t2Pick = function(){ return null; }, t2NoBlast = function(){ return false; }, syncNB = function(){}, tutL1 = function(){ return false; }, tutDone = function(){ return true; }, tutStep = function(){}, tutPop = function(){}, tutRef = function(){ return false; };
     var TUT_DBL = { ms:600, px:40 };   // L1 teach only: a beginner's slower / looser double tap still counts (TUTORIAL-STATUS.md)
     var api = window.__blast.tap2 = {
       on:function(){ return T2.on; },
-      flags:function(){ return { on:T2.on, street:T2.street, lot:T2.lot, coin:T2.coin, soon:T2.soon, dblMs:DBL_MS, dblPx:DBL_PX, nearPx:NEAR_PX }; },
-      stats:function(){ return { dbl:T2.dbl, single:T2.single, ignored:T2.ignored, blasts:T2.blasts, ringOff:T2.ringOff || 0, log:T2.log.slice(-20) }; },
+      flags:function(){ return { on:T2.on, stack:T2.stack, street:T2.street, lot:T2.lot, coin:T2.coin, soon:T2.soon, dblMs:DBL_MS, dblPx:DBL_PX, nearPx:NEAR_PX }; },
+      stats:function(){ return { dbl:T2.dbl, single:T2.single, ignored:T2.ignored, stacks:T2.stacks, blasts:T2.blasts, ringOff:T2.ringOff || 0, log:T2.log.slice(-20) }; },
       // screen position of every unfired placed TNT (tools: double tap a placed TNT = BLAST without placing)
       charges:function(){ return charges.filter(function(c){ return !c.fired; }).map(function(c){ var s = toScreen(c.mesh.position); return { x:s.x, y:s.y, on:s.on, p:c.mesh.position.toArray(), host:blocks.indexOf(c.host) }; }); },
       noBlast:function(){ return t2NoBlast(); },
@@ -115,7 +118,8 @@
       // "on / near a placed TNT": within NEAR_PX of it on the SAME member the finger is on, or within NEAR_ANY px whatever is under the
       // finger (two legs side by side are ~16 px apart in an opening view: a tap on the next leg must still place)
       var NEAR_ANY = 10;
-      var nearHook = null;   // main/polish.js R20 (D-blast-NOSTACK per member): api.setNear(fn) replaces the pixel rule below
+      // STACKOK: placement no longer asks this (only ?nostack=1 does); the L1 / L2 hand magnet and the L1 slow double tap still do
+      var nearHook = null;   // main/polish.js R20 (per member): api.setNear(fn) replaces the pixel rule below
       api.setNear = function(f){ nearHook = typeof f === "function" ? f : null; };
       var nearCharge = function(x, y){ if(nearHook) return nearHook(x, y); var h = null, hd = false;
         for(var q=0;q<charges.length;q++){ var c = charges[q]; if(c.fired || (c.def && c.def.kind === "wreck")) continue;
@@ -124,11 +128,33 @@
           if(d <= NEAR_PX){ if(!hd){ hd = true; h = t2Pick(x, y); } if(!h || h.block === c.host) return c; } }
         return null; };
       var logT = function(s){ T2.log.push(s); if(T2.log.length > 60) T2.log.shift(); };
+      // STACKOK draw: a TNT on a member that holds a live one within one step of the tap point goes one step up along the face it was
+      // tapped on (sideways on a top face; down / the other way when the member ends), clamped onto the member, so no charge hides in
+      // another. Player taps only: the bots / test API place through placeOn, unchanged (determinism).
+      // The step is STACK_PX on screen (>= 0.35 m); "free" is measured on screen too (a face seen at a slant shows less than the step).
+      var STACK_PX = 20, STACK_FREE = 16, _sv = new THREE.Vector3(), _sw = new THREE.Vector3();
+      var stackPt = function(b, p, n){
+        var live = charges.filter(function(c){ return !c.fired && c.host === b && !(c.def && c.def.kind === "wreck"); });
+        if(!live.length) return p;
+        var d = Math.max(1, camera.position.distanceTo(p)), pxm = VH/(2*Math.tan(camera.fov*Math.PI/360)*d), step = Math.max(0.35, STACK_PX/pxm);
+        var onM = nearestPoint(b, p, _sv).distanceTo(p) < 0.05, ls = live.map(function(c){ return toScreen(c.mesh.position); });
+        var free = function(q){ _sw.copy(q).addScaledVector(n, 0.18); var s = toScreen(_sw); for(var i=0;i<ls.length;i++) if(Math.hypot(ls[i].x - s.x, ls[i].y - s.y) < STACK_FREE) return false; return true; };
+        if(free(p)) return p;
+        var up = new THREE.Vector3(0, 1, 0), t = up.clone().addScaledVector(n, -n.dot(up));
+        var side = new THREE.Vector3().setFromMatrixColumn(camera.matrixWorld, 0); side.addScaledVector(n, -n.dot(side));
+        var dirs = [];
+        if(t.lengthSq() > 0.09) dirs.push(t.normalize(), t.clone().negate());
+        if(side.lengthSq() > 0.09){ side.normalize(); dirs.push(side, side.clone().negate()); }
+        for(var k=1;k<=8;k++) for(var j=0;j<dirs.length;j++){ var q = p.clone().addScaledVector(dirs[j], step*k); if(onM) q = nearestPoint(b, q, new THREE.Vector3()); if(free(q)) return q; }
+        return p;
+      };
+      api.stackPx = function(){ return STACK_PX; };
       var placeAt = function(x, y){
         var h = t2Pick(x, y);
         if(!h){ tapRing(x, y); snd("ui_tap", { gain:0.4 }); if(levelIdx !== 0) toast("Tap a building"); return "miss"; }
         if(h.block.keep){ tapRing(x, y); toast("Protected! Hands off."); snd("protected_hit"); pulseShields(h.block.P, 0.5); return "keep"; }   // 18/11 (UX-30 / GD-28): + the tap ring (the toast is let through in a level: uiclean NUDGE)
-        T2.exact = true; var r; try{ r = placeCharge(h.block, h.point, h.normal); } finally { T2.exact = false; }
+        var pt = T2.stack ? stackPt(h.block, h.point, h.normal) : h.point;
+        T2.exact = true; var r; try{ r = placeCharge(h.block, pt, h.normal); } finally { T2.exact = false; }
         if(r === "empty"){ tapRing(x, y); if(!t2NoBlast()) toast("Tap BLAST!"); }
         return r;
       };
@@ -144,15 +170,16 @@
         if(dbl){
           T2.last = null; T2.dbl++;
           var r2 = "first";
-          if(!L0.placed && !nearCharge(x, y)) r2 = placeAt(x, y);   // the first tap placed nothing here: the double tap places now
+          if(!L0.placed && (T2.stack || !nearCharge(x, y))) r2 = placeAt(x, y);   // the first tap placed nothing here: the double tap places now (STACKOK: a TNT already there does not stop it; a placing first tap is never repeated)
           logT("dbl:" + r2 + ":" + placedCount());
           if(placedCount() > 0){ T2.blasts++; bl0(); }
           return;
         }
         var cur = T2.last = { t:t, x:x, y:y, placed:false };
-        if(nearCharge(x, y)){ T2.ignored++; tapRing(x, y); logT("near" + (L0 ? ":" + Math.round(t - L0.t) : "")); return; }   // NOSTACK (18/11: + the tap ring, a tap that places nothing)
+        var onT = nearCharge(x, y);
+        if(onT && !T2.stack){ T2.ignored++; tapRing(x, y); logT("near" + (L0 ? ":" + Math.round(t - L0.t) : "")); return; }   // ?nostack=1: the old NOSTACK reject (18/11: + the tap ring, a tap that places nothing)
         T2.single++;
-        var r = placeAt(x, y); cur.placed = r === "ok"; logT("tap:" + r);
+        var r = placeAt(x, y); cur.placed = r === "ok"; if(onT && r === "ok") T2.stacks++; logT((onT ? "stack:" : "tap:") + r + (onT && L0 ? ":" + Math.round(t - L0.t) : ""));   // a stack logs the gap since the last tap (a double tap that came too slow)
       };
       // T5 + the HUD class per level
       t2NoBlast = function(){ return screen === "game" && levelIdx === 0 && !manual; };
@@ -181,7 +208,7 @@
         var h = t2Pick(m.pt.x, m.pt.y); if(!h || h.block !== m.b || nearCharge(m.pt.x, m.pt.y)) return null;
         if(!dry){ T2.mag++; logT("mag:" + Math.round(d)); } return { x:m.pt.x, y:m.pt.y }; };
       // test hooks: the member a player tap at (x, y) would take a TNT on right now (magnet included; no TNT placed), and the magnet switch
-      api.tapTarget = function(x, y){ var mg = magnet(x, y, true), q = mg || { x:x, y:y }; if(nearCharge(q.x, q.y)) return { near:true, mag:!!mg, i:-1 };
+      api.tapTarget = function(x, y){ var mg = magnet(x, y, true), q = mg || { x:x, y:y }; if(!T2.stack && nearCharge(q.x, q.y)) return { near:true, mag:!!mg, i:-1 };
         var h = t2Pick(q.x, q.y); return { near:false, mag:!!mg, i:h ? blocks.indexOf(h.block) : -1, key:h ? h.block.key : null }; };
       api.magOn = function(on){ MAG.on = on !== false; return MAG.on; };
       api.mag = function(){ return { pt:MAG.pt ? { x:Math.round(MAG.pt.x), y:Math.round(MAG.pt.y) } : null, i:MAG.b ? blocks.indexOf(MAG.b) : -1, n:T2.mag, px:MAG_PX }; };
@@ -332,7 +359,7 @@
           var h = $("t2Hole"); h.classList.remove("no"); void h.offsetWidth; h.classList.add("no"); return;
         }
         // a beginner's SLOW double tap on the placed TNT (two taps on it, any pace) still blasts during the L1 lesson: a tap on a TNT
-        // does nothing else (NOSTACK), so a second one can only mean "blast"; never a dead end
+        // stacks one more TNT (STACKOK; it did nothing under NOSTACK), the next slow one means "blast"; never a dead end
         if(TUT.on && TUT.n > 0 && phase === "plan" && nearCharge(x, y)){ var tq = evT != null ? evT : performance.now();
           if(TUT.nearT && tq - TUT.nearT > (TUT_DBL.ms)){ evT = null; T2.last = null; TUT.nearT = 0; T2.log.push("tutSlowDbl"); T2.blasts++; bl0(); return; }
           TUT.nearT = tq; } else if(TUT.on) TUT.nearT = 0;

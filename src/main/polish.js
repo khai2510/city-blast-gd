@@ -647,9 +647,10 @@ P.r19disarm = disarm;
 
 // ================= Tester round 20/11 (feedback/2026-11-20/DIGEST.md fixes 1 + 2, group A, D-blast-NONEW: no new element; the
 // "Proposals for Owner" list is not built). ?r20=0 = none of it (A/B shots; the test probe below stays, it changes nothing).
-//  T1 (GD-42 / GD-45, enforces D-blast-NOSTACK) one TNT per MEMBER: a member that already holds an unfired TNT rejects another (the
-//     same tap ring as before); a different member takes it whatever the pixel distance (the 24 px / 10 px screen rule of tap2 T3
-//     rejected neighbouring steel legs 8-20 px apart and let a 2nd TNT onto the same member > 24 px away). Via tap2 api.setNear.
+//  T1 (GD-42 / GD-45) "on a TNT" = per MEMBER: the member under the finger holds an unfired TNT (was the 24 px / 10 px screen rule of
+//     tap2, which mixed up neighbouring steel legs 8-20 px apart). Via tap2 api.setNear. Since D-blast-STACKOK (20/11, replaces
+//     D-blast-NOSTACK) this no longer rejects a tap: tap2 places anyway (a stack) and only counts it; ?nostack=1 = the old reject
+//     (a member that already holds an unfired TNT takes no other; a different member takes it whatever the pixel distance).
 //  T2 (GD-43) a first-use spotlight that places (L3 Brick, L4 Concrete, L8 Steel): a tap OUTSIDE its ring on another valid member
 //     (not blue, not a member already holding TNT) places there and dismisses the hand (it was dropped silently). Via intro setPass.
 //  T3 (U-2) false "Tap a building": (a) a tap on hero dress that sits on the ground slab (the L3 tower porch, L9 plinths) returned
@@ -699,7 +700,7 @@ P.r20 = function(){ return { on:false }; };
 if(!R20.on) return;
 H.classList.add("r20");
 var T2a = window.__blast.tap2;
-// ---- T1 one TNT per member
+// ---- T1 "on a TNT" per member (the reject itself only with ?nostack=1: tap2 T3)
 function liveOn(b){ for(var q=0;q<charges.length;q++){ var c = charges[q]; if(c.fired || (c.def && c.def.kind === "wreck")) continue; if(c.host === b) return c; } return null; }
 if(T2a && T2a.setNear) T2a.setNear(function(x, y){ var h = pick(x, y); if(!h) return null; var c = liveOn(h.block); R20.near++; if(c) R20.nearSame++; else R20.nearOther++; return c; });
 // ---- T3 the pick: dress on the ground slab lets the ray through; a gap inside a building goes to the nearer side

@@ -17,4 +17,4 @@ const t = src.indexOf('<title>'); if (t < 0) { console.error('no <title>'); proc
 let out = src.replace(A, '\n' + fs.readFileSync(path.join(__dirname, 'tap2.js'), 'utf8').replace(/\s+$/, '') + A);
 out = out.slice(0, t) + MARK + out.slice(t);
 fs.writeFileSync(OUT, out);
-console.log('ok   T1 exact tap · T2 no removal · T3 no stacking · T4 double tap = TNT + BLAST · T5 no BLAST on L1 · H1/H2 L1/L2 hand · R1 no street rule · R2 no lot · R3 coins 10/20/30 · R4 coming-soon hidden  -> ' + path.basename(OUT));
+console.log('ok   T1 exact tap · T2 no removal · T3 stacking allowed (STACKOK; ?nostack=1 = old) · T4 double tap = TNT + BLAST · T5 no BLAST on L1 · H1/H2 L1/L2 hand · R1 no street rule · R2 no lot · R3 coins 10/20/30 · R4 coming-soon hidden  -> ' + path.basename(OUT));
