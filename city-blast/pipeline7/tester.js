@@ -326,6 +326,46 @@
     const keep = Math.round(100 * (T().collateral() || 0));
     return { log: __blast.lv7.log.filter(x => /dom7/.test(x)).join(','), seq: steps.map(s => s.part + (s.f[0] ? (s.f[0] > 0 ? '>' : '<') : (s.f[1] > 0 ? 'v' : '^'))).join(' '), pct: Math.round(r.pct * 100), keep, used, waves: waves.join('>'), notes: notes.join('; '), win: r.pct >= L.target && keep <= Math.round(100 * (L.keepMax || 0.05)) };
   }
-  window.P7 = { seqT, reach4, keepT, aim, oneWave, metrics, oneBomb, lazy, fair, massStanding, allFoot, footOnly, curve };
+
+  // ---- coreT (L05 "peel the shell, find the core"). mode 'core': blast the podium's ground walls/shop fronts (6 a blast,
+  // nearest the core first) until the core's ground piers can be tapped, then 1 TNT on every reachable core pier a blast
+  // until the tower's top drops 8 m, then clean up. mode 'shell': every blast, 6 TNT on what a player sees (facade posts,
+  // glass, walls, decks) of the tower, NEVER the core: must not win.
+  function coreT(idx, part, budget, mode, stop){ try{ return coreT0(idx, part, budget, mode, stop); }catch(e){ if(e && e.stop7) return { waves: e.stop7 }; throw e; } }
+  function coreT0(idx, part, budget, mode, stop){
+    fresh(idx); const L = LV()[idx]; let used = 0, r = { pct: 0 }; const waves = [], notes = [];
+    const fire = tag => { T().fire(); r = T().run(30); waves.push(tag + Math.round(r.pct * 100)); if(stop && waves.length >= stop) throw { stop7: waves.join('>') }; };
+    const isCore = b => /^(hrc|rc)$/.test(b.key) && Math.abs(b.sx - cx0) < 3 && Math.abs(b.sz - cz0) < 3;
+    const A0 = INF().filter(b => b.bid === part && !b.an); const cx0 = A0.reduce((a, b) => a + b.sx, 0) / A0.length, cz0 = A0.reduce((a, b) => a + b.sz, 0) / A0.length;
+    const top = () => Math.max(...INF().filter(b => b.bid === part && !b.dead && !b.an).map(b => b.y)), y0 = top();
+    if(mode === 'core'){
+      for(let w = 0; w < 4 && used < budget; w++){
+        const pk = reach4(), I = INF(); const cl = I.filter(b => b.bid === part && !b.dead && b.f === 0 && isCore(b));
+        if(cl.filter(b => pk.has(b.i)).length >= Math.min(2, cl.length)){ notes.push('core reachable after ' + w + ' peel'); break; }
+        const near = I.filter(b => tgt(b) && !b.dead && b.bid === part && pk.has(b.i) && b.f === 0 && !isCore(b) && b.h > 0.5).sort((a, b) => Math.hypot(a.x - cx0, a.z - cz0) - Math.hypot(b.x - cx0, b.z - cz0));
+        if(!near.length) break; const pick = []; for(const b of near){ if(pick.length >= Math.min(6, budget - used)) break; if(pick.some(u => Math.hypot(u.x - b.x, u.z - b.z) < 1.5)) continue; pick.push(b); }
+        pick.forEach(b => { T().charge('tnt', b.i, 0, 1, 0); used++; }); fire('peel');
+      }
+      for(let w = 0; w < 5 && used < budget; w++){
+        const pk = reach4(), cl = INF().filter(b => b.bid === part && !b.dead && b.f === 0 && isCore(b) && pk.has(b.i));
+        if(!cl.length){ notes.push('no core pier reachable'); break; }
+        cl.forEach(b => { if(used < budget){ T().charge('tnt', b.i, Math.sign(b.x - cx0) || 1, 0, 0); used++; } }); fire('core');
+        if(top() < y0 - 8) break;
+      }
+      notes.push('top ' + y0.toFixed(0) + '>' + top().toFixed(0));
+    }
+    const PC = {}; INF().filter(b => b.bid && !b.an).forEach(b => { const c = PC[b.bid] = PC[b.bid] || [0, 0, 0]; c[0] += b.sx; c[1] += b.sz; c[2]++; });
+    const coreOf = b => { const c = PC[b.bid]; if(!c) return 0; return (Math.abs(b.sx - c[0]/c[2]) < 2.2 && Math.abs(b.sz - c[1]/c[2]) < 2.2 && b.h > 1.2 && b.st) ? 1 : 0; };
+    for(let w = 0; w < 10 && used < budget && r.phase !== 'done'; w++){
+      const pk2 = reach4();
+      const left = INF().filter(b => tgt(b) && !b.dead && b.bid && pk2.has(b.i) && (b.st || b.y > 1.5) && b.h > 0.3 && !(mode === 'shell' && isCore(b))).sort((a, b) => mode === 'shell' ? (b.y - a.y) : ((coreOf(b) - coreOf(a)) || (b.st - a.st) || (LV7hard(b) - LV7hard(a)) || (Math.abs(a.x - cx0) < 3 && Math.abs(a.z - cz0) < 3 ? 0 : 0) || (b.h - a.h) || (b.m - a.m)));
+      if(!left.length) break;
+      const pick = []; for(const b of left){ if(pick.length >= Math.min(6, budget - used)) break; if(pick.some(u => Math.hypot(u.x - b.x, u.y - b.y, u.z - b.z) < 2.5)) continue; pick.push(b); }
+      pick.forEach(b => { const k = b.key === 'hrc' ? 1 : 1; for(let q = 0; q < k && used < budget; q++){ T().charge('tnt', b.i, 0, 1, 0); used++; } });
+      fire(mode === 'shell' ? 's' : 'c');
+    }
+    return { mode, pct: Math.round(r.pct * 100), used, waves: waves.join('>'), notes: notes.join('; '), win: r.pct >= L.target };
+  }
+  window.P7 = { coreT, seqT, reach4, keepT, aim, oneWave, metrics, oneBomb, lazy, fair, massStanding, allFoot, footOnly, curve };
 
 })();

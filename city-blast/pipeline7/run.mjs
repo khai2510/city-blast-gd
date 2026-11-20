@@ -42,18 +42,18 @@ const base = await S.pg.evaluate('__blast.lv7.base');
 const results = [];
 for(let k = 0; k < BPS.length; k++){
   const bp = BPS[k], idx = base + k, R = { id: bp.id, lv: idx + 1, name: bp.name, tier: bp.tier, sf: bp.sf, pattern: bp.pattern, story: bp.story, sfMetric: bp.sfMetric };
-  await S.pg.evaluate(`window.P7tap = ${!!(bp.json && (bp.json.keepRoutes || bp.json.seqRoutes))}`);
+  await S.pg.evaluate(`window.P7tap = ${!!(bp.json && (bp.json.keepRoutes || bp.json.seqRoutes || bp.json.coreTest))}`);
   R.metrics = await S.pg.evaluate(`JSON.stringify(P7.metrics(${idx}))`).then(JSON.parse);
   log(bp.id, 'metrics'); R.oneBomb = await S.pg.evaluate(`JSON.stringify(P7.oneBomb(${idx}, 18))`).then(JSON.parse);
   R.lazy = await S.pg.evaluate(`JSON.stringify(P7.lazy(${idx}))`).then(JSON.parse);
   log(bp.id, 'oneBomb/lazy done'); const open40 = await S.pg.evaluate(`P7.fair(${idx}, 40, 1).then(JSON.stringify)`).then(JSON.parse);
   R.fairOpen = open40;
   const [lo, hi] = RULE.spare[bp.tier];
-  R.tnt = (open40.win || (bp.json && (bp.json.aimFace || bp.json.keepRoutes || bp.json.seqRoutes))) ? (bp.tntStart || open40.used + lo + (bp.tier === 'N' ? 1 : 0)) : null;   // tntStart: a budget proven in an earlier run
+  R.tnt = (open40.win || (bp.json && (bp.json.aimFace || bp.json.keepRoutes || bp.json.seqRoutes || bp.json.coreTest))) ? (bp.tntStart || open40.used + lo + (bp.tier === 'N' ? 1 : 0)) : null;   // tntStart: a budget proven in an earlier run
   // confirm on 3 seeds; a capped player plays differently from the 40-TNT probe, so raise the budget one TNT at a time
   // (up to +6) until all 3 seeds win, then the verdicts check the spare band
   if(R.tnt){
-    for(let bump = 0; bump <= (bp.json && (bp.json.aimFace || bp.json.keepRoutes || bp.json.seqRoutes) ? 0 : 6); bump++){
+    for(let bump = 0; bump <= (bp.json && (bp.json.aimFace || bp.json.keepRoutes || bp.json.seqRoutes || bp.json.coreTest) ? 0 : 6); bump++){
       R.fair = [];
       for(const seed of [1, 2, 3]) R.fair.push(await S.pg.evaluate(`P7.fair(${idx}, ${R.tnt}, ${seed}).then(JSON.stringify)`).then(JSON.parse));
       if(R.fair.every(f => f.win) && Math.min(...R.fair.map(f => f.left)) >= lo) break;   // every seed wins AND keeps the tier's spare
@@ -65,7 +65,7 @@ for(let k = 0; k < BPS.length; k++){
   if(R.tnt){
     R.allFoot = await S.pg.evaluate(`JSON.stringify(P7.allFoot(${idx}, ${R.tnt}))`).then(JSON.parse);
     R.footOnly = await S.pg.evaluate(`JSON.stringify(P7.footOnly(${idx}, ${R.tnt}))`).then(JSON.parse);
-    R.oneWave = await S.pg.evaluate(`JSON.stringify(P7.oneWave(${idx}, ${R.tnt}, ${bp.json && (bp.json.keepRoutes || bp.json.seqRoutes) ? 'true' : 'false'}))`).then(JSON.parse);
+    R.oneWave = await S.pg.evaluate(`JSON.stringify(P7.oneWave(${idx}, ${R.tnt}, ${bp.json && (bp.json.keepRoutes || bp.json.seqRoutes || bp.json.coreTest) ? 'true' : 'false'}))`).then(JSON.parse);
     if(bp.json && (bp.json.keepRoutes || bp.json.seqRoutes)) R.oneWave.keep = await S.pg.evaluate('Math.round(100*__blast.test.collateral())');   // the whole budget in ONE blast (Khai 20/11)
   }
   // the lesson test (L.aimFace): tip the tower each way, then clean up; the right way must win, the 3 others must not
@@ -78,6 +78,9 @@ for(let k = 0; k < BPS.length; k++){
   if(bp.json && bp.json.seqRoutes){ R.keepT = [];
     for(const q of bp.json.seqRoutes.right) R.keepT.push(Object.assign({ right: 1, peel: '', face: '' }, await S.pg.evaluate(`JSON.stringify(P7.seqT(${idx}, ${JSON.stringify(q)}, ${R.tnt}))`).then(JSON.parse)));
     for(const q of bp.json.seqRoutes.wrong) R.keepT.push(Object.assign({ right: 0, peel: '', face: '' }, await S.pg.evaluate(`JSON.stringify(P7.seqT(${idx}, ${JSON.stringify(q)}, ${R.tnt}))`).then(JSON.parse))); }
+  if(bp.json && bp.json.coreTest){ const pt = JSON.stringify(bp.json.coreTest.part || 'A'); R.keepT = [];
+    R.keepT.push(Object.assign({ right: 1, peel: '', face: '', seq: 'core', keep: 0 }, await S.pg.evaluate(`JSON.stringify(P7.coreT(${idx}, ${pt}, ${R.tnt}, 'core'))`).then(JSON.parse)));
+    R.keepT.push(Object.assign({ right: 0, peel: '', face: '', seq: 'shell', keep: 0 }, await S.pg.evaluate(`JSON.stringify(P7.coreT(${idx}, ${pt}, ${R.tnt}, 'shell'))`).then(JSON.parse))); }
   // verdicts
   const v = [];
   if(R.oneBomb.pct >= RULE.oneBombPct || R.oneBomb.collapse >= RULE.oneBombCollapse) v.push(`ONE-BOMB ${R.oneBomb.pct}% / collapse ${R.oneBomb.collapse}% at ${R.oneBomb.at}`);
