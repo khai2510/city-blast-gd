@@ -132,20 +132,45 @@
       // tapped on (sideways on a top face; down / the other way when the member ends), clamped onto the member, so no charge hides in
       // another. Player taps only: the bots / test API place through placeOn, unchanged (determinism).
       // The step is STACK_PX on screen (>= 0.35 m); "free" is measured on screen too (a face seen at a slant shows less than the step).
-      var STACK_PX = 20, STACK_FREE = 16, _sv = new THREE.Vector3(), _sw = new THREE.Vector3();
+      // 21/11 (UX-62 / UX-63): never an occupied point. On a side face the pile goes UP first, then down, sideways last (sideways first
+      // only on a top face). When no step is free (a small member: a pier, a glass pane at the L3 zoom), the TNT goes on the free spot of
+      // the member's seen faces (the tapped one first) nearest above the top TNT of the pile (>= STACK_FREE px on screen from each TNT of the pile), still on the member; when even
+      // those faces have no such spot (a member under ~2 sprites on screen), the spot farthest from the pile. The host member, the normal and the damage are those of the tap.
+      var STACK_PX = 20, STACK_FREE = 16, _sv = new THREE.Vector3(), _sw = new THREE.Vector3(), _sq = new THREE.Quaternion();
+      T2.pile = 0;
       var stackPt = function(b, p, n){
         var live = charges.filter(function(c){ return !c.fired && c.host === b && !(c.def && c.def.kind === "wreck"); });
         if(!live.length) return p;
         var d = Math.max(1, camera.position.distanceTo(p)), pxm = VH/(2*Math.tan(camera.fov*Math.PI/360)*d), step = Math.max(0.35, STACK_PX/pxm);
         var onM = nearestPoint(b, p, _sv).distanceTo(p) < 0.05, ls = live.map(function(c){ return toScreen(c.mesh.position); });
-        var free = function(q){ _sw.copy(q).addScaledVector(n, 0.18); var s = toScreen(_sw); for(var i=0;i<ls.length;i++) if(Math.hypot(ls[i].x - s.x, ls[i].y - s.y) < STACK_FREE) return false; return true; };
+        var scr = function(q){ _sw.copy(q).addScaledVector(n, 0.18); return toScreen(_sw); };
+        var gap = function(q){ var s = scr(q), m = 1e9; for(var i=0;i<ls.length;i++) m = Math.min(m, Math.hypot(ls[i].x - s.x, ls[i].y - s.y)); return m; };
+        var free = function(q){ return gap(q) >= STACK_FREE; };
         if(free(p)) return p;
         var up = new THREE.Vector3(0, 1, 0), t = up.clone().addScaledVector(n, -n.dot(up));
         var side = new THREE.Vector3().setFromMatrixColumn(camera.matrixWorld, 0); side.addScaledVector(n, -n.dot(side));
-        var dirs = [];
-        if(t.lengthSq() > 0.09) dirs.push(t.normalize(), t.clone().negate());
-        if(side.lengthSq() > 0.09){ side.normalize(); dirs.push(side, side.clone().negate()); }
-        for(var k=1;k<=8;k++) for(var j=0;j<dirs.length;j++){ var q = p.clone().addScaledVector(dirs[j], step*k); if(onM) q = nearestPoint(b, q, new THREE.Vector3()); if(free(q)) return q; }
+        var vert = [], horz = [];
+        if(t.lengthSq() > 0.09) vert.push(t.normalize(), t.clone().negate());
+        if(side.lengthSq() > 0.09){ side.normalize(); horz.push(side, side.clone().negate()); }
+        var topFace = !vert.length, groups = topFace ? [horz] : [vert.slice(0, 1), vert.slice(1), horz];   // side face: up, then down, then sideways
+        for(var g=0;g<groups.length;g++) for(var k=1;k<=8;k++) for(var j=0;j<groups[g].length;j++){ var q = p.clone().addScaledVector(groups[g][j], step*k); if(onM) q = nearestPoint(b, q, new THREE.Vector3()); if(free(q)) return q; }
+        // no free step: a spot on the member's faces the camera sees (the tapped face first: the face whose local axis is nearest the normal)
+        var P0 = b.P || b.spawn, Q0 = b.Q, h = b.half; if(!P0 || !h) return p;
+        if(Q0) _sq.copy(Q0).invert(); else _sq.identity(); var ln = n.clone().applyQuaternion(_sq), ax0 = Math.abs(ln.x) >= Math.abs(ln.y) && Math.abs(ln.x) >= Math.abs(ln.z) ? 0 : Math.abs(ln.y) >= Math.abs(ln.z) ? 1 : 2, sg0 = ln.getComponent(ax0) < 0 ? -1 : 1;
+        var N = 10, top = null, best = null, bestG = -1, bestY = 1e9, pick2 = null, pickD = 1e9, lc = new THREE.Vector3(), fn = new THREE.Vector3(), cl = camera.position.clone().sub(P0).applyQuaternion(_sq);
+        ls.forEach(function(s){ if(s.on && (!top || s.y < top.y)) top = s; });
+        var aim = top ? { x:top.x, y:top.y - STACK_FREE } : scr(p);
+        for(var ax=0;ax<3;ax++) for(var sg=-1;sg<=1;sg+=2){
+          var own = ax === ax0 && sg === sg0; if(!own && sg*cl.getComponent(ax) <= h[ax]) continue;   // a face the camera does not see
+          var a1 = (ax + 1) % 3, a2 = (ax + 2) % 3;
+          for(var u=0;u<=N;u++) for(var v=0;v<=N;v++){
+            lc.set(0, 0, 0); lc.setComponent(ax, sg*h[ax]); lc.setComponent(a1, (u/N*2 - 1)*h[a1]*0.92); lc.setComponent(a2, (v/N*2 - 1)*h[a2]*0.92);
+            var q2 = lc.clone(); if(Q0) q2.applyQuaternion(Q0); q2.add(P0);
+            var s2 = scr(q2); if(!s2.on) continue; var g2 = gap(q2);
+            if(g2 >= STACK_FREE){ var dd = Math.hypot(s2.x - aim.x, s2.y - aim.y) + (top && s2.y > top.y ? 1000 : 0) + (own ? 0 : 8); if(dd < pickD){ pickD = dd; pick2 = q2; } }   // above the pile first, the tapped face first
+            if(g2 > bestG + 0.5 || (Math.abs(g2 - bestG) <= 0.5 && s2.y < bestY)){ bestG = g2; best = q2; bestY = s2.y; } } }
+        var r = pick2 || (bestG > 0.5 ? best : null);
+        if(r){ T2.pile++; logT("pile:" + Math.round(pick2 ? gap(r) : bestG)); return r; }
         return p;
       };
       api.stackPx = function(){ return STACK_PX; };
