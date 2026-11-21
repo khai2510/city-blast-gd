@@ -552,7 +552,7 @@
   "name": "Glass Spine",
   "bp": "L05",
   "tier": "SH",
-  "tntStart": 25,
+  "tntStart": 26,
   "f": 7,
   "kind": "scene",
   "hero": "A",
@@ -592,7 +592,7 @@
     "bg": 72,
     "ph": 4,
     "th": 4,
-    "n": 3,
+    "n": 2,
     "pod": 0,
     "noCore": 1,
     "hrc": false
@@ -605,7 +605,7 @@
     "bg": 73,
     "ph": 4,
     "th": 4,
-    "n": 3,
+    "n": 2,
     "pod": 0,
     "noCore": 1,
     "hrc": false
@@ -616,7 +616,7 @@
   },
   "tanks": [],
   "charges": {
-   "tnt": 26
+   "tnt": 27
   },
   "tip": "",
   "ftip": "Find what really holds it up.",
