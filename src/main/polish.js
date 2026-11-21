@@ -808,8 +808,64 @@ P.r20 = function(){ var bar = $("bbar"), wk = bar && bar.querySelector('[data-k=
 P.r20ux51 = ux51;
 })();
 
+// ================= R21 (uxui 21/11, group A): small UI. ?r21=0 = off
+//  UX-66 Pause works during a tutorial spotlight: while the spotlight dim is up, the HUD row sits above it (Pause at full opacity, the
+//        rest of the row dimmed as before and not tappable); Pause opens its sheet as usual and the dim, ring and glove step aside
+//        until Resume (UX-50, R20 above).
+//  UX-67 one filled button on the near-miss card: when a filled "+1 TNT" offer shows (rescue button or rewarded "+1 TNT Free"),
+//        Try Again is a quiet button (cream fill, navy 22 px label, 292 x 56, no gloss). Green stays the offer's colour.
+//  UX-68 the fast-forward pill in the collapse: 48 px tall hit area, the glyph + a "Skip ahead" label (16 px), aria-label, and it
+//        sits 8 px above the chip row instead of on the TNT chip's spot. A tap on it fast-forwards like a tap on the world.
+//  UX-69 Shop sheet: the badges ("ONE-TIME", "POPULAR", "BEST VALUE") and the pack timer at 16 px.
+(function(){
+var R21 = { on:QS.get("r21") !== "0", tut:0, quiet:0, ff:null, log:[] };
+P.r21 = function(){ return { on:R21.on, tut:R21.tut, quiet:R21.quiet, ff:R21.ff, tutNow:document.body.classList.contains("r21tut"), log:R21.log.slice() }; };
+if(!R21.on) return;
+H.classList.add("r21");
+function lg21(s){ R21.log.push(s); if(R21.log.length > 30) R21.log.shift(); lg(s); }
+var css = [
+  // UX-66 the HUD row above the spotlight dim (z 94); only Pause is live and full strength
+  "html.r21 body.r21tut #top{z-index:95!important}",
+  "html.r21 body.r21tut #top > *:not(#pauseBtn){pointer-events:none!important;filter:brightness(.45)!important}",
+  "html.r21 body.r21tut #top #pauseBtn{opacity:1!important}",
+  // UX-67 the quiet Try Again under a filled offer
+  "html.r21 body #result #rNext.r21quiet{background:#FFF8E1!important;background-image:none!important;border:3px solid #0E2466!important;box-shadow:none!important;filter:none!important;color:#0E2466!important;" +
+    "-webkit-text-stroke:0!important;text-shadow:none!important;font:400 22px/1 var(--ul-fr,'Lilita One'),system-ui,sans-serif!important;width:292px!important;max-width:calc(100vw - 48px)!important;min-width:0!important;height:56px!important;min-height:56px!important;border-radius:20px!important}",
+  "html.r21 body #result #rNext.r21quiet::before,html.r21 body #result #rNext.r21quiet::after{display:none!important}",
+  // UX-68 the fast-forward pill
+  "html.r21 body #ff{min-height:48px!important;min-width:48px!important;box-sizing:border-box!important;padding:0 16px 0 12px!important;gap:6px!important;border-radius:24px!important;justify-content:center!important;pointer-events:auto!important;cursor:pointer;" +
+    "font:900 16px/1 Nunito,system-ui,sans-serif!important;color:#fff!important;background:rgba(43,33,64,.82)!important;bottom:var(--r21ffb, calc(var(--bot) + 140px))!important}",
+  "html.r21 body #ff.hidden{display:none!important}",
+  // UX-69 Shop badges + timer
+  "html.r21 body .sh2Bdg{font-size:16px!important}",
+  "html.r21 body .sh2Bdg.tmr img{width:16px!important;height:16px!important}"
+].join("\n");
+var st = document.createElement("style"); st.id = "polR21Css"; st.textContent = css; document.head.appendChild(st);
+// UX-66
+var dim = $("inDim"), pm = $("pauseM");
+function syncTut(){ var on = !!dim && !dim.classList.contains("hidden") && !(pm && !pm.classList.contains("hidden"));
+  if(on !== document.body.classList.contains("r21tut")){ document.body.classList.toggle("r21tut", on); if(on){ R21.tut++; lg21("tutPause"); } } }
+[dim, pm].forEach(function(e){ if(e) new MutationObserver(syncTut).observe(e, { attributes:true, attributeFilter:["class"] }); }); syncTut();
+// UX-67
+function filled(id){ var e = $(id); if(!e || e.classList.contains("hidden") || e.classList.contains("r19sec") || e.classList.contains("polNo") || e.disabled) return false;
+  var r = e.getBoundingClientRect(), cs = getComputedStyle(e); return r.width > 0 && r.height > 0 && cs.display !== "none" && cs.visibility !== "hidden"; }
+function quiet(){ var nx = $("rNext"); if(!nx) return; var r = lastResult;
+  var q = !!(r && !r.ok && screen === "result" && !nx.classList.contains("sh2Sec2") && (filled("rRescue") || filled("sh2Rv")));
+  if(q !== nx.classList.contains("r21quiet")){ nx.classList.toggle("r21quiet", q); if(q){ R21.quiet++; lg21("quiet"); } } }
+var sr21 = showResult; showResult = function(){ var o = sr21.apply(this, arguments); try{ quiet(); setTimeout(quiet, 60); setTimeout(quiet, 400); }catch(e){ console.error("polish r21", e); } return o; };
+var res = $("result"); if(res) new MutationObserver(function(){ quiet(); }).observe(res, { attributes:true, subtree:true, attributeFilter:["class", "disabled"] });
+// UX-68
+var ff = $("ff");
+if(ff){ ff.setAttribute("role", "button"); ff.setAttribute("aria-label", "Skip ahead"); ff.setAttribute("tabindex", "0");
+  if(!ff.querySelector(".r21l")){ var lb = document.createElement("span"); lb.className = "r21l"; lb.textContent = "Skip ahead"; ff.appendChild(lb); }
+  var place = function(){ var bt = $("bottom"), top = 1e9; if(bt) [].forEach.call(bt.querySelectorAll("*"), function(e){ var r = e.getBoundingClientRect(); if(r.width > 8 && r.height > 8 && r.bottom > 0) top = Math.min(top, r.top); });
+    if(top < 1e9){ H.style.setProperty("--r21ffb", Math.round(innerHeight - top + 8) + "px"); } var fr = ff.getBoundingClientRect(); R21.ff = { w:Math.round(fr.width), h:Math.round(fr.height), bottom:Math.round(fr.bottom), chipTop:top < 1e9 ? Math.round(top) : null }; };
+  new MutationObserver(function(){ if(!ff.classList.contains("hidden")){ place(); setTimeout(place, 50); } }).observe(ff, { attributes:true, attributeFilter:["class"] });
+  ff.addEventListener("click", function(e){ e.stopPropagation(); if(phase === "boom" || phase === "settle") fastForward(); else if(phase === "done" && screen === "game") skipToResult = true; lg21("ffTap"); }); }
+})();
+
 window.__blast.polish = {
-  prot:function(){ return P.prot(); }, r18:function(){ return P.r18(); }, r19:function(){ return P.r19 ? P.r19() : { on:false }; }, r19skew:function(v){ return P.r19skew ? P.r19skew(v) : null; }, r19disarm:function(w){ return P.r19disarm ? P.r19disarm(w) : null; }, r19copy:function(){ return P.r19copy ? P.r19copy() : null; }, r20:function(){ return P.r20 ? P.r20() : { on:false }; }, r20probe:function(st){ return P.r20probe ? P.r20probe(st) : null; }, r20ux51:function(){ return P.r20ux51 ? P.r20ux51() : null; }, kdDrift:function(){ return P.kdDrift(); }, kdHosts:function(){ return P.kdHosts(); }, pads:function(){ return P.pads(); }, kWord:function(s, tip){ return kWord(s, tip); },
+  prot:function(){ return P.prot(); }, r18:function(){ return P.r18(); }, r19:function(){ return P.r19 ? P.r19() : { on:false }; }, r19skew:function(v){ return P.r19skew ? P.r19skew(v) : null; }, r19disarm:function(w){ return P.r19disarm ? P.r19disarm(w) : null; }, r19copy:function(){ return P.r19copy ? P.r19copy() : null; }, r20:function(){ return P.r20 ? P.r20() : { on:false }; }, r20probe:function(st){ return P.r20probe ? P.r20probe(st) : null; }, r21:function(){ return P.r21 ? P.r21() : { on:false }; }, r20ux51:function(){ return P.r20ux51 ? P.r20ux51() : null; }, kdDrift:function(){ return P.kdDrift(); }, kdHosts:function(){ return P.kdHosts(); }, pads:function(){ return P.pads(); }, kWord:function(s, tip){ return kWord(s, tip); },
   mapTitle:mapTitle, goal:function(){ var mp = $("mPass"); if(!mp) return null; var cs = getComputedStyle(mp, "::after"); return { text:mp.getAttribute("data-pol"), fs:parseFloat(cs.fontSize), display:cs.display, content:cs.content }; },
   on:true, tf6:TF6, log:function(){ return P.log.slice(); },
   pill:function(){ return { lock:P.pill.lock, pend:P.pill.pend, shown:P.pill.shown, text:ct ? ct.textContent : null, bank:save.coins, forced:P.pill.forced }; },
