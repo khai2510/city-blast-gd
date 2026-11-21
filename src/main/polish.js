@@ -809,9 +809,10 @@ P.r20ux51 = ux51;
 })();
 
 // ================= R21 (uxui 21/11, group A): small UI. ?r21=0 = off
-//  UX-66 Pause works during a tutorial spotlight: while the spotlight dim is up, the HUD row sits above it (Pause at full opacity, the
-//        rest of the row dimmed as before and not tappable); Pause opens its sheet as usual and the dim, ring and glove step aside
-//        until Resume (UX-50, R20 above).
+//  UX-66 Pause works during a tutorial spotlight (New material / obstacle: L3 brick, L4 concrete, L5 blue, L8 steel...): while the
+//        spotlight dim is up, the HUD row sits above it (Pause at full opacity, the rest of the row dimmed as before and not tappable);
+//        Pause opens its sheet as usual and the dim, ring and glove step aside until Resume (UX-50, R20 above). The booster forced
+//        first use (D-blast-INTRO-BTF: one tap on the chip, everything else blocked) keeps Pause blocked: that step is one tap long.
 //  UX-67 one filled button on the near-miss card: when a filled "+1 TNT" offer shows (rescue button or rewarded "+1 TNT Free"),
 //        Try Again is a quiet button (cream fill, navy 22 px label, 292 x 56, no gloss). Green stays the offer's colour.
 //  UX-68 the fast-forward pill in the collapse: 48 px tall hit area, the glyph + a "Skip ahead" label (16 px), aria-label, and it
@@ -843,7 +844,9 @@ var css = [
 var st = document.createElement("style"); st.id = "polR21Css"; st.textContent = css; document.head.appendChild(st);
 // UX-66
 var dim = $("inDim"), pm = $("pauseM");
-function syncTut(){ var on = !!dim && !dim.classList.contains("hidden") && !(pm && !pm.classList.contains("hidden"));
+var IA21 = window.__blast.intro;
+function boosterStep(){ try{ var st = IA21 && IA21.state ? IA21.state() : null, id = st && st.forced; if(!id) return false; return IA21.sched().some(function(e){ return e.id === id && e.kind === "booster"; }); }catch(e){ return false; } }
+function syncTut(){ var on = !!dim && !dim.classList.contains("hidden") && !(pm && !pm.classList.contains("hidden")) && !boosterStep();
   if(on !== document.body.classList.contains("r21tut")){ document.body.classList.toggle("r21tut", on); if(on){ R21.tut++; lg21("tutPause"); } } }
 [dim, pm].forEach(function(e){ if(e) new MutationObserver(syncTut).observe(e, { attributes:true, attributeFilter:["class"] }); }); syncTut();
 // UX-67
