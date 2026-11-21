@@ -20,6 +20,29 @@ File này là **bộ nhớ chung** của mọi máy và mọi agent làm màn Ci
   - không bao giờ đặt "cho vừa chỗ trống".
 - Công trình: **lấy cảm hứng, không sao chép** (`levels-gd/LANDMARKS.md`). Không trùng các landmark đã có trong game.
 
+## 1b. Toà phụ và bố cục: luật cụ thể (rút ra từ H2–H5, góp ý Khai 20/11)
+
+**Chất lượng toà phụ**
+- Toà phụ **cùng chuẩn với toà chính**: builder riêng, kết cấu thật (cột, sàn, vách), mái thật, cửa và đèn, có **nội thất** để phá vỏ thì có cái để thấy (H3: màn nhung đỏ, ghế, đèn chùm; H2: bàn ghế trong Đại sảnh). Không dùng hộp xếp chồng.
+- **Mỗi toà phụ một vai**: đích của chuỗi (H2 Đại sảnh), lá chắn che chân an toàn (H3 sảnh và khán phòng), mắt xích domino (H4 dãy nhà), bối cảnh bị chuỗi đè (H5 nhà kính). Không có toà nào chỉ để lấp chỗ.
+- **Toà phụ không lặp câu đố của toà chính.** H5 v1: hai nhà kính cũng có lõi giấu trong bệ, nên tốn bom gấp ba mà không dạy thêm gì. Đã đổi thành nhà kính thường, dễ phá.
+- Mái và đầu hồi phải là **khối thật**; decor nằm sát, trong đường bao của khối nó gắn vào (xem mục 5 "mái lơ lửng").
+
+**Bố cục**
+- **Một trục**, xếp theo kiến trúc thật: nhà hát thì sảnh, khán phòng, tháp sân khấu; tháp kính thì bệ đến thân rồi vương miện; dãy phố thì tháp ở giữa quảng trường.
+- **Đối xứng qua trục**: toà xanh và toà phụ thành cặp **cùng cỡ, cùng chiều cao, cùng khoảng cách** (H3: bệnh viện và trường học hai bên tháp, cùng 4 tầng, cách 3.5 m; H4: trường học và bệnh viện hai đầu; H5: hai nhà kính giống hệt nhau).
+- **Mép thẳng hàng**: mặt tiền một dãy thẳng một hàng; mép trước toà xanh thẳng với tường sau khán phòng (H3).
+- **Nhịp đều**: cùng bề ngang, khe đều. Chiều cao đổi đều từng bậc (H4: 5, 4, 3 tầng về phía tháp; mỗi nhà khác nhà bên một tầng).
+- **Camera gần chính diện** (`yaw` khoảng 0.08–0.12) để thấy trục. Toà xanh phải **lộ ra ở góc mở màn**: thu hẹp toà chính (H3: sảnh 16 m thay vì 22 m) hoặc đặt toà xanh ra ngoài bề ngang toà chính.
+
+**Khoảng cách do vật lý quyết định, rồi mới làm đều**
+- **Khe giữa các nhà ≥ 2.5 m** để chân giữa chạm được (khe 1–2 m: chân giữa bị chân góc che từ mọi góc).
+- **Domino**: chiều cao nhà > khoảng cách tới nhà kế (để chạm), nhưng < khoảng cách nhảy qua quảng trường (để chuỗi dừng đúng chỗ). H4: nhà 14 m, khe tới tháp 4 m, qua quảng trường 13 m.
+- **Toà xanh**: đủ gần để đổ sai hướng là trúng (H3: 3.5 m cạnh tháp 22 m), nhưng không đứng chắn đường đổ đúng.
+- **Chân an toàn**: phải bị che từ **cả 4 góc xoay camera**, không chỉ góc mở màn. Lấp khe nhìn trộm bằng cách cho mép toà khác thẳng hàng (H3: dịch toà xanh lên thẳng tường sau khán phòng).
+
+**Kiểm bằng mắt trước khi chạy tester**: `shotlv.mjs` (ảnh mở màn), `closeup.mjs` (cận cảnh mái, khe hở), bản vẽ Figma có ghi "1 m = N px".
+
 ## 2. Quy trình 4 bước (mỗi màn một lượt, xong màn nào gửi Khai màn đó)
 
 1. **GD spec** (`Lxx/1-GD-SPEC.md`): bài học, hình khối, vật liệu, vai từng toà, khoảnh khắc nhận ra, wow, bảng tester.
