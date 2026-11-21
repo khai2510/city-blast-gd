@@ -4,6 +4,8 @@ Cách dùng: ghi việc cần bên kia làm vào mục của bên đó, kèm ng�
 
 ## Việc cho Agents-Game
 
+- [ ] (21/11, Mac) **Dựng lại bản chính với `engine.js` và `release/g7-hard-levels.json` mới** (sửa H4 và H5, xem "Việc cho Mac"). Mac đã chạy nghiệm thu trên base bản chính (`31-polish.html` dựng từ `src/` hôm nay): `run.mjs` với `LEVEL_JSON=../release/g7-hard-levels.json` cho **5/5 PASS**. Sau khi dựng: chạy `packcheck` và `run.mjs` trên máy ảo để xác nhận, rồi giao Lead đăng link test. W6863 chỉ khi Khai OK.
+
 - [x] (20/11, Mac) **Tích hợp 5 màn khó vào bản chính** theo `city-blast/release/INTEGRATE.md`: thêm bước `g7-hard` vào `src/tools/build-main.js`, dựng, chạy `packcheck` và `run.mjs` (5/5 PASS). Đăng bản build lên link test và báo Khai. **Đăng lên W6863 chỉ khi Khai OK.**
   - (20/11, Agents-Game) Xong, commit `dde36bb`: bước `g7-hard` cuối `src/tools/build-main.js` (`src/g7hard/patch.js`), 2 neo khớp đúng 1 lần, engine.js + JSON băm vào build stamp. `packcheck`: 5/5 màn 0 khối chết, tip "". `run.mjs` trên base bản chính: **3/5 PASS** (H4, H5 FAIL, xem "Việc cho Mac"). Bản build đã giao Lead để đăng link test; W6863 chỉ khi Khai OK.
 - [x] (20/11, Mac) Commit và push mọi thay đổi đang chỉ có trên máy ảo, ghi một dòng trạng thái vào `LEARNINGS.md` mục 6.
@@ -23,8 +25,11 @@ Cách dùng: ghi việc cần bên kia làm vào mục của bên đó, kèm ng�
 ## Việc cho Mac
 
 - (trống)
-- [ ] (20/11, Agents-Game) **H4 Canal Row FAIL** ở `run.mjs` trên máy ảo, cả trên `base-1811.html` (engine.js của `origin/main`): `KEEP route Tv A> F< fails` (75%, blue 30%), trên base bản chính 77%/blue 63%. Lúc engine còn bản tạm (có khối E01) thì H4 PASS 18 TNT/9 lần nổ. Nhờ Mac kiểm lại H4 với engine.js hiện tại.
-- [ ] (20/11, Agents-Game) **H5 Glass Spine FAIL trên base bản chính** (PASS trên `base-1811`: core 86%): `KEEP route core fails (83%, blue 0%)`, `spare 0 TNT`. Không do R20 (`?r20=0` vẫn 83%). Màn sát ngưỡng 85%: nhờ Mac chỉnh lại H5 trên base mới (mục trên).
-- [ ] (20/11, Agents-Game) `pipeline7/cdp.mjs` trên `main` chưa có `CB_LIBS` (proxy máy ảo chặn CDN). Máy ảo đang dùng bản trên nhánh `level/easy-pack`. Nhờ Mac đưa lên `main`.
+- [x] (20/11, Agents-Game) **H4 Canal Row FAIL** ở `run.mjs` trên máy ảo, cả trên `base-1811.html` (engine.js của `origin/main`): `KEEP route Tv A> F< fails` (75%, blue 30%), trên base bản chính 77%/blue 63%. Lúc engine còn bản tạm (có khối E01) thì H4 PASS 18 TNT/9 lần nổ. Nhờ Mac kiểm lại H4 với engine.js hiện tại.
+  - (21/11, Mac) Sửa xong. Mac tái hiện được: lỗi chỉ hiện khi vật lý lệch một chút (có bài test chạy trước). Gạch vụn của dãy trái xô lệch khối mái nhà D bên phải, `dom7` coi D là đang đổ nên kéo dãy phải đổ ra ngoài, đè bệnh viện. Sửa `engine.js` (`dom7`): chỉ nhà **đã mất chân** mới kéo nhà kế tiếp; khối mái không tính là đỉnh. Bố cục và số bom giữ nguyên (21). Kết quả trên base bản chính: PASS, đường đúng 85%, toà xanh 0%, 20/21 TNT.
+- [x] (20/11, Agents-Game) **H5 Glass Spine FAIL trên base bản chính** (PASS trên `base-1811`: core 86%): `KEEP route core fails (83%, blue 0%)`, `spare 0 TNT`. Không do R20 (`?r20=0` vẫn 83%). Màn sát ngưỡng 85%: nhờ Mac chỉnh lại H5 trên base mới (mục trên).
+  - (21/11, Mac) Sửa xong. Thêm bom không giúp (27 TNT vẫn 83%) vì hai nhà kính 3 tầng còn đứng sau khi tháp sụp. Hạ nhà kính còn **2 tầng**, `tntStart` 26, **trong game 27 TNT** (`release/g7-hard-levels.json` đã cập nhật). PASS: đường đúng 85% với 18 TNT, chỉ phá vỏ 10–14%, máy chơi mù thắng 2–3/3.
+- [x] (20/11, Agents-Game) `pipeline7/cdp.mjs` trên `main` chưa có `CB_LIBS` (proxy máy ảo chặn CDN). Máy ảo đang dùng bản trên nhánh `level/easy-pack`. Nhờ Mac đưa lên `main`.
+  - (21/11, Mac) Đã đưa lên `main` (lấy nguyên bản của `level/easy-pack`). Mac không đặt `CB_LIBS` nên vẫn tải CDN như cũ.
 - (20/11, Agents-Game) Đã kiểm thay đổi toàn game của engine (bom bám khối, bỏ vòng đỏ) bằng `check-main` (flow, tap2, r20, lv; `?lv7ord=0`): 69 PASS, 1 FAIL `T13` (bài đếm thưởng 10/20/30 trên mọi màn và chờ đúng 36 màn; 5 màn khó làm thành 41). Không do engine g7.
 

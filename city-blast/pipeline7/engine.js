@@ -709,10 +709,13 @@ try{ (function(){
     // near half of the next house in that direction (or touching it), the next house goes the same way. Loose wall panels and
     // flying debris never count: only the whole house leaning over does.
     fixedStep = function(){ var r = fs11.apply(this, arguments); var D = L && L.dom7; if(!D || (++dstep % 6)) return r;
-      var info = {}; blocks.forEach(function(m){ if(!m.bid || D.parts.indexOf(m.bid) < 0 || m.anchor) return; var e = info[m.bid] = info[m.bid] || { top:null, x0:1e9, x1:-1e9, legs:0, done:0 };
-        e.x0 = Math.min(e.x0, m.spawn.x - m.half[0]); e.x1 = Math.max(e.x1, m.spawn.x + m.half[0]); if(m.dom7leg && !m.dead) e.legs++; if(m.dom7done) e.done = 1;
-        if(!m.dead && m.rb && m.half[1] < 1 && (!e.top || m.spawn.y > e.top.spawn.y)) e.top = m; });
-      Object.keys(info).forEach(function(id){ var e = info[id], t = e.top; if(!t) return; var dx = t.P.x - t.spawn.x, dz = t.P.z - t.spawn.z; if(Math.abs(dx) < 1.5 || Math.abs(dx) < Math.abs(dz) || t.P.y < 2 || t.P.y < 0.35*t.spawn.y || Math.abs(dx) > 0.9*t.spawn.y) return;   // leaning SIDEWAYS (along the row), not falling forward
+      var info = {}; blocks.forEach(function(m){ if(!m.bid || D.parts.indexOf(m.bid) < 0 || m.anchor) return; var e = info[m.bid] = info[m.bid] || { top:null, x0:1e9, x1:-1e9, legs:0, legs0:0, done:0 };
+        e.x0 = Math.min(e.x0, m.spawn.x - m.half[0]); e.x1 = Math.max(e.x1, m.spawn.x + m.half[0]); if(m.dom7leg){ e.legs0++; if(!m.dead) e.legs++; } if(m.dom7done) e.done = 1;
+        if(!m.dead && m.rb && m.half[1] < 1 && !m.dom7roof && (!e.top || m.spawn.y > e.top.spawn.y)) e.top = m; });
+      // only a house that has really lost a leg (blasted by the player, or failed by the chain) can pass the chain on: a house
+      // merely shoved by flying debris, or its attic knocked off, never does (21/11: debris from one row crossing the square
+      // nudged the far row's attic 1.5 m and toppled that whole row onto the hospital).
+      Object.keys(info).forEach(function(id){ var e = info[id], t = e.top; if(!t || (e.legs0 && e.legs >= e.legs0)) return; var dx = t.P.x - t.spawn.x, dz = t.P.z - t.spawn.z; if(Math.abs(dx) < 1.5 || Math.abs(dx) < Math.abs(dz) || t.P.y < 2 || t.P.y < 0.35*t.spawn.y || Math.abs(dx) > 0.9*t.spawn.y) return;   // leaning SIDEWAYS (along the row), not falling forward
         var dir = Math.sign(dx), best = null;
         Object.keys(info).forEach(function(j){ if(j === id) return; var f = info[j]; if(f.done || !f.legs) return; var c = (f.x0 + f.x1)/2;
           if(Math.sign(c - (e.x0 + e.x1)/2) !== dir) return; if(!best || Math.abs(c - t.spawn.x) < Math.abs((best.x0 + best.x1)/2 - t.spawn.x)) best = Object.assign({ id:j }, f); });
@@ -748,7 +751,7 @@ try{ (function(){
       // the roof is a REAL body (Khai 20/11: roofs floated after the fall when they were decor on the top floor): an attic block
       // as wide and deep as the house; the gable (stepped for even c, bell for odd c), the hoist beam and the roof slopes are
       // decor flush on THAT block, inside its outline, so they fall, tumble and land with it.
-      var gh = P.gable || 3.2, ah = gh*0.6, at = addBlock(0, y + ah/2, 0, 2*hx - 0.1, ah, 2*hz - 0.1, "wwall", {floor:n + 1}); at.tint = col;
+      var gh = P.gable || 3.2, ah = gh*0.6, at = addBlock(0, y + ah/2, 0, 2*hx - 0.1, ah, 2*hz - 0.1, "wwall", {floor:n + 1}); at.tint = col; at.dom7roof = 1;
       var ay = y + ah;   // top of the attic block
       if((P.c || 0) % 2 === 0){ for(var k = 0; k < 3; k++){ var ww = 2*hx - 0.4 - k*(2*hx/4.4), sh = (gh - ah)/3; kd(at, "box", col, 0, ay + k*sh + sh/2, hz - 0.2, ww, sh, 0.3); kd(at, "box", K.white, 0, ay + (k + 1)*sh - 0.04, hz - 0.2, ww + 0.08, 0.08, 0.34); } }
       else { kd(at, "prism", col, 0, ay + (gh - ah)/2, hz - 0.2, 2*hx - 0.3, gh - ah, 0.3); kd(at, "dome", col, 0, ay + (gh - ah) - 0.05, hz - 0.2, 1.0, 0.6, 0.3); }

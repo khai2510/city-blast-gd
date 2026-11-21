@@ -99,6 +99,13 @@ File này là **bộ nhớ chung** của mọi máy và mọi agent làm màn Ci
   - Luật mới: **mái là một khối thật** (tầng áp mái, `wwall`), còn decor mái phải **nằm sát, trong đường bao của khối nó gắn vào**. Không để decor lớn chìa ra khỏi khối chủ.
   - Kiểm bằng `pipeline7/closeup.mjs` (camera cận cảnh) và `floatcheck.mjs` (khe hở tĩnh). Dùng `hangcheck.mjs` để tìm khối còn treo trên cao sau khi nổ.
 - **Lõi nhiều tầng (Màn 5):** trụ lõi tầng trên mà dùng `rc` (khối cứng) thì nằm trong đống đổ nát vẫn bị tính là "còn đứng", nên không thắng nổi. Còn dùng bê tông thường thì 1 lần nổ cắt ngang thân tháp là xong. Giải pháp là key `core7`: bóc 1 nấc mỗi lần nổ (layer7) nhưng tính là đã đổ khi rơi xuống.
+- **Domino bị gạch vụn kích hoạt (21/11, H4):**
+  - Lỗi: sau khi mái thành khối thật, "đỉnh nhà" mà `dom7` theo dõi là khối mái. Gạch vụn của dãy trái văng qua quảng trường xô lệch nhà D bên phải 1.5 m. Luật coi D đang đổ nên kéo E, F đổ ra ngoài, đè lên bệnh viện (toà xanh hư 63%).
+  - Lỗi chỉ hiện khi vật lý lệch một chút: có bài test chạy trước thì có, chạy riêng thì không. Máy ảo và Mac đều gặp. Nghĩa là người chơi thật cũng sẽ gặp.
+  - Luật mới: **chỉ nhà đã mất ít nhất 1 chân** (do người chơi nổ hoặc do chuỗi làm gãy) mới được kéo nhà kế tiếp. Khối mái (`dom7roof`) không bao giờ là đỉnh để đo.
+  - Cách dò: `pipeline7/out/probe4.mjs` (không commit) ghi % điểm, hư hại từng toà xanh và độ cao từng nhà sau mỗi đợt nổ. Thêm `PRE=1` để chạy một bài test trước, tái hiện lỗi do vật lý lệch.
+- **Đổi base thì điểm đổi (21/11, H5):** trên base bản chính, đường đúng của H5 chỉ được 83%: tháp sụp cho 79%, sau đó dọn mãi không lên vì hai nhà kính 3 tầng vẫn đứng. Thêm bom không giúp được. Sửa bằng thiết kế: nhà kính còn 2 tầng để tháp lõi chiếm phần lớn điểm (đúng bài học của màn). **Màn khó mới phải dựng và test trên base bản chính** (`SYNC.md`, mục base), không dùng `base-1811` nữa.
+- **Sửa toàn game có thể phá màn đã PASS:** bản sửa "bom đi theo khối" (20/11) và mái khối thật ra đời sau lần H4 PASS mà chưa chạy lại. Sau mỗi thay đổi engine hay base: **chạy lại cả 5 màn** bằng `run.mjs` với `LEVEL_JSON=../release/g7-hard-levels.json`.
 - `T.chargeHosts` không tồn tại; dùng `__blast.chargeHosts()`, `__blast.members()`, `__blast.test.pickAt(x, y)`.
 
 ## 6. Trạng thái các màn khó (20/11). Mã H1–H5 không phải vị trí; vị trí do Agents-Game (main) quyết định
@@ -108,8 +115,8 @@ File này là **bộ nhớ chung** của mọi máy và mọi agent làm màn Ci
 | H1 | Five Eaves (chùa 5 mái) | làm rơi trước, phá sau | PASS, 37 TNT, Khai duyệt |
 | H2 | Watch Keep | ngắm hướng đổ, chuỗi đè sảnh, kho thuốc súng | PASS, 25 TNT |
 | H3 | Grand Stage (nhà hát) | giữ toà xanh: dỡ sảnh và khán phòng, tháp đổ dọc trục | PASS, 24 TNT, bố cục v2 đối xứng |
-| H4 | Canal Row (dãy nhà phố) | domino đối xứng: phá tháp giữa trước, đẩy hai dãy vào trong | PASS, 21 TNT, SH; mái là khối thật |
-| H5 | Glass Spine (tháp kính lõi bê tông) | bóc vỏ bệ, đục lõi 3 lần nổ | PASS, 26 TNT, SH |
+| H4 | Canal Row (dãy nhà phố) | domino đối xứng: phá tháp giữa trước, đẩy hai dãy vào trong | PASS trên base bản chính (21/11), 21 TNT, SH; luật domino chỉ tính nhà đã gãy chân |
+| H5 | Glass Spine (tháp kính lõi bê tông) | bóc vỏ bệ, đục lõi 3 lần nổ | PASS trên base bản chính (21/11), 27 TNT, SH; nhà kính hai bên 2 tầng |
 
 Link test (artifact, private): https://claude.ai/artifact/CDNLd5gsjLaTaPGT7W4pes. Không sửa artifact chính W6863… khi chưa có OK của Khai.
 
