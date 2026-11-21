@@ -8,6 +8,9 @@
 // ?lv7=0 = no hard levels (identity), ?lv7ord=0 = hard levels appended after L36 (identity, Mac's layout).
 // Save: save.level / best / bp are slots. An old save (appended layout) is moved to the new slots once; the mark is its own key
 // (SAVE_KEY + ".lv7o") and is written only together with the save (writeSave), so a load that never saved migrates again.
+// The mark names the order the save was written in: "s:" + the slot list (21/11 on), "1" = the 20/11 order (LEGACY in patch.js),
+// none = the appended layout. A save from another order: best / bp follow their level; save.level = the first level of the new
+// order the player has not beaten yet (all hard levels of the 20/11 order came before old L8, so it is the next old level).
 var LV7O = (function(){
   var Q = location.search, on = !/[?&]lv7=0(&|$)/.test(Q), NB = LEVELS.length, NH = __NH__, SLOTS = __SLOTS__;
   var R = [], i;                                                           // the play order: slot -> appended index
@@ -25,15 +28,22 @@ var LV7O = (function(){
   // booster unlock levels ("save.level >= unlock" = that boss is beaten) in new numbers; once per booster (boosters are added in two places)
   O.boost = function(B){ Object.keys(B).forEach(function(k){ var b = B[k], u = b && b.unlock; if(b && !b.lv7o && u > 0 && u < 999){ b.unlock = O.num(u); b.lv7o = u; } }); };
   // ---- the save: appended layout <-> slots
-  var KEY = SAVE_KEY + ".lv7o", had = null, want = O.reorder ? "1" : null;
+  var LEG = __LEGACY__, SIG = "s:" + SLOTS.join(",");
+  var rOf = function(sl){ var r = [], i; sl.forEach(function(s){ r.push(s >= 0 ? s : NB - s - 1); }); for(i = 0; i < NB; i++) if(r.indexOf(i) < 0) r.push(i); for(i = 0; i < NH; i++) if(r.indexOf(NB + i) < 0) r.push(NB + i); return r; };
+  var markR = function(m){ var sl = m && LEG[m] ? LEG[m] : m && /^s:-?\d+(,-?\d+)*$/.test(m) ? m.slice(2).split(",").map(Number) : null;   // the order a mark names (null = unknown)
+    if(!sl || sl.some(function(s){ return s >= NB || s < -NH; })) return null; var r = rOf(sl); return r.length === R.length ? r : null; };
+  var KEY = SAVE_KEY + ".lv7o", had = null, want = O.reorder ? SIG : null;
   try{ had = localStorage.getItem(KEY); }catch(e){}
+  var R0 = had ? markR(had) : null;
   var fwd = function(o){ return o >= NB ? o + NH : R.indexOf(o); };          // appended index -> slot (a save past L36 stays past the end)
-  var back = function(p){ if(p >= R.length) return p - NH; for(var q = p; q < R.length; q++) if(R[q] < NB) return R[q]; return NB; };   // slot -> old index (a hard slot: the next old level)
+  var back = function(p){ if(p >= R0.length) return p - NH; for(var q = p; q < R0.length; q++) if(R0[q] < NB) return R0[q]; return NB; };   // slot of the save's order -> old index (a hard slot: the next old level)
+  var next = function(p){ if(p >= R0.length) return p; var beat = {}, q; for(q = 0; q < p; q++) beat[R0[q]] = 1; for(q = 0; q < R.length; q++) if(!beat[R[q]]) return q; return R.length; };   // the first level of the new order not beaten yet
   var mv = function(f, keyF){ save.level = f(save.level|0);
     ["best", "bp"].forEach(function(k){ var o = save[k]; if(!o || typeof o !== "object") return; var n = {}; Object.keys(o).forEach(function(j){ var t = keyF(+j); if(t != null && t >= 0) n[t] = o[j]; }); save[k] = n; }); };
-  if(want === "1" && had !== "1") mv(fwd, function(o){ return o < NB ? R.indexOf(o) : null; });
-  else if(want !== "1" && had === "1") mv(back, function(p){ return p < R.length && R[p] < NB ? R[p] : null; });
-  O.migrated = want !== had;
+  if(want && !had) mv(fwd, function(o){ return o < NB ? R.indexOf(o) : null; });
+  else if(want && had !== want && R0) mv(next, function(p){ return p < R0.length ? R.indexOf(R0[p]) : p; });
+  else if(!want && R0) mv(back, function(p){ return p < R0.length && R0[p] < NB ? R0[p] : null; });
+  O.migrated = want !== had; O.mark = { had:had, want:want, known:!had || !!R0 };
   var ws0 = writeSave;
   writeSave = function(){ var r = ws0.apply(this, arguments); try{ if(want) localStorage.setItem(KEY, want); else localStorage.removeItem(KEY); }catch(e){} return r; };
   window.LV7O = O;

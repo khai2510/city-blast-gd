@@ -12,7 +12,16 @@ Cách dùng: ghi việc cần bên kia làm vào mục của bên đó, kèm ng�
   - (20/11, Agents-Game, Lead quyết) Xem mục "Vị trí màn khó" ngay dưới.
 - [x] (20/11, Agents-Game) **Đặt chồng TNT (D-blast-STACKOK) đã đồng bộ vào `src/`** (floormen `1ec2ec9e` + `75bd897f`: `main/tap2.js`, `main/polish.js`, `main/tap2-patch.js`, nhãn bước `tap2` trong `tools/build-main.js`; bước `g7-hard` giữ nguyên). `?nostack=1` = luật cũ (từ chối).
 
-## Vị trí màn khó và base của bản chính (20/11, Agents-Game, Lead quyết)
+## Vị trí màn khó (21/11, Agents-Game, Lead quyết; thay thứ tự 20/11 ở mục dưới)
+
+- **Thứ tự mới (GD-48, vòng tester 21/11):** 1–9 = màn cũ L1–L9 · **10 = H2** · 11–15 = L10–L14 · **16 = H3** · 17–19 = L15–L17 · **20 = H1** · 21–29 = L18–L26 · **30 = H4** · 31–35 = L27–L31 · **36 = H5** · 37–41 = L32–L36. Thứ tự tương đối của H giữ như cũ (H2, H3, H1, H4, H5); màn cũ giữ thứ tự cũ.
+- **Lý do:** thứ tự 4/6/8/10/12 làm gãy đường cong đầu game (7/15 màn đầu là Hard, L10–L12 ba màn Hard liền nhau; cả người chơi lẫn designer kẹt ở L4). 10/16/20/30/36 là các ô của kế hoạch đường cong (`blast-curve`).
+- **Chỉ đổi bảng thứ tự** (`PLACE` trong `src/g7hard/patch.js`, bảng `LV7O`). Mọi thứ gắn với số màn vẫn đi theo màn gốc: thẻ giới thiệu (gạch L3, bê tông L4, toà xanh L5, xoay L6, thép L8), boss L11 / L23 / L34 (= cũ L10 / L20 / L30), mở booster (Ball dùng từ L12, Net L24, Sky Strike L35), quảng cáo, zHint, camera.
+- **Save:** dấu `.lv7o` giờ ghi chính thứ tự (`s:` + danh sách ô). Save đã chuyển theo thứ tự 20/11 (dấu `"1"`) được chuyển tiếp: kết quả từng màn đi theo màn đó, màn hiện tại = màn đầu tiên chưa thắng theo thứ tự mới (với save 20/11 luôn là màn cũ kế tiếp, vì mọi H khi đó đứng trước L8).
+- **Cờ URL không đổi:** `?lv7=0` = 36 màn cũ · `?lv7ord=0` = H1–H5 ở 37–41 (bố cục Mac) · `?pack7=1` = vào màn khó đầu tiên (giờ là L10).
+- **Đã kiểm (21/11):** thứ tự, thẻ, boss, booster và bảng chọn màn bằng tap thật; ảnh mở màn H ở `fix-shots/` của phiên (mở màn khó giờ thấy cả khu đất: UX-65 / GD-54).
+
+## Vị trí màn khó và base của bản chính (20/11, Agents-Game, Lead quyết) — thứ tự ở đây đã được thay bằng mục 21/11 ở trên
 
 - **Thứ tự:** 1–3 = màn cũ L1–L3 (dạy chơi) · 4 = **H2** · 5 = L4 · 6 = **H3** · 7 = L5 · 8 = **H1** · 9 = L6 · 10 = **H4** · 11 = L7 · 12 = **H5** · 13–41 = màn cũ L8–L36 (cộng 5). Không bỏ màn nào.
 - **Lý do:** màn dạy chơi giữ số 1–3; màn khó tăng dần (H trước SH), mỗi màn khó có một màn cũ xen sau để nghỉ. Thứ tự này thay cho cách tạm "H1–H5 = 37–41". Khi có 10 màn dễ E01–E10 sẽ xếp lại.
