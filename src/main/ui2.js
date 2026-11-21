@@ -29,7 +29,7 @@ try{ (function(){
 if(QS.get("ui2") === "0") return;
 var H = document.documentElement, BODY = document.body;
 H.classList.add("ui2");
-if(QS.get("dev") !== "1") H.classList.add("dev0");            // the LV picker button only with ?dev=1 (glue C5 made it default-on)
+if(QS.get("dev") === "0") H.classList.add("dev0");            // the LV picker button: on by default again (Owner 21/11 "cho t phần chọn được level"; hidden since 14/11 = ?dev=1 only); ?dev=0 hides it
 var U = "var(--us)";
 var css = [
   // ---- H1 top row: pause | [cap + meter]
