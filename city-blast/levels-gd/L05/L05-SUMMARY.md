@@ -1,16 +1,3 @@
-# 21/11: chỉnh lại trên base bản chính: PASS (`run-main.log`, 27 TNT trong game)
-
-| Bài | Kết quả |
-|---|---|
-| 1 bom / chân 1 lần / chỉ chân / nổ một lần | 3% / 25% / 35% / 24% |
-| **Đúng:** bóc bệ, đục lõi, dọn | **85%**, 18 TNT, 4 đợt |
-| Sai: chỉ phá vỏ | 14%: thua |
-| Máy chơi mù | thắng 2/3 (dư 3 TNT), trước là 3/3 |
-
-Sửa gì: trên base bản chính, tháp sụp cho 79% rồi dừng ở 83%, vì hai nhà kính 3 tầng vẫn đứng và thêm bom cũng không lên. Hạ hai nhà kính còn **2 tầng** (`PN` trong `make-level.mjs`) để tháp lõi chiếm phần lớn điểm. `tntStart` 26 (trong game 27).
-
----
-
 # Màn 5 "Glass Spine": kết quả tester (run-b, 26 TNT, bậc SH): PASS
 
 | Bài | Kết quả |

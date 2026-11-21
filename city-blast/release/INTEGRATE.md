@@ -23,7 +23,7 @@ Mã màn khó là **H1–H5** (trường `bp` trong JSON). Đây là mã nhận 
 | H2 | Watch Keep | L02 | H | 25 | ngắm hướng đổ; chuỗi đè sảnh, kho thuốc súng (`hit7`, `layer7`) |
 | H3 | Grand Stage | L03 | H | 24 | giữ toà xanh: dỡ sảnh và khán phòng, tháp đổ dọc trục (`keeps`) |
 | H4 | Canal Row | L04 | SH | 21 | domino đối xứng: phá tháp giữa trước (`dom7`, `layer7`) |
-| H5 | Glass Spine | L05 | SH | 27 | bóc vỏ thấy lõi (`layer7` với `hrc` và `core7`) |
+| H5 | Glass Spine | L05 | SH | 26 | bóc vỏ thấy lõi (`layer7` với `hrc` và `core7`) |
 
 ## 2. Thay đổi ảnh hưởng **toàn game** (không chỉ 5 màn) trong `engine.js`
 

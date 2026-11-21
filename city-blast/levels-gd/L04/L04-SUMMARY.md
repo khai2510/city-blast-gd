@@ -1,17 +1,3 @@
-# 21/11: chạy lại trên base bản chính: PASS (`run-h-main.log`, 21 TNT)
-
-| Bài | Kết quả |
-|---|---|
-| 1 bom / chân 1 lần / chỉ chân / nổ một lần | 1% / 8% / 3% / 6% |
-| **Đúng:** tháp ra trước, dãy trái vào, dãy phải vào | **85%, toà xanh 0%**, 20 TNT, 10 đợt |
-| Sai: đẩy hai dãy khi tháp còn đứng | toà xanh hư 73%: thua |
-| Sai: phá tháp rồi đẩy hai dãy ra ngoài | toà xanh hư 11%: thua |
-| Máy chơi mù | thua 3/3 |
-
-Sửa gì: luật `dom7` chỉ cho **nhà đã mất chân** kéo nhà kế tiếp, và không lấy khối mái làm đỉnh để đo. Trước đó gạch vụn của dãy trái xô lệch mái nhà D bên phải, kích hoạt dãy phải đổ ra ngoài đè bệnh viện (75%, toà xanh 30–63%), tuỳ vật lý lệch ra sao. Bố cục và số bom không đổi.
-
----
-
 # Màn 4 "Canal Row": kết quả tester (run-f, 24 TNT, bậc SH): PASS
 
 Bố cục đối xứng trên một trục:
