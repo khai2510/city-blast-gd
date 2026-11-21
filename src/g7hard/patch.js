@@ -30,10 +30,22 @@ const PLACE = []; for (let n = 1, o = 1; n <= 36; n++) PLACE.push(HAT[n] || 'o' 
 // "1" = the 20/11 build (H at 4 / 6 / 8 / 10 / 12). Newer builds write their own slot list as the mark ("s:" + slots).
 const LEGACY = { '1': ['o1', 'o2', 'o3', 'H2', 'o4', 'H3', 'o5', 'H1', 'o6', 'H4', 'o7', 'H5'] };
 
+// fail lines (L.ftip: the lose card's line when a hard level ends short, levels6 failTip; 21/11 tester round GD-55): each names the real
+// cause, the rule of that level the player has not been told (stone that ignores TNT, piers that need more blasts, drop first), as a
+// principle, never a spot (<= 9 words, LEARNINGS 1). Copy only: the level data from Mac is not changed on disk, only these strings.
+const FTIP = {
+  H1: 'Drop it first. It only breaks once it falls.',
+  H2: 'Stone ignores TNT. Dark piers need more blasts.',
+  H3: 'Bring the tower down, away from the blue.',
+  H4: 'Dark piers need more blasts. Stone ignores TNT.',
+  H5: 'The core needs more blasts, not more TNT.',
+};
+
 let h = fs.readFileSync(IN, 'utf8');
 const engine = fs.readFileSync(ENGINE, 'utf8'), defs = JSON.parse(fs.readFileSync(LEVELS7, 'utf8'));
 const early = fs.readFileSync(path.join(__dirname, 'order-early.js'), 'utf8'), end = fs.readFileSync(path.join(__dirname, 'order-end.js'), 'utf8');
 const fail = (m) => { console.error('g7-hard: ' + m); process.exit(1); };
+for (const [c, t] of Object.entries(FTIP)) { const l = defs.find(x => x.bp === HBP[c]); if (!l) fail('FTIP: no level ' + c); if (t.split(/\s+/).length > 9 || /\b(road|street|lot|stack|stacked|stacking)\b/i.test(t)) fail('FTIP ' + c + ': > 9 words or a dropped word'); l.ftip = t; }
 const count = (s) => h.split(s).length - 1;
 // slots: >= 0 = old level index, -(k + 1) = hard level k of LV7DEFS
 const toSlots = (list, what) => {
