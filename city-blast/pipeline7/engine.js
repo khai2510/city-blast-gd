@@ -1380,12 +1380,12 @@ try{ (function(){
       // the RC telescope pier (the core): two heavy pieces in the floor holes, a stone collar per storey (decor)
       var PL = P.plinth || 0; if(PL){ var pl = addBlock(0, PL/2 - 0.25, 0, CW + 0.5, PL + 0.5, CW + 0.5, "base", {anchor:true}); kd(pl, "box", K.stone, 0, PL/2, 0, CW + 0.52, PL, CW + 0.52); kd(pl, "box", K.stoneD, 0, PL - 0.06, 0, CW + 0.7, 0.12, CW + 0.7); }
       var c0 = mem(P.coreKey || "hard7v", 0, PL + (h0 - PL - 0.02)/2, 0, CW, h0 - PL - 0.02, CW, 0, null, null, 0x6E6A66); c0.tint = 0x6E6A66;
-      var c1 = mem(P.coreKey || "hard7v", 0, h0 + (h1 - 0.04)/2, 0, CW - 0.3, h1 - 0.04, CW - 0.3, 1, null, null, 0x6E6A66); c1.tint = 0x6E6A66;
+      var CG = P.coreGap || 0, c1 = mem(P.coreKey || "hard7v", 0, h0 + (h1 - 0.04 - CG)/2, 0, CW - 0.3, h1 - 0.04 - CG, CW - 0.3, 1, null, null, 0x6E6A66); c1.tint = 0x6E6A66;   // coreGap: the pier stops short of the dome, so the dome drops in when the drum goes
       [c0, c1].forEach(function(p, k){ var hy = p.spawn.y, hh = p.half[1]; kd(p, "box", K.stone, 0, hy - hh + 0.25, 0, 2*p.half[0] + 0.3, 0.5, 2*p.half[2] + 0.3); kd(p, "box", K.stone, 0, hy + hh - 0.2, 0, 2*p.half[0] + 0.2, 0.3, 2*p.half[2] + 0.2);
         for(var q = 0; q < 3; q++) kd(p, "ibox", 0x5A5652, 0, hy - hh + 1.0 + q*1.0, p.half[2] + 0.01, 2*p.half[0] - 0.2, 0.05, 0.03);
         if(!k) kd(p, "lit", K.lit, 0, PL + 1.0, p.half[2] + 0.04, 0.5, 0.35, 0.04); });
       // the telescope on the pier (decor on the upper piece): a mount, a counterweight, a long white tube aimed out of the slit
-      var tz = h0 + h1, ta = P.tilt || 0.62;
+      var tz = h0 + h1 - CG, ta = P.tilt || 0.62;
       kd(c1, "box", K.iron, 0, tz + 0.3, 0, 0.9, 0.6, 0.9); kd(c1, "icyl", K.iron, 0, tz + 0.9, 0, 0.35, 0.8, 0.35); kd(c1, "ibox", K.ink, -0.4, tz + 1.1, -0.6, 0.5, 0.5, 0.5);
       kq(c1, "cyl", K.white, 0, tz + 1.9, 0.9, 0.7, 3.8, 0.7, 0, ta, 0); kq(c1, "cyl", K.ink, 0, tz + 3.3, 2.0, 0.78, 0.25, 0.78, 0, ta, 0); kq(c1, "cyl", K.gold, 0, tz + 1.4, 0.5, 0.74, 0.12, 0.74, 0, ta, 0);
       // ground storey: door on the front, tall arched windows round
@@ -1462,7 +1462,7 @@ try{ (function(){
       // inside, on the floor of the hall (decor on the terrace: it stays when the hall comes down): the big pool, benches, steam
       kd(base, "box", K.marbleD, 0, 0.1, -0.3, 2*hx - 4.4, 0.1, 2*hz - 4.4); kd(base, "box", K.aqua, 0, 0.17, -0.3, 2*hx - 5, 0.05, 2*hz - 5);
       [-1, 1].forEach(function(s){ kd(base, "ibox", K.woodD, s*(hx - 1.6), 0.45, -0.3, 0.6, 0.12, 2*hz - 5); kd(base, "ibush", 0xF4F4F4, s*1.4, 1.2, -0.8, 1.6, 0.8, 1.2); });
-      var g = H.boxSt({ y0:0, h:PH, hx:hx, hz:hz, nx:3, nz:3, pw:P.pw || 1.15, mw:P.mw || 1.0, fl:0, MT:api.mat("brick"), deck:"mdB", skin:{ "z+":"glass", "z-":"glass", def:"wall" }, wall:"bkw", split:[2, 2], dk:0.5, tp:K.marble, td:K.marbleD, tw:K.cream });
+      var g = H.boxSt({ y0:0, h:PH, hx:hx, hz:hz, nx:3, nz:3, pw:P.pw || 1.15, mw:P.mw || 1.0, fl:0, MT:api.mat("brick"), deck:"mdB", skin:P.allGlass ? "glass" : { "z+":"glass", "z-":"glass", def:"wall" }, wall:"bkw", split:[2, 2], dk:0.5, tp:K.marble, td:K.marbleD, tw:K.cream });
       plainDeck(g.decks, "mdB"); LV7.g7tip = tipOf(g, P.hold != null ? P.hold : 1.6);
       g.piers.forEach(function(p){ kd(p, "box", K.marbleD, p.spawn.x, 0.35, p.spawn.z, 2*p.half[0] + 0.2, 0.7, 2*p.half[2] + 0.2); kd(p, "box", K.marble, p.spawn.x, PH - 1.05, p.spawn.z, 2*p.half[0] + 0.18, 0.3, 2*p.half[2] + 0.18);
         for(var q = 0; q < 4; q++) kd(p, "ibox", K.marbleD, p.spawn.x, 1.3 + q*1.1, p.spawn.z + Math.sign(p.a1z || 1)*(p.half[2] + 0.01), 2*p.half[0] - 0.12, 0.05, 0.03); });   // rustication
