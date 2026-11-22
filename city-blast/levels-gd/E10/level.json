@@ -1,0 +1,112 @@
+[
+ {
+  "name": "Rail Terminus",
+  "bp": "E10",
+  "tier": "N",
+  "f": 7,
+  "kind": "scene",
+  "hero": "A",
+  "heroId": "G7-E10",
+  "teaches": "combine",
+  "target": 0.85,
+  "yaw": 0.1,
+  "d": 1,
+  "fillMax": 0.73,
+  "hard7": true,
+  "drop7": {
+   "keys": [
+    "mdB"
+   ],
+   "fall": 1.5,
+   "armor": 0.97
+  },
+  "hit7": {
+   "keys": [
+    "bk",
+    "bkw",
+    "mdW",
+    "g7tile"
+   ],
+   "armor": 0.001,
+   "f": 3,
+   "reach": 1,
+   "drums": true
+  },
+  "sf": [],
+  "pattern": "combine: legs + direction + drums + keep: tip the head building into the train shed (drums at its piers go off, the roof comes down bay by bay); the school behind the head building stays clear",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7term",
+    "x": -5.75,
+    "z": 0,
+    "hx": 3.6,
+    "hz": 3.6,
+    "legH": 5,
+    "n": 2,
+    "hold": 2,
+    "side": 1,
+    "heavy": 1,
+    "bg": 140
+   },
+   {
+    "id": "B",
+    "kind": "g7shed",
+    "x": 4.7,
+    "z": 0,
+    "n": 2,
+    "bw": 2.3,
+    "hz": 4.5,
+    "ph": 6,
+    "side": 1,
+    "train": null,
+    "cars": 2,
+    "back": 1,
+    "pw": 1,
+    "roofKey": "g7tile",
+    "bg0": 141
+   }
+  ],
+  "keeps": [
+   {
+    "kind": "keep6",
+    "x": 6.2,
+    "z": -10.15,
+    "floors": 2,
+    "cx": 3,
+    "cz": 2,
+    "name": "the school",
+    "role": "school",
+    "fixType": "school"
+   }
+  ],
+  "keep": {
+   "name": "the school",
+   "sides": [],
+   "type": "school",
+   "role": "school",
+   "full": 1
+  },
+  "tanks": [
+   [
+    0.45,
+    5.15
+   ],
+   [
+    4.7,
+    5.15
+   ],
+   [
+    8.95,
+    5.15
+   ]
+  ],
+  "charges": {
+   "tnt": 40
+  },
+  "tip": "",
+  "ftip": "Read it first: which legs, which side, what stays.",
+  "sol": [],
+  "tntStart": 14
+ }
+]

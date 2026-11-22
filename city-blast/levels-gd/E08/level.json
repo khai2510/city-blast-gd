@@ -1,0 +1,85 @@
+[
+ {
+  "name": "Grain Elevator",
+  "bp": "E08",
+  "tier": "N",
+  "f": 7,
+  "kind": "scene",
+  "hero": "A",
+  "heroId": "G7-E08",
+  "teaches": "hrc",
+  "target": 0.85,
+  "yaw": 0.1,
+  "d": 1,
+  "fillMax": 0.73,
+  "hard7": true,
+  "drop7": {
+   "keys": [
+    "mdC"
+   ],
+   "fall": 1.5,
+   "armor": 0.97
+  },
+  "hit7": {
+   "keys": [
+    "g7silo"
+   ],
+   "armor": 0.001,
+   "f": 3,
+   "reach": 1
+  },
+  "sf": [],
+  "pattern": "patience: a concrete head house on 8 piers, the corners massive RC (3 TNT, damage stays); two piers side by side tip it; tipped onto the silo row it lays the silos down",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7elev",
+    "x": -1.3000000000000007,
+    "z": 0,
+    "hx": 3.2,
+    "hz": 3.2,
+    "legH": 5.4,
+    "n": 5,
+    "hold": 2,
+    "side": 1,
+    "roofKey": "g7roofL",
+    "rh": 1,
+    "bin": 1,
+    "bin2": 3.4,
+    "gwall": 0,
+    "bg": 120
+   },
+   {
+    "id": "B",
+    "kind": "g7silo",
+    "x": 7.2,
+    "z": 0,
+    "n": 2,
+    "rows": 2,
+    "D": 3.2,
+    "gap": 0.2,
+    "k": 3,
+    "dh": 4.2,
+    "bg0": 121
+   },
+   {
+    "id": "C",
+    "kind": "g7weigh",
+    "x": -8.5,
+    "z": 0.6,
+    "hx": 2,
+    "hz": 2.6,
+    "side": -1,
+    "bg": 126
+   }
+  ],
+  "tanks": [],
+  "charges": {
+   "tnt": 40
+  },
+  "tip": "",
+  "ftip": "Cracked concrete stays cracked. Hit it again.",
+  "sol": [],
+  "tntStart": 20
+ }
+]

@@ -1,0 +1,71 @@
+[
+ {
+  "name": "High Cistern",
+  "bp": "E09",
+  "tier": "N",
+  "f": 7,
+  "kind": "scene",
+  "hero": "A",
+  "heroId": "G7-E09",
+  "teaches": "drop",
+  "target": 0.85,
+  "yaw": 0.1,
+  "d": 1,
+  "fillMax": 0.73,
+  "hard7": true,
+  "drop7": {
+   "keys": [
+    "hard7v",
+    "mdB"
+   ],
+   "fall": 1.5,
+   "armor": 0.97
+  },
+  "sf": [],
+  "pattern": "drop first (light): a brick water tower with a heavy iron cistern on top; the cistern ignores TNT up high and counts until cracked; drop the tower, then crack the cistern",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7cis",
+    "x": 0,
+    "z": 0,
+    "hx": 3,
+    "sh": 4,
+    "n": 3,
+    "cw": 3.3,
+    "ch": 3.4,
+    "stand": 1.6,
+    "side": 1,
+    "bg": 131
+   },
+   {
+    "id": "B",
+    "kind": "g7pump",
+    "x": -7.800000000000001,
+    "z": 0,
+    "hx": 2.6,
+    "hz": 3.4,
+    "side": -1,
+    "bg": 135
+   },
+   {
+    "id": "C",
+    "kind": "g7pump",
+    "x": 7.800000000000001,
+    "z": 0,
+    "hx": 2.6,
+    "hz": 3.4,
+    "side": 1,
+    "bg": 136
+   }
+  ],
+  "tanks": [],
+  "charges": {
+   "tnt": 40
+  },
+  "tip": "",
+  "ftip": "Bring the heavy piece down first. Then crack it.",
+  "sol": [],
+  "tntStart": 20
+ }
+]

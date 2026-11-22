@@ -1,0 +1,171 @@
+{
+ "when": "2026-11-22T18:14:26.476Z",
+ "rule": {
+  "oneBombPct": 70,
+  "oneBombCollapse": 101,
+  "spare": {
+   "N": [
+    2,
+    5
+   ],
+   "H": [
+    1,
+    3
+   ],
+   "SH": [
+    1,
+    3
+   ]
+  },
+  "minWaves": {
+   "N": 2,
+   "H": 3,
+   "SH": 3
+  },
+  "estSec": {
+   "N": [
+    20,
+    75
+   ],
+   "H": [
+    30,
+    90
+   ],
+   "SH": [
+    40,
+    120
+   ]
+  },
+  "keepMax": 0.05,
+  "footMax": 80
+ },
+ "results": [
+  {
+   "id": "E07",
+   "lv": 37,
+   "name": "Bathhouse",
+   "tier": "N",
+   "sf": [],
+   "pattern": "restraint: a domed bathhouse on 8 piers between two colonnade wings, a school (blue) behind the right wing at a generous gap; small blasts drop the dome into the hall, a big blast or a tip back-right reaches the school",
+   "story": "",
+   "sfMetric": {},
+   "metrics": {
+    "members": 63,
+    "hard": 0,
+    "soft": 63,
+    "hardPct": 0,
+    "main": {
+     "members": 41,
+     "hard": 0,
+     "soft": 41,
+     "hardPct": 0,
+     "pos": {
+      "top": 0,
+      "mid": 0,
+      "bottom": 0,
+      "edge": 0,
+      "core": 0,
+      "front": 0,
+      "back": 0
+     },
+     "core": "no",
+     "hardLayers": 0,
+     "depthRows": 4,
+     "frontHard": 0,
+     "backHard": 0,
+     "floors": 3
+    },
+    "stacks": 3,
+    "parts": [
+     "A",
+     "B",
+     "C"
+    ]
+   },
+   "oneBomb": {
+    "pct": 10,
+    "collapse": 10,
+    "at": "bk@A:f1",
+    "tried": 18
+   },
+   "lazy": {
+    "pct": 42,
+    "collapse": 71
+   },
+   "fairOpen": {
+    "win": true,
+    "res": "WIN",
+    "pct": 96,
+    "used": 17,
+    "left": 23,
+    "waves": 4,
+    "firstWave": 56,
+    "keep": 0.04,
+    "estSec": 48,
+    "log": "bld8=56 bld4=66 heap3=77 heap2=96"
+   },
+   "tnt": 18,
+   "fair": [
+    {
+     "win": true,
+     "res": "WIN",
+     "pct": 97,
+     "used": 16,
+     "left": 2,
+     "waves": 5,
+     "firstWave": 63,
+     "keep": 0,
+     "estSec": 51,
+     "log": "bld8=63 bld2=65 heap3=71 heap2=79 heap1=97"
+    },
+    {
+     "win": true,
+     "res": "WIN",
+     "pct": 96,
+     "used": 14,
+     "left": 4,
+     "waves": 4,
+     "firstWave": 58,
+     "keep": 0,
+     "estSec": 45,
+     "log": "bld8=58 bld1=64 heap3=75 heap2=96"
+    },
+    {
+     "win": true,
+     "res": "WIN",
+     "pct": 96,
+     "used": 14,
+     "left": 4,
+     "waves": 4,
+     "firstWave": 58,
+     "keep": 0,
+     "estSec": 45,
+     "log": "bld8=58 bld1=64 heap3=75 heap2=96"
+    }
+   ],
+   "spare": 2,
+   "allFoot": {
+    "pct": 76,
+    "used": 18,
+    "collapse": 100,
+    "keep": 11
+   },
+   "footOnly": {
+    "pct": 51,
+    "waves": 3,
+    "left": 0,
+    "keep": 11
+   },
+   "oneWave": {
+    "pct": 100,
+    "used": 18,
+    "reach": 55,
+    "collapse": 100
+   },
+   "verdict": "FAIL",
+   "issues": [
+    "ONE-WAVE (all TNT, one BLAST) reaches 100%"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,169 @@
+{
+ "when": "2026-11-22T17:32:17.300Z",
+ "rule": {
+  "oneBombPct": 70,
+  "oneBombCollapse": 101,
+  "spare": {
+   "N": [
+    2,
+    5
+   ],
+   "H": [
+    1,
+    3
+   ],
+   "SH": [
+    1,
+    3
+   ]
+  },
+  "minWaves": {
+   "N": 2,
+   "H": 3,
+   "SH": 3
+  },
+  "estSec": {
+   "N": [
+    20,
+    75
+   ],
+   "H": [
+    30,
+    90
+   ],
+   "SH": [
+    40,
+    120
+   ]
+  },
+  "keepMax": 0.05,
+  "footMax": 80
+ },
+ "results": [
+  {
+   "id": "E09",
+   "lv": 37,
+   "name": "High Cistern",
+   "tier": "N",
+   "sf": [],
+   "pattern": "drop first (light): a brick water tower with a heavy iron cistern on top; the cistern ignores TNT up high and counts until cracked; drop the tower, then crack the cistern",
+   "story": "",
+   "sfMetric": {},
+   "metrics": {
+    "members": 84,
+    "hard": 5,
+    "soft": 79,
+    "hardPct": 6,
+    "main": {
+     "members": 56,
+     "hard": 5,
+     "soft": 51,
+     "hardPct": 9,
+     "pos": {
+      "top": 5,
+      "mid": 0,
+      "bottom": 0,
+      "edge": 0,
+      "core": 5,
+      "front": 0,
+      "back": 0
+     },
+     "core": "yes",
+     "hardLayers": 1,
+     "depthRows": 3,
+     "frontHard": 0,
+     "backHard": 0,
+     "floors": 4
+    },
+    "stacks": 3,
+    "parts": [
+     "A",
+     "B",
+     "C"
+    ]
+   },
+   "oneBomb": {
+    "pct": 14,
+    "collapse": 14,
+    "at": "g7bk@A:f1",
+    "tried": 18
+   },
+   "lazy": {
+    "pct": 32,
+    "collapse": 64
+   },
+   "fairOpen": {
+    "win": true,
+    "res": "WIN",
+    "pct": 95,
+    "used": 16,
+    "left": 24,
+    "waves": 4,
+    "firstWave": 57,
+    "keep": 0,
+    "estSec": 45,
+    "log": "bld9=57 bld1=58 bld4=67 heap2=95"
+   },
+   "tnt": 20,
+   "fair": [
+    {
+     "win": true,
+     "res": "WIN",
+     "pct": 96,
+     "used": 16,
+     "left": 4,
+     "waves": 3,
+     "firstWave": 58,
+     "keep": 0,
+     "estSec": 39,
+     "log": "bld9=58 bld5=68 heap2=96"
+    },
+    {
+     "win": true,
+     "res": "WIN",
+     "pct": 95,
+     "used": 17,
+     "left": 3,
+     "waves": 4,
+     "firstWave": 57,
+     "keep": 0,
+     "estSec": 47,
+     "log": "bld9=57 bld1=58 bld4=67 heap3=95"
+    },
+    {
+     "win": true,
+     "res": "WIN",
+     "pct": 96,
+     "used": 16,
+     "left": 4,
+     "waves": 3,
+     "firstWave": 57,
+     "keep": 0,
+     "estSec": 40,
+     "log": "bld9=57 bld5=67 heap2=96"
+    }
+   ],
+   "spare": 3,
+   "allFoot": {
+    "pct": 73,
+    "used": 20,
+    "collapse": 100,
+    "keep": 0
+   },
+   "footOnly": {
+    "pct": 73,
+    "waves": 3,
+    "left": 7,
+    "keep": 0
+   },
+   "oneWave": {
+    "pct": 71,
+    "used": 20,
+    "reach": 73,
+    "collapse": 98
+   },
+   "verdict": "PASS",
+   "issues": []
+  }
+ ]
+}
