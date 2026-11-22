@@ -6,11 +6,6 @@
   var api = { on:function(){ return ON; }, v:"r3" }, tA = setInterval(function(){ if(window.__blast){ window.__blast.rs = api; clearInterval(tA); } }, 100);
   if(!ON) return;
   H.classList.add("rs");
-  // R1 deck: the construction-site stand under the tray (foreground anchor, like a cannon dais). After #bottom in the DOM so
-  // "#bottom:not(.hidden) ~ #rsDeck" shows it only in play.
-  var deck = document.createElement("div"); deck.id = "rsDeck"; deck.setAttribute("aria-hidden", "true");
-  deck.innerHTML = '<i class="rsTop"></i>';
-  document.body.appendChild(deck);
   // R3 Reduce motion (OS or the game's own switch: save.reduce / html.rm) turns the R3 animations off
   var rm = function(){ var g = false; try{ g = !!(window.__blast.save().reduce || window.__blast.save().rm); }catch(e){}
     H.classList.toggle("rsRM", g || H.classList.contains("rm") || (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches)); };
