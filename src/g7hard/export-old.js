@@ -11,7 +11,7 @@
 const fs = require('fs'), path = require('path');
 const ROOT = path.join(__dirname, '..', '..'), GD = path.join(ROOT, 'city-blast', 'levels-gd');
 const OUT = path.join(ROOT, 'city-blast', 'release', 'g7-old-levels.json');
-const DONE = ['O01', 'O02', 'O03'];   // the rebuilds that pass their bars, in play order (OLD-POLISH.md)
+const DONE = ['O01', 'O04', 'O05', 'O06', 'O07', 'O09', 'O10', 'O12', 'O13', 'O15'];   // the rebuilds that pass their bars, in play order (OLD-POLISH.md)
 const TIER = { o1:'T', o2:'T', o3:'N', o36:'R', o6:'N', o8:'R', o9:'N', o13:'R', o14:'N', o21:'R', o15:'N', o11:'R', o19:'N', o17:'R', o12:'N', o18:'N' };
 const fail = (m) => { console.error('export-old: ' + m); process.exit(1); };
 const seen = new Set();

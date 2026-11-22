@@ -13,6 +13,7 @@
   "target": 0.85,
   "yaw": 0,
   "d": 1,
+  "hard7": true,
   "base": {
    "A": {
     "preset": "stiff-tip",
@@ -31,7 +32,8 @@
     "hx": 1.8,
     "gh": 4,
     "sh": 3.6,
-    "ns": 4
+    "ns": 4,
+    "heavy": 1
    },
    {
     "id": "S",
@@ -62,16 +64,6 @@
     "side": 1
    }
   ],
-  "faces": {
-   "right": [
-    "z-"
-   ],
-   "wrong": [
-    "z+",
-    "x+",
-    "x-"
-   ]
-  },
   "charges": {
    "tnt": 40
   },
@@ -146,6 +138,6 @@
     ]
    ]
   },
-  "tntStart": 10
+  "tntStart": 13
  }
 ]

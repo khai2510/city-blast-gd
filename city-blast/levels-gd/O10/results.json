@@ -1,0 +1,163 @@
+{
+ "when": "2026-11-22T18:16:55.768Z",
+ "bp": "O10",
+ "name": "Pier Pavilion",
+ "tnt": 14,
+ "bar": "N",
+ "metrics": {
+  "members": 155,
+  "hard": 8,
+  "soft": 147,
+  "hardPct": 5,
+  "main": {
+   "members": 56,
+   "hard": 8,
+   "soft": 48,
+   "hardPct": 14,
+   "pos": {
+    "top": 0,
+    "mid": 0,
+    "bottom": 8,
+    "edge": 8,
+    "core": 0,
+    "front": 3,
+    "back": 3
+   },
+   "core": "no",
+   "hardLayers": 1,
+   "depthRows": 9,
+   "frontHard": 3,
+   "backHard": 3,
+   "floors": 5
+  },
+  "stacks": 4,
+  "parts": [
+   "A",
+   "S",
+   "B",
+   "C"
+  ]
+ },
+ "sol": {
+  "pct": 96,
+  "win": true,
+  "res": "WIN",
+  "placed": [
+   "ok",
+   "ok",
+   "ok",
+   "ok"
+  ],
+  "waves": 1,
+  "keep": 0
+ },
+ "oneBomb": {
+  "pct": 39,
+  "collapse": 40,
+  "at": "steel@A:f1",
+  "tried": 20
+ },
+ "lazy": {
+  "pct": 41,
+  "collapse": 45
+ },
+ "fair": [
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 87,
+   "used": 12,
+   "left": 2,
+   "waves": 1,
+   "firstWave": 87,
+   "keep": 0,
+   "estSec": 20,
+   "log": "bld12=87"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 99,
+   "used": 12,
+   "left": 2,
+   "waves": 1,
+   "firstWave": 99,
+   "keep": 0,
+   "estSec": 21,
+   "log": "bld12=99"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 99,
+   "used": 12,
+   "left": 2,
+   "waves": 1,
+   "firstWave": 99,
+   "keep": 0,
+   "estSec": 21,
+   "log": "bld12=99"
+  }
+ ],
+ "allFoot": {
+  "pct": 88,
+  "used": 14,
+  "collapse": 98,
+  "keep": 0
+ },
+ "footOnly": {
+  "pct": 94,
+  "waves": 2,
+  "left": 7,
+  "keep": 0
+ },
+ "oneWave": {
+  "pct": 99,
+  "used": 14,
+  "reach": 136,
+  "collapse": 100
+ },
+ "curve": [
+  {
+   "n": 1,
+   "pct": 3,
+   "collapse": 5
+  },
+  {
+   "n": 2,
+   "pct": 39,
+   "collapse": 42
+  },
+  {
+   "n": 3,
+   "pct": 43,
+   "collapse": 47
+  },
+  {
+   "n": 4,
+   "pct": 41,
+   "collapse": 47
+  },
+  {
+   "n": 6,
+   "pct": 42,
+   "collapse": 47
+  },
+  {
+   "n": 8,
+   "pct": 44,
+   "collapse": 49
+  },
+  {
+   "n": 12,
+   "pct": 44,
+   "collapse": 49
+  }
+ ],
+ "jump": 36,
+ "verdict": "MISS",
+ "issues": [
+  "allFoot 88%",
+  "footOnly 94%"
+ ]
+}

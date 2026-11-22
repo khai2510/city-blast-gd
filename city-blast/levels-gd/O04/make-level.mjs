@@ -6,7 +6,7 @@
 // hits the blue.
 import { writeFileSync } from 'node:fs';
 const E = (k, d) => process.env[k] != null ? +process.env[k] : d;
-const TZ = E('TZ', -8), CX = E('CX', 9.0), SZ = E('SZ', 4.6);
+const TZ = E('TZ', -8), CX = E('CX', 8.6), SZ = E('SZ', 4.6);
 const T = (sel, f, i) => ['tnt', sel, f || 0, i || 0];
 const lvl = {
   name: 'Fire Station', bp: 'O04', slot: 4, replaces: 'o36', tier: process.env.TIER || 'N', f: 12, kind: 'scene', hero: 'A', heroId: 'G7-O04', teaches: 'keep',
@@ -15,7 +15,7 @@ const lvl = {
   sf: [], pattern: 'blue intro: two brick piers tip the hose tower forward onto the engine house, away from the school; the crew house takes its own pier',
   parts: [
     { id: 'A', kind: 'g7oHose', x: 0, z: TZ, hx: E('HX', 2.8), ah: E('AH', 4.6), sh: E('SH', 3.4), ns: E('NS', 3) },
-    { id: 'S', kind: 'g7oEng', x: 0, z: SZ, hx: E('SHX', 4.8), hz: 2.2, h: E('SHH', 3.0) },
+    { id: 'S', kind: 'g7oEng', x: 0, z: SZ, hx: E('SHX', 10.0), hz: 2.2, h: E('SHH', 3.0), nx: E('SNX', 5), bays: E('SBAYS', 4) },
     { id: 'C', kind: 'g7oCott', x: CX, z: TZ + 0.8, hx: 3.2, hz: 2.8, side: 1 }
   ],
   keeps: [{ kind: 'keep6', x: -CX, z: TZ + 0.8, floors: E('KF', 3), cx: E('KCX', 3), cz: E('KCZ', 3), name: 'the school', role: 'school', fixType: 'school' }],
@@ -25,9 +25,9 @@ const lvl = {
   ftip: 'Bring it down in front. Keep the blue safe.',
   lesson: { check: [[T('A:z+', 0, 0), T('A:z+', 0, 1), T('C:x-', 0, 0)]] }
 };
-lvl.sol = [T('A:z+', 0, 0), T('A:z+', 0, 1), T('C:z+', 0, 0)];
+lvl.sol = [T('A:z+', 0, 0), T('A:z+', 0, 1), T('S:z+', 0, 0), T('C:z+', 0, 0)];
 lvl.bot = { hints: [['A', 'A:z+', 1], ['A', 'A:z+', 1], ['A', 'C:z+', 1]] };
 lvl.hero = lvl.parts.map(p => p.id).join(',');   // the opening frames every building (main/frame.js heroIds), not only the main one
-lvl.tntStart = E('TNT', 7);
+lvl.tntStart = E('TNT', 11);
 writeFileSync(new URL('./level.json', import.meta.url), JSON.stringify([lvl], null, 1));
 console.log('ok O04', 'tower z', TZ, 'school/crew ±' + CX, 'engine house z', SZ);

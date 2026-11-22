@@ -53,17 +53,6 @@
     "side": 1
    }
   ],
-  "faces": {
-   "part": "B",
-   "right": [
-    "x+"
-   ],
-   "wrong": [
-    "x-",
-    "z+",
-    "z-"
-   ]
-  },
   "charges": {
    "tnt": 40
   },
@@ -162,6 +151,6 @@
     ]
    ]
   },
-  "tntStart": 9
+  "tntStart": 11
  }
 ]

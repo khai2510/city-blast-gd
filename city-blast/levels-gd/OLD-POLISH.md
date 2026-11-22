@@ -67,10 +67,35 @@ leaning tower, lattice, saucer, twin spires, Art Deco needle, flatiron, dome hal
 tower, twin sails, cube houses…), L01–L05 (pagoda, fortress keep, opera, canal houses, glass spine) and E01–E10 (slab on pilotis,
 shot tower, tram depot, market hall, observatory, chimney + boiler house, bathhouse, grain elevator, water tower, rail terminus).
 
-## Status
+## Status (22/11 evening)
 
-| Slot | Code | State | TNT | Numbers |
-|---|---|---|---|---|
-| 1 | O01 | building | | |
-| 2 | O02 | building | | |
-| 3 | O03 | building | | |
+Before shots: `OLD-POLISH-shots/` (current main, 393×852, real LV picker). After: each level folder (`shot-open.jpg` from main,
+`shot-blast1*.jpg` the expert plan in one blast). Numbers: each `O<slot>-SUMMARY.md`.
+
+| Slot | Code | Replaces | State | TNT | Note |
+|---|---|---|---|---|---|
+| 1 | O01 Ranger Lookout | L1 | **PASS, wired** | 5 | fair 3/3 at 5 (the falling tower takes the shed and the cabins), oneBomb 63 % |
+| 2 | O02 Hop Kiln | L2 | built, **not wired: Khai** | 5 | fair bot 0/3 at 5 TNT (D-blast-K2), 3/3 at 10. See "Decision for Khai" |
+| 3 | O03 Airfield Tower | L3 | built, **not wired: Khai** | 5 | same as slot 2. Its expert plan wins in one blast (98 %), the old L3 problem is gone |
+| 4 | O04 Fire Station | L36 | **PASS, wired** | 11 | |
+| 5 | O05 Valley Station | L6 | **PASS, wired** | 13 | front legs drop it on the blue (lose); back / sides win |
+| 6 | O06 Harbour Crane | L8 | **PASS, wired** | 13 | |
+| 7 | O07 Pit Head | L9 | **PASS, wired** | 8 | the aim test did not separate (a wrong fall + clean-up still wins): a steel practice level |
+| 9 | O09 Floodlit Stand | L13 | miss | — | the stand does not react to foot TNT (curve 2→6 %), fair 2/3 |
+| 10 | O10 Pier Pavilion | L14 | **PASS, wired** | 14 | |
+| 12 | O12 Drive-in | L21 | **PASS, wired** | 16 | the Ball card stays on this slot |
+| 13 | O13 Monorail Station | L15 | testing | 7 | |
+| 14 | O14 Seaside Hotel | L11 | miss | — | the upper block does not need a second blast yet (one blast 91 %), oneBomb 71 % |
+| 15 | O15 Gas Works | L19 | **PASS, wired** | 17 | |
+| 17 | O17 Car Park | L17 | testing | — | heavy roof pieces (dark is introduced here) to keep allFoot < 80 % |
+| 18 | O18 Roadside Motel | L12 | testing | — | same |
+| 19 | O19 Library | L18 | testing | — | same; oneBomb 70 % before |
+
+## Decision for Khai (slots 2–3)
+
+The tutorial budget is 5 TNT (D-blast-K2: tutorial levels 4–6, old L1–L3 had 5). The fair bot places up to 3 TNT on every building in
+one blast, so a scene of a main building, its landing and two side buildings needs ~10 TNT for the bot; with 2 buildings it wins at 5
+but one bomb then wins too (oneBomb 88–100 %: the base score's height term). Slot 1 passes because its tall tower knocks the others.
+- **A:** keep 5 TNT (K2). The player's plan (the hand's legs + one TNT a side building) wins with 1 spare; the fair bot loses. Wire.
+- **B:** 10 TNT on slots 2–3 (changes K2). The fair bot wins 3/3.
+- **C:** keep the old L2 / L3 on slots 2–3.

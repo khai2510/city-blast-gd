@@ -1,0 +1,165 @@
+{
+ "when": "2026-11-22T18:17:59.756Z",
+ "bp": "O12",
+ "name": "Drive-in",
+ "tnt": 16,
+ "bar": "N",
+ "metrics": {
+  "members": 125,
+  "hard": 16,
+  "soft": 109,
+  "hardPct": 13,
+  "main": {
+   "members": 39,
+   "hard": 16,
+   "soft": 23,
+   "hardPct": 41,
+   "pos": {
+    "top": 8,
+    "mid": 8,
+    "bottom": 0,
+    "edge": 16,
+    "core": 0,
+    "front": 8,
+    "back": 8
+   },
+   "core": "no",
+   "hardLayers": 2,
+   "depthRows": 4,
+   "frontHard": 8,
+   "backHard": 8,
+   "floors": 3
+  },
+  "stacks": 4,
+  "parts": [
+   "A",
+   "S",
+   "B",
+   "C"
+  ]
+ },
+ "sol": {
+  "pct": 91,
+  "win": true,
+  "res": "WIN",
+  "placed": [
+   "ok",
+   "ok",
+   "ok",
+   "ok",
+   "ok"
+  ],
+  "waves": 1,
+  "keep": 0
+ },
+ "oneBomb": {
+  "pct": 53,
+  "collapse": 75,
+  "at": "cpan@S:f0",
+  "tried": 20
+ },
+ "lazy": {
+  "pct": 60,
+  "collapse": 79
+ },
+ "fair": [
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 99,
+   "used": 12,
+   "left": 4,
+   "waves": 2,
+   "firstWave": 22,
+   "keep": 0,
+   "estSec": 30,
+   "log": "bld7=22 bld5=99"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 88,
+   "used": 12,
+   "left": 4,
+   "waves": 2,
+   "firstWave": 23,
+   "keep": 0,
+   "estSec": 30,
+   "log": "bld8=23 bld4=88"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 99,
+   "used": 13,
+   "left": 3,
+   "waves": 3,
+   "firstWave": 23,
+   "keep": 0,
+   "estSec": 40,
+   "log": "bld8=23 bld4=77 bld1=99"
+  }
+ ],
+ "allFoot": {
+  "pct": 88,
+  "used": 16,
+  "collapse": 98,
+  "keep": 0
+ },
+ "footOnly": {
+  "pct": 96,
+  "waves": 1,
+  "left": 10,
+  "keep": 0
+ },
+ "oneWave": {
+  "pct": 99,
+  "used": 16,
+  "reach": 107,
+  "collapse": 100
+ },
+ "curve": [
+  {
+   "n": 1,
+   "pct": 12,
+   "collapse": 24
+  },
+  {
+   "n": 2,
+   "pct": 16,
+   "collapse": 30
+  },
+  {
+   "n": 3,
+   "pct": 60,
+   "collapse": 83
+  },
+  {
+   "n": 4,
+   "pct": 62,
+   "collapse": 88
+  },
+  {
+   "n": 6,
+   "pct": 58,
+   "collapse": 87
+  },
+  {
+   "n": 8,
+   "pct": 57,
+   "collapse": 80
+  },
+  {
+   "n": 12,
+   "pct": 57,
+   "collapse": 80
+  }
+ ],
+ "jump": 44,
+ "verdict": "MISS",
+ "issues": [
+  "allFoot 88%",
+  "footOnly 96%",
+  "curve jump +44"
+ ]
+}

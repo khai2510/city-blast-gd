@@ -1,0 +1,161 @@
+{
+ "when": "2026-11-22T17:55:29.098Z",
+ "bp": "O04",
+ "name": "Fire Station",
+ "tnt": 11,
+ "bar": "N",
+ "metrics": {
+  "members": 82,
+  "hard": 0,
+  "soft": 82,
+  "hardPct": 0,
+  "main": {
+   "members": 42,
+   "hard": 0,
+   "soft": 42,
+   "hardPct": 0,
+   "pos": {
+    "top": 0,
+    "mid": 0,
+    "bottom": 0,
+    "edge": 0,
+    "core": 0,
+    "front": 0,
+    "back": 0
+   },
+   "core": "no",
+   "hardLayers": 0,
+   "depthRows": 3,
+   "frontHard": 0,
+   "backHard": 0,
+   "floors": 6
+  },
+  "stacks": 3,
+  "parts": [
+   "A",
+   "S",
+   "C"
+  ]
+ },
+ "sol": {
+  "pct": 98,
+  "win": true,
+  "res": "WIN",
+  "placed": [
+   "ok",
+   "ok",
+   "ok",
+   "ok"
+  ],
+  "waves": 1,
+  "keep": 0
+ },
+ "oneBomb": {
+  "pct": 50,
+  "collapse": 44,
+  "at": "wwall@A:f1",
+  "tried": 18
+ },
+ "lazy": {
+  "pct": 51,
+  "collapse": 46
+ },
+ "fair": [
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 98,
+   "used": 9,
+   "left": 2,
+   "waves": 1,
+   "firstWave": 98,
+   "keep": 0,
+   "estSec": 17,
+   "log": "bld9=98"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 98,
+   "used": 9,
+   "left": 2,
+   "waves": 1,
+   "firstWave": 98,
+   "keep": 0,
+   "estSec": 17,
+   "log": "bld9=98"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 98,
+   "used": 9,
+   "left": 2,
+   "waves": 1,
+   "firstWave": 98,
+   "keep": 0,
+   "estSec": 17,
+   "log": "bld9=98"
+  }
+ ],
+ "allFoot": {
+  "pct": 99,
+  "used": 11,
+  "collapse": 100,
+  "keep": 14
+ },
+ "footOnly": {
+  "pct": 97,
+  "waves": 1,
+  "left": 5,
+  "keep": 14
+ },
+ "oneWave": {
+  "pct": 99,
+  "used": 11,
+  "reach": 70,
+  "collapse": 100
+ },
+ "curve": [
+  {
+   "n": 1,
+   "pct": 48,
+   "collapse": 44
+  },
+  {
+   "n": 2,
+   "pct": 48,
+   "collapse": 44
+  },
+  {
+   "n": 3,
+   "pct": 48,
+   "collapse": 44
+  },
+  {
+   "n": 4,
+   "pct": 48,
+   "collapse": 44
+  },
+  {
+   "n": 6,
+   "pct": 51,
+   "collapse": 47
+  },
+  {
+   "n": 8,
+   "pct": 54,
+   "collapse": 53
+  },
+  {
+   "n": 12,
+   "pct": 54,
+   "collapse": 53
+  }
+ ],
+ "jump": 3,
+ "verdict": "MISS",
+ "issues": [
+  "est 17/17/17s"
+ ]
+}

@@ -1,0 +1,1390 @@
+[
+ {
+  "name": "Ranger Lookout",
+  "bp": "O01",
+  "slot": 1,
+  "replaces": "o1",
+  "tier": "T",
+  "f": 9,
+  "kind": "scene",
+  "hero": "A,S,B,C",
+  "heroId": "G7-O01",
+  "teaches": "wood",
+  "target": 0.85,
+  "yaw": 0,
+  "d": 1,
+  "base": {
+   "A": {
+    "preset": "weak-tip",
+    "shove": 2.5
+   },
+   "*": "weak"
+  },
+  "sf": [],
+  "pattern": "tutorial: one post holds the lookout up; one double tap and it falls across the woodshed; each cabin takes its own post",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7oLook",
+    "x": 0,
+    "z": -8,
+    "hx": 2.8,
+    "lh": 5.2,
+    "sh": 3.4,
+    "ns": 4
+   },
+   {
+    "id": "S",
+    "kind": "g7oShed",
+    "x": 3.6,
+    "z": 2.4,
+    "hx": 3,
+    "hz": 2,
+    "h": 2.2,
+    "nx": 3
+   },
+   {
+    "id": "B",
+    "kind": "g7oCabin",
+    "x": -8.6,
+    "z": -7,
+    "hx": 3.2,
+    "hz": 2.8,
+    "side": -1
+   },
+   {
+    "id": "C",
+    "kind": "g7oCabin",
+    "x": 8.6,
+    "z": -7,
+    "hx": 3.2,
+    "hz": 2.8,
+    "side": 1
+   }
+  ],
+  "charges": {
+   "tnt": 6
+  },
+  "hint": "A:z+",
+  "tip": "",
+  "noWords": 1,
+  "aid": {
+   "tip": false
+  },
+  "dbl": 1,
+  "ftip": "A post holds a building up. Hit the posts.",
+  "lesson": {
+   "check": [
+    []
+   ]
+  },
+  "sol": [
+   [
+    "tnt",
+    "A:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "B:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "C:z+",
+    0,
+    0
+   ]
+  ],
+  "bot": {
+   "hints": [
+    [
+     "A",
+     "A:z+",
+     1
+    ],
+    [
+     "A",
+     "B:z+",
+     1
+    ],
+    [
+     "A",
+     "C:z+",
+     1
+    ]
+   ]
+  },
+  "tntStart": 6
+ },
+ {
+  "name": "Fire Station",
+  "bp": "O04",
+  "slot": 4,
+  "replaces": "o36",
+  "tier": "R",
+  "f": 12,
+  "kind": "scene",
+  "hero": "A,S,C",
+  "heroId": "G7-O04",
+  "teaches": "keep",
+  "target": 0.85,
+  "yaw": 0,
+  "d": 1,
+  "base": {
+   "A": {
+    "preset": "stiff-tip",
+    "shove": 2.5
+   },
+   "*": "weak"
+  },
+  "sf": [],
+  "pattern": "blue intro: two brick piers tip the hose tower forward onto the engine house, away from the school; the crew house takes its own pier",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7oHose",
+    "x": 0,
+    "z": -8,
+    "hx": 2.8,
+    "ah": 4.6,
+    "sh": 3.4,
+    "ns": 3
+   },
+   {
+    "id": "S",
+    "kind": "g7oEng",
+    "x": 0,
+    "z": 4.6,
+    "hx": 10,
+    "hz": 2.2,
+    "h": 3,
+    "nx": 5,
+    "bays": 4
+   },
+   {
+    "id": "C",
+    "kind": "g7oCott",
+    "x": 8.6,
+    "z": -7.2,
+    "hx": 3.2,
+    "hz": 2.8,
+    "side": 1
+   }
+  ],
+  "keeps": [
+   {
+    "kind": "keep6",
+    "x": -8.6,
+    "z": -7.2,
+    "floors": 3,
+    "cx": 3,
+    "cz": 3,
+    "name": "the school",
+    "role": "school",
+    "fixType": "school"
+   }
+  ],
+  "keep": {
+   "name": "the school",
+   "sides": [],
+   "type": "school",
+   "role": "school",
+   "full": 1
+  },
+  "charges": {
+   "tnt": 11
+  },
+  "hint": "A:z+",
+  "tip": "",
+  "dud": "Not yet. Two legs side by side!",
+  "ftip": "Bring it down in front. Keep the blue safe.",
+  "lesson": {
+   "check": [
+    [
+     [
+      "tnt",
+      "A:z+",
+      0,
+      0
+     ],
+     [
+      "tnt",
+      "A:z+",
+      0,
+      1
+     ],
+     [
+      "tnt",
+      "C:x-",
+      0,
+      0
+     ]
+    ]
+   ]
+  },
+  "sol": [
+   [
+    "tnt",
+    "A:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "A:z+",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "S:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "C:z+",
+    0,
+    0
+   ]
+  ],
+  "bot": {
+   "hints": [
+    [
+     "A",
+     "A:z+",
+     1
+    ],
+    [
+     "A",
+     "A:z+",
+     1
+    ],
+    [
+     "A",
+     "C:z+",
+     1
+    ]
+   ]
+  },
+  "tntStart": 11
+ },
+ {
+  "name": "Valley Station",
+  "bp": "O05",
+  "slot": 5,
+  "replaces": "o6",
+  "tier": "N",
+  "f": 12,
+  "kind": "scene",
+  "hero": "A,S,B,C",
+  "heroId": "G7-O05",
+  "teaches": "rotate",
+  "target": 0.85,
+  "yaw": 0,
+  "d": 1,
+  "base": {
+   "A": "stiff-tip",
+   "*": "weak"
+  },
+  "sf": [],
+  "pattern": "rotate: the front legs drop the station on the blue house; turned to the back, two legs drop it onto the ticket hall",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7oCable",
+    "x": 0,
+    "z": -3,
+    "hx": 3.2,
+    "gh": 4.8,
+    "sh": 3.3,
+    "ns": 2
+   },
+   {
+    "id": "S",
+    "kind": "g7oTicket",
+    "x": 0,
+    "z": -15.5,
+    "hx": 5,
+    "hz": 3,
+    "nb": 2
+   },
+   {
+    "id": "B",
+    "kind": "g7oCabin",
+    "x": -9,
+    "z": -3,
+    "hx": 3.2,
+    "hz": 2.8,
+    "side": -1
+   },
+   {
+    "id": "C",
+    "kind": "g7oCabin",
+    "x": 9,
+    "z": -3,
+    "hx": 3.2,
+    "hz": 2.8,
+    "side": 1
+   }
+  ],
+  "keeps": [
+   {
+    "kind": "keep6",
+    "x": 0,
+    "z": 6.5,
+    "floors": 1,
+    "cx": 4,
+    "cz": 2,
+    "name": "the guest house",
+    "role": "hospital",
+    "fixType": "hospital"
+   }
+  ],
+  "keep": {
+   "name": "the guest house",
+   "sides": [],
+   "type": "hospital",
+   "role": "hospital",
+   "full": 1
+  },
+  "faces": {
+   "right": [
+    "z-",
+    "x+",
+    "x-"
+   ],
+   "wrong": [
+    "z+"
+   ]
+  },
+  "charges": {
+   "tnt": 13
+  },
+  "hint": "A:z-",
+  "tip": "",
+  "dud": "Not yet. Two legs side by side!",
+  "ftip": "It falls toward the legs you break. Turn around.",
+  "lesson": {
+   "check": [
+    [
+     [
+      "tnt",
+      "A:z+",
+      0,
+      0
+     ],
+     [
+      "tnt",
+      "A:z+",
+      0,
+      1
+     ],
+     [
+      "tnt",
+      "B:z+",
+      0,
+      0
+     ],
+     [
+      "tnt",
+      "C:z+",
+      0,
+      0
+     ]
+    ]
+   ]
+  },
+  "sol": [
+   [
+    "tnt",
+    "A:z-",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "A:z-",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "B:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "C:z+",
+    0,
+    0
+   ]
+  ],
+  "bot": {
+   "hints": [
+    [
+     "A",
+     "A:z-",
+     1
+    ],
+    [
+     "A",
+     "A:z-",
+     1
+    ],
+    [
+     "A",
+     "B:z+",
+     1
+    ],
+    [
+     "A",
+     "C:z+",
+     1
+    ]
+   ]
+  },
+  "tntStart": 13
+ },
+ {
+  "name": "Harbour Crane",
+  "bp": "O06",
+  "slot": 6,
+  "replaces": "o8",
+  "tier": "R",
+  "f": 12,
+  "kind": "scene",
+  "hero": "A,S,B,C",
+  "heroId": "G7-O06",
+  "teaches": "steel",
+  "target": 0.85,
+  "yaw": 0,
+  "d": 1,
+  "base": {
+   "A": {
+    "preset": "stiff-tip",
+    "shove": 2.5
+   },
+   "*": "weak"
+  },
+  "sf": [],
+  "pattern": "steel intro: TNT on the steel legs does little; two concrete pedestals side by side drop the crane forward onto the ship; each warehouse takes its own pier",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7oCrane",
+    "x": 0,
+    "z": -6,
+    "hx": 3.2,
+    "hz": 2.6,
+    "ph": 2.6,
+    "lh": 7
+   },
+   {
+    "id": "S",
+    "kind": "g7oShip",
+    "x": 0,
+    "z": 4.6,
+    "hx": 5.4,
+    "hz": 1.8,
+    "h": 2
+   },
+   {
+    "id": "B",
+    "kind": "g7oWhse",
+    "x": -9,
+    "z": -6,
+    "hx": 3.2,
+    "hz": 3,
+    "nb": 3
+   },
+   {
+    "id": "C",
+    "kind": "g7oWhse",
+    "x": 9,
+    "z": -6,
+    "hx": 3.2,
+    "hz": 3,
+    "nb": 3
+   }
+  ],
+  "charges": {
+   "tnt": 13
+  },
+  "hint": "A:z+",
+  "tip": "",
+  "dud": "Not yet. Two legs side by side!",
+  "ftip": "Steel holds. Break what it stands on.",
+  "lesson": {
+   "check": [
+    []
+   ]
+  },
+  "sol": [
+   [
+    "tnt",
+    "A:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "A:z+",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "B:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "C:z+",
+    0,
+    0
+   ]
+  ],
+  "bot": {
+   "hints": [
+    [
+     "A",
+     "A:z+",
+     1
+    ],
+    [
+     "A",
+     "A:z+",
+     1
+    ],
+    [
+     "A",
+     "B:z+",
+     1
+    ],
+    [
+     "A",
+     "C:z+",
+     1
+    ]
+   ]
+  },
+  "tntStart": 13
+ },
+ {
+  "name": "Pit Head",
+  "bp": "O07",
+  "slot": 7,
+  "replaces": "o9",
+  "tier": "N",
+  "f": 12,
+  "kind": "scene",
+  "hero": "A,S,B,C",
+  "heroId": "G7-O07",
+  "teaches": "aim",
+  "target": 0.85,
+  "yaw": 0,
+  "d": 1,
+  "base": {
+   "A": "stiff-tip",
+   "*": "weak"
+  },
+  "sf": [],
+  "pattern": "steel on concrete + aim: two footings at the back drop the headframe across the winding house; a front fall lands in the empty yard",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7oHead",
+    "x": 0,
+    "z": 0,
+    "hx": 2.6,
+    "hz": 2.4,
+    "ph": 3.2,
+    "lh": 5.6
+   },
+   {
+    "id": "S",
+    "kind": "g7oWind",
+    "x": 0,
+    "z": -6.8,
+    "hx": 5,
+    "hz": 3.2,
+    "h": 5.4
+   },
+   {
+    "id": "B",
+    "kind": "g7oLamp",
+    "x": -9,
+    "z": 0,
+    "hx": 3.2,
+    "hz": 2.8,
+    "side": -1
+   },
+   {
+    "id": "C",
+    "kind": "g7oLamp",
+    "x": 9,
+    "z": 0,
+    "hx": 3.2,
+    "hz": 2.8,
+    "side": 1
+   }
+  ],
+  "charges": {
+   "tnt": 8
+  },
+  "hint": "A:z-",
+  "tip": "",
+  "dud": "Not yet. Two legs side by side!",
+  "ftip": "It falls where the legs go. Aim it.",
+  "lesson": {
+   "check": [
+    [
+     [
+      "tnt",
+      "A:z+",
+      0,
+      0
+     ],
+     [
+      "tnt",
+      "A:z+",
+      0,
+      1
+     ],
+     [
+      "tnt",
+      "B:z+",
+      0,
+      0
+     ],
+     [
+      "tnt",
+      "C:z+",
+      0,
+      0
+     ]
+    ]
+   ]
+  },
+  "sol": [
+   [
+    "tnt",
+    "A:z-",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "A:z-",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "S:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "B:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "C:z+",
+    0,
+    0
+   ]
+  ],
+  "bot": {
+   "hints": [
+    [
+     "A",
+     "A:z-",
+     1
+    ],
+    [
+     "A",
+     "A:z-",
+     1
+    ],
+    [
+     "A",
+     "B:z+",
+     1
+    ],
+    [
+     "A",
+     "C:z+",
+     1
+    ]
+   ]
+  },
+  "tntStart": 8
+ },
+ {
+  "name": "Floodlit Stand",
+  "bp": "O09",
+  "slot": 9,
+  "replaces": "o13",
+  "tier": "R",
+  "f": 12,
+  "kind": "scene",
+  "hero": "A,B,C",
+  "heroId": "G7-O09",
+  "teaches": "aim",
+  "target": 0.85,
+  "yaw": 0,
+  "d": 1,
+  "base": {
+   "B": "stiff-tip",
+   "C": "stiff-tip",
+   "*": "weak"
+  },
+  "sf": [],
+  "pattern": "steel on concrete + aim: each floodlight tower tipped inward through two pedestals falls across the grandstand roof",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7oStand",
+    "x": 0,
+    "z": 0,
+    "hx": 6.2,
+    "nx": 5,
+    "rh": 8.4
+   },
+   {
+    "id": "B",
+    "kind": "g7oFlood",
+    "x": -9.6,
+    "z": -2.4,
+    "hx": 1.7,
+    "ph": 2,
+    "lh": 5,
+    "ns": 3,
+    "side": -1
+   },
+   {
+    "id": "C",
+    "kind": "g7oFlood",
+    "x": 9.6,
+    "z": -2.4,
+    "hx": 1.7,
+    "ph": 2,
+    "lh": 5,
+    "ns": 3,
+    "side": 1
+   }
+  ],
+  "charges": {
+   "tnt": 11
+  },
+  "hint": "B:x+",
+  "tip": "",
+  "dud": "Not yet. Two legs side by side!",
+  "ftip": "Tall steel falls where its feet go. Aim inward.",
+  "lesson": {
+   "check": [
+    [
+     [
+      "tnt",
+      "B:z+",
+      0,
+      0
+     ],
+     [
+      "tnt",
+      "B:z+",
+      0,
+      1
+     ],
+     [
+      "tnt",
+      "C:z+",
+      0,
+      0
+     ],
+     [
+      "tnt",
+      "C:z+",
+      0,
+      1
+     ]
+    ]
+   ]
+  },
+  "sol": [
+   [
+    "tnt",
+    "B:x+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "B:x+",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "C:x-",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "C:x-",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "A:z+",
+    0,
+    2
+   ]
+  ],
+  "bot": {
+   "hints": [
+    [
+     "A",
+     "B:x+",
+     1
+    ],
+    [
+     "A",
+     "B:x+",
+     1
+    ],
+    [
+     "A",
+     "C:x-",
+     1
+    ],
+    [
+     "A",
+     "C:x-",
+     1
+    ],
+    [
+     "A",
+     "A:z+",
+     1
+    ]
+   ]
+  },
+  "tntStart": 11
+ },
+ {
+  "name": "Pier Pavilion",
+  "bp": "O10",
+  "slot": 10,
+  "replaces": "o14",
+  "tier": "N",
+  "f": 12,
+  "kind": "scene",
+  "hero": "A,S,B,C",
+  "heroId": "G7-O10",
+  "teaches": "steel",
+  "target": 0.85,
+  "yaw": 0,
+  "d": 1,
+  "base": {
+   "A": {
+    "preset": "stiff-tip",
+    "shove": 2.5
+   },
+   "*": "weak"
+  },
+  "sf": [],
+  "pattern": "materials ladder: concrete pile caps under steel legs under a brick and timber pavilion; two caps side by side pitch it onto the hut row",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7oPav",
+    "x": 0,
+    "z": -7,
+    "hx": 3.4,
+    "hz": 3,
+    "ph": 3,
+    "lh": 2.2
+   },
+   {
+    "id": "S",
+    "kind": "g7oHuts",
+    "x": 0,
+    "z": -1.2,
+    "n": 5,
+    "w": 1.8,
+    "hz": 1.4,
+    "h": 2.4
+   },
+   {
+    "id": "B",
+    "kind": "g7oCott",
+    "x": -9.8,
+    "z": -6.4,
+    "hx": 3.2,
+    "hz": 2.8,
+    "side": -1
+   },
+   {
+    "id": "C",
+    "kind": "g7oCott",
+    "x": 9.8,
+    "z": -6.4,
+    "hx": 3.2,
+    "hz": 2.8,
+    "side": 1
+   }
+  ],
+  "charges": {
+   "tnt": 14
+  },
+  "hint": "A:z+",
+  "tip": "",
+  "dud": "Not yet. Two legs side by side!",
+  "ftip": "Hit what holds the steel. Two side by side.",
+  "lesson": {
+   "check": [
+    []
+   ]
+  },
+  "sol": [
+   [
+    "tnt",
+    "A:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "A:z+",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "B:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "C:z+",
+    0,
+    0
+   ]
+  ],
+  "bot": {
+   "hints": [
+    [
+     "A",
+     "A:z+",
+     1
+    ],
+    [
+     "A",
+     "A:z+",
+     1
+    ],
+    [
+     "A",
+     "B:z+",
+     1
+    ],
+    [
+     "A",
+     "C:z+",
+     1
+    ]
+   ]
+  },
+  "tntStart": 14
+ },
+ {
+  "name": "Drive-in",
+  "bp": "O12",
+  "slot": 12,
+  "replaces": "o21",
+  "tier": "R",
+  "f": 12,
+  "kind": "scene",
+  "hero": "A,S,B,C",
+  "heroId": "G7-O12",
+  "teaches": "wreck",
+  "target": 0.85,
+  "yaw": 0,
+  "d": 1,
+  "base": {
+   "A": {
+    "preset": "stiff-tip",
+    "shove": 2.5
+   },
+   "*": "weak"
+  },
+  "sf": [],
+  "pattern": "a wide screen on a row of concrete footings: two side by side drop it forward across the booth; the diners take their own pier",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7oScreen",
+    "x": 0,
+    "z": -8,
+    "hx": 5.4,
+    "hz": 1.6,
+    "fh": 2.2,
+    "sh": 4.4,
+    "nx": 4
+   },
+   {
+    "id": "S",
+    "kind": "g7oBooth",
+    "x": 0,
+    "z": -3.2,
+    "hx": 4.6,
+    "hz": 2.2,
+    "h": 3
+   },
+   {
+    "id": "B",
+    "kind": "g7oTicket",
+    "x": -10.4,
+    "z": -7,
+    "hx": 2.6,
+    "hz": 2.8,
+    "nb": 2
+   },
+   {
+    "id": "C",
+    "kind": "g7oTicket",
+    "x": 10.4,
+    "z": -7,
+    "hx": 2.6,
+    "hz": 2.8,
+    "nb": 2
+   }
+  ],
+  "charges": {
+   "tnt": 16
+  },
+  "hint": "A:z+",
+  "tip": "",
+  "dud": "Not yet. Two legs side by side!",
+  "ftip": "A wall stands on its feet. Break two.",
+  "lesson": {
+   "check": [
+    []
+   ]
+  },
+  "sol": [
+   [
+    "tnt",
+    "A:z+",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "A:z+",
+    0,
+    2
+   ],
+   [
+    "tnt",
+    "S:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "B:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "C:z+",
+    0,
+    0
+   ]
+  ],
+  "bot": {
+   "hints": [
+    [
+     "A",
+     "A:z+",
+     1
+    ],
+    [
+     "A",
+     "A:z+",
+     1
+    ],
+    [
+     "A",
+     "B:z+",
+     1
+    ],
+    [
+     "A",
+     "C:z+",
+     1
+    ]
+   ]
+  },
+  "tntStart": 16
+ },
+ {
+  "name": "Monorail Station",
+  "bp": "O13",
+  "slot": 13,
+  "replaces": "o15",
+  "tier": "N",
+  "f": 12,
+  "kind": "scene",
+  "hero": "A,B,C",
+  "heroId": "G7-O13",
+  "teaches": "support",
+  "target": 0.85,
+  "yaw": 0,
+  "d": 1,
+  "base": {
+   "A": "stiff-tip",
+   "*": "weak"
+  },
+  "sf": [],
+  "pattern": "support chain: the viaduct spans rest on the station platform; drop the station and both spans swing down",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7oMono",
+    "x": 0,
+    "z": -5,
+    "hx": 4.2,
+    "hz": 2.6,
+    "gh": 6,
+    "bg": 91
+   },
+   {
+    "id": "B",
+    "kind": "g7oSpan",
+    "x": -7.4,
+    "z": -5,
+    "side": -1,
+    "len": 8,
+    "y": 6,
+    "hz": 2,
+    "bg": 92
+   },
+   {
+    "id": "C",
+    "kind": "g7oSpan",
+    "x": 7.4,
+    "z": -5,
+    "side": 1,
+    "len": 8,
+    "y": 6,
+    "hz": 2,
+    "bg": 93
+   }
+  ],
+  "charges": {
+   "tnt": 7
+  },
+  "hint": "A:z+",
+  "tip": "",
+  "dud": "Not yet. Two legs side by side!",
+  "ftip": "What rests on it falls with it.",
+  "lesson": {
+   "check": [
+    []
+   ]
+  },
+  "sol": [
+   [
+    "tnt",
+    "A:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "A:z+",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "B:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "C:z+",
+    0,
+    0
+   ]
+  ],
+  "bot": {
+   "hints": [
+    [
+     "A",
+     "A:z+",
+     1
+    ],
+    [
+     "A",
+     "A:z+",
+     1
+    ],
+    [
+     "A",
+     "B:z+",
+     1
+    ],
+    [
+     "A",
+     "C:z+",
+     1
+    ]
+   ]
+  },
+  "tntStart": 7
+ },
+ {
+  "name": "Gas Works",
+  "bp": "O15",
+  "slot": 15,
+  "replaces": "o19",
+  "tier": "N",
+  "f": 12,
+  "kind": "scene",
+  "hero": "A,S,B,C",
+  "heroId": "G7-O15",
+  "teaches": "steel",
+  "target": 0.85,
+  "yaw": 0,
+  "d": 1,
+  "base": {
+   "A": {
+    "preset": "stiff-tip",
+    "shove": 2.5
+   },
+   "*": "weak"
+  },
+  "sf": [],
+  "pattern": "steel on brick: two brick pedestals side by side lean the steel guide frame over onto the retort house",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7oGas",
+    "x": 0,
+    "z": -8,
+    "r": 4.2,
+    "ph": 2.4,
+    "sh": 6
+   },
+   {
+    "id": "S",
+    "kind": "g7oRetort",
+    "x": 0,
+    "z": 4.6,
+    "hx": 5.6,
+    "hz": 2.2,
+    "h": 3.4
+   },
+   {
+    "id": "B",
+    "kind": "g7oWhse",
+    "x": -9.9,
+    "z": -8,
+    "hx": 3.2,
+    "hz": 3,
+    "nb": 3
+   },
+   {
+    "id": "C",
+    "kind": "g7oWhse",
+    "x": 9.9,
+    "z": -8,
+    "hx": 3.2,
+    "hz": 3,
+    "nb": 3
+   }
+  ],
+  "charges": {
+   "tnt": 17
+  },
+  "hint": "A:z+",
+  "tip": "",
+  "dud": "Not yet. Two legs side by side!",
+  "ftip": "Steel stands on brick. Break two side by side.",
+  "lesson": {
+   "check": [
+    []
+   ]
+  },
+  "sol": [
+   [
+    "tnt",
+    "A:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "A:z+",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "B:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "C:z+",
+    0,
+    0
+   ]
+  ],
+  "bot": {
+   "hints": [
+    [
+     "A",
+     "A:z+",
+     1
+    ],
+    [
+     "A",
+     "A:z+",
+     1
+    ],
+    [
+     "A",
+     "B:z+",
+     1
+    ],
+    [
+     "A",
+     "C:z+",
+     1
+    ]
+   ]
+  },
+  "tntStart": 17
+ }
+]

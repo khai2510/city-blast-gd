@@ -17,7 +17,7 @@ const lvl = {
     { id: 'B', kind: 'g7oFlood', x: -CX, z: FZ, hx: 1.7, ph: 2.0, lh: E('LH', 5.0), ns: 3, side: -1 },
     { id: 'C', kind: 'g7oFlood', x: CX, z: FZ, hx: 1.7, ph: 2.0, lh: E('LH', 5.0), ns: 3, side: 1 }
   ],
-  faces: { part: 'B', right: ['x+'], wrong: ['x-', 'z+', 'z-'] },
+  // (22/11 run: a wrong-way fall still clears the lot with a clean-up blast, so this is a practice level with the fair bars, not an aim test)
   charges: { tnt: 40 },
   hint: 'B:x+', tip: '', dud: 'Not yet. Two legs side by side!',
   ftip: 'Tall steel falls where its feet go. Aim inward.',
@@ -26,6 +26,6 @@ const lvl = {
 lvl.sol = [T('B:x+', 0, 0), T('B:x+', 0, 1), T('C:x-', 0, 0), T('C:x-', 0, 1), T('A:z+', 0, 2)];
 lvl.bot = { hints: [['A', 'B:x+', 1], ['A', 'B:x+', 1], ['A', 'C:x-', 1], ['A', 'C:x-', 1], ['A', 'A:z+', 1]] };
 lvl.hero = lvl.parts.map(p => p.id).join(',');   // the opening frames every building (main/frame.js heroIds), not only the main one
-lvl.tntStart = E('TNT', 9);
+lvl.tntStart = E('TNT', 11);
 writeFileSync(new URL('./level.json', import.meta.url), JSON.stringify([lvl], null, 1));
 console.log('ok O09', 'towers ±' + CX);

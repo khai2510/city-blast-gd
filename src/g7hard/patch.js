@@ -23,6 +23,10 @@ const LEVELS7 = path.join(ROOT, 'city-blast', 'release', 'g7-hard-levels.json');
 // g7hard/export-easy.js (budget = the tester's tntStart). Appended after H1-H5 in LV7DEFS (appended index 36 + 5 + k); not "hard":
 // no Hard tag, normal picker label; like H they are hint-free g7 levels (LV7O.isG). Code in PLACE = its bp (E01 ...).
 const EASY7 = path.join(ROOT, 'city-blast', 'release', 'g7-easy-levels.json');
+// the old-polish rebuilds (Agents-Game 22/11, Khai: "the old levels 1 to ten-something to the easy-pack quality"): city-blast/levels-gd/O<slot>
+// exported by g7hard/export-old.js. Each REPLACES an old level in place (L.replaces = "oN": the same appended index, so the same slot,
+// save, seed, intro cards, tutorial hand); not a g7 level for LV7O (isG false: the old level's cards / hands stay). ?oldlv=1 = the old level.
+const OLD7 = path.join(ROOT, 'city-blast', 'release', 'g7-old-levels.json');
 // hard-level code -> bp in g7-hard-levels.json (release/INTEGRATE.md §1)
 const HBP = { H1: 'L01v4', H2: 'L02', H3: 'L03', H4: 'L04', H5: 'L05' };
 // new level number = position in this list (1-based); "oN" = old level N, "Hk" = hard level k; every one of the 41 levels is listed once
@@ -64,10 +68,15 @@ const FTIP = {
 
 let h = fs.readFileSync(IN, 'utf8');
 const engine = fs.readFileSync(ENGINE, 'utf8'), hdefs = JSON.parse(fs.readFileSync(LEVELS7, 'utf8')), edefs = JSON.parse(fs.readFileSync(EASY7, 'utf8'));
+const odefs = fs.existsSync(OLD7) ? JSON.parse(fs.readFileSync(OLD7, 'utf8')) : [];
 const defs = hdefs.concat(edefs);   // LV7DEFS: H1-H5 (Mac's file order) then the easy pack
 const early = fs.readFileSync(path.join(__dirname, 'order-early.js'), 'utf8'), end = fs.readFileSync(path.join(__dirname, 'order-end.js'), 'utf8');
 const fail = (m) => { console.error('g7-hard: ' + m); process.exit(1); };
 for (const l of edefs) { if (!/^E\d\d$/.test(l.bp) || l.tip !== '' || !l.ftip || l.ftip.split(/\s+/).length > 9 || /\b(road|street|lot|stack|stacked|stacking)\b/i.test(l.ftip)) fail('easy ' + l.bp + ': bad code, a tip, or ftip > 9 words / a dropped word'); if (hdefs.some(h => h.bp === l.bp)) fail('easy ' + l.bp + ' clashes with a hard level'); }
+const oldBy = {};
+for (const l of odefs) { const m = /^o(\d+)$/.exec(l.replaces || ''); if (!m || +m[1] < 1 || +m[1] > 36 || oldBy[+m[1] - 1]) fail('old-polish ' + l.bp + ': bad or repeated replaces ' + l.replaces);
+  if (l.tip !== '' || !l.ftip || l.ftip.split(/\s+/).length > 9 || /\b(road|street|lot|stack|stacked|stacking)\b/i.test(l.ftip)) fail('old-polish ' + l.bp + ': a tip, or ftip > 9 words / a dropped word');
+  if (!Array.isArray(l.sol) || !l.sol.length) fail('old-polish ' + l.bp + ': no sol'); oldBy[+m[1] - 1] = l; }
 for (const [c, t] of Object.entries(FTIP)) { const l = hdefs.find(x => x.bp === HBP[c]); if (!l) fail('FTIP: no level ' + c); if (t.split(/\s+/).length > 9 || /\b(road|street|lot|stack|stacked|stacking)\b/i.test(t)) fail('FTIP ' + c + ': > 9 words or a dropped word'); l.ftip = t; }
 const count = (s) => h.split(s).length - 1;
 // slots: >= 0 = old level index, -(k + 1) = hard level k of LV7DEFS
@@ -120,7 +129,7 @@ if (count('// ---- main/levels7.js') || count('// ---- main/levels7-data.js')) f
 for (const [, f, r] of SITES) h = h.split(f).join(r);
 
 // ---- 3. insert: LV7O (early, before levelDef), the level data (UILAYOUT anchor), the engine + the reorder (end of main)
-h = h.replace(EARLY, () => '\n' + early.replace('__NH__', String(hdefs.length)).replace('__NE__', String(edefs.length)).replace('__SLOTS__', JSON.stringify(slots)).replace('__LEGACY__', JSON.stringify(legacy)).replace('__INTRO__', JSON.stringify(introAt)) + EARLY);
+h = h.replace(EARLY, () => '\n' + early.replace('__NH__', String(hdefs.length)).replace('__NE__', String(edefs.length)).replace('__SLOTS__', JSON.stringify(slots)).replace('__LEGACY__', JSON.stringify(legacy)).replace('__INTRO__', JSON.stringify(introAt)).replace('__OLD__', JSON.stringify(oldBy)) + EARLY);
 const data = '// ---- main/levels7-data.js (g7hard/patch.js = pipeline7/build.mjs, test=false; data: city-blast/release/g7-hard-levels.json + g7-easy-levels.json ' + require('crypto').createHash('sha256').update(fs.readFileSync(EASY7)).digest('hex').slice(0, 10) + ', do not edit by hand)\n' +
   'if(!/[?&]lv7=0(&|$)/.test(location.search)) try{ (function(){ var LV7DEFS = ' + JSON.stringify(defs) + ';\n' +
   '  LV7DEFS.forEach(function(l){ LEVELS.push(l); }); window.__lv7base = LEVELS.length - LV7DEFS.length;\n' +
@@ -131,8 +140,8 @@ const data = '// ---- main/levels7-data.js (g7hard/patch.js = pipeline7/build.mj
   '    writeSave(); }\n})(); }catch(e){ console.error("main/levels7-data.js", e); }\n';
 h = h.replace(UI, () => data + UI);
 h = h.replace(MARK, () => engine + '\n' + end + '\n' + MARK);
-if (count('__LEGACY__') || count('__SLOTS__') || count('__NH__') || count('__NE__') || count('__INTRO__')) fail('order-early.js placeholder left in the output');
+if (count('__LEGACY__') || count('__SLOTS__') || count('__NH__') || count('__NE__') || count('__INTRO__') || count('__OLD__')) fail('order-early.js placeholder left in the output');
 for (const m of ['// ---- main/levels7.js', '// ---- main/levels7-data.js', '// ---- g7hard/order-early.js', '// ---- g7hard/order-end.js']) if (count(m) !== 1) fail('output carries ' + m + ' ' + count(m) + 'x');
 fs.writeFileSync(OUT, h);
 const HC = Object.fromEntries(Object.entries(HBP).map(([c, b]) => [b, c])), nm = (s) => s >= 0 ? 'L' + (s + 1) : HC[defs[-s - 1].bp] || defs[-s - 1].bp;
-console.log('ok   g7 engine + ' + hdefs.length + ' hard + ' + edefs.length + ' easy levels, ' + SITES.length + ' number-keyed sites; order ' + slots.map(nm).join(' ') + ' then L' + (PLACE.length - defs.length + 1) + '+');
+console.log('ok   g7 engine + ' + hdefs.length + ' hard + ' + edefs.length + ' easy levels + ' + odefs.length + ' old rebuilt (' + odefs.map(l => l.replaces + '=' + l.bp).join(' ') + '), ' + SITES.length + ' number-keyed sites; order ' + slots.map(nm).join(' ') + ' then L' + (PLACE.length - defs.length + 1) + '+');

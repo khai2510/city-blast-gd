@@ -7,6 +7,7 @@
 //   LV7O.pos(o)   the slot of appended index o (old L4 = pos(3));  LV7O.num(n) = the new number of old level n
 //   LV7O.isH(p)   a hard level (Hard tag in the picker; not counted by nth);  LV7O.isE(p) an easy-pack level;  LV7O.isG(p) either
 //                 (a g7 level: no tutorial, no hint, no intro card);  LV7O.orig1(p) = old level number, 0 for a g7 level
+//   LV7O.isO(p)   an old level rebuilt in place (old-polish, 22/11): same slot / save / cards / hand, new data (?oldlv=1 = the old one)
 //   LV7O.introAt(id)  new number of the level an intro card was moved to (INTRO_AT in patch.js), 0 = the card stays on its own level
 //   LV7O.nth(k)   slot of the (k+1)-th non-hard level: "from level N on" thresholds (ads, rewarded) count progress, not one level
 //   LV7O.nh = hard + easy (every g7 level: LEVELS.length = base + nh), LV7O.nhd = hard only, LV7O.ne = easy only
@@ -34,7 +35,10 @@ var LV7O = (function(){
   O.isH = function(p){ var v = O.id(p); return v >= NB && v < NB + O.nhd; };
   O.isE = function(p){ var v = O.id(p); return v >= NB + O.nhd && v < NB + O.nh; };
   O.isG = function(p){ var v = O.id(p); return v >= NB && v < NB + O.nh; };
-  O.orig1 = function(p){ return O.isG(p) ? 0 : O.id(p) + 1; };
+  // old-polish (22/11): appended index -> the rebuilt level that replaces that old level in place (g7-old-levels.json); ?oldlv=1 = the old ones
+  O.old = __OLD__; O.oldOn = on && !/[?&]oldlv=1(&|$)/.test(Q);
+  O.isO = function(p){ return O.oldOn && O.old[O.id(p)] != null; };
+  O.orig1 = function(p){ return O.isG(p) || O.isO(p) ? 0 : O.id(p) + 1; };   // 0: no per-old-level opening camera on a rebuilt level
   // intro cards moved to their element's intro level (INTRO_AT in patch.js): card id -> new level number, 0 = keep its own level
   var IA = __INTRO__;
   O.introAt = function(id){ return O.reorder && IA[id] != null && IA[id] < NB + O.nh ? O.pos(IA[id]) + 1 : 0; };

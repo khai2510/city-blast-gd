@@ -80,12 +80,12 @@
   },
   "faces": {
    "right": [
-    "z-"
-   ],
-   "wrong": [
-    "z+",
+    "z-",
     "x+",
     "x-"
+   ],
+   "wrong": [
+    "z+"
    ]
   },
   "charges": {
@@ -175,6 +175,6 @@
     ]
    ]
   },
-  "tntStart": 8
+  "tntStart": 13
  }
 ]

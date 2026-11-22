@@ -1485,7 +1485,7 @@ try{ (function(){
     V5_PARTS.g7oCott = function(P){
       var n0 = blocks.length, MT = api.mat("brick"), hx = P.hx || 3.2, hz = P.hz || 2.8, side = P.side || 1, y = 0, s, sts = [];
       var base = addBlock(0, -0.25, 0, 2*hx + 4, 0.5, 2*hz + 4, "base", {anchor:true}); kd(base, "box", K.lawn, 0, 0.03, 0, 2*hx + 3.6, 0.06, 2*hz + 3.6);
-      for(s = 0; s < 2; s++){ var h = s ? 3.2 : 3.6;
+      for(s = 0; s < (P.nb || 2); s++){ var h = s ? 3.2 : 3.6;
         var st = H.boxSt({ y0:y, h:h, hx:hx, hz:hz, nx:3, nz:2, pw:0.6, mw:0.55, fl:s, MT:MT, deck:"mdB", skin:"wall", wall:"bkw", dk:0.3, tp:K.brickD, td:K.brickD, tw:s ? K.brickL : K.brick });
         sts.push(st);
         st.walls.forEach(function(w, j){ var L2 = 2*Math.max(w.half[0], w.half[2]); if(!s) onF(w, "box", K.brickD, 0, -h/2 + 0.35, L2, 0.5, 0.07);
@@ -1494,7 +1494,7 @@ try{ (function(){
           else if(L2 > 1.2) win(w, 0, 0.2, Math.min(1.0, L2*0.38), 1.15, (j + s) % 3 === 0, K.green); });
         kd(st.decks[0], "lit", K.lit, 0, y + h - 0.65, 0, 0.6, 0.3, 0.6);
         y += h; }
-      var at = roofBody(0, 0, y, hx - 0.02, hz - 0.02, 0.6, 2, 2.3, K.tile, K.tileD, 1, K.brickL);
+      var at = roofBody(0, 0, y, hx - 0.02, hz - 0.02, 0.6, (P.nb || 2), 2.3, K.tile, K.tileD, 1, K.brickL);
       kd(at, "box", K.brickD, side*hx*0.55, y + 2.3, -0.3, 0.8, 2.4, 0.9); kd(at, "box", K.brick, side*hx*0.55, y + 3.55, -0.3, 0.95, 0.16, 1.05); [-1, 1].forEach(function(e){ kd(at, "icyl", K.tile, side*hx*0.55 + e*0.2, y + 3.8, -0.3, 0.2, 0.35, 0.2); });
       tree(base, side*(hx + 1.2), -hz - 0.3, 0.9);
       if(P.bg) bgSet(n0, P.bg); return { w:2*hx + 4, d:2*hz + 4 };
@@ -1601,7 +1601,7 @@ try{ (function(){
     V5_PARTS.g7oEng = function(P){
       var n0 = blocks.length, hx = P.hx || 5.0, hz = P.hz || 2.4, h = P.h || 3.2;
       var base = addBlock(0, -0.25, 0, 2*hx + 2.5, 0.5, 2*hz + 3.5, "base", {anchor:true}); kd(base, "box", K.apron, 0, 0.03, 0.5, 2*hx + 2.1, 0.06, 2*hz + 3.1);
-      var st = H.boxSt({ y0:0, h:h, hx:hx, hz:hz, nx:3, nz:2, pw:0.7, mw:0.65, fl:0, MT:api.mat("brick"), deck:"mdW", skin:{ "z-":"wall", "x-":"wall", "x+":"wall", def:"open" }, wall:"bkw", dk:0.25, tp:K.brick, td:K.woodD, tw:K.brickL, split:[2, 1] });
+      var st = H.boxSt({ y0:0, h:h, hx:hx, hz:hz, nx:P.nx || 3, nz:2, pw:0.7, mw:0.65, fl:0, MT:api.mat("brick"), deck:"mdW", skin:{ "z-":"wall", "x-":"wall", "x+":"wall", def:"open" }, wall:"bkw", dk:0.25, tp:K.brick, td:K.woodD, tw:K.brickL, split:[P.bays || 2, 1] });
       st.walls.forEach(function(w){ var L2 = 2*Math.max(w.half[0], w.half[2]); onF(w, "box", K.cream, 0, h*0.3, L2, 0.12, 0.07); for(var q = 0; q < 5; q++) onF(w, "ibox", K.brickD, 0, -h*0.4 + q*h*0.15, L2, 0.04, 0.04); });
       st.decks.forEach(function(d){ var dx = d.spawn.x; kd(d, "ibox", K.red, dx, 0.95, -0.1, 1.9, 1.4, 3.6); kd(d, "ibox", K.white, dx, 1.7, -0.1, 1.9, 0.12, 3.6); kd(d, "ibox", K.iron, dx, 1.9, -0.6, 1.4, 0.12, 2.4);
         kd(d, "lit", K.lit, dx - 0.6, 0.95, 1.72, 0.3, 0.3, 0.05); kd(d, "lit", K.lit, dx + 0.6, 0.95, 1.72, 0.3, 0.3, 0.05); [-1, 1].forEach(function(e){ kd(d, "icyl", K.ink, dx + e*0.95, 0.4, 0.9, 0.8, 0.3, 0.8, 0, 0, Math.PI/2); kd(d, "icyl", K.ink, dx + e*0.95, 0.4, -1.1, 0.8, 0.3, 0.8, 0, 0, Math.PI/2); });
@@ -1775,13 +1775,13 @@ try{ (function(){
       // the tiers: tier k is a deck at TH*(k+1) over a band D deep, on a row of posts under its front edge (the back edge rests on
       // the next tier's posts); seats decor on each deck
       for(k = 0; k < 3; k++){ var zc = z0 - D/2 - k*D, yk = TH*(k + 1);
-        xs.forEach(function(x, j){ mem("concrete", x, (yk - 0.3)/2, zc + D/2 - 0.3, 0.5, yk - 0.3, 0.5, k, j, k, K.conc); });
+        xs.forEach(function(x, j){ mem("concrete", x, (yk - 0.3)/2, zc + D/2 - 0.3, 0.5, yk - 0.3, 0.5, 0, j, k, K.conc); });   // every post stands on the ground: floor 0 (the base rule reads the whole foot)
         for(i = 0; i < nx - 1; i++){ var d = mem("mdC", (xs[i] + xs[i + 1])/2, yk - 0.15, zc, xs[i + 1] - xs[i] + 0.02, 0.3, D, k, null, null, K.concL); decks.push(d);
           for(var r = 0; r < 2; r++) kd(d, "box", [K.red, K.white][(i + r + k) % 2], d.spawn.x, yk + 0.2, zc + 0.5 - r*0.9, d.half[0]*2 - 0.1, 0.35, 0.45);
           kd(d, "ibox", K.concD, xs[i] + 0.05, yk + 0.1, zc, 0.5, 0.15, D - 0.2); } }
       // the back: tall grey columns and concrete panels up to the roof; the steel roof on slim front posts
       var zb = z0 - 3*D - 0.3, RH = P.rh || 8.4, cols = [];
-      xs.forEach(function(x, j){ cols.push(mem("concrete", x, RH/2, zb, 0.7, RH, 0.7, 3, j, 3, K.conc)); });
+      xs.forEach(function(x, j){ cols.push(mem("concrete", x, RH/2, zb, 0.7, RH, 0.7, 0, j, 3, K.conc)); });
       for(i = 0; i < nx - 1; i++){ var w = mem("cpan", (xs[i] + xs[i + 1])/2, (RH - 0.4)/2, zb - 0.05, xs[i + 1] - xs[i] - 0.72, RH - 0.4, 0.24, 3, null, null, K.concL); w.a1face = "z-";
         kd(w, "box", K.navy, w.spawn.x, RH - 1.2, zb + 0.14, w.half[0]*2 - 0.2, 0.5, 0.04); }
       var zf = z0 - D + 0.2, fps = [];
@@ -1971,6 +1971,11 @@ try{ (function(){
           if(s < ns - 1 || true) for(var q = 0; q < 2; q++){ var c = cols[(s*4 + j*2 + q) % cols.length], cx = dx - d.half[0]*0.5 + q*d.half[0];
             kd(d, "ibox", c, cx, y + h + 0.45, dz - Math.sign(dz)*0.4, 1.6, 0.7, 3.2); kd(d, "ibox", K.glass, cx, y + h + 0.95, dz - Math.sign(dz)*0.4, 1.4, 0.45, 2.0); } });
         y += h; }
+      // P.heavy (slot 17 on: the dark element is introduced): the lift motor room and the water tank on the roof deck are heavy
+      // reinforced pieces (hard7v): they land whole and count until a TNT cracks them (L.hard7 scoring), as the easy pack's roof pieces
+      if(P.heavy){ [[-hx*0.45, 2.6, 2.2, 2.6, K.rcDark], [hx*0.45, 2.2, 1.9, 2.2, 0x5B6470]].forEach(function(q, k){ var hv = mem("hard7v", q[0], y + q[2]/2, -hz*0.3, q[1]*P.heavy, q[2]*P.heavy, q[3]*P.heavy, ns, null, null, q[4]); hv.tint = q[4];
+        if(k){ kd(hv, "cyl", 0x66707C, q[0], y + q[2]/2, -hz*0.3, q[1]*P.heavy + 0.3, q[2]*P.heavy - 0.2, q[1]*P.heavy + 0.3); kd(hv, "cone", K.iron, q[0], y + q[2]*P.heavy + 0.25, -hz*0.3, q[1]*P.heavy + 0.3, 0.5, q[1]*P.heavy + 0.3); }
+        else { kd(hv, "box", K.white, q[0], y + q[2]*P.heavy - 0.1, -hz*0.3, q[1]*P.heavy + 0.2, 0.2, q[3]*P.heavy + 0.2); kd(hv, "box", K.navy, q[0], y + q[2]*P.heavy*0.5, -hz*0.3 + q[3]*P.heavy/2 + 0.02, 1.0, 1.6, 0.04); } }); }
       // the stair-and-lift tower (decor on the deck nearest the left end) and a level sign on the front
       var tl = H.near(st.decks, -hx, 0); kd(tl, "ibox", K.concD, -hx - 1.2, y/2, 0, 2.2, y + 1.0, 2.6); kd(tl, "ibox", K.glassD, -hx - 1.2, y/2, 1.31, 1.4, y - 0.5, 0.04); kd(tl, "box", K.navy, -hx - 1.2, y + 0.9, 1.32, 1.6, 0.9, 0.06);
       kd(H.near(st.decks, hx, hz), "box", K.navy, hx - 1.5, y + 0.9, hz + 0.05, 2.4, 0.9, 0.08); kd(H.near(st.decks, hx, hz), "box", K.white, hx - 1.5, y + 0.9, hz + 0.1, 0.5, 0.6, 0.04);
@@ -2010,6 +2015,8 @@ try{ (function(){
       y = GH;
       for(s = 0; s < ns; s++){ st = H.boxSt({ y0:y, h:SH, hx:hx - 0.1, hz:hx - 0.1, nx:2, nz:2, pw:0.55, mw:0.55, fl:s + 1, MT:api.mat("concrete"), deck:"mdC", skin:"open", dk:0.3, tp:K.conc, td:K.concD });
         st.piers.forEach(function(p){ kd(p, "box", K.white, p.spawn.x, y + SH - 0.3, p.spawn.z, 2*p.half[0] + 0.06, 0.12, 2*p.half[2] + 0.06); }); y += SH; }
+      if(P.heavy){ var cab = mem("hard7v", 0, y + 1.0, 0, 2*hx - 0.4, 2.0*P.heavy, 2*hx - 0.4, ns + 1, null, null, K.rcDark); cab.tint = K.rcDark;   // the sign's transformer cabinet on top: heavy, lands whole (slot 18: dark is introduced)
+        kd(cab, "box", K.yellow, 0, y + 1.0, hx - 0.18, 2*hx - 0.8, 0.3, 0.04); }
       // the sign (decor on the top two storeys' decks, inside their outline): a board, a star, bulbs and the arrow
       var top = st.decks[0], y0 = y - 2*SH;
       kd(top, "box", K.seaGreen, 0, y0 + SH, hx + 0.1, 2*hx + 2.0, 2*SH - 1.2, 0.3); kd(top, "box", K.white, 0, y0 + SH, hx + 0.27, 2*hx + 1.6, 2*SH - 1.6, 0.06);
@@ -2047,7 +2054,10 @@ try{ (function(){
         st.decks.forEach(function(d){ for(var q = 0; q < 3; q++) kd(d, "ibox", [K.red, K.navy, K.seaGreen][q], d.spawn.x - 0.8 + q*0.8, y + 0.8, d.spawn.z, 0.6, 1.4, 0.3); });
         y += SH; }
       var top = H.near(st.decks, 0, 0);
-      kd(top, "box", K.stone, 0, y + 0.2, 0, 2*hx + 0.5, 0.4, 2*hx + 0.5); kd(top, "box", K.stoneD, 0, y + 1.0, 0, 2.2, 1.6, 2.2); kd(top, "cone", K.slate, 0, y + 2.4, 0, 2.6, 1.4, 2.6); kd(top, "lit", K.lit, 0, y + 1.0, 1.12, 1.0, 0.8, 0.04);
+      kd(top, "box", K.stone, 0, y + 0.2, 0, 2*hx + 0.5, 0.4, 2*hx + 0.5);
+      if(P.heavy){ var ln = mem("hard7v", 0, y + 0.4 + 1.1*P.heavy, 0, 2.6*P.heavy, 2.2*P.heavy, 2.6*P.heavy, ns + 1, null, null, K.stoneD); ln.tint = K.stoneD;   // the book-lift lantern: heavy, lands whole (slot 19)
+        kd(ln, "cone", K.slate, 0, y + 0.4 + 2.2*P.heavy + 0.7, 0, 2.6*P.heavy + 0.4, 1.4, 2.6*P.heavy + 0.4); kd(ln, "lit", K.lit, 0, y + 0.4 + 1.1*P.heavy, 1.3*P.heavy + 0.02, 1.0, 0.8, 0.04); }
+      else { kd(top, "box", K.stoneD, 0, y + 1.0, 0, 2.2, 1.6, 2.2); kd(top, "cone", K.slate, 0, y + 2.4, 0, 2.6, 1.4, 2.6); kd(top, "lit", K.lit, 0, y + 1.0, 1.12, 1.0, 0.8, 0.04); }
       if(P.bg) bgSet(n0, P.bg); return { w:2*hx + 4, d:2*hx + 4 };
     };
     // ---- O19 g7oRead: the reading hall in front of the stack tower (its landing): two brick storeys on brick piers (bk + bkw), tall

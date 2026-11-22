@@ -13,6 +13,7 @@
   "target": 0.85,
   "yaw": 0,
   "d": 1,
+  "hard7": true,
   "base": {
    "A": {
     "preset": "stiff-tip",
@@ -31,7 +32,8 @@
     "hx": 3.4,
     "gh": 4.4,
     "sh": 3.4,
-    "ns": 4
+    "ns": 4,
+    "heavy": 1
    },
    {
     "id": "S",
@@ -70,16 +72,6 @@
    "type": "school",
    "role": "school",
    "full": 1
-  },
-  "faces": {
-   "right": [
-    "z+"
-   ],
-   "wrong": [
-    "z-",
-    "x+",
-    "x-"
-   ]
   },
   "charges": {
    "tnt": 40
@@ -143,6 +135,6 @@
     ]
    ]
   },
-  "tntStart": 10
+  "tntStart": 15
  }
 ]

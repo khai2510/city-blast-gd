@@ -68,7 +68,7 @@
   "hint": "A:z+",
   "tip": "",
   "dud": "Not yet. Two legs side by side!",
-  "ftip": "A wall stands on its feet. Two side by side.",
+  "ftip": "A wall stands on its feet. Break two.",
   "lesson": {
    "check": [
     []
@@ -86,6 +86,12 @@
     "A:z+",
     0,
     2
+   ],
+   [
+    "tnt",
+    "S:z+",
+    0,
+    0
    ],
    [
     "tnt",
@@ -124,6 +130,6 @@
     ]
    ]
   },
-  "tntStart": 9
+  "tntStart": 16
  }
 ]

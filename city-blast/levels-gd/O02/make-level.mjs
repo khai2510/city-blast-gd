@@ -16,8 +16,8 @@ const lvl = {
   parts: [
     { id: 'A', kind: 'g7oOast', x: 0, z: TZ, hx: E('HX', 3.0), ah: E('AH', 5.6), kh: E('KH', 8.0) },
     { id: 'S', kind: 'g7oLodge', x: 0, z: SZ, hx: E('SHX', 4.8), hz: 2.0, h: E('SHH', 2.4), nx: 4 },
-    { id: 'B', kind: 'g7oCott', x: -CX, z: TZ + 0.8, hx: 3.2, hz: 2.8, side: -1 },
-    { id: 'C', kind: 'g7oCott', x: CX, z: TZ + 0.8, hx: 3.2, hz: 2.8, side: 1 }
+    { id: 'B', kind: 'g7oCott', x: -CX, z: TZ + 0.8, hx: 3.2, hz: 2.8, side: -1, nb: E('NB', 2) },
+    { id: 'C', kind: 'g7oCott', x: CX, z: TZ + 0.8, hx: 3.2, hz: 2.8, side: 1, nb: E('NB', 2) }
   ],
   charges: { tnt: 40 },
   hint: 'A:z+', tip: '', dud: 'Not yet. Two legs side by side!',

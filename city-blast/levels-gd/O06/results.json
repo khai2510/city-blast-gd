@@ -1,0 +1,163 @@
+{
+ "when": "2026-11-22T17:57:41.932Z",
+ "bp": "O06",
+ "name": "Harbour Crane",
+ "tnt": 13,
+ "bar": "N",
+ "metrics": {
+  "members": 120,
+  "hard": 4,
+  "soft": 116,
+  "hardPct": 3,
+  "main": {
+   "members": 21,
+   "hard": 4,
+   "soft": 17,
+   "hardPct": 19,
+   "pos": {
+    "top": 0,
+    "mid": 4,
+    "bottom": 0,
+    "edge": 4,
+    "core": 0,
+    "front": 2,
+    "back": 2
+   },
+   "core": "no",
+   "hardLayers": 1,
+   "depthRows": 2,
+   "frontHard": 2,
+   "backHard": 2,
+   "floors": 3
+  },
+  "stacks": 4,
+  "parts": [
+   "A",
+   "S",
+   "B",
+   "C"
+  ]
+ },
+ "sol": {
+  "pct": 85,
+  "win": true,
+  "res": "WIN",
+  "placed": [
+   "ok",
+   "ok",
+   "ok",
+   "ok"
+  ],
+  "waves": 1,
+  "keep": 0
+ },
+ "oneBomb": {
+  "pct": 24,
+  "collapse": 41,
+  "at": "concrete@A:f0",
+  "tried": 20
+ },
+ "lazy": {
+  "pct": 32,
+  "collapse": 46
+ },
+ "fair": [
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 97,
+   "used": 11,
+   "left": 2,
+   "waves": 1,
+   "firstWave": 97,
+   "keep": 0,
+   "estSec": 20,
+   "log": "bld11=97"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 96,
+   "used": 11,
+   "left": 2,
+   "waves": 1,
+   "firstWave": 96,
+   "keep": 0,
+   "estSec": 20,
+   "log": "bld11=96"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 98,
+   "used": 11,
+   "left": 2,
+   "waves": 1,
+   "firstWave": 98,
+   "keep": 0,
+   "estSec": 20,
+   "log": "bld11=98"
+  }
+ ],
+ "allFoot": {
+  "pct": 92,
+  "used": 13,
+  "collapse": 99,
+  "keep": 0
+ },
+ "footOnly": {
+  "pct": 89,
+  "waves": 1,
+  "left": 7,
+  "keep": 0
+ },
+ "oneWave": {
+  "pct": 96,
+  "used": 13,
+  "reach": 104,
+  "collapse": 99
+ },
+ "curve": [
+  {
+   "n": 1,
+   "pct": 24,
+   "collapse": 41
+  },
+  {
+   "n": 2,
+   "pct": 24,
+   "collapse": 36
+  },
+  {
+   "n": 3,
+   "pct": 34,
+   "collapse": 51
+  },
+  {
+   "n": 4,
+   "pct": 30,
+   "collapse": 50
+  },
+  {
+   "n": 6,
+   "pct": 30,
+   "collapse": 50
+  },
+  {
+   "n": 8,
+   "pct": 30,
+   "collapse": 50
+  },
+  {
+   "n": 12,
+   "pct": 30,
+   "collapse": 50
+  }
+ ],
+ "jump": 10,
+ "verdict": "MISS",
+ "issues": [
+  "allFoot 92%",
+  "footOnly 89%"
+ ]
+}

@@ -1,0 +1,163 @@
+{
+ "when": "2026-11-22T17:58:42.357Z",
+ "bp": "O15",
+ "name": "Gas Works",
+ "tnt": 17,
+ "bar": "N",
+ "metrics": {
+  "members": 136,
+  "hard": 16,
+  "soft": 120,
+  "hardPct": 12,
+  "main": {
+   "members": 37,
+   "hard": 16,
+   "soft": 21,
+   "hardPct": 43,
+   "pos": {
+    "top": 8,
+    "mid": 8,
+    "bottom": 0,
+    "edge": 16,
+    "core": 0,
+    "front": 4,
+    "back": 4
+   },
+   "core": "no",
+   "hardLayers": 2,
+   "depthRows": 8,
+   "frontHard": 4,
+   "backHard": 4,
+   "floors": 3
+  },
+  "stacks": 4,
+  "parts": [
+   "A",
+   "S",
+   "B",
+   "C"
+  ]
+ },
+ "sol": {
+  "pct": 96,
+  "win": true,
+  "res": "WIN",
+  "placed": [
+   "ok",
+   "ok",
+   "ok",
+   "ok"
+  ],
+  "waves": 1,
+  "keep": 0
+ },
+ "oneBomb": {
+  "pct": 46,
+  "collapse": 68,
+  "at": "bk@A:f0",
+  "tried": 20
+ },
+ "lazy": {
+  "pct": 42,
+  "collapse": 54
+ },
+ "fair": [
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 97,
+   "used": 14,
+   "left": 3,
+   "waves": 2,
+   "firstWave": 19,
+   "keep": 0,
+   "estSec": 32,
+   "log": "bld8=19 bld6=97"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 99,
+   "used": 15,
+   "left": 2,
+   "waves": 2,
+   "firstWave": 36,
+   "keep": 0,
+   "estSec": 33,
+   "log": "bld12=36 bld3=99"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 95,
+   "used": 14,
+   "left": 3,
+   "waves": 2,
+   "firstWave": 21,
+   "keep": 0,
+   "estSec": 32,
+   "log": "bld8=21 bld6=95"
+  }
+ ],
+ "allFoot": {
+  "pct": 95,
+  "used": 17,
+  "collapse": 100,
+  "keep": 0
+ },
+ "footOnly": {
+  "pct": 94,
+  "waves": 1,
+  "left": 11,
+  "keep": 0
+ },
+ "oneWave": {
+  "pct": 100,
+  "used": 17,
+  "reach": 116,
+  "collapse": 100
+ },
+ "curve": [
+  {
+   "n": 1,
+   "pct": 15,
+   "collapse": 34
+  },
+  {
+   "n": 2,
+   "pct": 14,
+   "collapse": 31
+  },
+  {
+   "n": 3,
+   "pct": 9,
+   "collapse": 11
+  },
+  {
+   "n": 4,
+   "pct": 9,
+   "collapse": 11
+  },
+  {
+   "n": 6,
+   "pct": 46,
+   "collapse": 56
+  },
+  {
+   "n": 8,
+   "pct": 46,
+   "collapse": 57
+  },
+  {
+   "n": 12,
+   "pct": 46,
+   "collapse": 57
+  }
+ ],
+ "jump": 37,
+ "verdict": "MISS",
+ "issues": [
+  "allFoot 95%",
+  "footOnly 94%"
+ ]
+}

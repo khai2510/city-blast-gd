@@ -8,16 +8,16 @@ const TZ = E('TZ', -2), CX = E('CX', 9.0), MZ = E('MZ', -7.4);
 const T = (sel, f, i) => ['tnt', sel, f || 0, i || 0];
 const lvl = {
   name: 'Roadside Motel', bp: 'O18', slot: 18, replaces: 'o12', tier: process.env.TIER || 'N', f: 12, kind: 'scene', hero: 'A', heroId: 'G7-O18', teaches: 'rotate',
-  target: 0.85, yaw: 0, d: 1,
+  target: 0.85, yaw: 0, d: 1, hard7: E('HARD7', 1) ? true : undefined,   // slot 17 on: heavy pieces count until cracked (the dark element is introduced)
   base: { A: { preset: 'stiff-tip', shove: E('SHOVE', 2.5) }, '*': 'weak' },
   sf: [], pattern: 'rotate + dark: the sign pylon stands on dark back legs; turned to the back, two of them (more TNT each) drop it across the motel row',
   parts: [
-    { id: 'A', kind: 'g7oSign', x: 0, z: TZ, hx: 1.8, gh: 4.0, sh: E('SH', 3.6), ns: E('NS', 4) },
+    { id: 'A', kind: 'g7oSign', x: 0, z: TZ, hx: 1.8, gh: 4.0, sh: E('SH', 3.6), ns: E('NS', 4), heavy: E('HEAVY', 1) },
     { id: 'S', kind: 'g7oMotel', x: 0, z: MZ, n: E('NM', 4), w: 3.0, hz: 2.6, h: 3.2 },
     { id: 'B', kind: 'g7oCott', x: -CX, z: TZ, hx: 3.2, hz: 2.8, side: -1 },
     { id: 'C', kind: 'g7oCott', x: CX, z: TZ, hx: 3.2, hz: 2.8, side: 1 }
   ],
-  faces: { right: ['z-'], wrong: ['z+', 'x+', 'x-'] },
+  // (22/11 run: a wrong-way fall still clears the lot with a clean-up blast, so this is a practice level with the fair bars, not an aim test)
   charges: { tnt: 40 },
   hint: 'A:z-', tip: '', dud: 'Not yet. Dark piers need more TNT!',
   ftip: 'Dark legs take more TNT. Look round the back.',
@@ -26,6 +26,6 @@ const lvl = {
 lvl.sol = [T('A:z-', 0, 0), T('A:z-', 0, 0), T('A:z-', 0, 1), T('A:z-', 0, 1), T('B:z+', 0, 0), T('C:z+', 0, 0)];
 lvl.bot = { hints: [['A', 'A:z-', 2], ['A', 'A:z-', 2], ['A', 'B:z+', 1], ['A', 'C:z+', 1]] };
 lvl.hero = lvl.parts.map(p => p.id).join(',');
-lvl.tntStart = E('TNT', 10);
+lvl.tntStart = E('TNT', 13);
 writeFileSync(new URL('./level.json', import.meta.url), JSON.stringify([lvl], null, 1));
 console.log('ok O18');

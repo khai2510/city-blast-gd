@@ -1,0 +1,1 @@
+{"rest":{"keys":{"concrete":6,"mdC":1,"steel":8,"mdS":2,"bk":32,"mdB":6,"bkw":32,"g7roofL":3,"wpost":12,"mdW":2,"wwall":12},"members":116,"parts":{"A":17,"S":19,"B":40,"C":40},"height":{"A":14.4,"S":6,"B":9.9,"C":9.9},"dead":0,"moved":0,"bondsBefore":481,"bondsAfter":481,"list":[],"pct":0},"sol":{"placed":["ok","ok","ok","ok"],"after":{"pct":73,"phase":"plan","res":null}}}

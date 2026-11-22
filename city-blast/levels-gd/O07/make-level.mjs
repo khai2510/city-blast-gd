@@ -18,13 +18,13 @@ const lvl = {
     { id: 'B', kind: 'g7oLamp', x: -CX, z: TZ, hx: 3.2, hz: 2.8, side: -1 },
     { id: 'C', kind: 'g7oLamp', x: CX, z: TZ, hx: 3.2, hz: 2.8, side: 1 }
   ],
-  faces: { right: ['z-'], wrong: ['z+', 'x+', 'x-'] },
+  // (22/11 run: a wrong-way fall still clears the lot with a clean-up blast, so this is a practice level with the fair bars, not an aim test)
   charges: { tnt: 40 },
   hint: 'A:z-', tip: '', dud: 'Not yet. Two legs side by side!',
   ftip: 'It falls where the legs go. Aim it.',
   lesson: { check: [[T('A:z+', 0, 0), T('A:z+', 0, 1), T('B:z+', 0, 0), T('C:z+', 0, 0)]] }
 };
-lvl.sol = [T('A:z-', 0, 0), T('A:z-', 0, 1), T('B:z+', 0, 0), T('C:z+', 0, 0)];
+lvl.sol = [T('A:z-', 0, 0), T('A:z-', 0, 1), T('S:z+', 0, 0), T('B:z+', 0, 0), T('C:z+', 0, 0)];
 lvl.bot = { hints: [['A', 'A:z-', 1], ['A', 'A:z-', 1], ['A', 'B:z+', 1], ['A', 'C:z+', 1]] };
 lvl.hero = lvl.parts.map(p => p.id).join(',');   // the opening frames every building (main/frame.js heroIds), not only the main one
 lvl.tntStart = E('TNT', 8);
