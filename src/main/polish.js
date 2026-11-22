@@ -585,7 +585,7 @@ var sr19 = showResult; showResult = function(){
   try{
     var rs = $("result"), fail = !!(r && !r.ok && !manual && screen === "result");
     rescPlace(r);
-    var dock = fail && r.code !== "collateral";   // the collateral card has its own dock (r18prot, UX-31)
+    var dock = fail && r.code !== "collateral" && QS.get("r19dock") === "1";   // Khai 22/11: fail cards back in the middle as in TF6 (UX-39 dock only with ?r19dock=1); the collateral card keeps its own dock (r18prot, UX-31)
     if(rs) rs.classList.toggle("r19dock", dock);
     if(dock){ R19.dock++; var c = standC(), s = c ? toScreen(c) : null, tgt = innerHeight*0.28;
       if(s && isFinite(s.y) && s.y > tgt){ R19.cam = { t0:performance.now(), off:Math.min(0.3*VH, s.y - tgt), k:0, y0:Math.round(s.y) }; lg19("dockCam:" + Math.round(R19.cam.off)); } else lg19("dock"); }
