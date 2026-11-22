@@ -1,0 +1,170 @@
+{
+ "when": "2026-11-20T07:16:05.128Z",
+ "rule": {
+  "oneBombPct": 70,
+  "oneBombCollapse": 101,
+  "spare": {
+   "N": [
+    2,
+    5
+   ],
+   "H": [
+    1,
+    3
+   ],
+   "SH": [
+    1,
+    3
+   ]
+  },
+  "minWaves": {
+   "N": 2,
+   "H": 3,
+   "SH": 3
+  },
+  "estSec": {
+   "N": [
+    20,
+    75
+   ],
+   "H": [
+    30,
+    90
+   ],
+   "SH": [
+    40,
+    120
+   ]
+  },
+  "keepMax": 0.05,
+  "footMax": 80
+ },
+ "results": [
+  {
+   "id": "E01",
+   "lv": 37,
+   "name": "Long Legs",
+   "tier": "N",
+   "sf": [],
+   "pattern": "legs: a raised slab on pilotis, three sections; bombs on the legs drop a section, the heavy roof pieces land whole and need one more",
+   "story": "",
+   "sfMetric": {},
+   "metrics": {
+    "members": 281,
+    "hard": 15,
+    "soft": 266,
+    "hardPct": 5,
+    "main": {
+     "members": 211,
+     "hard": 15,
+     "soft": 196,
+     "hardPct": 7,
+     "pos": {
+      "top": 3,
+      "mid": 0,
+      "bottom": 12,
+      "edge": 12,
+      "core": 3,
+      "front": 6,
+      "back": 6
+     },
+     "core": "yes",
+     "hardLayers": 2,
+     "depthRows": 4,
+     "frontHard": 6,
+     "backHard": 6,
+     "floors": 7
+    },
+    "stacks": 4,
+    "parts": [
+     "A",
+     "B",
+     "C",
+     null
+    ]
+   },
+   "oneBomb": {
+    "pct": 4,
+    "collapse": 4,
+    "at": "wpost@C:f1",
+    "tried": 18
+   },
+   "lazy": {
+    "pct": 22,
+    "collapse": 29
+   },
+   "fairOpen": {
+    "win": true,
+    "res": "WIN",
+    "pct": 96,
+    "used": 16,
+    "left": 24,
+    "waves": 3,
+    "firstWave": 9,
+    "keep": 0,
+    "estSec": 40,
+    "log": "bld7=9 bld6=70 heap3=96"
+   },
+   "tnt": 19,
+   "fair": [
+    {
+     "win": true,
+     "res": "WIN",
+     "pct": 95,
+     "used": 14,
+     "left": 5,
+     "waves": 3,
+     "firstWave": 9,
+     "keep": 0,
+     "estSec": 38,
+     "log": "bld7=9 bld4=70 heap3=95"
+    },
+    {
+     "win": true,
+     "res": "WIN",
+     "pct": 96,
+     "used": 13,
+     "left": 6,
+     "waves": 3,
+     "firstWave": 31,
+     "keep": 0,
+     "estSec": 37,
+     "log": "bld7=31 bld3=70 heap3=96"
+    },
+    {
+     "win": true,
+     "res": "WIN",
+     "pct": 96,
+     "used": 13,
+     "left": 6,
+     "waves": 3,
+     "firstWave": 31,
+     "keep": 0,
+     "estSec": 37,
+     "log": "bld7=31 bld3=70 heap3=96"
+    }
+   ],
+   "spare": 5,
+   "allFoot": {
+    "pct": 64,
+    "used": 19,
+    "collapse": 100,
+    "keep": 0
+   },
+   "footOnly": {
+    "pct": 65,
+    "waves": 3,
+    "left": 6,
+    "keep": 0
+   },
+   "oneWave": {
+    "pct": 73,
+    "used": 19,
+    "reach": 231,
+    "collapse": 100
+   },
+   "verdict": "PASS",
+   "issues": []
+  }
+ ]
+}

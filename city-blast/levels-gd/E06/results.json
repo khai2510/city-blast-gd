@@ -1,0 +1,170 @@
+{
+ "when": "2026-11-20T16:42:20.664Z",
+ "rule": {
+  "oneBombPct": 70,
+  "oneBombCollapse": 101,
+  "spare": {
+   "N": [
+    2,
+    5
+   ],
+   "H": [
+    1,
+    3
+   ],
+   "SH": [
+    1,
+    3
+   ]
+  },
+  "minWaves": {
+   "N": 2,
+   "H": 3,
+   "SH": 3
+  },
+  "estSec": {
+   "N": [
+    20,
+    75
+   ],
+   "H": [
+    30,
+    90
+   ],
+   "SH": [
+    40,
+    120
+   ]
+  },
+  "keepMax": 0.05,
+  "footMax": 80
+ },
+ "results": [
+  {
+   "id": "E06",
+   "lv": 37,
+   "name": "Boiler Stack",
+   "tier": "N",
+   "sf": [],
+   "pattern": "aim: a chimney on legs at the end of a boiler house; tipped towards it the chimney lies along the boiler-house roof (one fall, two buildings); tipped away it hits the empty yard",
+   "story": "",
+   "sfMetric": {},
+   "metrics": {
+    "members": 107,
+    "hard": 10,
+    "soft": 97,
+    "hardPct": 9,
+    "main": {
+     "members": 71,
+     "hard": 8,
+     "soft": 63,
+     "hardPct": 11,
+     "pos": {
+      "top": 0,
+      "mid": 0,
+      "bottom": 8,
+      "edge": 8,
+      "core": 0,
+      "front": 3,
+      "back": 3
+     },
+     "core": "no",
+     "hardLayers": 1,
+     "depthRows": 8,
+     "frontHard": 3,
+     "backHard": 3,
+     "floors": 7
+    },
+    "stacks": 2,
+    "parts": [
+     "A",
+     "B"
+    ]
+   },
+   "oneBomb": {
+    "pct": 12,
+    "collapse": 12,
+    "at": "g7bkw@A:f1",
+    "tried": 18
+   },
+   "lazy": {
+    "pct": 39,
+    "collapse": 41
+   },
+   "fairOpen": {
+    "win": true,
+    "res": "WIN",
+    "pct": 100,
+    "used": 13,
+    "left": 27,
+    "waves": 4,
+    "firstWave": 56,
+    "keep": 0,
+    "estSec": 43,
+    "log": "bld6=56 bld3=79 bld1=82 heap3=100"
+   },
+   "tnt": 17,
+   "fair": [
+    {
+     "win": true,
+     "res": "WIN",
+     "pct": 100,
+     "used": 15,
+     "left": 2,
+     "waves": 4,
+     "firstWave": 57,
+     "keep": 0,
+     "estSec": 46,
+     "log": "bld6=57 bld3=74 bld3=82 heap3=100"
+    },
+    {
+     "win": true,
+     "res": "WIN",
+     "pct": 91,
+     "used": 13,
+     "left": 4,
+     "waves": 4,
+     "firstWave": 57,
+     "keep": 0,
+     "estSec": 43,
+     "log": "bld6=57 bld3=76 bld1=81 heap3=91"
+    },
+    {
+     "win": true,
+     "res": "WIN",
+     "pct": 91,
+     "used": 13,
+     "left": 4,
+     "waves": 4,
+     "firstWave": 57,
+     "keep": 0,
+     "estSec": 43,
+     "log": "bld6=57 bld3=76 bld1=81 heap3=91"
+    }
+   ],
+   "spare": 2,
+   "allFoot": {
+    "pct": 64,
+    "used": 17,
+    "collapse": 73,
+    "keep": 0
+   },
+   "footOnly": {
+    "pct": 78,
+    "waves": 3,
+    "left": 0,
+    "keep": 0
+   },
+   "oneWave": {
+    "pct": 85,
+    "used": 17,
+    "reach": 94,
+    "collapse": 86
+   },
+   "verdict": "FAIL",
+   "issues": [
+    "ONE-WAVE (all TNT, one BLAST) reaches 85%"
+   ]
+  }
+ ]
+}

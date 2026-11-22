@@ -837,6 +837,477 @@ try{ (function(){
   // test hook: turn the view a quarter at a time, like the player's swipe (k = 0..3), and settle the camera at once
   LV7.view = function(k){ var y0 = (L && L.yaw != null) ? L.yaw : 0.55; baseYaw = y0 + (k || 0)*QUARTER; yaw = baseYaw; for(var i = 0; i < 40; i++) updateCamera(0.1); yaw = baseYaw; updateCamera(0.001); camera.updateMatrixWorld(true); return baseYaw; };
 
+  // ==================================================================================================================
+  // g7 E01 "Long Legs" (easy pack, lesson: hit the legs). A long housing slab lifted on sculpted pilotis (inspired by the
+  // modernist "city in the sky" slabs: raised body, colourful loggias, a roof terrace with a funnel stack and a gym; our own
+  // proportions and colours, never a replica). The slab is THREE sections side by side (own bond group each: they rest
+  // against each other, they are never glued), each on 4 legs: bombs on the facade only break glass, bombs on the legs drop a
+  // section. The roof pieces are heavy (hard7v: they land whole and still count until a bomb cracks them).
+  // g7stilt: a timber clubhouse raised on 4 legs (easy), one at each end; red drums sit under the slab ends (L.hit7.drums:
+  // a section landing on them sets them off, and the blast knocks the clubhouse's legs out: the chain).
+  // ==================================================================================================================
+  (function(){
+    if(typeof A1 === "undefined" || !A1.h || typeof M14 === "undefined") return;
+    var H = A1.h, kd = l6KdAdd, api = M14.api, kq = H.kq, bar = H.bar, mem = H.mem;
+    var K = { conc:0xD9D3C6, concD:0xB4AC9C, concL:0xEEE9DF, white:0xF7F4EC, ink:0x3A3D45, glass:0x9FC3D6, lit:0xFFD98A, warm:0xFFF1C4,
+      lawn:0x7FB069, lawnD:0x5E8F4E, path:0xD8CDB4, leaf:0x4F8F46, trunk:0x7A5236, wood:0xC58B55, woodD:0x8A5A33, roof:0x3F6E78, roofD:0x2F5660,
+      cols:[0xD8442E, 0xF2C230, 0x2E6FB8, 0x5BA35A, 0xE8803A] };
+    var bgSet = function(n0, g){ for(var q = n0; q < blocks.length; q++) if(!blocks[q].anchor) blocks[q].bg = g; };
+    var FN = { "z+":[0, 1], "z-":[0, -1], "x+":[1, 0], "x-":[-1, 0] };
+    function onF(b, g, c, u, v, w, h, t){ var n = FN[b.a1face]; if(!n) return; var X = !!n[0]; t = t || 0.06; var d = (X ? b.half[0] : b.half[2]) + t/2;
+      kd(b, g, c, b.spawn.x + (X ? n[0]*d : u), b.spawn.y + v, b.spawn.z + (X ? u : n[1]*d), X ? t : w, h, X ? w : t); }
+    function tree(host, x, z, s){ kd(host, "icyl", K.trunk, x, 1.1*s, z, 0.35*s, 2.2*s, 0.35*s); kd(host, "ibush", K.leaf, x, 2.9*s, z, 2.4*s, 2.2*s, 2.4*s); kd(host, "ibush", K.lawnD, x + 0.4*s, 3.5*s, z - 0.3*s, 1.5*s, 1.4*s, 1.5*s); }
+    V5_PARTS.g7slab = function(P){
+      var n0 = blocks.length, hx = P.hx || 3.5, hz = P.hz || 4.5, ns = P.secs || 3, gap = 0.1, PH = P.legH || 5.0, FH = 3.0, NF = P.floors || 6, rr = H.rng(4401);
+      var W = ns*2*hx + (ns - 1)*gap, x0 = -W/2 + hx, i, s, k;
+      // the park: an anchored lawn (never counted) with paths, benches and trees
+      var base = addBlock(0, -0.25, 0, W + 4, 0.5, 2*hz + 8, "base", {anchor:true});
+      kd(base, "box", K.lawn, 0, 0.03, 0, W + 3.6, 0.06, 2*hz + 7.6); kd(base, "box", K.path, 0, 0.07, 0, W - 1, 0.04, 2*hz - 1.2);
+      kd(base, "box", K.path, 0, 0.07, hz + 2.2, 2.4, 0.04, 4.4);
+      [-1, 1].forEach(function(sx){ tree(base, sx*(W/2 - 2.0), -hz - 2.6, 0.9); tree(base, sx*(W/2 - 7.5), -hz - 2.8, 0.8); tree(base, sx*1.6, -hz - 2.4, 0.7);
+        kd(base, "ibox", K.woodD, sx*(W/2 - 4.5), 0.45, hz + 2.6, 1.8, 0.12, 0.5); kd(base, "ibox", K.ink, sx*(W/2 - 4.5), 0.2, hz + 2.6, 1.6, 0.4, 0.1); });
+      var secs = [];
+      for(k = 0; k < ns; k++){
+        var cx = x0 + k*(2*hx + gap), nS = blocks.length, y = 0, first = k === 0, last = k === ns - 1, decks = [], tops;
+        // the legs: 4 sculpted pilotis (ordinary RC, 1 TNT), open below, a deep cassette above ("the artificial ground")
+        var g = H.boxSt({ y0:0, h:PH, hx:hx, hz:hz, cx:cx, nx:2, nz:2, pw:P.legW || 1.05, mw:1.0, fl:0, MT:api.mat("concrete"), deck:"mdC", skin:"open", split:[2, 1], dk:0.7, tp:K.conc, td:K.concD });
+        g.piers.forEach(function(p){ p.key = "rc"; p.def = MEMBERS.rc; p.hp = p.hp0 = MEMBERS.rc.hp; p.tint = K.conc;
+          for(var f2 = 0; f2 < 4; f2++) kd(p, "box", f2 % 2 ? K.conc : K.concL, p.spawn.x, PH - 1.0 - f2*0.55, p.spawn.z, 2*p.half[0] + 0.8 - f2*0.22, 0.55, 2*p.half[2] + 0.8 - f2*0.22);   // the flared head (a sculpted V)
+          kd(p, "box", K.concD, p.spawn.x, 0.2, p.spawn.z, 2*p.half[0] + 0.12, 0.4, 2*p.half[2] + 0.12);
+          for(var q = 0; q < 3; q++) kd(p, "ibox", K.concD, p.spawn.x + (p.a1z > 0 ? 0 : 0), 1.0 + q*1.0, p.spawn.z + Math.sign(p.a1z)*(p.half[2] + 0.02), 2*p.half[0] - 0.2, 0.05, 0.04); });   // board marks
+        if(P.softDeck !== 0) g.decks.forEach(function(d){ d.key = "mdC"; d.def = MEMBERS.mdC; d.hp = d.hp0 = MEMBERS.mdC.hp; });
+        g.decks.forEach(function(d){ kd(d, "box", K.concL, d.spawn.x, PH - 0.35, d.spawn.z, 2*d.half[0] + 0.05, 0.75, 2*d.half[2] + 0.2); });
+        // under the belly: lamps on the soffit, and a glazed porch on the middle section (decor on its deck)
+        g.decks.forEach(function(d){ kd(d, "lit", K.warm, d.spawn.x, PH - 0.75, d.spawn.z, 1.2, 0.06, 1.2); });
+        if(!first && !last){ var dm = g.decks[0]; kd(dm, "box", K.glass, cx, PH - 2.2, 0, 3.2, 2.6, 2.4); kd(dm, "box", K.white, cx, PH - 0.85, 0, 3.6, 0.2, 2.8); kd(dm, "lit", K.lit, cx, PH - 2.3, 1.22, 1.4, 1.8, 0.04); }
+        decks.push(g.decks); y = PH;
+        // the body: NF storeys, glass on the long faces (loggias), a blank end wall on the two outer ends
+        for(s = 0; s < NF; s++){
+          var skin = { "z+":"glass", "z-":"glass", def:"open" }; if(first) skin["x-"] = "wall"; if(last) skin["x+"] = "wall";
+          var st = H.boxSt({ y0:y, h:FH, hx:hx, hz:hz, cx:cx, nx:3, nz:2, pw:0.75, mw:0.65, fl:s + 1, MT:api.mat("concrete"), deck:"mdC", skin:skin, wall:"cpan", split:[2, 1], dk:0.4, tp:K.conc, td:K.concD, tw:K.concL });
+          // ordinary concrete floors (mdC, 1 TNT), not the blast-proof hero floors: a floor lying in the heap must be clearable
+          if(P.softDeck !== 0) st.decks.forEach(function(d){ d.key = "mdC"; d.def = MEMBERS.mdC; d.hp = d.hp0 = MEMBERS.mdC.hp; });
+          st.panes.forEach(function(g2, j){ H.paneDress(g2, y, FH, s + j);
+            // the loggia: two painted side walls and a white parapet in front of the glass (decor on the floor below)
+            var hd = H.near(decks[decks.length - 1], g2.spawn.x, g2.spawn.z), zf = g2.spawn.z + Math.sign(g2.spawn.z)*0.55, lw = 2*g2.half[0], c = K.cols[(s*3 + j + k*2) % K.cols.length];
+            [-1, 1].forEach(function(e){ kd(hd, "box", c, g2.spawn.x + e*(lw/2 - 0.08), y + FH*0.48, zf, 0.14, FH - 0.5, 0.9); });
+            kd(hd, "box", K.white, g2.spawn.x, y + 0.5, zf + Math.sign(g2.spawn.z)*0.42, lw, 1.0, 0.12);
+            kd(hd, "box", c, g2.spawn.x, y + 1.6, g2.spawn.z - Math.sign(g2.spawn.z)*0.3, lw*0.42, 1.9, 0.06); });
+          st.walls.forEach(function(w){ onF(w, "box", K.concD, 0, FH*0.42 - 1.4, 2*Math.max(w.half[0], w.half[2]), 0.12, 0.08);
+            for(var q = -2; q <= 2; q++) onF(w, "ibox", K.concD, q*1.5, 0, 0.05, FH - 0.6, 0.06); });   // board-marked end wall
+          // the brise-soleil grid: a floor band on both long faces, a fin on every post
+          st.decks.forEach(function(d){ [-1, 1].forEach(function(sz){ kd(d, "box", K.white, d.spawn.x, y + FH - 0.2, sz*(hz + 0.62), 2*d.half[0] + 0.06, 0.26, 0.5); }); });
+          st.piers.forEach(function(p){ if(Math.abs(p.a1z) < hz - 1) return; kd(p, "box", K.white, p.spawn.x, y + FH/2 - 0.2, p.spawn.z + Math.sign(p.a1z)*0.6, 0.22, FH - 0.4, 1.0); });
+          // the flats inside: lit, a different layout every floor (seen through the loggias)
+          var fh = H.near(decks[decks.length - 1], cx, 0); api.floorIn(fh, y + 0.02, { hw:3.0, x:cx, z:0, rr:rr, fi:s + k, plateHw:0 });
+          decks.push(st.decks); y += FH;
+        }
+        // the roof terrace: parapet, a running track, and one heavy roof piece per section (hard7v: lands whole, still counts)
+        tops = decks[decks.length - 1];
+        tops.forEach(function(d){ kd(d, "box", K.white, d.spawn.x, y + 0.45, d.spawn.z + hz - 0.15, 2*d.half[0], 0.9, 0.2); kd(d, "box", K.white, d.spawn.x, y + 0.45, d.spawn.z - hz + 0.15, 2*d.half[0], 0.9, 0.2);
+          kd(d, "box", 0xA0473C, d.spawn.x, y + 0.03, d.spawn.z + hz - 1.0, 2*d.half[0], 0.06, 0.9); kd(d, "box", 0xA0473C, d.spawn.x, y + 0.03, d.spawn.z - hz + 1.0, 2*d.half[0], 0.06, 0.9); });
+        if(first || last) tops.forEach(function(d){ var ex = first ? -1 : 1; if(Math.sign(d.spawn.x - cx) !== ex) return; kd(d, "box", K.white, cx + ex*(hx - 0.15), y + 0.45, 0, 0.2, 0.9, 2*hz); });
+        var nV = blocks.length, RW = P.roofW || 1;
+        if(!first && !last){
+          // the funnel stack: a heavy tapering ventilation tower (hard7v) with a flared top, painted bands
+          var fv = mem("hard7v", cx, y + 2.0*RW, -0.6, 2.6*RW, 4.0*RW, 2.6*RW, NF + 1, null, null, 0x8C8A84); fv.tint = 0x8C8A84;
+          kd(fv, "cone", K.concL, cx, y + 4.0*RW + 0.9, -0.6, 3.8*RW, 1.8, 3.8*RW, Math.PI, 0, 0); kd(fv, "box", K.cols[0], cx, y + 1.2, -0.6, 2.7*RW, 0.4, 2.7*RW); kd(fv, "box", K.cols[1], cx, y + 2.0, -0.6, 2.7*RW, 0.3, 2.7*RW);
+          kd(fv, "box", K.ink, cx, y + 4.0*RW + 1.7, -0.6, 2.0*RW, 0.12, 2.0*RW);
+        } else {
+          // the roof gym: a heavy vaulted pavilion (hard7v) on the end section, a shallow pool beside it (decor)
+          var ex2 = first ? -1 : 1, gx = cx + ex2*0.6;
+          var gy = mem("hard7v", gx, y + 1.3*RW, -0.8, 4.2*RW, 2.6*RW, 3.4*RW, NF + 1, null, null, 0x8C8A84); gy.tint = 0x8C8A84;
+          kd(gy, "cyl", K.concL, gx, y + 2.5*RW, -0.8, 2.4*RW, 4.3*RW, 3.4*RW, 0, 0, Math.PI/2);
+          kd(gy, "box", K.glass, gx, y + 1.2, -0.8 + 1.72*RW, 3.2*RW, 1.6, 0.08); kd(gy, "lit", K.lit, gx, y + 1.2, -0.8 + 1.68*RW, 2.8*RW, 1.2, 0.04);
+          var pd = H.near(tops, cx - ex2*1.6, 2.4); kd(pd, "box", 0x6FC3DF, cx - ex2*1.6, y + 0.08, 2.4, 3.0, 0.12, 1.8); kd(pd, "box", K.white, cx - ex2*1.6, y + 0.05, 2.4, 3.4, 0.08, 2.2);
+        }
+        secs.push({ cx:cx, top:y }); bgSet(nS, (P.bg0 || 81) + k);
+      }
+      LV7.g7info = Object.assign(LV7.g7info || {}, { slab:{ top:secs[0].top + 5, members:blocks.length - n0, secs:secs } });
+      return { w:W + 4, d:2*hz + 8 };
+    };
+    // ---- the timber clubhouse on stilts (easy, an echo of the lesson): 4 timber legs, two timber storeys, a gabled roof,
+    // a balcony rail round the first floor and a stair up to it (decor). One or two bombs on the legs bring it down.
+    V5_PARTS.g7stilt = function(P){
+      var n0 = blocks.length, hx = P.hx || 2.6, hz = P.hz || 3.0, LH = P.legH || 4.0, y = 0, s, sts = [], MT = api.mat("wood"), side = P.side || 1;
+      var base = addBlock(0, -0.25, 0, 2*hx + 3, 0.5, 2*hz + 3, "base", {anchor:true}); kd(base, "box", K.lawn, 0, 0.03, 0, 2*hx + 2.6, 0.06, 2*hz + 2.6);
+      var g = H.boxSt({ y0:0, h:LH, hx:hx, hz:hz, nx:2, nz:2, pw:0.55, mw:0.5, fl:0, MT:MT, deck:"mdW", skin:"open", dk:0.35, tp:K.woodD, td:K.woodD });
+      g.piers.forEach(function(p){ kd(p, "box", K.concD, p.spawn.x, 0.25, p.spawn.z, 0.8, 0.5, 0.8); });
+      // cross braces between the legs (decor on the legs: they go when a leg goes)
+      [[-1, 1], [1, 1], [-1, -1], [1, -1]].forEach(function(q, k){ var p = H.near(g.piers, q[0]*hx, q[1]*hz); if(k % 2) return;
+        bar(p, K.woodD, q[0]*(hx - 0.3), 0.6, q[1]*(hz - 0.3), q[0]*(hx - 0.3), LH - 0.9, -q[1]*(hz - 0.3), 0.14); });
+      var d0 = g.decks[0]; y = LH;
+      for(var r = -1; r <= 1; r += 2) kd(d0, "box", K.woodD, 0, y + 0.55, r*(hz + 0.55), 2*hx + 1.2, 0.1, 0.1);   // the balcony rail
+      kd(d0, "box", K.wood, 0, y - 0.2, 0, 2*hx + 1.2, 0.12, 2*hz + 1.2);
+      for(var b2 = 0; b2 < 6; b2++) kd(d0, "ibox", K.woodD, -side*(hx + 0.75) + 0, 0.35 + b2*(LH - 0.4)/6, hz - 0.6 - b2*0.55, 1.0, 0.12, 0.5);   // the stair
+      for(s = 0; s < 2; s++){ var h = 3.2;
+        var st = H.boxSt({ y0:y, h:h, hx:hx, hz:hz, nx:3, nz:2, pw:0.45, mw:0.4, fl:s + 1, MT:MT, deck:"mdW", skin:{ "z+":"glass", def:"wall" }, mat:"wood", wall:"wwall", dk:0.3, tp:K.woodD, td:K.woodD, tw:0xEFD9B0 });
+        sts.push(st);
+        st.panes.forEach(function(g2, j){ H.paneDress(g2, y, h, j); });
+        st.walls.forEach(function(w, j){ onF(w, "box", K.woodD, 0, -h*0.42, 2*Math.max(w.half[0], w.half[2]), 0.18, 0.06);
+          for(var q = -2; q <= 2; q++) onF(w, "ibox", 0xD8B888, q*0.55, 0, 0.05, h - 0.5, 0.05);
+          if((j + s) % 2 === 0) onF(w, "box", K.glass, 0, 0.25, 0.9, 0.9, 0.08); });
+        var hd = H.near(sts.length > 1 ? sts[s - 1].decks : g.decks, 0, 0);
+        kd(hd, "ibox", K.wood, 0, y + 0.4, -hz*0.4, 2.2, 0.8, 0.8); kd(hd, "lit", K.lit, 0, y + h - 0.6, 0, 0.5, 0.4, 0.5);
+        y += h; }
+      // the gabled roof (decor on the top cassettes), a gable board and a little lantern
+      var top = sts[1].decks, sl = 0.6;
+      [-1, 1].forEach(function(sz){ top.forEach(function(d){ kq(d, "box", sz > 0 ? K.roof : K.roofD, d.spawn.x, y + 1.1, sz*(hz/2 + 0.2), 2*d.half[0] + 1.0, 0.22, hz + 1.3, 0, -sz*sl, 0); }); });
+      top.forEach(function(d){ kd(d, "box", K.roofD, d.spawn.x, y + 2.1, 0, 2*d.half[0] + 1.0, 0.25, 0.3); }); [-1, 1].forEach(function(sx){ kd(H.near(top, sx*hx, 0), "prism", 0xEFD9B0, sx*(hx - 0.1), y + 0.95, 0, 0.2, 1.9, 2*hz - 0.1); });
+      kd(top[0], "box", K.woodD, 0, y + 2.7, 0, 0.6, 1.0, 0.6); kd(top[0], "lit", K.lit, 0, y + 2.7, 0, 0.4, 0.6, 0.4); kd(top[0], "cone", K.roofD, 0, y + 3.5, 0, 1.0, 0.7, 1.0);
+      if(P.bg) bgSet(n0, P.bg); return { w:2*hx + 3, d:2*hz + 3 };
+    };
+  })();
+
+  // ==================================================================================================================
+  // g7 EASY PACK E02-E06 (Agents-Game, 20/11: Chapter 1 easy levels). One shared kit, own builders per level:
+  //   E03 "Tram Depot" (FEEL, red drums blast for free): g7depot (four brick tram sheds, arched doors, a heavy roof piece each)
+  //       and g7cabin (a brick-and-timber signal cabin). The drum row along the depot front is level data (L.tanks).
+  //   E02 "Shot Tower" (TEACH, two legs side by side tip it that way): g7shot (a tall brick shot tower on 8 legs) and
+  //       g7gshed (a long timber goods shed, one each side: whichever side the tower is tipped to, it lies down on a shed).
+  //   E06 "Boiler Stack" (COMBINE, legs + direction): g7stack (a square brick chimney on a legged base, one at each end)
+  //       and g7boil (the boiler house between them: a chimney tipped inward lies along its roof).
+  //   E04 "Market Hall" (TEACH, wood falls easy, brick shields): g7mhall (three timber market halls on posts), g7arcade
+  //       (a two-storey brick arcade in front: the shield) and g7kiosk (a small brick weigh house at each end).
+  // Inspired by building types only (no real building, no real proportions). Every box that carries load is a member;
+  // every detail (arches, slopes, rails, lamps, trams, louvres) is decor riding on a member, inside its outline.
+  // Floors are the plain ladder floors (mdB / mdC), not the blast-proof hero floors: a floor lying in the heap must be
+  // clearable (E01 lesson); levels that need "floors ignore TNT while they stand" list them in L.drop7 (plumbing only).
+  // ==================================================================================================================
+  (function(){
+    if(typeof A1 === "undefined" || !A1.h || typeof M14 === "undefined") return;
+    var H = A1.h, kd = l6KdAdd, api = M14.api, kq = H.kq, bar = H.bar, mem = H.mem;
+    var K = { brick:0xB5543A, brickD:0x8C3E2B, brickL:0xC9714E, stone:0xD9CFBD, stoneD:0xA89E8C, slate:0x4F5A68, slateD:0x3B4450, iron:0x3B4048,
+      green:0x3F6F55, greenD:0x2E5541, cream:0xF1E6CC, white:0xF6F2EA, glass:0x9FC3D6, lit:0xFFD98A, warm:0xFFF1C4, wood:0xC58B55, woodD:0x8A5A33,
+      woodL:0xE2B77E, red:0xC8362B, soot:0x2E2A2A, cobble:0x9C978E, cobbleD:0x7F7A72, lawn:0x7FB069, leaf:0x4F8F46, trunk:0x7A5236, copper:0x5FA08A,
+      tile:0xB0503A, tileD:0x8E3E2D, awnA:0xD8442E, awnB:0xF4EDE0, gold:0xE8B23A, ink:0x2B2F36 };
+    var bgSet = function(n0, g){ for(var q = n0; q < blocks.length; q++) if(!blocks[q].anchor) blocks[q].bg = g; };
+    var FN = { "z+":[0, 1], "z-":[0, -1], "x+":[1, 0], "x-":[-1, 0] };
+    function onF(b, g, c, u, v, w, h, t){ var n = FN[b.a1face]; if(!n) return; var X = !!n[0]; t = t || 0.06; var d = (X ? b.half[0] : b.half[2]) + t/2;
+      kd(b, g, c, b.spawn.x + (X ? n[0]*d : u), b.spawn.y + v, b.spawn.z + (X ? u : n[1]*d), X ? t : w, h, X ? w : t); }
+    // a disc on the face of b (arch heads, round windows): D across, t proud of the face
+    function onD(b, c, u, v, D, t){ var n = FN[b.a1face]; if(!n) return; var X = !!n[0], d = (X ? b.half[0] : b.half[2]) + t/2;
+      kd(b, "cyl", c, b.spawn.x + (X ? n[0]*d : u), b.spawn.y + v, b.spawn.z + (X ? u : n[1]*d), D, t, D, X ? 0 : Math.PI/2, 0, X ? Math.PI/2 : 0); }
+    // a corbelled arch head under a lintel (no cut-outs: two steps of brick in each top corner of the opening + a keystone).
+    // X: the opening faces x (along z) or z (along x); f = the face coordinate; u = centre along the face; yt = soffit; w = width
+    function corb(h, X, f, u, yt, w, col, t){ t = t || 0.3; var sgn = Math.sign(f) || 1, fc = f - sgn*t/2;
+      [-1, 1].forEach(function(e){ [[0.5, 0.18, 0], [0.32, 0.08, 0.5]].forEach(function(q){ var a = u + e*(w/2 - w*q[1]/2), yy = yt - q[2] - q[0]/2;
+        kd(h, "box", col, X ? fc : a, yy, X ? a : fc, X ? t : w*q[1], q[0], X ? w*q[1] : t); }); });
+      kd(h, "box", K.cream, X ? f + sgn*0.03 : u, yt - 0.2, X ? u : f + sgn*0.03, X ? 0.08 : 0.36, 0.42, X ? 0.36 : 0.08); }
+    // an arched window on a wall panel: glass with a round head and a cream sill (lit on some)
+    function archWin(w, u, v, ww, hh, lit){ onF(w, "box", K.cream, u, v - hh/2 - 0.08, ww + 0.3, 0.14, 0.1); onF(w, "box", K.glass, u, v, ww, hh, 0.07); onD(w, K.glass, u, v + hh/2, ww, 0.07);
+      onD(w, K.cream, u, v + hh/2 + 0.02, ww + 0.28, 0.05); if(lit) onF(w, "lit", K.lit, u, v - 0.1, ww*0.7, hh*0.7, 0.08); onF(w, "box", K.white, u, v, 0.06, hh, 0.09); }
+    function plainDeck(list, key){ list.forEach(function(d){ d.key = key; d.def = MEMBERS[key]; d.hp = d.hp0 = MEMBERS[key].hp; }); }
+    function setKey(p, key, tint){ p.key = key; p.def = MEMBERS[key]; p.hp = p.hp0 = MEMBERS[key].hp; if(tint != null) p.tint = tint; }
+    var tipOf = function(g, hold){ return api.tip({ piers:g.piers, skin:g.walls.concat(g.panes), decks:g.decks, hinge:hold, xz:function(p){ return p.a1x == null ? null : [p.a1x, p.a1z]; } }); };
+    function tree(host, x, z, s){ kd(host, "icyl", K.trunk, x, 1.1*s, z, 0.35*s, 2.2*s, 0.35*s); kd(host, "ibush", K.leaf, x, 2.9*s, z, 2.4*s, 2.2*s, 2.4*s); kd(host, "ibush", 0x5E8F4E, x + 0.4*s, 3.5*s, z - 0.3*s, 1.5*s, 1.4*s, 1.5*s); }
+    // a light timber roof body (an attic block under the slopes): breaks on landing, one TNT, light enough not to crush its posts
+    MEMBERS.g7roofL = Object.assign({}, MEMBERS.wwall, { density:+(window.__g7roofD || 260), color:K.slate }); MATS.g7roofL = MATS.wwall || MATS.concrete;
+    // the market's timber posts (E04): old dry timber, a little weaker than wpost, so one TNT reliably takes the posts beside it
+    MEMBERS.g7post = Object.assign({}, MEMBERS.wpost, { hp:20 }); MATS.g7post = MATS.wpost;
+    // the depot roof (E03): the same light timber body, but it breaks up when it lands (a whole roof slab lying in the yard hid
+    // the heavy roof pieces from the player's finger: tester run D, 20/11)
+    MEMBERS.g7roofD = Object.assign({}, MEMBERS.g7roofL, { shatter:+(window.__g7roofS || 3.5) }); MATS.g7roofD = MATS.g7roofL;
+    // a tiled market roof (timber frame + clay tiles): heavier, so the timber hall carries its share of the score
+    MEMBERS.g7tile = Object.assign({}, MEMBERS.wwall, { density:+(window.__g7tileD || 900), color:K.tile }); MATS.g7tile = MATS.wwall || MATS.concrete;
+    // chimney brick (E06): the same brick, its own keys, so a hit7 list on the boiler house's brick never covers the chimney
+    MEMBERS.g7bk = Object.assign({}, MEMBERS.rc, { color:K.brickD }); MATS.g7bk = MATS.bk;   // the chimney's posts: RC clad in brick (a bomb on the shaft takes a wall, never the storey)
+    MEMBERS.g7bkw = Object.assign({}, MEMBERS.bkw); MATS.g7bkw = MATS.bkw;
+    function stackKeys(st){ st.piers.forEach(function(p){ setKey(p, "g7bk"); }); st.walls.forEach(function(w){ setKey(w, "g7bkw"); }); plainDeck(st.decks, "mdC"); }
+    // a heavy tiled roof (E04): the timber frame folds easily, the roof lands whole and still counts until a bomb cracks it
+    MEMBERS.hard7t = Object.assign({}, MEMBERS.hard7v, { density:+(window.__g7tileT || 1200), color:K.tile }); MATS.hard7t = MATS.hard7v || MATS.concrete;
+    var isH7 = LV7.isHard7; LV7.isHard7 = function(b){ return isH7(b) || b.key === "hard7t"; };
+    // pitched roof decor over an attic block `at` (top at y), ridge along x (ax = 1) or z (ax = 0), rise r, flush with the block
+    function slopes(at, cx, cz, y, hx, hz, r, col, colD, ax){
+      if(ax){ var sl = Math.atan2(r, hz); [-1, 1].forEach(function(s){ kq(at, "box", s > 0 ? col : colD, cx, y + r/2, cz + s*hz/2, 2*hx, 0.2, Math.hypot(hz, r), 0, s*sl, 0); }); kd(at, "box", colD, cx, y + r, cz, 2*hx, 0.22, 0.3); }
+      else { var sl2 = Math.atan2(r, hx); [-1, 1].forEach(function(s){ kq(at, "box", s > 0 ? col : colD, cx + s*hx/2, y + r/2, cz, Math.hypot(hx, r), 0.2, 2*hz, 0, 0, -s*sl2); }); kd(at, "box", colD, cx, y + r, cz, 0.3, 0.22, 2*hz); }
+    }
+
+    // ---- E03 g7depot: P.n brick tram sheds side by side (own bond group each: they lean on each other, never glued). A shed:
+    // 8 brick piers (tip rule: two side by side gone = it falls that way), an open front of two arched tram doors, brick side
+    // and back walls with arched windows, a light timber roof body with slate slopes and a glazed clerestory, and ONE heavy
+    // roof piece (hard7v: a riveted water tank on the outer sheds, a cast-iron vent lantern on the inner ones) that lands whole.
+    V5_PARTS.g7depot = function(P){
+      var n0 = blocks.length, ns = P.n || 4, hx = P.hx || 4.2, hz = P.hz || 7, PH = P.ph || 7.0, RH = P.rh || 2.2, gap = 0.1, W = ns*2*hx + (ns - 1)*gap, x0 = -W/2 + hx, k;
+      var base = addBlock(0, -0.25, 1.5, W + 6, 0.5, 2*hz + 11, "base", {anchor:true});
+      kd(base, "box", K.cobble, 0, 0.03, 1.5, W + 5.6, 0.06, 2*hz + 10.6); kd(base, "box", K.cobbleD, 0, 0.07, hz + 3.2, W + 2, 0.04, 2.6);
+      var info = [];
+      for(k = 0; k < ns; k++){
+        var cx = x0 + k*(2*hx + gap), nS = blocks.length, first = k === 0, last = k === ns - 1, outer = first || last;
+        var skin = { "z+":"open", "z-":"wall", "x-":first ? "wall" : "open", "x+":last ? "wall" : "open" };
+        var g = H.boxSt({ y0:0, h:PH, hx:hx, hz:hz, cx:cx, nx:3, nz:3, pw:1.0, mw:0.9, fl:0, MT:api.mat("brick"), deck:"mdB", skin:skin, wall:"bkw", split:[2, 2], dk:0.5, tp:K.brick, td:K.brickD, tw:K.brickL });
+        plainDeck(g.decks, "mdB"); tipOf(g, P.hold != null ? P.hold : 1.2);
+        g.piers.forEach(function(p){ kd(p, "box", K.stoneD, p.spawn.x, 0.35, p.spawn.z, 2*p.half[0] + 0.16, 0.7, 2*p.half[2] + 0.16); kd(p, "box", K.stone, p.spawn.x, PH - 0.95, p.spawn.z, 2*p.half[0] + 0.12, 0.3, 2*p.half[2] + 0.12);
+          if(p.a1z > hz - 1) for(var q = 0; q < 5; q++) kd(p, "ibox", K.brickD, p.spawn.x, 1.2 + q*1.0, p.spawn.z + p.half[2] + 0.01, 2*p.half[0] - 0.1, 0.06, 0.03); });
+        // the front: a brick spandrel over the two tram doors, dark arch heads, a cream keystone and fanlight bars, a green name board
+        var fd = H.near(g.decks, cx, hz), bw = hx - 0.95;
+        kd(fd, "box", K.brick, cx, PH - 0.75, hz - 0.2, 2*hx - 0.1, 1.5, 0.4); kd(fd, "box", K.stone, cx, PH - 0.06, hz - 0.15, 2*hx, 0.14, 0.5);
+        [-1, 1].forEach(function(s){ var bx = cx + s*hx/2;
+          // a stepped (corbelled) arch head under the spandrel, a fanlight behind it, a cream keystone
+          [[0.6, 0.2], [0.45, 0.1]].forEach(function(q, r){ [-1, 1].forEach(function(e){ kd(fd, "box", K.brick, bx + e*(bw/2 - bw*q[1]/2), PH - 1.5 - (r ? 0.6 + q[0]/2 : q[0]/2), hz - 0.2, bw*q[1], q[0], 0.4);
+            kd(fd, "box", K.cream, bx + e*(bw/2 - bw*q[1]), PH - 1.5 - (r ? 0.6 + q[0]/2 : q[0]/2), hz + 0.02, 0.12, q[0], 0.06); }); });
+          kd(fd, "box", K.cream, bx, PH - 1.52, hz + 0.02, bw*0.6, 0.12, 0.06); kd(fd, "box", K.cream, bx, PH - 1.25, hz + 0.05, 0.45, 0.6, 0.1);
+          kd(fd, "box", K.glass, bx, PH - 2.0, hz - 0.45, bw, 1.05, 0.06); for(var r = -2; r <= 2; r++) kd(fd, "ibox", K.white, bx + r*bw/5, PH - 2.0, hz - 0.4, 0.05, 1.0, 0.05);
+          kd(base, "box", K.iron, bx - 0.72, 0.1, 1.5, 0.12, 0.05, 2*hz + 9); kd(base, "box", K.iron, bx + 0.72, 0.1, 1.5, 0.12, 0.05, 2*hz + 9);   // the rails
+          // a tram parked inside (decor on the yard: it stays when the shed comes down)
+          if(P.trams !== 0){ var tc = (k + (s > 0 ? 1 : 0)) % 2 ? K.green : K.red, tz = -1.2;
+            kd(base, "ibox", tc, bx, 1.55, tz, 2.2, 2.0, 8.0); kd(base, "ibox", K.cream, bx, 2.85, tz, 2.2, 0.6, 8.0); kd(base, "ibox", K.cream, bx, 3.35, tz, 1.9, 0.4, 7.6);
+            kd(base, "lit", K.lit, bx, 2.85, tz + 4.02, 1.5, 0.45, 0.05); kd(base, "ibox", K.ink, bx, 0.45, tz, 1.8, 0.3, 7.0); kd(base, "ibox", K.iron, bx, 4.2, tz, 0.08, 1.3, 0.08); } });
+        g.walls.forEach(function(w, j){ var L2 = 2*Math.max(w.half[0], w.half[2]); onF(w, "box", K.stoneD, 0, -PH*0.42, L2, 0.5, 0.08); onF(w, "box", K.brickD, 0, PH*0.18, L2, 0.18, 0.08);
+          archWin(w, 0, 0.2, Math.min(1.8, L2*0.45), 2.4, (j + k) % 2 === 0); });
+        g.decks.forEach(function(d){ kd(d, "lit", K.warm, d.spawn.x, PH - 0.62, d.spawn.z, 1.0, 0.08, 1.0); });
+        // the roof body and its decor: slate slopes along z (ridge front to back), a glazed clerestory, a brick front gable
+        var at = mem("g7roofD", cx, PH + RH/2, 0, 2*hx - 0.1, RH, 2*hz - 0.1, 1, null, null, K.slate), yt = PH + RH;
+        kd(at, "box", K.brick, cx, PH + RH/2, hz - 0.09, 2*hx - 0.1, RH, 0.12); kd(at, "box", K.stone, cx, PH + RH - 0.05, hz - 0.08, 2*hx, 0.12, 0.16);
+        slopes(at, cx, 0, yt, hx - 0.05, hz - 0.05, 1.7, K.slate, K.slateD, 0);
+        kd(at, "prism", K.brick, cx, yt + 0.85, hz - 0.16, 0.12, 1.7, 2*hx - 0.1, 0, Math.PI/2, 0);
+        kd(at, "cyl", K.cream, cx, yt + 0.6, hz - 0.08, 1.3, 0.08, 1.3, Math.PI/2, 0, 0); kd(at, "cyl", K.glass, cx, yt + 0.6, hz - 0.03, 1.0, 0.06, 1.0, Math.PI/2, 0, 0);
+        kd(at, "box", K.greenD, cx, PH + 0.5, hz + 0.0, 2*hx - 1.6, 0.7, 0.08); kd(at, "box", K.cream, cx, PH + 0.5, hz + 0.03, 2*hx - 2.2, 0.12, 0.06);
+        kd(at, "box", K.glass, cx, yt + 1.95, -0.4, 1.4, 0.6, 2*hz - 3.4); kd(at, "box", K.slateD, cx, yt + 2.3, -0.4, 1.7, 0.12, 2*hz - 3.2);
+        // the heavy roof piece (hard7v): lands whole, still counts until a bomb cracks it
+        var HW = P.hw || 1;
+        if(outer){ var wt = mem("hard7v", cx, yt + 1.25*HW, -hz*0.45, 2.6*HW, 2.5*HW, 2.6*HW, 2, null, null, 0x5B6470); wt.tint = 0x5B6470;
+          kd(wt, "cyl", 0x66707C, cx, yt + 1.25*HW, -hz*0.45, 2.9*HW, 2.3*HW, 2.9*HW); for(var bb = 0; bb < 3; bb++) kd(wt, "cyl", K.iron, cx, yt + 0.4*HW + bb*0.8*HW, -hz*0.45, 2.98*HW, 0.08, 2.98*HW);
+          kd(wt, "cone", K.iron, cx, yt + 2.75*HW, -hz*0.45, 2.9*HW, 0.6, 2.9*HW); kd(wt, "box", K.cream, cx, yt + 1.4*HW, -hz*0.45 + 1.47*HW, 1.4*HW, 0.5, 0.06); }
+        else { var vl = mem("hard7v", cx, yt + 0.95*HW, -hz*0.45, 2.4*HW, 1.9*HW, 3.6*HW, 2, null, null, 0x4E5560); vl.tint = 0x4E5560;
+          for(var lv = 0; lv < 4; lv++) [-1, 1].forEach(function(s){ kq(vl, "box", K.iron, cx + s*1.22*HW, yt + 0.4*HW + lv*0.38*HW, -hz*0.45, 0.06, 0.08, 3.4*HW, 0, 0, s*0.5); });
+          kd(vl, "prism", K.iron, cx, yt + 2.15*HW, -hz*0.45, 2.8*HW, 0.6, 3.8*HW, 0, Math.PI/2, 0); kd(vl, "ibush", K.gold, cx, yt + 2.6*HW, -hz*0.45, 0.35, 0.35, 0.35); }
+        info.push({ cx:cx, top:yt + 2.5 }); bgSet(nS, (P.bg0 || 61) + k);
+      }
+      // the yard in front: a lamp post at each end, a buffer stop on each track pair (decor on the yard)
+      [-1, 1].forEach(function(s){ var lx = s*(W/2 + 1.2); kd(base, "icyl", K.iron, lx, 2.2, hz + 3.0, 0.16, 4.4, 0.16); kd(base, "lit", K.lit, lx, 4.5, hz + 3.0, 0.5, 0.5, 0.5); kd(base, "icyl", K.iron, lx, 4.85, hz + 3.0, 0.6, 0.1, 0.6); });
+      LV7.g7info = Object.assign(LV7.g7info || {}, { depot:{ members:blocks.length - n0, sheds:info, W:W } });
+      return { w:W + 6, d:2*hz + 11 };
+    };
+    // ---- E03 g7cabin: a signal cabin (easy end job): a brick locking-room storey on 4 piers, a glazed timber operating room,
+    // a hipped slate roof body with a chimney, a signal mast on the yard beside it.
+    V5_PARTS.g7cabin = function(P){
+      var n0 = blocks.length, hx = P.hx || 2.6, hz = P.hz || 3.2, y = 0, side = P.side || 1;
+      var base = addBlock(0, -0.25, 0, 2*hx + 4, 0.5, 2*hz + 4, "base", {anchor:true}); kd(base, "box", K.cobble, 0, 0.03, 0, 2*hx + 3.6, 0.06, 2*hz + 3.6);
+      var g, nb = P.nb || 1;
+      for(var sb = 0; sb < nb; sb++){ var hb = sb ? 3.4 : 4.2;
+        g = H.boxSt({ y0:y, h:hb, hx:hx, hz:hz, nx:2, nz:2, pw:0.7, mw:0.6, fl:sb, MT:api.mat("brick"), deck:"mdW", skin:"wall", wall:"bkw", dk:0.35, tp:K.brick, td:K.woodD, tw:sb % 2 ? K.brick : K.brickL });
+        g.walls.forEach(function(w, j){ onF(w, "box", K.stoneD, 0, -hb/2 + 0.3, 2*Math.max(w.half[0], w.half[2]), 0.4, 0.08); if(w.a1face === "z+" && sb === 0) { onF(w, "box", K.greenD, 0, -0.7, 1.0, 2.2, 0.08); onD(w, K.greenD, 0, 0.4, 1.0, 0.08); }
+          else archWin(w, 0, 0.3, 0.9, 1.6, (j + sb) % 2 === 0); });
+        y += hb; }
+      var st = H.boxSt({ y0:y, h:3.4, hx:hx + 0.2, hz:hz + 0.2, nx:3, nz:3, pw:0.4, mw:0.34, fl:nb, MT:api.mat("wood"), deck:"mdW", skin:{ "z+":"glass", "x+":"glass", "x-":"glass", def:"wall" }, mat:"wood", wall:"wwall", dk:0.3, tp:K.green, td:K.woodD, tw:K.cream });
+      st.panes.forEach(function(p, j){ H.paneDress(p, y, 3.4, j); onF(p, "box", K.green, 0, -1.2, 2*Math.max(p.half[0], p.half[2]), 0.8, 0.08); });
+      st.walls.forEach(function(w){ for(var q = -2; q <= 2; q++) onF(w, "ibox", K.woodL, q*0.6, 0, 0.05, 2.8, 0.05); });
+      kd(st.decks[0], "lit", K.lit, 0, y + 1.3, 0, 1.4, 0.5, 0.6); kd(st.decks[0], "ibox", K.red, -0.6, y + 0.7, -0.6, 2.6, 0.8, 0.4);   // the lever frame
+      kd(g.decks[0], "box", K.woodD, 0, y + 0.1, hz + 0.75, 2*hx + 0.6, 0.12, 1.0); kd(g.decks[0], "box", K.white, 0, y + 0.7, hz + 1.2, 2*hx + 0.6, 0.08, 0.08);   // the walkway
+      y += 3.4;
+      var at = mem("g7roofL", 0, y + 0.6, 0, 2*hx + 0.3, 1.2, 2*hz + 0.3, 2, null, null, K.slate);
+      slopes(at, 0, 0, y + 1.2, hx + 0.15, hz + 0.15, 1.3, K.slate, K.slateD, 1); kd(at, "box", K.white, 0, y + 0.1, hz + 0.25, 2*hx + 0.4, 0.2, 0.08);
+      kd(at, "box", K.brick, hx*0.5, y + 2.1, -hz*0.3, 0.6, 1.6, 0.6); kd(at, "box", K.brickD, hx*0.5, y + 2.95, -hz*0.3, 0.75, 0.15, 0.75);
+      // the signal mast and arms (decor on the yard), a ladder
+      var mx = side*(hx + 1.3); kd(base, "icyl", K.white, mx, 4.5, hz + 0.6, 0.22, 9.0, 0.22); kd(base, "ibox", K.red, mx + side*0.6, 8.0, hz + 0.6, 1.3, 0.28, 0.08); kd(base, "ibox", K.white, mx + side*0.9, 8.0, hz + 0.64, 0.18, 0.28, 0.06);
+      kd(base, "lit", 0xFF5A4A, mx, 7.4, hz + 0.75, 0.25, 0.25, 0.1); kd(base, "ibox", K.iron, mx, 9.1, hz + 0.6, 0.5, 0.12, 0.5);
+      if(P.bg) bgSet(n0, P.bg); return { w:2*hx + 4, d:2*hz + 4 };
+    };
+
+    // ---- E02 g7shot: a tall brick shot tower. Ground storey = an open arcade of 8 legs (RC piers clad in brick: one TNT each,
+    // a bomb never takes the neighbour; tip rule with a hinge: two legs side by side and it lies down that way). A tapering
+    // square shaft of brick posts and walls with tall slit windows and string courses, a corbelled gallery, an octagonal
+    // lantern with a copper cap and a weather vane (decor on the top floor).
+    V5_PARTS.g7shot = function(P){
+      var n0 = blocks.length, hx = P.hx || 3.4, LH = P.legH || 5.0, SH = 3.4, n = P.n || 7, y = 0, s, i, sts = [];
+      var base = addBlock(0, -0.25, 0, 2*hx + 7, 0.5, 2*hx + 7, "base", {anchor:true}); kd(base, "box", K.stone, 0, 0.03, 0, 2*hx + 6.6, 0.06, 2*hx + 6.6); kd(base, "box", K.cobble, 0, 0.07, 0, 2*hx + 1.6, 0.04, 2*hx + 1.6);
+      var g = H.boxSt({ y0:0, h:LH, hx:hx, hz:hx, nx:3, nz:3, pw:1.15, mw:1.05, fl:0, MT:{ pier:"rc", deck:"mdB" }, deck:"mdB", skin:"open", dk:0.55, tp:K.brick, td:K.brickD });
+      plainDeck(g.decks, "mdB");
+      g.piers.forEach(function(p){ setKey(p, "rc", K.brick); kd(p, "box", K.stoneD, p.spawn.x, 0.35, p.spawn.z, 2*p.half[0] + 0.2, 0.7, 2*p.half[2] + 0.2); kd(p, "box", K.stone, p.spawn.x, LH - 0.85, p.spawn.z, 2*p.half[0] + 0.16, 0.3, 2*p.half[2] + 0.16);
+        for(var q = 0; q < 4; q++) [-1, 1].forEach(function(e){ kd(p, "ibox", K.brickD, p.spawn.x, 1.1 + q*0.9, p.spawn.z + e*(p.half[2] + 0.01), 2*p.half[0] - 0.1, 0.05, 0.03); }); });
+      LV7.g7tip = tipOf(g, P.hold != null ? P.hold : 2.0);
+      // arch heads between the legs (decor on the deck above each bay), a stone band, a lit shot-room through the arches
+      g.decks.forEach(function(d){ kd(d, "box", K.stone, d.spawn.x, LH - 0.2, d.spawn.z, 2*d.half[0] + 0.2, 0.3, 2*d.half[2] + 0.2); });
+      [[0, 1], [0, -1], [1, 0], [-1, 0]].forEach(function(q){ for(var e = -1; e <= 1; e += 2){ var u = e*hx/2, X = !!q[0];
+        var d = H.near(g.decks, X ? q[0]*hx : u, X ? u : q[1]*hx);
+        kd(d, "box", K.brick, X ? q[0]*(hx - 0.1) : u, LH - 0.75, X ? u : q[1]*(hx - 0.1), X ? 0.2 : hx - 1.1, 0.6, X ? hx - 1.1 : 0.2); corb(d, X, (X ? q[0] : q[1])*hx, u, LH - 1.05, hx - 1.1, K.brick, 0.2); } });
+      kd(g.decks[0], "ibox", K.woodD, 0, 0.6, 0, 2.2, 1.2, 1.2); kd(g.decks[0], "lit", K.lit, 0, LH - 1.4, 0, 1.0, 0.2, 1.0); kd(g.decks[0], "ibox", K.iron, 0, 2.2, 0, 1.4, 0.1, 1.4);   // shot pans, the drop
+      y = LH;
+      for(s = 0; s < n; s++){ var hs = Math.max(2.4, hx - 0.12*s);
+        var st = H.boxSt({ y0:y, h:SH, hx:hs, hz:hs, nx:3, nz:3, pw:0.85, mw:0.7, fl:s + 1, MT:api.mat("brick"), deck:"mdB", skin:"wall", wall:"bkw", dk:0.4, tp:K.brick, td:K.brickD, tw:s % 2 ? K.brick : K.brickL });
+        plainDeck(st.decks, "mdB"); sts.push(st);
+        if(P.rcPosts !== 0) st.piers.forEach(function(p){ setKey(p, "rc", K.brick); });   // a bomb on the shaft takes a wall panel, never the storey
+        // the lead-shot hoppers: heavy cast-iron bins inside (hard7v: land whole in the heap, still count until cracked)
+        if(P.hop && P.hop.indexOf(s) >= 0){ var hw2 = P.hopW || 2.6, hp = mem("hard7v", 0, y + 1.0*(P.hopH || 2.0)/2 + 0.02, 0, hw2, P.hopH || 2.0, hw2, s + 1, null, null, 0x4A4F58); hp.tint = 0x4A4F58;
+          kd(hp, "cone", 0x5A606A, 0, y + (P.hopH || 2.0) + 0.3, 0, hw2*1.1, 0.6, hw2*1.1, Math.PI, 0, 0); kd(hp, "lit", K.lit, 0, y + (P.hopH || 2.0) + 0.9, 0, 0.6, 0.2, 0.6); }
+        st.walls.forEach(function(w, j){ var L2 = 2*Math.max(w.half[0], w.half[2]);
+          onF(w, "box", K.cream, 0, 0.35, 0.55, 1.7, 0.08); onF(w, "box", K.glass, 0, 0.35, 0.4, 1.5, 0.1); onD(w, K.cream, 0, 1.2, 0.55, 0.08);
+          if((j + s) % 3 === 0) onF(w, "lit", K.lit, 0, 0.3, 0.3, 1.1, 0.11);
+          for(var q = 0; q < 3; q++) onF(w, "ibox", K.brickD, 0, -1.2 + q*0.55, L2, 0.04, 0.07); });
+        st.piers.forEach(function(p){ if(Math.abs(p.a1x) > hs - 1 && Math.abs(p.a1z) > hs - 1) kd(p, "box", K.brickD, p.spawn.x, y + SH/2 - 0.2, p.spawn.z, 2*p.half[0] + 0.12, SH - 0.4, 2*p.half[2] + 0.12); });   // corner quoins
+        if(s % 2 === 1) kd(st.decks[0], "box", K.stone, 0, y + SH - 0.2, 0, 2*hs + 0.35, 0.28, 2*hs + 0.35);   // string course
+        y += SH; }
+      // the gallery: corbels, a white rail round the top floor, the octagonal lantern, a copper cap and a vane
+      var top = sts[sts.length - 1].decks[0], ht = Math.max(2.4, hx - 0.12*(n - 1));
+      [[1, 0], [-1, 0], [0, 1], [0, -1]].forEach(function(q){ for(var e = -2; e <= 2; e++) kd(top, "box", K.stone, q[0] ? q[0]*(ht + 0.2) : e*ht*0.42, y - 0.3, q[1] ? q[1]*(ht + 0.2) : e*ht*0.42, 0.45, 0.45, 0.45); });   // corbels
+      kd(top, "box", K.stone, 0, y + 0.05, 0, 2*ht + 1.2, 0.2, 2*ht + 1.2);
+      [[1, 0], [-1, 0], [0, 1], [0, -1]].forEach(function(q){ kd(top, "box", K.white, q[0]*(ht + 0.55), y + 0.65, q[1]*(ht + 0.55), q[0] ? 0.1 : 2*ht + 1.2, 0.1, q[0] ? 2*ht + 1.2 : 0.1);
+        for(var e = -3; e <= 3; e++) kd(top, "box", K.white, q[0] ? q[0]*(ht + 0.55) : e*(ht + 0.5)/3, y + 0.35, q[1] ? q[1]*(ht + 0.55) : e*(ht + 0.5)/3, 0.07, 0.6, 0.07); });
+      if(P.cis){ var cw2 = P.cis, ci = mem("hard7v", 0, y + 1.3, 0, cw2, 2.6, cw2, n + 1, null, null, 0x4A4F58); ci.tint = 0x4A4F58; }   // the shot cistern (hard7v) inside the lantern
+      H.oct(top, K.cream, y + 0.15, 2.6, ht - 0.7); H.oct(top, K.glass, y + 0.55, 1.7, ht - 0.62); kd(top, "lit", K.lit, 0, y + 1.3, 0, 1.6, 1.2, 1.6);
+      for(i = 0; i < 8; i++){ var a2 = i*Math.PI/4 + Math.PI/8; kd(top, "box", K.cream, Math.cos(a2)*(ht - 0.65), y + 1.4, Math.sin(a2)*(ht - 0.65), 0.22, 2.4, 0.22); }
+      kd(top, "cone", K.copper, 0, y + 3.9, 0, 2*ht - 0.6, 2.6, 2*ht - 0.6); kd(top, "icyl", K.iron, 0, y + 5.7, 0, 0.08, 1.2, 0.08); kd(top, "ibox", K.gold, 0.25, y + 6.0, 0, 0.6, 0.18, 0.04); kd(top, "ibush", K.gold, 0, y + 6.4, 0, 0.26, 0.26, 0.26);
+      if(P.bg) bgSet(n0, P.bg); LV7.g7info = Object.assign(LV7.g7info || {}, { shot:{ top:y + 6.4, members:blocks.length - n0 } });
+      return { w:2*hx + 7, d:2*hx + 7 };
+    };
+    // ---- E02 g7gshed: a long timber goods shed (the target). Timber posts (one TNT takes every post within ~3 m), board walls,
+    // loading doors on the long front, a timber upper floor with a glazed hoist bay, a slate roof body (ridge along x).
+    V5_PARTS.g7gshed = function(P){
+      var n0 = blocks.length, hx = P.hx || 9, hz = P.hz || 4, y = 0, side = P.side || 1, nx = P.nx || 6;
+      var base = addBlock(0, -0.25, 0, 2*hx + 2, 0.5, 2*hz + 4, "base", {anchor:true}); kd(base, "box", K.cobble, 0, 0.03, 0.5, 2*hx + 1.6, 0.06, 2*hz + 3.6);
+      kd(base, "box", K.stone, 0, 0.45, hz + 1.0, 2*hx, 0.9, 1.6);   // the loading platform
+      var g = H.boxSt({ y0:0, h:4.6, hx:hx, hz:hz, nx:nx, nz:3, pw:0.5, mw:0.42, fl:0, MT:api.mat("wood"), deck:"mdW", skin:"wall", mat:"wood", wall:"wwall", split:[3, 1], dk:0.35, tp:K.woodD, td:K.woodD, tw:K.woodL });
+      g.walls.forEach(function(w, j){ var L2 = 2*Math.max(w.half[0], w.half[2]); for(var q = -3; q <= 3; q++) onF(w, "ibox", K.wood, q*L2/7, 0, 0.05, 4.0, 0.05);
+        onF(w, "box", K.woodD, 0, -1.9, L2, 0.25, 0.07); if(w.a1face === "z+" && j % 2 === 0){ onF(w, "box", K.green, 0, -0.4, L2*0.62, 3.0, 0.08); onF(w, "box", K.cream, 0, -0.4, 0.06, 3.0, 0.1); bar(w, K.cream, w.spawn.x - L2*0.3, 0.9, hz + 0.1, w.spawn.x + L2*0.3, 3.0, hz + 0.1, 0.06); } });
+      y = 4.6;
+      var st = H.boxSt({ y0:y, h:3.3, hx:hx, hz:hz, nx:nx, nz:3, pw:0.44, mw:0.38, fl:1, MT:api.mat("wood"), deck:"mdW", skin:"wall", mat:"wood", wall:"wwall", split:[3, 1], dk:0.3, tp:K.woodD, td:K.woodD, tw:K.cream });
+      st.walls.forEach(function(w, j){ var L2 = 2*Math.max(w.half[0], w.half[2]); onF(w, "box", K.white, 0, 0.2, Math.min(1.1, L2*0.5), 1.2, 0.07); onF(w, "box", K.glass, 0, 0.2, Math.min(0.9, L2*0.42), 1.0, 0.09);
+        if(j % 3 === 1) onF(w, "lit", K.lit, 0, 0.2, 0.6, 0.7, 0.1); for(var q = -3; q <= 3; q++) onF(w, "ibox", K.woodL, q*L2/7, 0, 0.04, 3.0, 0.04); });
+      y += 3.3;
+      var at = mem("g7roofL", 0, y + 0.55, 0, 2*hx - 0.1, 1.1, 2*hz - 0.1, 2, null, null, K.slate);
+      slopes(at, 0, 0, y + 1.1, hx + 0.1, hz + 0.1, 1.6, K.slate, K.slateD, 1);
+      // the hoist bay on the front (glazed dormer + a beam) and a painted board, decor on the roof body
+      kd(at, "box", K.woodL, side*hx*0.45, y + 1.3, hz - 0.6, 2.2, 2.0, 1.2); kd(at, "box", K.glass, side*hx*0.45, y + 1.3, hz + 0.02, 1.4, 1.4, 0.06); kd(at, "prism", K.slateD, side*hx*0.45, y + 2.55, hz - 0.6, 2.4, 0.7, 1.4);
+      kd(at, "box", K.woodD, side*hx*0.45, y + 2.0, hz + 0.6, 0.18, 0.18, 1.4); kd(at, "box", K.greenD, 0, y + 0.45, hz - 0.03, hx, 0.6, 0.06); kd(at, "box", K.cream, 0, y + 0.45, hz, hx - 0.6, 0.1, 0.05);
+      // crates and sacks on the platform (decor on the yard)
+      for(var c = -2; c <= 2; c++) kd(base, "box", c % 2 ? K.woodL : K.wood, c*hx/3 + 0.6, 1.3, hz + 1.1, 0.9, 0.8, 0.9);
+      if(P.bg) bgSet(n0, P.bg); return { w:2*hx + 2, d:2*hz + 4 };
+    };
+
+    // ---- E06 g7stack: a square brick factory chimney. A wide base on 8 legs (RC clad in brick, one TNT each, tip rule with a
+    // hinge), a brick pedestal storey with a soot door, then a tapering square shaft of brick posts and walls with iron bands,
+    // a corbelled crown and a sooty lip (decor on the top floor).
+    V5_PARTS.g7stack = function(P){
+      var n0 = blocks.length, bx = P.bx || 2.9, LH = P.legH || 4.6, n = P.n || 6, SH = P.sh || 3.1, y = 0, s, sts = [];
+      var base = addBlock(0, -0.25, 0, 2*bx + 5, 0.5, 2*bx + 5, "base", {anchor:true}); kd(base, "box", K.cobble, 0, 0.03, 0, 2*bx + 4.6, 0.06, 2*bx + 4.6);
+      var g = H.boxSt({ y0:0, h:LH, hx:bx, hz:bx, nx:3, nz:3, pw:1.05, mw:0.95, fl:0, MT:{ pier:"rc", deck:"mdB" }, deck:"mdB", skin:"open", dk:0.5, tp:K.brickD, td:K.brickD });
+      plainDeck(g.decks, "mdC");
+      g.piers.forEach(function(p){ setKey(p, "rc", K.brickD); kd(p, "box", K.stoneD, p.spawn.x, 0.3, p.spawn.z, 2*p.half[0] + 0.2, 0.6, 2*p.half[2] + 0.2); kd(p, "box", K.stone, p.spawn.x, LH - 0.8, p.spawn.z, 2*p.half[0] + 0.14, 0.26, 2*p.half[2] + 0.14); });
+      LV7.g7tip = tipOf(g, P.hold != null ? P.hold : 2.0);
+      g.decks.forEach(function(d){ kd(d, "box", K.stone, d.spawn.x, LH - 0.18, d.spawn.z, 2*d.half[0] + 0.2, 0.28, 2*d.half[2] + 0.2); });
+      [[0, 1], [0, -1], [1, 0], [-1, 0]].forEach(function(q){ for(var e = -1; e <= 1; e += 2){ var u = e*bx/2, X = !!q[0], d = H.near(g.decks, X ? q[0]*bx : u, X ? u : q[1]*bx);
+        kd(d, "box", K.brickD, X ? q[0]*(bx - 0.1) : u, LH - 0.72, X ? u : q[1]*(bx - 0.1), X ? 0.2 : bx - 1.0, 0.56, X ? bx - 1.0 : 0.2); corb(d, X, (X ? q[0] : q[1])*bx, u, LH - 1.0, bx - 1.0, K.brickD, 0.2); } });
+      kd(g.decks[0], "ibox", K.iron, 0, 1.0, 0, 1.6, 2.0, 1.6); kd(g.decks[0], "lit", 0xFF8A3A, 0, 0.9, 0.82, 0.8, 0.6, 0.04);   // the flue and its fire door
+      y = LH;
+      var ped = H.boxSt({ y0:y, h:3.0, hx:bx - 0.3, hz:bx - 0.3, nx:3, nz:3, pw:0.9, mw:0.75, fl:1, MT:api.mat("brick"), deck:"mdB", skin:"wall", wall:"bkw", dk:0.4, tp:K.brickD, td:K.brickD, tw:K.brick });
+      stackKeys(ped); ped.walls.forEach(function(w){ onF(w, "box", K.stone, 0, 1.2, 2*Math.max(w.half[0], w.half[2]), 0.2, 0.1); onF(w, "box", K.brickD, 0, -0.2, 0.7, 1.4, 0.08); });
+      kd(ped.decks[0], "box", K.stone, 0, y + 2.85, 0, 2*bx + 0.1, 0.3, 2*bx + 0.1); y += 3.0;
+      for(s = 0; s < n; s++){ var hs = Math.max(1.25, (P.sx || 2.0) - 0.1*s);
+        var st = H.boxSt({ y0:y, h:SH, hx:hs, hz:hs, nx:2, nz:2, pw:0.7, mw:0.6, fl:s + 2, MT:api.mat("brick"), deck:"mdB", skin:"wall", wall:"bkw", dk:0.35, tp:K.brickD, td:K.brickD, tw:s % 2 ? K.brick : K.brickL });
+        stackKeys(st); sts.push(st);
+        st.walls.forEach(function(w){ var L2 = 2*Math.max(w.half[0], w.half[2]); for(var q = 0; q < 4; q++) onF(w, "ibox", K.brickD, 0, -1.2 + q*0.7, L2, 0.04, 0.07); });
+        kd(st.decks[0], "box", K.iron, 0, y + SH - 0.35, 0, 2*hs + 0.12, 0.14, 2*hs + 0.12);   // iron band
+        y += SH; }
+      var top = sts[sts.length - 1].decks[0], ht = Math.max(1.25, (P.sx || 2.0) - 0.1*(n - 1));
+      kd(top, "box", K.brickD, 0, y - 0.1, 0, 2*ht + 0.5, 0.35, 2*ht + 0.5); kd(top, "box", K.brick, 0, y + 0.35, 0, 2*ht + 0.75, 0.55, 2*ht + 0.75); kd(top, "box", K.soot, 0, y + 0.7, 0, 2*ht + 0.6, 0.2, 2*ht + 0.6);
+      kd(top, "ibox", 0x161414, 0, y + 0.72, 0, 2*ht - 0.3, 0.22, 2*ht - 0.3); kd(top, "ibush", 0xBFB9B2, 0.4, y + 2.0, 0.2, 1.6, 1.2, 1.6); kd(top, "ibush", 0xD8D3CC, 0.9, y + 3.0, -0.1, 1.2, 0.9, 1.2);   // a puff of smoke
+      if(P.bg) bgSet(n0, P.bg); LV7.g7info = Object.assign(LV7.g7info || {}, { stack:{ top:y + 0.8, members:blocks.length - n0 } });
+      return { w:2*bx + 5, d:2*bx + 5 };
+    };
+    // ---- E06 g7boil: the boiler house. Three brick bays side by side (own bond group each), brick piers and walls with tall
+    // arched windows, a slate roof body per bay with a glazed louvre lantern; inside, the boilers glow (decor on the floor).
+    V5_PARTS.g7boil = function(P){
+      var n0 = blocks.length, nb = P.n || 3, bw = P.bw || 3.6, hz = P.hz || 6, PH = P.ph || 7.0, gap = 0.1, W = nb*2*bw + (nb - 1)*gap, x0 = -W/2 + bw, k;
+      var base = addBlock(0, -0.25, 0, W + 2, 0.5, 2*hz + 4, "base", {anchor:true}); kd(base, "box", K.cobble, 0, 0.03, 0, W + 1.6, 0.06, 2*hz + 3.6);
+      for(k = 0; k < nb; k++){ var cx = x0 + k*(2*bw + gap), nS = blocks.length, first = k === 0, last = k === nb - 1;
+        var g = H.boxSt({ y0:0, h:PH, hx:bw, hz:hz, cx:cx, nx:3, nz:3, pw:0.85, mw:0.75, fl:0, MT:api.mat("brick"), deck:"mdB", skin:{ "z+":"wall", "z-":"wall", "x-":first ? "wall" : "open", "x+":last ? "wall" : "open" }, wall:"bkw", split:[1, 2], dk:0.45, tp:K.brick, td:K.brickD, tw:K.brickL });
+        plainDeck(g.decks, "mdB");
+        g.piers.forEach(function(p){ kd(p, "box", K.stoneD, p.spawn.x, 0.3, p.spawn.z, 2*p.half[0] + 0.14, 0.6, 2*p.half[2] + 0.14); kd(p, "box", K.brickD, p.spawn.x, PH/2, p.spawn.z, 2*p.half[0] + 0.1, PH - 1.2, 2*p.half[2] + 0.1); });
+        g.walls.forEach(function(w, j){ var L2 = 2*Math.max(w.half[0], w.half[2]); onF(w, "box", K.stoneD, 0, -PH*0.43, L2, 0.45, 0.08); onF(w, "box", K.stone, 0, PH*0.36, L2, 0.18, 0.08);
+          archWin(w, 0, 0.0, Math.min(1.6, L2*0.5), 3.0, (j + k) % 2 === 1); });
+        g.decks.forEach(function(d){ kd(d, "lit", K.warm, d.spawn.x, PH - 0.6, d.spawn.z, 0.8, 0.08, 0.8); });
+        // a boiler (decor on the front deck): a long drum with a glowing fire door
+        var bd = H.near(g.decks, cx, 1), BL = P.boilL || 5.6, BD = P.boilD || 2.4;
+        kd(bd, "cyl", 0x6A5A4E, cx, BD/2 + 0.1, 0.4, BD + 0.2, BL + 0.2, BD + 0.2, Math.PI/2, 0, 0); kd(bd, "lit", 0xFF8A3A, cx, BD*0.45, 0.4 + BL/2 + 0.13, 0.7, 0.5, 0.05); kd(bd, "icyl", K.iron, cx, BD + 0.8, -1.0, 0.5, 1.6, 0.5);
+        kd(bd, "box", K.brickD, cx, 0.3, 0.4, BD + 0.4, 0.6, BL - 0.4);
+        var at = mem("g7roofL", cx, PH + 0.6, 0, 2*bw - 0.1, 1.2, 2*hz - 0.1, 1, null, null, K.slate), yt = PH + 1.2;
+        slopes(at, cx, 0, yt, bw - 0.05, hz - 0.05, 1.8, K.slate, K.slateD, 1);
+        kd(at, "box", K.stone, cx, PH + 0.1, hz - 0.03, 2*bw, 0.2, 0.08); kd(at, "box", K.stone, cx, PH + 0.1, -hz + 0.03, 2*bw, 0.2, 0.08);
+        kd(at, "box", K.glass, cx, yt + 2.05, 0, 2*bw - 1.6, 0.7, 1.4); kd(at, "box", K.slateD, cx, yt + 2.5, 0, 2*bw - 1.2, 0.14, 1.9);
+        for(var lv = -2; lv <= 2; lv++) kd(at, "ibox", K.white, cx + lv*(bw - 1)/2.5, yt + 2.05, 0.72, 0.06, 0.6, 0.04);
+        // the feed-water tank on the roof (hard7v): heavy riveted iron, lands whole, still counts until a bomb cracks it
+        if(P.heavy){ var TW = P.tankW || 2.4, tk = mem("hard7v", cx, yt + TW*0.45, -hz*0.4, TW, TW*0.9, TW*1.3, 2, null, null, 0x5B6470); tk.tint = 0x5B6470;
+          for(var bb = 0; bb < 3; bb++) kd(tk, "box", K.iron, cx, yt + 0.3 + bb*TW*0.3, -hz*0.4, TW + 0.06, 0.08, TW*1.3 + 0.06); kd(tk, "box", K.cream, cx, yt + TW*0.5, -hz*0.4 + TW*0.65 + 0.02, TW*0.6, 0.4, 0.04); }
+        if(first || last){ var ex = first ? -1 : 1; kd(at, "prism", K.brick, cx + ex*(bw - 0.08), yt + 0.9, 0, 0.14, 1.8, 2*hz - 0.1); kd(at, "cyl", K.cream, cx + ex*(bw - 0.02), yt + 0.6, 0, 1.1, 0.06, 1.1, 0, 0, Math.PI/2); }
+        bgSet(nS, (P.bg0 || 71) + k); }
+      // coal heaps and a barrow on the yard behind (decor)
+      [-1, 1].forEach(function(s){ kd(base, "ibush", K.soot, s*W/4, 0.5, -hz - 1.2, 2.6, 1.0, 1.4); });
+      LV7.g7info = Object.assign(LV7.g7info || {}, { boil:{ members:blocks.length - n0, W:W } });
+      return { w:W + 2, d:2*hz + 4 };
+    };
+
+    // ---- E04 g7mhall: the covered timber market (main). P.n sections side by side (own bond group each), each on timber posts
+    // (one TNT takes every post within ~3 m: "wood falls easy"), an open market floor with stalls and lamps, a glazed timber
+    // clerestory storey, and a heavy tiled roof body (g7tile) with a ridge vent; a lantern cupola on the middle section.
+    V5_PARTS.g7mhall = function(P){
+      var n0 = blocks.length, ns = P.n || 3, hx = P.hx || 3.6, hz = P.hz || 6, PH = P.ph || 5.4, CH = P.ch || 2.6, RH = P.rh || 1.6, gap = 0.1, W = ns*2*hx + (ns - 1)*gap, x0 = -W/2 + hx, k;
+      var base = addBlock(0, -0.25, 0, W + 4, 0.5, 2*hz + 4, "base", {anchor:true}); kd(base, "box", K.cobble, 0, 0.03, 0, W + 3.6, 0.06, 2*hz + 3.6); kd(base, "box", K.stone, 0, 0.07, 0, W - 0.4, 0.04, 2*hz - 0.4);
+      for(k = 0; k < ns; k++){ var cx = x0 + k*(2*hx + gap), nS = blocks.length, mid = k === (ns - 1)/2;
+        var g = H.boxSt({ y0:0, h:PH, hx:hx, hz:hz, cx:cx, nx:3, nz:3, pw:0.5, mw:0.45, fl:0, MT:api.mat("wood"), deck:"mdW", skin:"open", split:[2, 2], dk:0.35, tp:K.woodD, td:K.woodD,
+          inner:P.inner ? [[0, -hz/2 + 0.3, 0.42], [0, hz/2 - 0.3, 0.42]] : [] });
+        g.piers.forEach(function(p){ setKey(p, "g7post"); });
+        tipOf(g, P.hold != null ? P.hold : 1.0);   // two posts side by side gone: the section folds that way
+        g.piers.forEach(function(p){ kd(p, "box", K.stone, p.spawn.x, 0.3, p.spawn.z, 0.8, 0.6, 0.8);
+          if(p.a1x != null) [-1, 1].forEach(function(e){ bar(p, K.woodD, p.spawn.x, PH - 1.6, p.spawn.z, p.spawn.x + (Math.abs(p.a1z) > hz - 1 ? e*1.2 : 0), PH - 0.5, p.spawn.z + (Math.abs(p.a1z) > hz - 1 ? 0 : e*1.2), 0.14); }); });   // knee braces
+        // the market floor: two rows of stalls with striped awnings, crates of produce, hanging lamps (decor on the decks)
+        g.decks.forEach(function(d, j){ var sx = d.spawn.x, sz = d.spawn.z;
+          kd(d, "ibox", K.wood, sx, 0.5, sz, 2.4, 1.0, 1.4); kd(d, "ibox", [0xD8442E, 0xF2C230, 0x5BA35A, 0xE8803A][(j + k) % 4], sx, 1.05, sz, 2.2, 0.16, 1.2);
+          for(var q = 0; q < 4; q++) kq(d, "box", q % 2 ? K.awnB : K.awnA, sx - 0.9 + q*0.6, 2.35, sz + Math.sign(sz)*0.4, 0.6, 0.06, 1.8, 0, Math.sign(sz)*0.35, 0);
+          kd(d, "icyl", K.iron, sx, PH - 1.2, sz, 0.04, 1.6, 0.04); kd(d, "lit", K.lit, sx, PH - 2.1, sz, 0.45, 0.35, 0.45); });
+        var y = PH, st = H.boxSt({ y0:y, h:CH, hx:hx, hz:hz, cx:cx, nx:3, nz:3, pw:0.42, mw:0.36, fl:1, MT:api.mat("wood"), deck:"mdW", skin:{ "z+":"glass", "z-":"glass", def:"open" }, split:[2, 1], dk:0.3, tp:K.woodD, td:K.woodD });
+        st.panes.forEach(function(p, j){ H.paneDress(p, y, CH, j); onF(p, "box", K.woodD, 0, -CH*0.4, 2*Math.max(p.half[0], p.half[2]), 0.2, 0.08); onF(p, "box", K.woodD, 0, 0, 0.08, CH - 0.4, 0.09); });
+        g.decks.forEach(function(d){ kd(d, "box", K.woodD, d.spawn.x, PH - 0.05, d.spawn.z + Math.sign(d.spawn.z)*0.6, 2*d.half[0], 0.3, 2*d.half[2] - 1.0); });
+        y += CH;
+        var at = mem(P.roofKey || "hard7t", cx, y + RH/2, 0, 2*hx - 0.1, RH, 2*hz - 0.1, 2, null, null, K.tile), yt = y + RH;
+        slopes(at, cx, 0, yt, hx - 0.05, hz - 0.05, 2.0, K.tile, K.tileD, 1);
+        kd(at, "box", K.woodD, cx, y + 0.1, hz - 0.03, 2*hx, 0.2, 0.1); kd(at, "box", K.woodD, cx, y + 0.1, -hz + 0.03, 2*hx, 0.2, 0.1);
+        for(var t = -2; t <= 2; t++) [-1, 1].forEach(function(s){ kq(at, "ibox", K.tileD, cx + t*hx/2.6, yt + 1.0, s*hz/2, 0.08, 0.05, Math.hypot(hz, 2.0), 0, s*Math.atan2(2.0, hz), 0); });   // tile ribs
+        kd(at, "box", K.woodL, cx, yt + 2.2, 0, 2*hx - 0.8, 0.4, 0.8); kd(at, "box", K.slateD, cx, yt + 2.45, 0, 2*hx - 0.6, 0.1, 1.1);   // the ridge vent
+        if(mid){ H.oct(at, K.cream, yt + 1.6, 1.8, 1.0, cx, 0); kd(at, "lit", K.lit, cx, yt + 2.4, 0, 1.3, 0.9, 1.3); kd(at, "cone", K.copper, cx, yt + 4.1, 0, 2.4, 1.6, 2.4); kd(at, "ibush", K.gold, cx, yt + 5.1, 0, 0.3, 0.3, 0.3); }
+        bgSet(nS, (P.bg0 || 91) + k); }
+      LV7.g7info = Object.assign(LV7.g7info || {}, { hall:{ members:blocks.length - n0, W:W } });
+      return { w:W + 4, d:2*hz + 4 };
+    };
+    // ---- E04 g7arcade: the brick arcade in front of the hall (the shield): P.n arches on brick piers, two storeys, a brick
+    // parapet, cream arch heads and keystones. One TNT takes one pier (and the arch over it): it chips, it does not fold.
+    V5_PARTS.g7arcade = function(P){
+      var n0 = blocks.length, na = P.n || 7, L2 = P.len || 22.0, dz = P.d || 1.2, h1 = P.h1 || 5.0, h2 = P.h2 || 3.6, pw = P.pw || 1.1, i, s;
+      var base = addBlock(0, -0.25, 0, L2 + 2, 0.5, dz + 3, "base", {anchor:true}); kd(base, "box", K.stone, 0, 0.03, 0, L2 + 1.6, 0.06, dz + 2.6);
+      var sp = (L2 - pw)/na, xs = []; for(i = 0; i <= na; i++) xs.push(-L2/2 + pw/2 + i*sp);
+      var y = 0;
+      [h1, h2].forEach(function(hh, s2){ var piers = [];
+        xs.forEach(function(x, i2){ var p = mem("bk", x, y + (hh - 0.6)/2, 0, pw, hh - 0.6, dz, s2*2, i2, 0, K.brick); piers.push(p);
+          kd(p, "box", s2 ? K.brickL : K.stoneD, x, y + 0.3, 0, pw + 0.12, 0.6, dz + 0.12); kd(p, "box", K.stone, x, y + hh - 0.85, 0, pw + 0.14, 0.24, dz + 0.14); });
+        for(i = 0; i < na; i++){ var lx = (xs[i] + xs[i + 1])/2, ll = sp - 0.04, lt = mem(s2 ? "bkw" : "bk", lx, y + hh - 0.3, 0, ll, 0.6, dz, s2*2 + 1, i, 1, K.brick);
+          corb(lt, false, dz/2, lx, y + hh - 0.6, sp - pw, K.brick, 0.3); kd(lt, "box", K.stone, lx, y + hh - 0.02, 0, ll + 0.04, 0.12, dz + 0.16);
+          if(s2 === 1){ kd(lt, "ibox", K.white, lx, y + 0.9, dz/2 - 0.1, ll - pw, 0.08, 0.08); for(var b = -2; b <= 2; b++) kd(lt, "ibox", K.white, lx + b*(ll - pw)/5, y + 0.5, dz/2 - 0.1, 0.07, 0.8, 0.07); } }
+        y += hh; });
+      // the parapet: a brick band with a cream coping and a sign board over the middle arch (decor on the top lintels)
+      var tops = blocks.slice(n0).filter(function(b){ return b.floor === 3; });
+      tops.forEach(function(t){ kd(t, "box", K.brickL, t.spawn.x, y + 0.35, 0, 2*t.half[0], 0.7, dz - 0.1); kd(t, "box", K.cream, t.spawn.x, y + 0.75, 0, 2*t.half[0] + 0.02, 0.1, dz + 0.04); });
+      var mt = H.near(tops, 0, 0); kd(mt, "box", K.greenD, 0, y + 1.1, dz/2 - 0.1, 4.0, 0.9, 0.1); kd(mt, "box", K.cream, 0, y + 1.1, dz/2 - 0.04, 3.4, 0.14, 0.06); kd(mt, "prism", K.brickL, 0, y + 1.75, 0, 4.4, 0.5, dz - 0.2);
+      if(P.bg) bgSet(n0, P.bg); return { w:L2 + 2, d:dz + 3 };
+    };
+    // ---- E04 g7kiosk: a small brick weigh house (hard, small): 4 brick piers, brick walls, an upper storey, a pyramid slate roof
+    // body with a vane. Brick takes one TNT per pier: four bombs for a small gain.
+    V5_PARTS.g7kiosk = function(P){
+      var n0 = blocks.length, hx = P.hx || 2.4, y = 0, s;
+      var base = addBlock(0, -0.25, 0, 2*hx + 2.4, 0.5, 2*hx + 2.4, "base", {anchor:true}); kd(base, "box", K.stone, 0, 0.03, 0, 2*hx + 2, 0.06, 2*hx + 2);
+      for(s = 0; s < 2; s++){ var hh = s ? 3.2 : 4.0;
+        var st = H.boxSt({ y0:y, h:hh, hx:hx, hz:hx, nx:2, nz:2, pw:0.85, mw:0.8, fl:s, MT:api.mat("brick"), deck:"mdB", skin:"wall", wall:"bkw", dk:0.35, tp:K.brickD, td:K.brickD, tw:s ? K.brickL : K.brick });
+        plainDeck(st.decks, "mdB");
+        st.walls.forEach(function(w){ if(s === 0 && w.a1face === "z+"){ onF(w, "box", K.greenD, 0, -0.6, 1.1, 2.2, 0.08); onD(w, K.greenD, 0, 0.5, 1.1, 0.08); onF(w, "box", K.cream, 0, 1.25, 1.6, 0.14, 0.1); }
+          else archWin(w, 0, 0.2, 0.9, s ? 1.3 : 1.7, s === 1); onF(w, "box", K.stone, 0, hh*0.42 - 0.1, 2*Math.max(w.half[0], w.half[2]), 0.16, 0.08); });
+        y += hh; }
+      var at = mem(P.roofKey || "g7roofL", 0, y + 0.5, 0, 2*hx - 0.1, 1.0, 2*hx - 0.1, 2, null, null, K.slate); at.tint = K.slate;   // E04: roofKey hard7v = a heavy slate cap that lands whole
+      kd(at, "cone", K.slate, 0, y + 1.0 + 1.1, 0, 2*hx*1.12, 2.2, 2*hx*1.12); kd(at, "box", K.cream, 0, y + 0.05, 0, 2*hx + 0.3, 0.2, 2*hx + 0.3);
+      kd(at, "icyl", K.iron, 0, y + 3.9, 0, 0.07, 1.0, 0.07); kd(at, "ibox", K.gold, 0.2, y + 4.2, 0, 0.5, 0.14, 0.04);
+      kd(base, "ibox", K.iron, hx + 0.7, 0.45, hx*0.4, 0.9, 0.9, 1.3); kd(base, "ibox", K.stone, hx + 0.7, 0.92, hx*0.4, 1.0, 0.06, 1.4);   // the weighing scale
+      if(P.bg) bgSet(n0, P.bg); return { w:2*hx + 2.4, d:2*hx + 2.4 };
+    };
+  })();
+
   // ---- levels -----------------------------------------------------------------------------------------------------
   var DEF = LV7.levels = [];
   LV7.add = function(l){ DEF.push(l); };
