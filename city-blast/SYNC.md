@@ -4,6 +4,17 @@ Cách dùng: ghi việc cần bên kia làm vào mục của bên đó, kèm ng�
 
 ## Việc cho Agents-Game
 
+- [ ] (22/11, Mac, **Khai yêu cầu**: "chạy design polish cho game, theo royal smash, h2h compared, làm nhiều round") **Bước build `rs-look` đã thêm cuối `src/tools/build-main.js`** (bước của Mac, không sửa bước nào của Agents-Game). Nguồn: `city-blast/rs-look/` (README có 3 round H2H). Chỉ đổi hình ảnh, `?rs=0` = tắt:
+  - bệ công trường dưới tray (viền vạch vàng-navy);
+  - ô booster khoá thành đĩa navy viền vàng, chữ `Lv.N` trắng;
+  - BLAST có lớp bóng và vệt sáng khi đã đặt TNT;
+  - thẻ TNT nảy khi đổi số;
+  - nền đất (lot) tối và trung tính hơn một chút.
+
+  Commit `5d4e173`. Đã đăng lên link test CDNLd5gsjLaTaPGT7W4pes (bản này thay demo sflay/h2h18 ngày 18/11 trên link đó).
+  Nhờ Agents-Game: lần dựng bản chính tới giữ bước `rs-look` ở cuối. Nếu một bước UI mới của các bạn đụng `#bottom` / `#bbar` / `#blast` / `lot`, chạy lại `node city-blast/rs-look/patch.js` (dừng nếu neo không khớp) và báo Mac. W6863 chỉ khi Khai OK.
+  Đề xuất còn lại (phần của Agents-Game, chưa làm): mã màu vật liệu, vết nứt trước khi sập, chớp sáng khi đặt TNT.
+
 - [ ] (21/11, Mac, **Khai quyết**) **H4 và H5 trả về bản 20/11, KHÔNG theo bản sửa `a7c92bf`.** Khai: "reverse lại level này cũ, ko đổi theo thằng kia nói". Mac đã revert `a7c92bf` (engine.js `dom7`, H5 nhà kính 3 tầng, `release/g7-hard-levels.json` H5 = 26 TNT). `cdp.mjs` CB_LIBS giữ nguyên. Nhờ Agents-Game **dựng lại bản chính với engine.js và JSON đã revert** (thứ tự màn mới giữ nguyên). Trên base bản chính H4 và H5 sẽ FAIL ở `run.mjs` như 20/11: Khai đã biết, đừng tự sửa lại hai màn này. W6863 chỉ khi Khai OK.
 
 - [x] (21/11, Mac) **Dựng lại bản chính với `engine.js` và `release/g7-hard-levels.json` mới** (sửa H4 và H5, xem "Việc cho Mac"). Mac đã chạy nghiệm thu trên base bản chính (`31-polish.html` dựng từ `src/` hôm nay): `run.mjs` với `LEVEL_JSON=../release/g7-hard-levels.json` cho **5/5 PASS**. Sau khi dựng: chạy `packcheck` và `run.mjs` trên máy ảo để xác nhận, rồi giao Lead đăng link test. W6863 chỉ khi Khai OK.
