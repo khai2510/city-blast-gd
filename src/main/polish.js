@@ -36,6 +36,7 @@
 try{ (function(){
 if(QS.get("polish") === "0") return;
 var H = document.documentElement, BODY = document.body; H.classList.add("pol"); if(QS.get("polear") !== "0") H.classList.add("polEar");
+var R22ON = QS.get("r22") !== "0";   // tester round 22/11 (R22 block below): ?r22=0 = off
 var TF6 = { lose:QS.get("pollose") === "1", hand:QS.get("polhand") === "1", card:QS.get("polcard") === "1", cam:/^(1|k2)$/.test(QS.get("collcam") || "") };   // D-blast-TF6 opt-ins
 var T2A = window.__blast.tap2 || {};
 var P = { log:[], pill:{ lock:false, pend:0, shown:null, writes:0, forced:0 }, win:{ n:0, stamp:0, cam:null, camN:0, plus:0, t0:0, home:0 }, demo:{ miss:0, at:0, shown:0, until:0, b:null }, lose:0 };
@@ -854,6 +855,7 @@ function filled(id){ var e = $(id); if(!e || e.classList.contains("hidden") || e
   var r = e.getBoundingClientRect(), cs = getComputedStyle(e); return r.width > 0 && r.height > 0 && cs.display !== "none" && cs.visibility !== "hidden"; }
 function quiet(){ var nx = $("rNext"); if(!nx) return; var r = lastResult;
   var q = !!(r && !r.ok && screen === "result" && !nx.classList.contains("sh2Sec2") && (filled("rRescue") || filled("sh2Rv")));
+  if(R22ON && !(filled("sh2Rv") && !filled("rRescue"))) q = false;   // R22 GD-63: Try Again stays the one primary; the coin rescue is the quiet button (below)
   if(q !== nx.classList.contains("r21quiet")){ nx.classList.toggle("r21quiet", q); if(q){ R21.quiet++; lg21("quiet"); } } }
 var sr21 = showResult; showResult = function(){ var o = sr21.apply(this, arguments); try{ quiet(); setTimeout(quiet, 60); setTimeout(quiet, 400); }catch(e){ console.error("polish r21", e); } return o; };
 var res = $("result"); if(res) new MutationObserver(function(){ quiet(); }).observe(res, { attributes:true, subtree:true, attributeFilter:["class", "disabled"] });
@@ -867,8 +869,167 @@ if(ff){ ff.setAttribute("role", "button"); ff.setAttribute("aria-label", "Skip a
   ff.addEventListener("click", function(e){ e.stopPropagation(); if(phase === "boom" || phase === "settle") fastForward(); else if(phase === "done" && screen === "game") skipToResult = true; lg21("ffTap"); }); }
 })();
 
+// ================= R22 (tester round 22/11, feedback/2026-11-22/DIGEST.md, group A only; D-blast-NONEW). ?r22=0 = off (A/B)
+//  B1  BUG-1 / UX-70 an in-level chip tap on the Wrecking Ball takes the stock at once (the commit point stays as it is: moving it to
+//      the first swing is Khai's call). A use taken by the chip and never swung (2 swings left) is given back: on Restart / Try Again /
+//      any level start, Home / level exit, and when the level ends (result card); a 48 x 48 ✕ (the #chX style) sits on the armed chip's
+//      top-left corner (Ball and Sky Strike) and disarms it, giving the unswung Ball use back; a 2nd tap on the chip does the same.
+//      The aim tip reads "Tap to swing" / "Tap the chip to cancel" (17 px, two lines) while the use can still come back. The pre-level
+//      sheet pick stays committed by Play (prelevel O3, as in Smash Fest).
+//  C1  UX-71 when planning resumes after a blast that left TNT (and after the "+1 TNT" rescue) the camera eases 500 ms onto what still
+//      counts with the hard-opening margins (main/frame.js F5 b, API.refit). C2 UX-72: boss openings keep the lot in frame (frame.js F5 a).
+//  G1  GD-68 the Hard / Boss pre-level sheet shows on the first try of a level only (not on any retry); taps made while a hard / boss
+//      level is still building (phase "build") are kept and replayed, on the member they hit, as soon as planning starts.
+//  G2  GD-63 near-miss card: Try Again keeps its primary look; the coin rescue "+1 TNT · 150" is the quiet button (cream, navy 3 px,
+//      navy 22 px, 292 x 56, no gloss) under it (R21 UX-67's quiet Try Again is off while R22 is on).
+//  G3  GD-66 in play the coin pill never sits over the 85% goal label (the H4 "coins" state is re-read at every level start, and in
+//      play the pill moves below the label if they meet); UX-74 Map: a district plaque ends >= 8 px left of the coin pill, its name
+//      wrapping to two lines at 16 px.
+(function(){
+var R22 = { on:R22ON, pend:null, refund:0, xTap:0, cancel:0, refit:0, refitLast:null, skip:0, q:[], queued:0, replayed:0, quiet:0, pill:null, map:null, log:[] };
+function lg22(s){ R22.log.push(s); if(R22.log.length > 40) R22.log.shift(); lg(s); }
+P.r22 = function(){ var x = $("r22X"), xr = x && !x.classList.contains("hidden") ? x.getBoundingClientRect() : null, tip = $("bAimTip");
+  return { on:R22.on, pend:R22.pend, refund:R22.refund, xTap:R22.xTap, cancel:R22.cancel, refit:R22.refit, refitLast:R22.refitLast, skip:R22.skip, queued:R22.queued, replayed:R22.replayed, quiet:R22.quiet,
+    x:xr ? { x:Math.round(xr.left), y:Math.round(xr.top), w:Math.round(xr.width), h:Math.round(xr.height) } : null, tip:tip && !tip.classList.contains("hidden") ? tip.innerText : null,
+    ball:{ aim:typeof ballAim !== "undefined" && !!ballAim, left:typeof ballLeft !== "undefined" ? ballLeft : null }, pill:R22.pill, map:R22.map, log:R22.log.slice() }; };
+if(!R22.on) return;
+H.classList.add("r22");
+var css = [
+  // B1 the ✕ on an armed chip (= #chX)
+  "html.r22 body #r22X{position:fixed;z-index:40;width:48px;height:48px;margin:0;padding:0;border:0;border-radius:50%;background:var(--coral,#FF5A3C);color:#fff;box-shadow:0 3px 0 var(--coral-d,#C23A20),0 0 0 3px #fff;display:grid;place-items:center;cursor:pointer;touch-action:manipulation}",
+  "html.r22 body #r22X.hidden{display:none!important}",
+  "html.r22 body #r22X svg{width:24px;height:24px;pointer-events:none}",
+  "html.r22 body #bAimTip.r22two{text-align:center;line-height:1.25;font-size:17px}",
+  // G2 the quiet coin rescue under Try Again
+  "html.r22 body #result #rRescue.r22quiet{display:flex!important;align-items:center;justify-content:center;gap:8px;background:#FFF8E1!important;background-image:none!important;border:3px solid #0E2466!important;box-shadow:none!important;filter:none!important;color:#0E2466!important;" +
+    "-webkit-text-stroke:0!important;text-shadow:none!important;font:400 22px/1 var(--ul-fr,'Lilita One'),system-ui,sans-serif!important;width:292px!important;max-width:calc(100vw - 48px)!important;min-width:0!important;height:56px!important;min-height:56px!important;border-radius:20px!important;margin:12px auto 0!important;opacity:1!important}",
+  "html.r22 body #result #rRescue.r22quiet::before,html.r22 body #result #rRescue.r22quiet::after{display:none!important}",
+  "html.r22 body #result #rRescue.r22quiet small,html.r22 body #result #rRescue.r22quiet b{color:#0E2466!important;-webkit-text-stroke:0!important;text-shadow:none!important;font-size:max(16px,1em)!important}",
+  // G3 UX-74 a plaque that wraps
+  "html.r22 body #cityMap .cmBoard.r22wrap b{white-space:normal!important;line-height:1.05!important;display:block}"
+].join("\n");
+var st = document.createElement("style"); st.id = "polR22Css"; st.textContent = css; document.head.appendChild(st);
+
+// ---- B1 refund of an unswung chip use + the ✕
+function wk(){ return bstSave().wreck || 0; }
+function refund(why){
+  var p = R22.pend; R22.pend = null; if(!p) return false;
+  if(typeof ballLeft === "undefined" || ballLeft !== BALL.throws || ballLive || ballStats.throws !== p.n) { lg22("noRefund:" + why); return false; }
+  if(ballAim) ballAimOff();
+  ballLeft = 0; var sv = bstSave(); sv.wreck = (sv.wreck || 0) + 1; writeSave(); R22.refund++; lg22("refund:" + why + ":" + sv.wreck);
+  try{ bstSync(); }catch(e){} xSync(); return true; }
+var bb22 = ballBtn; ballBtn = function(){
+  if(!ballLive && ballAim && R22.pend){ R22.cancel++; refund("chip"); return; }
+  var s0 = wk(), l0 = ballLeft, o = bb22.apply(this, arguments);
+  if(l0 <= 0 && ballLeft === BALL.throws && wk() === s0 - 1){ R22.pend = { n:ballStats.throws }; lg22("pend"); }
+  tipFix(); xSync(); return o; };
+var xb = document.createElement("button"); xb.type = "button"; xb.id = "r22X"; xb.className = "hidden"; xb.setAttribute("aria-label", "Cancel the booster");
+xb.innerHTML = '<svg class="i w"><use href="#i-close"/></svg>'; document.body.appendChild(xb);
+function armedK(){ if(typeof ballAim !== "undefined" && ballAim && !ballLive) return "wreck"; if(typeof skyArmed !== "undefined" && skyArmed && !skyLive) return "sky"; return null; }
+function xSync(){
+  var k = screen === "game" && (phase === "plan" || phase === "build") && !manual ? armedK() : null, ch = k ? document.querySelector('#bbar .bst[data-k="' + k + '"]') : null, r = ch ? ch.getBoundingClientRect() : null;
+  if(!r || !r.width){ xb.classList.add("hidden"); return; }
+  xb.style.left = Math.round(Math.max(4, r.left - 18)) + "px"; xb.style.top = Math.round(Math.max(4, r.top - 18)) + "px"; xb.classList.remove("hidden"); }
+xb.addEventListener("click", function(e){ e.stopPropagation(); e.preventDefault(); var k = armedK(); R22.xTap++; lg22("x:" + k);
+  try{ snd("ui_tap"); }catch(x){}
+  if(k === "wreck"){ if(!refund("x")){ ballAimOff(); } }
+  else if(k === "sky") skyDisarm();
+  xSync(); });
+["pointerdown", "touchstart", "mousedown"].forEach(function(t){ xb.addEventListener(t, function(e){ e.stopPropagation(); }, { passive:true }); });
+var bs22 = bstSync; bstSync = function(){ var o = bs22.apply(this, arguments); try{ xSync(); }catch(e){} return o; };
+var ao22 = ballAimOff; ballAimOff = function(){ var o = ao22.apply(this, arguments); xSync(); return o; };
+function tipFix(){ try{ var tip = $("bAimTip"); if(!tip) return; var two = !!R22.pend && !!ballAim && !tip.classList.contains("hidden"), has = !!tip.querySelector("br");
+    if(two && !has){ var a = tip.textContent; tip.textContent = ""; tip.appendChild(document.createTextNode(a)); tip.appendChild(document.createElement("br")); tip.appendChild(document.createTextNode("Tap the chip to cancel")); }
+    else if(!two && has) tip.textContent = tip.firstChild ? tip.firstChild.textContent : "";
+    if(two !== tip.classList.contains("r22two")) tip.classList.toggle("r22two", two); }catch(e){} }
+var su22 = ballSuggest; ballSuggest = function(){ var o = su22.apply(this, arguments); tipFix(); return o; };
+window.addEventListener("resize", function(){ setTimeout(xSync, 200); });
+
+// ---- G1 the pre-level sheet on the first try only
+var bw22 = bstWants; bstWants = function(i){
+  var Lv = LEVELS[i] || {}; if((isHard(Lv) || Lv.boss) && (bstFailN[i] || 0) > 0 && !BST_ALL){ R22.skip++; lg22("sheetSkip:" + (i + 1)); return false; }
+  return bw22.apply(this, arguments); };
+// G1 taps while a hard / boss level builds: kept (member + offset), replayed when planning starts
+var lvTok = 0;
+var ot22 = onTap; onTap = function(x, y){
+  if(phase === "build" && screen === "game" && !manual && L && (isHard(L) || L.boss) && !(typeof v5UnlockOpen === "function" && v5UnlockOpen())){
+    var h = null; try{ h = pick(x, y); }catch(e){}
+    R22.q.push({ x:x, y:y, b:h ? h.block : null, o:h && h.block && h.block.P ? h.point.clone().sub(h.block.P) : null, tok:lvTok }); if(R22.q.length > 6) R22.q.shift(); R22.queued++; lg22("queue");
+  }
+  return ot22.apply(this, arguments); };
+function introBusy(){ try{ var s = window.__blast.intro && window.__blast.intro.state(); return !!(s && (s.card || s.forced)); }catch(e){ return false; } }
+function replay(){
+  var q = R22.q.filter(function(e){ return e.tok === lvTok; }); R22.q = []; if(!q.length) return;
+  q.forEach(function(e, k){ setTimeout(function(){
+    if(e.tok !== lvTok || screen !== "game" || phase !== "plan" || introBusy() || armedK()) return;
+    var x = e.x, y = e.y; if(e.b && !e.b.dead && e.o){ var s = toScreen(e.b.P.clone().add(e.o)); if(s && isFinite(s.x) && isFinite(s.y)){ x = s.x; y = s.y; } }
+    R22.replayed++; lg22("replay:" + Math.round(x) + "," + Math.round(y)); onTap(x, y); }, 150 + k*520); });
+}
+
+// ---- C1 the re-frame when planning resumes after a blast / the rescue; G1 replay at the first plan
+var ph22 = null;
+var uc22 = updateCamera; updateCamera = function(){
+  var ph = phase;
+  if(ph !== ph22){
+    if(screen === "game" && !manual && ph === "plan"){
+      if(ph22 === "build") setTimeout(replay, 0);
+      else if(ph22 === "boom" || ph22 === "settle" || ph22 === "done"){
+        try{ var fa = window.__blast.frame, r = fa && fa.refit ? fa.refit() : null; if(r){ R22.refit++; R22.refitLast = r; lg22("refit:" + r.zOpen); } }catch(e){ console.error("polish r22 refit", e); } } }
+    ph22 = ph; }
+  return uc22.apply(this, arguments); };
+
+// ---- level start / exit / end: give an unswung chip use back (before the engine resets the ball)
+var sl22 = startLevel; startLevel = function(){ refund("start"); lvTok++; R22.q = []; ph22 = null; var o = sl22.apply(this, arguments); setTimeout(pillFix, 80); setTimeout(pillFix, 700); return o; };
+var gh22 = goHome; goHome = function(){ refund("home"); lvTok++; R22.q = []; xb.classList.add("hidden"); return gh22.apply(this, arguments); };
+var sr22 = showResult; showResult = function(){ refund("end"); xb.classList.add("hidden"); var o = sr22.apply(this, arguments); try{ roles(); setTimeout(roles, 60); setTimeout(roles, 400); }catch(e){ console.error("polish r22", e); } return o; };
+
+// ---- G2 one primary on the near-miss card
+function roles(){
+  var nx = $("rNext"), rc = $("rRescue"), r = lastResult; if(!nx || !rc) return;
+  var vis = !rc.classList.contains("hidden") && !rc.classList.contains("r19sec") && !rc.classList.contains("polNo") && !rc.disabled && getComputedStyle(rc).display !== "none";
+  var q = !!(r && !r.ok && screen === "result" && vis && !nx.classList.contains("sh2Sec2"));
+  if(q !== rc.classList.contains("r22quiet")){ rc.classList.toggle("r22quiet", q); if(q){ R22.quiet++; lg22("quiet"); } }
+  if(q && nx.nextElementSibling !== rc) nx.parentNode.insertBefore(rc, nx.nextSibling);
+  if(q && nx.classList.contains("r21quiet")) nx.classList.remove("r21quiet");
+  if(q && nx.classList.contains("sec")){ nx.classList.remove("sec"); nx.classList.add("mint"); }   // the engine made Try Again the secondary under its green rescue: it is the primary again
+}
+var res22 = $("result"); if(res22) new MutationObserver(function(){ if(screen === "result") roles(); }).observe(res22, { attributes:true, subtree:true, attributeFilter:["class", "disabled"] });
+var rs22 = typeof rescue === "function" ? rescue : null; if(rs22) rescue = function(){ var rc = $("rRescue"); if(rc) rc.classList.remove("r22quiet"); return rs22.apply(this, arguments); };
+
+// ---- G3 GD-66 the coin pill vs the goal label in play
+function pillFix(){
+  var cp = $("coinPill"), mp = $("mPass"); if(!cp) return null;
+  cp.style.removeProperty("margin-top");
+  if(screen === "game" && (phase === "build" || phase === "plan") && document.body.classList.contains("uicCoins")){ document.body.classList.remove("uicCoins"); }
+  var cs = getComputedStyle(cp), c = cp.getBoundingClientRect(), on = screen === "game" && cs.visibility !== "hidden" && +cs.opacity > 0.05 && c.width > 0;
+  var lab = null; if(mp){ var a = getComputedStyle(mp, "::after"), m = mp.getBoundingClientRect(); if(a && a.display !== "none" && +a.opacity > 0.05){ var fs = parseFloat(a.fontSize) || 16; lab = { l:m.left + m.width/2 - 2*fs, r:m.left + m.width/2 + 2*fs, t:m.bottom + 2, b:m.bottom + 2 + fs*1.25 }; } }
+  var over = !!(on && lab && c.left < lab.r && lab.l < c.right && c.top < lab.b && lab.t < c.bottom);
+  if(over){ cp.style.setProperty("margin-top", Math.ceil(lab.b + 4 - c.top) + "px", "important"); c = cp.getBoundingClientRect(); lg22("pillMove"); }
+  R22.pill = { on:on, pill:[Math.round(c.left), Math.round(c.top), Math.round(c.right), Math.round(c.bottom)], lab:lab ? [Math.round(lab.l), Math.round(lab.t), Math.round(lab.r), Math.round(lab.b)] : null, moved:over };
+  return R22.pill; }
+new MutationObserver(function(){ if(screen === "game") pillFix(); }).observe(document.body, { attributes:true, attributeFilter:["class"] });
+var gh22b = goHome; goHome = function(){ var cp = $("coinPill"); if(cp) cp.style.removeProperty("margin-top"); return gh22b.apply(this, arguments); };
+
+// ---- G3 UX-74 Map plaques clear of the coin pill
+function mapPill(){
+  var cm = $("cityMap"), pill = $("cmCoins"); if(!cm || cm.classList.contains("hidden") || !pill) return null;
+  var pr = pill.getBoundingClientRect(), n = 0, worst = null; if(!pr.width) return null;
+  [].forEach.call(cm.querySelectorAll(".cmBoard"), function(b){
+    var r = b.getBoundingClientRect(); if(!r.width || r.bottom < pr.top || r.top > pr.bottom || r.left > pr.right) return;
+    var k = r.width/(b.offsetWidth || r.width); if(!(k > 0.05)) return;
+    if(r.right > pr.left - 8){ var w = Math.max(40, (pr.left - 8 - r.left)/k); b.style.width = w.toFixed(1) + "px"; if(!b.classList.contains("r22wrap")) b.classList.add("r22wrap"); b.style.height = "auto"; b.style.minHeight = (b.offsetHeight) + "px"; n++;
+      var need = 0; [].forEach.call(b.children, function(c){ need = Math.max(need, c.scrollWidth - c.clientWidth); });   // a line that cannot wrap ("Unlock at Lv 31"): grow to the LEFT, never a cut number
+      if(need > 0 && b.style.left){ b.style.width = (parseFloat(b.style.width) + need + 4).toFixed(1) + "px"; b.style.left = (parseFloat(b.style.left) - need - 4).toFixed(1) + "px"; }
+      r = b.getBoundingClientRect(); }
+    var gap = Math.round(pr.left - r.right); worst = worst == null ? gap : Math.min(worst, gap); });
+  R22.map = { pill:[Math.round(pr.left), Math.round(pr.top), Math.round(pr.right), Math.round(pr.bottom)], fixed:n, gap:worst }; if(n) lg22("map:" + n);
+  return R22.map; }
+var cm22 = $("cityMap"); if(cm22){ var mpT = 0; new MutationObserver(function(){ clearTimeout(mpT); mpT = setTimeout(function(){ mapPill(); setTimeout(mapPill, 300); }, 160); }).observe(cm22, { attributes:true, attributeFilter:["class"], childList:true, subtree:true }); }
+P.r22map = mapPill; P.r22pill = pillFix;
+})();
+
 window.__blast.polish = {
-  prot:function(){ return P.prot(); }, r18:function(){ return P.r18(); }, r19:function(){ return P.r19 ? P.r19() : { on:false }; }, r19skew:function(v){ return P.r19skew ? P.r19skew(v) : null; }, r19disarm:function(w){ return P.r19disarm ? P.r19disarm(w) : null; }, r19copy:function(){ return P.r19copy ? P.r19copy() : null; }, r20:function(){ return P.r20 ? P.r20() : { on:false }; }, r20probe:function(st){ return P.r20probe ? P.r20probe(st) : null; }, r21:function(){ return P.r21 ? P.r21() : { on:false }; }, r20ux51:function(){ return P.r20ux51 ? P.r20ux51() : null; }, kdDrift:function(){ return P.kdDrift(); }, kdHosts:function(){ return P.kdHosts(); }, pads:function(){ return P.pads(); }, kWord:function(s, tip){ return kWord(s, tip); },
+  prot:function(){ return P.prot(); }, r18:function(){ return P.r18(); }, r19:function(){ return P.r19 ? P.r19() : { on:false }; }, r19skew:function(v){ return P.r19skew ? P.r19skew(v) : null; }, r19disarm:function(w){ return P.r19disarm ? P.r19disarm(w) : null; }, r19copy:function(){ return P.r19copy ? P.r19copy() : null; }, r20:function(){ return P.r20 ? P.r20() : { on:false }; }, r20probe:function(st){ return P.r20probe ? P.r20probe(st) : null; }, r21:function(){ return P.r21 ? P.r21() : { on:false }; }, r22:function(){ return P.r22 ? P.r22() : { on:false }; }, r22map:function(){ return P.r22map ? P.r22map() : null; }, r22pill:function(){ return P.r22pill ? P.r22pill() : null; }, r20ux51:function(){ return P.r20ux51 ? P.r20ux51() : null; }, kdDrift:function(){ return P.kdDrift(); }, kdHosts:function(){ return P.kdHosts(); }, pads:function(){ return P.pads(); }, kWord:function(s, tip){ return kWord(s, tip); },
   mapTitle:mapTitle, goal:function(){ var mp = $("mPass"); if(!mp) return null; var cs = getComputedStyle(mp, "::after"); return { text:mp.getAttribute("data-pol"), fs:parseFloat(cs.fontSize), display:cs.display, content:cs.content }; },
   on:true, tf6:TF6, log:function(){ return P.log.slice(); },
   pill:function(){ return { lock:P.pill.lock, pend:P.pill.pend, shown:P.pill.shown, text:ct ? ct.textContent : null, bank:save.coins, forced:P.pill.forced }; },

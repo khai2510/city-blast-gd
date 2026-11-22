@@ -33,8 +33,17 @@
     // zoomed out past the whole-lot zoom 1 if it has to be (up to zMax). ?framehard=0 = the hero framing as before.
     var HARD = Qf.get("framehard") !== "0", FILL_HH = 0.9, SIDE_PX = 16;
     var isHard = function(){ return HARD && !!(L && L.hard7); };
+    // F5 (22/11/2026, tester round UX-72 / UX-71, polish R22; ?r22=0 = off): (a) BOSS openings keep the hero framing (3/4 yaw, fill) but
+    // the projected bounding-box corners of the whole lot (target + protected blue buildings + their dress) must sit 16 px inside both
+    // screen sides and inside the play rect: the camera backs off (up to zMax) and the view offset slides until they do (L11 cut its
+    // right-hand block at x 387). Hard levels already fit the lot (F4). (b) API.refit(): when planning resumes after a blast that left
+    // TNT (or after the "+1 TNT" rescue) the camera eases in 500 ms (cut with Reduce motion) onto what still counts (live target
+    // members at their current pose; + the protected buildings on hard / boss levels) with the hard-opening margins (16 px sides,
+    // FILL_HH of the play height), keeping the player's current yaw and pitch. Pinch-out / BLAST hand back exactly as F3.
+    var R22 = Qf.get("r22") !== "0";
+    var isGuard = function(){ return R22 && HARD && !!(L && L.boss) && !isHard(); };
     var FR = { on:!OFF, cf:CF, S:null, W:0, n:0 };
-    var API = window.__blast.frame = { on:function(){ return FR.on; }, cfg:function(){ return CF; }, state:function(){ var S = FR.S; return S ? { lv:S.lv, live:S.live, W:+FR.W.toFixed(3), zOpen:+S.zOpen.toFixed(4), zFrom:+S.zFrom.toFixed(4), t:+S.t.toFixed(2), easing:S.t < S.dur, hard:!!S.hard, yawOpen:+S.yawOpen.toFixed(3), yawD:+S.yawD.toFixed(3), sx:Math.round(S.sx), sy:Math.round(S.sy), fitW:S.fitW, fitH:S.fitH, bind:S.bind } : null; }, measure:null };
+    var API = window.__blast.frame = { on:function(){ return FR.on; }, cfg:function(){ return CF; }, state:function(){ var S = FR.S; return S ? { lv:S.lv, live:S.live, W:+FR.W.toFixed(3), zOpen:+S.zOpen.toFixed(4), zFrom:+S.zFrom.toFixed(4), t:+S.t.toFixed(2), easing:S.t < S.dur, hard:!!S.hard, yawOpen:+S.yawOpen.toFixed(3), yawD:+S.yawD.toFixed(3), sx:Math.round(S.sx), sy:Math.round(S.sy), fitW:S.fitW, fitH:S.fitH, bind:S.bind, guard:!!S.guard, guardN:S.guardN || 0, refit:!!S.refit } : null; }, measure:null };
     var TILT = CF.tilt;   // v14-monument.js updateCamera: the view levels out by TILT x close when zoomed in (pitch - TILT x tiltK)
     var _pc = new THREE.PerspectiveCamera(GAME_FOV, 1, 0.1, 4000), _v = new THREE.Vector3(), _q = new THREE.Quaternion(), _h = new THREE.Vector3();
     var heroIds = function(){ return String((L && L.hero) || "A").split(","); };
@@ -61,6 +70,14 @@
       b = ndc(S.pts, yw, S.pitch, d, S.hx, focusY, S.hz);
       S.fitH = +((b.y1 - b.y0)/2*VH/A.h).toFixed(3); S.fitW = +((b.x1 - b.x0)/2).toFixed(3); S.bind = S.fitH/S.fillH >= S.fitW/S.fillW ? "height" : "width";
       S.sxT = (1 + (b.x0 + b.x1)/2)/2*VW - VW/2; S.syT = (1 - (b.y0 + b.y1)/2)/2*VH - A.cy;
+      if(S.gpts){   // F5 (a): the lot's corners inside the 16 px sides and the play rect (back off first, then slide the offset)
+        var g, gw, gh, gk;
+        for(it=0; it<12; it++){ g = ndc(S.gpts, yw, S.pitch, d, S.hx, focusY, S.hz); gw = (g.x1 - g.x0)/2*VW; gh = (g.y1 - g.y0)/2*VH;
+          gk = Math.max(gw/(VW - 2*SIDE_PX), gh/(FILL_HH*A.h)); if(gk <= 1.001 || !fit) break; d = d*gk; S.D = d; }
+        if(it){ b = ndc(S.pts, yw, S.pitch, d, S.hx, focusY, S.hz); S.sxT = (1 + (b.x0 + b.x1)/2)/2*VW - VW/2; S.syT = (1 - (b.y0 + b.y1)/2)/2*VH - A.cy; }
+        g = ndc(S.gpts, yw, S.pitch, d, S.hx, focusY, S.hz);
+        var lx0 = (1 + g.x0)/2*VW, lx1 = (1 + g.x1)/2*VW, ly0 = (1 - g.y1)/2*VH, ly1 = (1 - g.y0)/2*VH;
+        S.sxT = Math.max(lx1 - VW + SIDE_PX, Math.min(lx0 - SIDE_PX, S.sxT)); S.syT = Math.max(ly1 - (VH - A.b), Math.min(ly0 - A.t, S.syT)); S.guardN = it; }
       S.key = [VW, VH, A.t, A.b, yw.toFixed(3), focusY.toFixed(2)].join(); };
     var openLevel = function(){ FR.S = null; FR.W = 0;
       if(manual || screen !== "game" || !L || !blocks.length) return;
@@ -69,8 +86,9 @@
       var yawOpen = o.yaw != null ? o.yaw : f + sg*Math.max(o.yawMin || CF.yawMin, Math.min(o.yawMax || CF.yawMax, Math.abs(off)));
       var S = { lv:levelIdx + 1, hard:hard, pts:H.pts, hx:H.hx, hz:H.hz, yawD:yawOpen - baseYaw, yawOpen:yawOpen, pitch:o.pitch || CF.pitch, fillH:o.fillH || CF.fillH, fillW:o.fillW || CF.fillW,
         live:true, t:0, dur:REDUCED ? 0 : (o.dur || CF.dur), D:dist, sx:0, sy:0, sxSp:{v:0}, sySp:{v:0} };
+      if(isGuard()){ var G = heroPts(true); if(G) S.gpts = G.pts; S.guard = true; }   // F5 (a)
       solve(S, true);
-      S.zOpen = Math.min(hard ? Math.max(1, zMax) : 1, S.D/dist); S.zFrom = REDUCED ? S.zOpen : hard ? Math.max(S.zOpen, Math.min(zMax, S.zOpen*CF.wide)) : S.zOpen*CF.wide; S.zEnd = Math.max(1, S.zFrom + 0.25);
+      S.zOpen = Math.min(hard || S.guard ? Math.max(1, zMax) : 1, S.D/dist); S.zFrom = REDUCED ? S.zOpen : hard ? Math.max(S.zOpen, Math.min(zMax, S.zOpen*CF.wide)) : S.zOpen*CF.wide; S.zEnd = Math.max(1, S.zFrom + 0.25);
       S.closeO = window.__blast.m14 && window.__blast.m14.flags().cam ? Math.max(0, Math.min(1, (1 - S.zOpen)/0.45)) : 0;
       S.sx = S.sxT; S.sy = S.syT;
       FR.S = S; FR.W = 1; FR.n++;
@@ -91,10 +109,11 @@
       if(S.live && S.t < S.dur){ S.t = Math.min(S.dur, S.t + rdt); var e = 1 - Math.pow(1 - S.t/S.dur, 3); zoomT = zoomK = S.zFrom + (S.zOpen - S.zFrom)*e; zoomSp.v = 0; }
       // F3: the weight (state x zoom: the whole-lot zoom 1 = no framing)
       var wz = Math.max(0, Math.min(1, (S.zEnd - zoomK)/(S.zEnd - Math.max(S.zFrom, S.zOpen + 0.05)))), wt = S.live && (phase === "build" || phase === "plan" || phase === "count") ? wz : 0;
+      if(S.refit && S.dur > 0) wt = Math.min(wt, 1 - Math.pow(1 - Math.min(1, S.t/S.dur), 3));   // F5 (b): the look-at / offset ease in with the zoom
       FR.W = wt >= FR.W || REDUCED ? wt : damp(FR.W, wt, wSp, 0.3, rdt); if(FR.W < 1e-3 && wt === 0) FR.W = 0;
       var W = FR.W;
       if(W > 0 && S.key !== [VW, VH, topH(), botH(), (baseYaw + S.yawD).toFixed(3), focusY.toFixed(2)].join()){   // resize / HUD / turn: re-centre (same distance once the ease is over)
-        if(S.live && S.t < S.dur){ solve(S, true); S.zOpen = Math.min(S.hard ? Math.max(1, zMax) : 1, S.D/dist); S.closeO = window.__blast.m14 && window.__blast.m14.flags().cam ? Math.max(0, Math.min(1, (1 - S.zOpen)/0.45)) : 0; } else solve(S, false); }
+        if(S.live && S.t < S.dur && !S.refit){ solve(S, true); S.zOpen = Math.min(S.hard || S.guard ? Math.max(1, zMax) : 1, S.D/dist); S.closeO = window.__blast.m14 && window.__blast.m14.flags().cam ? Math.max(0, Math.min(1, (1 - S.zOpen)/0.45)) : 0; } else solve(S, false); }
       S.sx = damp(S.sx, S.sxT, S.sxSp, 0.25, rdt); S.sy = damp(S.sy, S.syT, S.sySp, 0.25, rdt);
       var fx = focus.x, fz = focus.z, by = baseYaw, pt = pitch;
       if(W > 0){ var close = Math.max(0, Math.min(1, (1 - zoomK)/0.45));
@@ -105,9 +124,40 @@
       var v = camera.view; if(!v) return;
       if(myX === null || v.offsetX !== myX || v.offsetY !== myY){ inX = v.offsetX; inY = v.offsetY; }
       if(W > 0){ myX = inX + W*S.sx; myY = inY + W*(S.sy - viewShift); camera.setViewOffset(VW, VH, myX, myY, VW, VH); }
+      // F5 (b): once the re-frame ease is over, read the box off the live camera (sway, clearance and pan included) and nudge the
+      // offset (and, if it is too big, the zoom) until it sits 16 px inside the sides and inside the play rect, + 3 px for the sway (a few frames)
+      if(S.refit && S.live && W > 0.98 && S.t >= S.dur && (S.fixN || 0) < 40 && ((S.fixF = (S.fixF || 0) + 1) % 3 === 0)){
+        camera.updateMatrixWorld(); camera.updateProjectionMatrix(); var A2 = area(), P2 = S.pts, x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
+        for(var i2=0;i2<P2.length;i2+=3){ _v.set(P2[i2], P2[i2+1], P2[i2+2]).project(camera); var px = (_v.x + 1)/2*VW, py = (1 - _v.y)/2*VH; if(px < x0) x0 = px; if(px > x1) x1 = px; if(py < y0) y0 = py; if(py > y1) y1 = py; }
+        var L0 = SIDE_PX + 3, R0 = VW - SIDE_PX - 3, T0 = A2.t + 3, B0 = VH - A2.b - 3, ddx = 0, ddy = 0, kz = Math.max((x1 - x0)/(R0 - L0), (y1 - y0)/(B0 - T0));
+        if(kz > 1.01){ zoomT = clampZoom(zoomK*kz); S.zOpen = zoomT; S.zEnd = Math.max(S.zEnd, zoomT + 0.25); }
+        else { if(x0 < L0) ddx = x0 - L0; else if(x1 > R0) ddx = x1 - R0; if(y0 < T0) ddy = y0 - T0; else if(y1 > B0) ddy = y1 - B0; }
+        if(ddx || ddy){ S.sxT += ddx; S.syT += ddy; S.sx += ddx; S.sy += ddy; }
+        S.fixN = (S.fixN || 0) + 1; if(!ddx && !ddy && kz <= 1.01) S.fixN = 40; }
       else if(myX !== null){ camera.setViewOffset(VW, VH, inX, inY, VW, VH); myX = myY = null; }
     };
     }
+    // F5 (b) the re-frame on what still counts (called by main/polish.js R22 when planning resumes with TNT left)
+    var remPts = function(withKeep){ var P = [], x0 = 1e9, x1 = -1e9, z0 = 1e9, z1 = -1e9, c;
+      blocks.forEach(function(b){ if(b.anchor || b.prop || b.bonus || b.dead || (!withKeep && b.keep)) return; var p = b.P || b.spawn, q = b.Q, h = b.half; if(!p) return;
+        for(c=0;c<8;c++){ _v.set(c&1 ? h[0] : -h[0], c&2 ? h[1] : -h[1], c&4 ? h[2] : -h[2]); if(q) _v.applyQuaternion(q); _v.add(p); if(_v.y < 0) _v.y = 0; P.push(_v.x, _v.y, _v.z);
+          if(!b.keep){ x0 = Math.min(x0, _v.x); x1 = Math.max(x1, _v.x); z0 = Math.min(z0, _v.z); z1 = Math.max(z1, _v.z); } } });
+      return P.length && x1 > x0 ? { pts:new Float32Array(P), hx:(x0 + x1)/2, hz:(z0 + z1)/2 } : null; };
+    API.refit = function(){
+      if(OFF || !R22 || manual || screen !== "game" || phase !== "plan" || !L || !blocks.length) return null;
+      var lotLv = isHard() || !!L.boss, H = remPts(lotLv); if(!H) return null;
+      var S = { lv:levelIdx + 1, hard:lotLv, refit:true, pts:H.pts, hx:H.hx, hz:H.hz, yawD:0, yawOpen:baseYaw, pitch:pitch, fillH:FILL_HH, fillW:Math.max(0.5, (VW - 2*SIDE_PX)/VW),
+        live:true, t:0, dur:REDUCED ? 0 : 0.5, D:dist, sx:0, sy:0, sxSp:{v:0}, sySp:{v:0}, closeO:0 };
+      solve(S, true);
+      S.zOpen = clampZoom(S.D/dist); S.zFrom = REDUCED ? S.zOpen : zoomK; S.zEnd = Math.max(1, S.zFrom, S.zOpen) + 0.25;
+      S.sx = S.sxT; S.sy = S.syT; FR.S = S; FR.W = 0; FR.n++; FR.refits = (FR.refits || 0) + 1;
+      if(REDUCED){ zoomT = zoomK = S.zOpen; zoomSp.v = 0; }
+      return { zOpen:+S.zOpen.toFixed(3), zFrom:+S.zFrom.toFixed(3), fitW:S.fitW, fitH:S.fitH, bind:S.bind };
+    };
+    // the screen box of what still counts now (refit check)
+    API.measureRem = function(withKeep){ var H = remPts(withKeep == null ? (isHard() || !!(L && L.boss)) : !!withKeep); if(!H) return null; camera.updateMatrixWorld(); var A = area(), x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9, P = H.pts;
+      for(var i=0;i<P.length;i+=3){ _v.set(P[i], P[i+1], P[i+2]).project(camera); var sx = (_v.x + 1)/2*VW, sy = (1 - _v.y)/2*VH; if(sx < x0) x0 = sx; if(sx > x1) x1 = sx; if(sy < y0) y0 = sy; if(sy > y1) y1 = sy; }
+      return { VW:VW, VH:VH, top:Math.round(A.t), bot:Math.round(VH - A.b), box:[Math.round(x0), Math.round(y0), Math.round(x1), Math.round(y1)], fillH:+((y1 - y0)/A.h).toFixed(3), fillW:+((x1 - x0)/VW).toFixed(3), W:+FR.W.toFixed(3), refit:!!(FR.S && FR.S.refit), refits:FR.refits || 0, zoomK:+zoomK.toFixed(3) }; };
     // test API: the hero on screen now (fractions of the playable area), the camera's clearance state
     API.measure = function(lot){ var H = heroPts(lot == null ? isHard() : !!lot); if(!H) return null; camera.updateMatrixWorld(); var A = area(), x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9, P = H.pts;
       for(var i=0;i<P.length;i+=3){ _v.set(P[i], P[i+1], P[i+2]).project(camera); var sx = (_v.x + 1)/2*VW, sy = (1 - _v.y)/2*VH; if(sx < x0) x0 = sx; if(sx > x1) x1 = sx; if(sy < y0) y0 = sy; if(sy > y1) y1 = sy; }

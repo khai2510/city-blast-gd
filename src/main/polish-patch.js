@@ -14,11 +14,11 @@ if (src.includes(MARK)) { console.error('already patched (polish): ' + IN); proc
 const n = src.split(A).length - 1;
 if (n !== 1) { console.error((n ? 'DUPLICATE (' + n + ')' : 'MISSING') + ' anchor "} // main"'); process.exit(1); }
 for (const need of ['function addCoins(v, audible){', 'function showResult(){', 'function goHome(){', 'function stepHand(){', 'function updateCamera(rdt){', 'function bstSync(){', 'function bstPlay(i){',
-  'st.id = "feelStamp"', 'plus.id = "uicPlus"', 'id="pauseM"', 'id="pmSfx"', 'id="pmMus"', 'id="shopPlay"', 'id="cmPlay"', 'tLbl.id = "t2Lbl"', 'setDblMs:function(f)', 'window.__blast.pre = {', 'window.__blast.tap2 = {', 'function stepShields(){', 'function buildShields(){', 'function shieldDamage(sh){', 'function verdict(){', 'function l6HardBroken(){', 'function shieldAnchor(', 'function onTap(x, y){'])
+  'st.id = "feelStamp"', 'plus.id = "uicPlus"', 'id="pauseM"', 'id="pmSfx"', 'id="pmMus"', 'id="shopPlay"', 'id="cmPlay"', 'tLbl.id = "t2Lbl"', 'setDblMs:function(f)', 'window.__blast.pre = {', 'window.__blast.tap2 = {', 'function stepShields(){', 'function buildShields(){', 'function shieldDamage(sh){', 'function verdict(){', 'function l6HardBroken(){', 'function shieldAnchor(', 'function onTap(x, y){', 'function ballBtn(){', 'function ballSuggest(){', 'function ballAimOff(){', 'function bstWants(i){', 'function skyDisarm(){'])
   if (!src.includes(need)) { console.error('MISSING engine / UI text: ' + need); process.exit(1); }
 const t = src.indexOf('<title>'); if (t < 0) { console.error('no <title>'); process.exit(1); }
 const body = fs.readFileSync(path.join(__dirname, 'polish.js'), 'utf8').replace(/\s+$/, '');
 let out = src.replace(A, () => '\n' + body + A);
 out = out.slice(0, t) + MARK + out.slice(t);
 fs.writeFileSync(OUT, out);
-console.log('ok   B1 coin pill = bank · B2 pause icons · X1 win payoff · X3 empty-tap hand · X4 pause rows · X5 two-line Play · X7/X8 copy · X9 L1 label + 400 ms · X10 chips · X11 targets · XB idle BLAST · K1-K3 protected (17/11)  -> ' + path.basename(OUT));
+console.log('ok   B1 coin pill = bank · B2 pause icons · X1 win payoff · X3 empty-tap hand · X4 pause rows · X5 two-line Play · X7/X8 copy · X9 L1 label + 400 ms · X10 chips · X11 targets · XB idle BLAST · K1-K3 protected (17/11) · R22 (22/11: booster refund + ✕, re-frame, first-try sheet, quiet rescue, pill / map)  -> ' + path.basename(OUT));
