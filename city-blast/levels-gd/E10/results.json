@@ -1,0 +1,169 @@
+{
+ "when": "2026-11-22T17:50:33.484Z",
+ "rule": {
+  "oneBombPct": 70,
+  "oneBombCollapse": 101,
+  "spare": {
+   "N": [
+    2,
+    5
+   ],
+   "H": [
+    1,
+    3
+   ],
+   "SH": [
+    1,
+    3
+   ]
+  },
+  "minWaves": {
+   "N": 2,
+   "H": 3,
+   "SH": 3
+  },
+  "estSec": {
+   "N": [
+    20,
+    75
+   ],
+   "H": [
+    30,
+    90
+   ],
+   "SH": [
+    40,
+    120
+   ]
+  },
+  "keepMax": 0.05,
+  "footMax": 80
+ },
+ "results": [
+  {
+   "id": "E10",
+   "lv": 40,
+   "name": "Rail Terminus",
+   "tier": "N",
+   "sf": [],
+   "pattern": "combine: legs + direction + drums + keep: tip the head building into the train shed (drums at its piers go off, the roof comes down bay by bay); the school behind the head building stays clear",
+   "story": "",
+   "sfMetric": {},
+   "metrics": {
+    "members": 65,
+    "hard": 11,
+    "soft": 54,
+    "hardPct": 17,
+    "main": {
+     "members": 46,
+     "hard": 11,
+     "soft": 35,
+     "hardPct": 24,
+     "pos": {
+      "top": 3,
+      "mid": 0,
+      "bottom": 8,
+      "edge": 10,
+      "core": 1,
+      "front": 4,
+      "back": 4
+     },
+     "core": "yes",
+     "hardLayers": 2,
+     "depthRows": 5,
+     "frontHard": 4,
+     "backHard": 4,
+     "floors": 4
+    },
+    "stacks": 3,
+    "parts": [
+     "A",
+     "B",
+     null
+    ]
+   },
+   "oneBomb": {
+    "pct": 18,
+    "collapse": 18,
+    "at": "g7bk@A:f1",
+    "tried": 18
+   },
+   "lazy": {
+    "pct": 44,
+    "collapse": 63
+   },
+   "fairOpen": {
+    "win": true,
+    "res": "WIN",
+    "pct": 91,
+    "used": 10,
+    "left": 30,
+    "waves": 3,
+    "firstWave": 80,
+    "keep": 0,
+    "estSec": 37,
+    "log": "bld6=80 bld1=81 heap3=91"
+   },
+   "tnt": 14,
+   "fair": [
+    {
+     "win": true,
+     "res": "WIN",
+     "pct": 94,
+     "used": 10,
+     "left": 4,
+     "waves": 3,
+     "firstWave": 78,
+     "keep": 0,
+     "estSec": 37,
+     "log": "bld6=78 bld1=82 heap3=94"
+    },
+    {
+     "win": true,
+     "res": "WIN",
+     "pct": 94,
+     "used": 10,
+     "left": 4,
+     "waves": 3,
+     "firstWave": 78,
+     "keep": 0,
+     "estSec": 37,
+     "log": "bld6=78 bld1=82 heap3=94"
+    },
+    {
+     "win": true,
+     "res": "WIN",
+     "pct": 94,
+     "used": 10,
+     "left": 4,
+     "waves": 3,
+     "firstWave": 78,
+     "keep": 0,
+     "estSec": 37,
+     "log": "bld6=78 bld1=82 heap3=94"
+    }
+   ],
+   "spare": 4,
+   "allFoot": {
+    "pct": 76,
+    "used": 14,
+    "collapse": 100,
+    "keep": 0
+   },
+   "footOnly": {
+    "pct": 79,
+    "waves": 2,
+    "left": 5,
+    "keep": 0
+   },
+   "oneWave": {
+    "pct": 77,
+    "used": 14,
+    "reach": 53,
+    "collapse": 82
+   },
+   "verdict": "PASS",
+   "issues": []
+  }
+ ]
+}

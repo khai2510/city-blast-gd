@@ -1552,6 +1552,8 @@ try{ (function(){
       cu.walls.forEach(function(w, j){ var L2 = 2*Math.max(w.half[0], w.half[2]); onF(w, "box", K.glass, 0, 0.2, L2*0.7, 0.8, 0.07); for(var m = -2; m <= 2; m++) onF(w, "ibox", K.white, m*L2*0.15, 0.2, 0.05, 0.8, 0.09); if(j % 2) onF(w, "lit", K.lit, 0, 0.2, L2*0.4, 0.5, 0.1); });
       kd(sts[n - 1].decks[0], "box", K.concL, 0, y + 0.1, 0, 2*hx + 0.3, 0.25, 2*hz + 0.3);   // the cornice under the cupola
       // the garner bin: a heavy iron-bound bin filling the cupola (hard7v: lands whole in the heap, counts until a bomb cracks it)
+      if(P.bin2){ var sw2 = P.bin2, sh2 = SH - 0.4 - 0.9, b2 = mem("hard7v", 0, y - SH + sh2/2 + 0.02, 0, sw2, sh2, sw2, n, null, null, 0x6A645C); b2.tint = 0x6A645C;   // a second bin in the top storey of the shaft
+        for(var b3 = 0; b3 < 2; b3++) kd(b2, "box", K.iron, 0, y - SH + 0.5 + b3*1.0, 0, sw2 + 0.05, 0.1, sw2 + 0.05); }
       if(P.bin){ var bw2 = 2*(hx - 0.9) - 1.5, bd2 = 2*(hz - 0.4) - 1.5, bh = 3.0 - 0.35 - 0.3, bn = mem("hard7v", 0, y + bh/2 + 0.02, 0, bw2, bh, bd2, n + 1, null, null, 0x6A645C); bn.tint = 0x6A645C;
         for(var bb = 0; bb < 3; bb++) kd(bn, "box", K.iron, 0, y + 0.4 + bb*0.8, 0, bw2 + 0.05, 0.1, bd2 + 0.05); kd(bn, "cone", K.iron, 0, y + bh + 0.15, 0, bw2*0.6, 0.3, bd2*0.6); }
       y += 3.0;
