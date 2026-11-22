@@ -37,12 +37,13 @@ const HBP = { H1: 'L01v4', H2: 'L02', H3: 'L03', H4: 'L04', H5: 'L05' };
 // 14 blast in steps (L11) · 17 dark pier (L17) · 20 H3 · 21 glass (L25) · 23 boss (L20) · 25 barrels (L32) · 30 H2 · 32 H5 · 33 trap
 // barrels (L34) · 34 boss (L30) · 38 H4 · 40 H1. Checked by city-blast SYNC 22/11 "no element before its intro level".
 // 22/11 easy pack (Lead): E01 E02 E03 E04 E06 appended as 42-46, slots 1-41 unchanged (every element they use is introduced before 42).
+// 22/11 easy pack, second batch: E05 E07 E08 E09 E10 appended as 47-51, slots 1-46 unchanged (nothing new: all taught by 33).
 const PLACE = [
   'o1', 'o2', 'o3', 'o36', 'o6', 'o8', 'o9', 'o7', 'o13', 'o14',
   'o10', 'o21', 'o15', 'o11', 'o19', 'o16', 'o17', 'o12', 'o18', 'H3',
   'o25', 'o4', 'o20', 'o31', 'o32', 'o24', 'o5', 'o28', 'o33', 'H2',
   'o26', 'H5', 'o34', 'o30', 'o27', 'o35', 'o22', 'H4', 'o23', 'H1',
-  'o29', 'E01', 'E02', 'E03', 'E04', 'E06',
+  'o29', 'E01', 'E02', 'E03', 'E04', 'E06', 'E05', 'E07', 'E08', 'E09', 'E10',
 ];
 // intro cards / spotlights that do not sit on their original level: card id (main/intro.js INTRO_SCHED) -> the level (code as in
 // PLACE) where that element is introduced in this order. The card fires when that level is played (LV7O.introAt), wherever it stands.

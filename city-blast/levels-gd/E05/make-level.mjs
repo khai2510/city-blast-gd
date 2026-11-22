@@ -23,6 +23,6 @@ const lvl = {
   ftip: 'Open the shell first. The core still counts.',
   sol: []
 };
-lvl.tntStart = +(process.env.TNT || 20);
+lvl.tntStart = +(process.env.TNT || 22);
 writeFileSync(new URL('./level.json', import.meta.url), JSON.stringify([lvl], null, 1));
 console.log('ok', 'wings at ±' + wx.toFixed(2));

@@ -1,4 +1,4 @@
-{"_":"g7hard order audit, 22/11: elements per level read at run time from the main build (block keys of every live body, protected flag, barrels; mechanics from the level tip / g7 fields). Codes: oN = old level N, Hk = hard level. Re-audit after level content changes. 22/11 easy pack E01-E06 (42-46): keys read from the main build (rc / hrc / hard7v = dark, tank = barrels, drop7 = drop, every easy level needs >= 2 blasts = steps), src/g7hard/check-order.js.","levels":{"o1":{"name":"Ranger Lookout","tier":"T","boss":false,"hard":false,"tnt":5,"el":["wood"],"rebuilt":"O01"},
+{"_":"g7hard order audit, 22/11: elements per level read at run time from the main build (block keys of every live body, protected flag, barrels; mechanics from the level tip / g7 fields). Codes: oN = old level N, Hk = hard level. Re-audit after level content changes. 22/11 easy pack E01-E06 (42-46): keys read from the main build (rc / hrc / hard7v = dark, tank = barrels, drop7 = drop, every easy level needs >= 2 blasts = steps), src/g7hard/check-order.js. 22/11 second batch E05 E07 E08 E09 E10 (47-51): keys from the levels-gd probes (same rules; steel = steel member, blue = keep6, mdW counted as wood).","levels":{"o1":{"name":"Ranger Lookout","tier":"T","boss":false,"hard":false,"tnt":5,"el":["wood"],"rebuilt":"O01"},
 "o2":{"name":"Stripey Point","tier":"T","boss":false,"hard":false,"tnt":5,"el":["wood","brick"]},
 "o3":{"name":"Old Tock","tier":"N","boss":false,"hard":false,"tnt":5,"el":["wood","brick","concrete"]},
 "o4":{"name":"Needle Court","tier":"N","boss":false,"hard":false,"tnt":7,"el":["wood","concrete","glass","blue"]},
@@ -43,4 +43,9 @@
 "E02":{"name":"Shot Tower","tier":"N","boss":false,"hard":false,"tnt":23,"el":["wood","brick","dark","steps","drop"]},
 "E03":{"name":"Tram Depot","tier":"N","boss":false,"hard":false,"tnt":19,"el":["wood","brick","glass","dark","barrels","steps"]},
 "E04":{"name":"Market Hall","tier":"N","boss":false,"hard":false,"tnt":19,"el":["wood","brick","glass","steps","drop"]},
-"E06":{"name":"Boiler Stack","tier":"N","boss":false,"hard":false,"tnt":17,"el":["brick","concrete","dark","steps","drop"]}}}
+"E06":{"name":"Boiler Stack","tier":"N","boss":false,"hard":false,"tnt":17,"el":["brick","concrete","dark","steps","drop"]},
+"E05":{"name":"Star Dome","tier":"N","boss":false,"hard":false,"tnt":22,"el":["wood","brick","glass","dark","steps","drop"]},
+"E07":{"name":"Bathhouse","tier":"N","boss":false,"hard":false,"tnt":18,"el":["wood","brick","glass","dark","blue","steps","drop"]},
+"E08":{"name":"Grain Elevator","tier":"N","boss":false,"hard":false,"tnt":20,"el":["wood","brick","concrete","glass","dark","steps","drop"]},
+"E09":{"name":"High Cistern","tier":"N","boss":false,"hard":false,"tnt":20,"el":["wood","brick","steel","dark","steps","drop"]},
+"E10":{"name":"Rail Terminus","tier":"N","boss":false,"hard":false,"tnt":14,"el":["wood","brick","dark","barrels","blue","steps","drop"]}}}
