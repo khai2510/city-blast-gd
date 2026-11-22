@@ -57,6 +57,9 @@ const STEPS = [
   // ---- Agents-Game (city-blast/OWNERS.md): the hard levels from Mac, LAST (the g7 engine wraps the final build's functions; city-blast/release/INTEGRATE.md §3)
   { id: 'g7-hard', what: 'hard levels H1-H5 (Mac, city-blast/release/): g7 engine (bombs ride their block, no red ring) + level data as pipeline7/build.mjs test=false; play order (21/11, GD-48) 1-9 old L1-9, 10 H2, 11-15 L10-14, 16 H3, 17-19 L15-17, 20 H1, 21-29 L18-26, 30 H4, 31-35 L27-31, 36 H5, 37-41 L32-36 (saves of the 20/11 order follow their levels); number-keyed features follow their old level (LV7O); ?lv7=0 = old 36 levels, ?lv7ord=0 = H after L36, ?pack7=1 = first hard level', run: ['g7hard/patch.js', '$IN', '$OUT'],
     src: ['g7hard/patch.js', 'g7hard/order-early.js', 'g7hard/order-end.js', '../city-blast/pipeline7/engine.js', '../city-blast/release/g7-hard-levels.json'], marks: ['// ---- main/levels7.js', '// ---- main/levels7-data.js', '// ---- g7hard/order-early.js', '// ---- g7hard/order-end.js'] },
+  // ---- Mac (Khai 22/11: "chạy design polish cho game, theo royal smash, h2h compared"): visual-only layer, LAST; city-blast/rs-look/README.md
+  { id: 'rs-look', what: 'H2H Royal Smash visual layer (Mac): construction-site deck under the tray, solid locked booster discs, BLAST gloss + shine, TNT count bump, neutral darker lot (value contrast); view only, ?rs=0 = off', run: ['../city-blast/rs-look/patch.js', '$IN', '$OUT'],
+    src: ['../city-blast/rs-look/patch.js', '../city-blast/rs-look/rs.css', '../city-blast/rs-look/rs.js', '../city-blast/rs-look/rs-main.js'], marks: ['<!-- rs-look -->', '// ---- rs-look (Mac', '// ---- rs-look in main()'] },
 ];
 if (process.argv.includes('--list')) { STEPS.forEach((s, i) => console.log(String(i + 1).padStart(2) + '. ' + s.id.padEnd(15) + s.what)); process.exit(0); }
 const OUT = path.resolve(process.argv[2] || G('checkpoints', 'index-main.html'));
