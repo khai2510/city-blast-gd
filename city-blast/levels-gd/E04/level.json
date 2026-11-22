@@ -1,0 +1,78 @@
+[
+ {
+  "name": "Market Hall",
+  "bp": "E04",
+  "tier": "N",
+  "f": 7,
+  "kind": "scene",
+  "hero": "A",
+  "heroId": "G7-E04",
+  "teaches": "materials",
+  "target": 0.85,
+  "yaw": 0.12,
+  "d": 1,
+  "fillMax": 0.73,
+  "hard7": true,
+  "drop7": {
+   "keys": [
+    "mdB"
+   ],
+   "fall": 1.5,
+   "armor": 0.97
+  },
+  "sf": [],
+  "pattern": "materials: a timber market (one TNT folds a section) behind a brick arcade (one TNT chips one pier); brick weigh houses at the ends",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7mhall",
+    "x": 0,
+    "z": 0,
+    "n": 3,
+    "hx": 3,
+    "hz": 6,
+    "ph": 5.4,
+    "ch": 2.6,
+    "rh": 1.6,
+    "bg0": 91
+   },
+   {
+    "id": "B",
+    "kind": "g7arcade",
+    "x": 0,
+    "z": 9.4,
+    "n": 6,
+    "len": 18.2,
+    "d": 1.2,
+    "pw": 0.95,
+    "h1": 5,
+    "h2": 3.6,
+    "bg": 95
+   },
+   {
+    "id": "C",
+    "kind": "g7kiosk",
+    "x": -14,
+    "z": 0,
+    "hx": 2.4,
+    "bg": 96
+   },
+   {
+    "id": "D",
+    "kind": "g7kiosk",
+    "x": 14,
+    "z": 0,
+    "hx": 2.4,
+    "bg": 97
+   }
+  ],
+  "tanks": [],
+  "charges": {
+   "tnt": 40
+  },
+  "tip": "",
+  "ftip": "Wood falls easy. Brick chips. Roofs still count.",
+  "sol": [],
+  "tntStart": 19
+ }
+]

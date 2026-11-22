@@ -1,0 +1,444 @@
+[
+ {
+  "name": "Long Legs",
+  "bp": "E01",
+  "tier": "N",
+  "tntStart": 19,
+  "f": 7,
+  "kind": "scene",
+  "hero": "A",
+  "heroId": "G7-E01",
+  "teaches": "legs",
+  "target": 0.85,
+  "yaw": 0.12,
+  "d": 1,
+  "fillMax": 0.73,
+  "hard7": true,
+  "hit7": {
+   "keys": [],
+   "drums": true
+  },
+  "drop7": {
+   "keys": [
+    "mdC"
+   ],
+   "fall": 1.5,
+   "armor": 0.97
+  },
+  "sf": [],
+  "pattern": "legs: a raised slab on pilotis, three sections; bombs on the legs drop a section, the heavy roof pieces land whole and need one more",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7slab",
+    "x": 0,
+    "z": 0,
+    "hx": 3.5,
+    "hz": 4.5,
+    "secs": 3,
+    "legH": 6,
+    "floors": 5,
+    "bg0": 81,
+    "softDeck": 1
+   },
+   {
+    "id": "B",
+    "kind": "g7stilt",
+    "x": -14.799999999999999,
+    "z": 0,
+    "hx": 2.6,
+    "hz": 3,
+    "legH": 4,
+    "side": -1,
+    "bg": 84
+   },
+   {
+    "id": "C",
+    "kind": "g7stilt",
+    "x": 14.799999999999999,
+    "z": 0,
+    "hx": 2.6,
+    "hz": 3,
+    "legH": 4,
+    "side": 1,
+    "bg": 85
+   }
+  ],
+  "tanks": [
+   [
+    -10.1,
+    -0.55
+   ],
+   [
+    -10.1,
+    0.55
+   ],
+   [
+    -9.2,
+    0
+   ],
+   [
+    10.1,
+    -0.55
+   ],
+   [
+    10.1,
+    0.55
+   ],
+   [
+    9.2,
+    0
+   ]
+  ],
+  "charges": {
+   "tnt": 19
+  },
+  "tip": "",
+  "ftip": "Hit the legs. Heavy pieces still count.",
+  "sol": []
+ },
+ {
+  "name": "Shot Tower",
+  "bp": "E02",
+  "tier": "N",
+  "f": 7,
+  "kind": "scene",
+  "hero": "A",
+  "heroId": "G7-E02",
+  "teaches": "tip",
+  "target": 0.85,
+  "yaw": 0.12,
+  "d": 1,
+  "fillMax": 0.73,
+  "hard7": true,
+  "hit7": {
+   "keys": [
+    "wpost",
+    "wwall",
+    "mdW",
+    "g7roofL"
+   ],
+   "armor": 0.001,
+   "f": 3,
+   "reach": 1
+  },
+  "drop7": {
+   "keys": [
+    "mdB"
+   ],
+   "fall": 1.5,
+   "armor": 0.97
+  },
+  "sf": [],
+  "pattern": "tip: a tall tower on 8 legs; two legs side by side gone = it lies down that way; a long goods shed on each side is the target",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7shot",
+    "x": 0,
+    "z": 0,
+    "hx": 3.4,
+    "legH": 5,
+    "n": 7,
+    "hold": 2,
+    "bg": 41,
+    "hop": [
+     0,
+     2,
+     4,
+     6
+    ],
+    "hopW": 2.6,
+    "hopH": 2.2,
+    "cis": 2.8
+   },
+   {
+    "id": "B",
+    "kind": "g7gshed",
+    "x": -12.9,
+    "z": 0,
+    "hx": 7,
+    "hz": 4,
+    "nx": 5,
+    "side": -1,
+    "bg": 42
+   },
+   {
+    "id": "C",
+    "kind": "g7gshed",
+    "x": 12.9,
+    "z": 0,
+    "hx": 7,
+    "hz": 4,
+    "nx": 5,
+    "side": 1,
+    "bg": 43
+   }
+  ],
+  "tanks": [],
+  "charges": {
+   "tnt": 23
+  },
+  "tip": "",
+  "ftip": "Neighbouring legs tip it. Heavy pieces still count.",
+  "sol": [],
+  "tntStart": 23
+ },
+ {
+  "name": "Tram Depot",
+  "bp": "E03",
+  "tier": "N",
+  "f": 7,
+  "kind": "scene",
+  "hero": "A",
+  "heroId": "G7-E03",
+  "teaches": "drums",
+  "target": 0.85,
+  "yaw": 0.12,
+  "d": 1,
+  "fillMax": 0.73,
+  "hard7": true,
+  "hit7": {
+   "keys": [],
+   "drums": true
+  },
+  "sf": [],
+  "pattern": "drums: a row of red drums along the depot front; one TNT sets the row off and the sheds tip forward one by one; the heavy roof pieces land whole and need one more",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7depot",
+    "x": 0,
+    "z": 0,
+    "n": 3,
+    "hx": 3.8,
+    "hz": 7,
+    "ph": 8.5,
+    "hold": 1.2,
+    "bg0": 61,
+    "hw": 1.5
+   },
+   {
+    "id": "B",
+    "kind": "g7cabin",
+    "x": -15.799999999999997,
+    "z": 1,
+    "hx": 2.3,
+    "hz": 3,
+    "nb": 2,
+    "side": -1,
+    "bg": 66
+   },
+   {
+    "id": "C",
+    "kind": "g7cabin",
+    "x": 15.799999999999997,
+    "z": 1,
+    "hx": 2.3,
+    "hz": 3,
+    "nb": 2,
+    "side": 1,
+    "bg": 67
+   }
+  ],
+  "tanks": [
+   [
+    -10.5,
+    7.55
+   ],
+   [
+    -8.4,
+    7.55
+   ],
+   [
+    -6.3,
+    7.55
+   ],
+   [
+    -4.2,
+    7.55
+   ],
+   [
+    -2.1,
+    7.55
+   ],
+   [
+    0,
+    7.55
+   ],
+   [
+    2.1,
+    7.55
+   ],
+   [
+    4.2,
+    7.55
+   ],
+   [
+    6.3,
+    7.55
+   ],
+   [
+    8.4,
+    7.55
+   ],
+   [
+    10.5,
+    7.55
+   ]
+  ],
+  "charges": {
+   "tnt": 19
+  },
+  "tip": "",
+  "ftip": "Red drums blast for free. Heavy pieces still count.",
+  "sol": [],
+  "tntStart": 19
+ },
+ {
+  "name": "Market Hall",
+  "bp": "E04",
+  "tier": "N",
+  "f": 7,
+  "kind": "scene",
+  "hero": "A",
+  "heroId": "G7-E04",
+  "teaches": "materials",
+  "target": 0.85,
+  "yaw": 0.12,
+  "d": 1,
+  "fillMax": 0.73,
+  "hard7": true,
+  "drop7": {
+   "keys": [
+    "mdB"
+   ],
+   "fall": 1.5,
+   "armor": 0.97
+  },
+  "sf": [],
+  "pattern": "materials: a timber market (one TNT folds a section) behind a brick arcade (one TNT chips one pier); brick weigh houses at the ends",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7mhall",
+    "x": 0,
+    "z": 0,
+    "n": 3,
+    "hx": 3,
+    "hz": 6,
+    "ph": 5.4,
+    "ch": 2.6,
+    "rh": 1.6,
+    "bg0": 91
+   },
+   {
+    "id": "B",
+    "kind": "g7arcade",
+    "x": 0,
+    "z": 9.4,
+    "n": 6,
+    "len": 18.2,
+    "d": 1.2,
+    "pw": 0.95,
+    "h1": 5,
+    "h2": 3.6,
+    "bg": 95
+   },
+   {
+    "id": "C",
+    "kind": "g7kiosk",
+    "x": -14,
+    "z": 0,
+    "hx": 2.4,
+    "bg": 96
+   },
+   {
+    "id": "D",
+    "kind": "g7kiosk",
+    "x": 14,
+    "z": 0,
+    "hx": 2.4,
+    "bg": 97
+   }
+  ],
+  "tanks": [],
+  "charges": {
+   "tnt": 19
+  },
+  "tip": "",
+  "ftip": "Wood falls easy. Brick chips. Roofs still count.",
+  "sol": [],
+  "tntStart": 19
+ },
+ {
+  "name": "Boiler Stack",
+  "bp": "E06",
+  "tier": "N",
+  "f": 7,
+  "kind": "scene",
+  "hero": "A",
+  "heroId": "G7-E06",
+  "teaches": "aim",
+  "target": 0.85,
+  "yaw": 0.12,
+  "d": 1,
+  "fillMax": 0.73,
+  "hard7": true,
+  "drop7": {
+   "keys": [
+    "mdB",
+    "mdC"
+   ],
+   "fall": 1.5,
+   "armor": 0.97
+  },
+  "hit7": {
+   "keys": [
+    "bk",
+    "bkw",
+    "mdB",
+    "g7roofL"
+   ],
+   "armor": 0.001,
+   "f": 3,
+   "reach": 1
+  },
+  "sf": [],
+  "pattern": "aim: a chimney on legs at the end of a boiler house; tipped towards it the chimney lies along the boiler-house roof (one fall, two buildings); tipped away it hits the empty yard",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7stack",
+    "x": -12.15,
+    "z": 0,
+    "bx": 2.9,
+    "legH": 4.6,
+    "n": 5,
+    "sh": 3.1,
+    "hold": 2,
+    "bg": 51
+   },
+   {
+    "id": "B",
+    "kind": "g7boil",
+    "x": 0,
+    "z": 0,
+    "n": 2,
+    "bw": 3.6,
+    "hz": 6,
+    "ph": 7,
+    "bg0": 52,
+    "heavy": 1
+   }
+  ],
+  "tanks": [],
+  "charges": {
+   "tnt": 17
+  },
+  "tip": "",
+  "ftip": "Open the side it should fall. Tanks still count.",
+  "sol": [],
+  "tntStart": 17
+ }
+]

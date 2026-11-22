@@ -1,0 +1,172 @@
+{
+ "when": "2026-11-20T16:51:00.281Z",
+ "rule": {
+  "oneBombPct": 70,
+  "oneBombCollapse": 101,
+  "spare": {
+   "N": [
+    2,
+    5
+   ],
+   "H": [
+    1,
+    3
+   ],
+   "SH": [
+    1,
+    3
+   ]
+  },
+  "minWaves": {
+   "N": 2,
+   "H": 3,
+   "SH": 3
+  },
+  "estSec": {
+   "N": [
+    20,
+    75
+   ],
+   "H": [
+    30,
+    90
+   ],
+   "SH": [
+    40,
+    120
+   ]
+  },
+  "keepMax": 0.05,
+  "footMax": 80
+ },
+ "results": [
+  {
+   "id": "E04",
+   "lv": 37,
+   "name": "Market Hall",
+   "tier": "N",
+   "sf": [],
+   "pattern": "materials: a timber market (one TNT folds a section) behind a brick arcade (one TNT chips one pier); brick weigh houses at the ends",
+   "story": "",
+   "sfMetric": {},
+   "metrics": {
+    "members": 145,
+    "hard": 0,
+    "soft": 145,
+    "hardPct": 0,
+    "main": {
+     "members": 81,
+     "hard": 0,
+     "soft": 81,
+     "hardPct": 0,
+     "pos": {
+      "top": 0,
+      "mid": 0,
+      "bottom": 0,
+      "edge": 0,
+      "core": 0,
+      "front": 0,
+      "back": 0
+     },
+     "core": "no",
+     "hardLayers": 0,
+     "depthRows": 4,
+     "frontHard": 0,
+     "backHard": 0,
+     "floors": 3
+    },
+    "stacks": 4,
+    "parts": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "oneBomb": {
+    "pct": 15,
+    "collapse": 31,
+    "at": "bkw@D:f1",
+    "tried": 20
+   },
+   "lazy": {
+    "pct": 19,
+    "collapse": 65
+   },
+   "fairOpen": {
+    "win": true,
+    "res": "WIN",
+    "pct": 99,
+    "used": 13,
+    "left": 27,
+    "waves": 3,
+    "firstWave": 44,
+    "keep": 0,
+    "estSec": 36,
+    "log": "bld7=44 bld3=53 heap3=99"
+   },
+   "tnt": 19,
+   "fair": [
+    {
+     "win": true,
+     "res": "WIN",
+     "pct": 99,
+     "used": 14,
+     "left": 5,
+     "waves": 3,
+     "firstWave": 43,
+     "keep": 0,
+     "estSec": 37,
+     "log": "bld8=43 bld3=53 heap3=99"
+    },
+    {
+     "win": true,
+     "res": "WIN",
+     "pct": 99,
+     "used": 14,
+     "left": 5,
+     "waves": 3,
+     "firstWave": 44,
+     "keep": 0,
+     "estSec": 37,
+     "log": "bld8=44 bld3=53 heap3=99"
+    },
+    {
+     "win": true,
+     "res": "WIN",
+     "pct": 100,
+     "used": 15,
+     "left": 4,
+     "waves": 4,
+     "firstWave": 44,
+     "keep": 0,
+     "estSec": 46,
+     "log": "bld8=44 bld3=54 heap3=85 heap1=100"
+    }
+   ],
+   "spare": 4,
+   "allFoot": {
+    "pct": 63,
+    "used": 19,
+    "collapse": 79,
+    "keep": 0
+   },
+   "footOnly": {
+    "pct": 65,
+    "waves": 3,
+    "left": 3,
+    "keep": 0
+   },
+   "oneWave": {
+    "pct": 96,
+    "used": 19,
+    "reach": 109,
+    "collapse": 96
+   },
+   "verdict": "FAIL",
+   "issues": [
+    "ONE-WAVE (all TNT, one BLAST) reaches 96%"
+   ]
+  }
+ ]
+}

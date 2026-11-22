@@ -1,4 +1,4 @@
-{"_":"g7hard order audit, 22/11: elements per level read at run time from the main build (block keys of every live body, protected flag, barrels; mechanics from the level tip / g7 fields). Codes: oN = old level N, Hk = hard level. Re-audit after level content changes.","levels":{"o1":{"name":"Old Whirly","tier":"T","boss":false,"hard":false,"tnt":5,"el":["wood"]},
+{"_":"g7hard order audit, 22/11: elements per level read at run time from the main build (block keys of every live body, protected flag, barrels; mechanics from the level tip / g7 fields). Codes: oN = old level N, Hk = hard level. Re-audit after level content changes. 22/11 easy pack E01-E06 (42-46): keys read from the main build (rc / hrc / hard7v = dark, tank = barrels, drop7 = drop, every easy level needs >= 2 blasts = steps), src/g7hard/check-order.js.","levels":{"o1":{"name":"Old Whirly","tier":"T","boss":false,"hard":false,"tnt":5,"el":["wood"]},
 "o2":{"name":"Stripey Point","tier":"T","boss":false,"hard":false,"tnt":5,"el":["wood","brick"]},
 "o3":{"name":"Old Tock","tier":"N","boss":false,"hard":false,"tnt":5,"el":["wood","brick","concrete"]},
 "o4":{"name":"Needle Court","tier":"N","boss":false,"hard":false,"tnt":7,"el":["wood","concrete","glass","blue"]},
@@ -38,4 +38,9 @@
 "H2":{"name":"Watch Keep","tier":"H","boss":false,"hard":true,"tnt":25,"el":["brick","concrete","dark","stone","barrels","steps","perblast"]},
 "H3":{"name":"Grand Stage","tier":"H","boss":false,"hard":true,"tnt":24,"el":["concrete","dark","blue","steps"]},
 "H4":{"name":"Canal Row","tier":"SH","boss":false,"hard":true,"tnt":21,"el":["wood","concrete","dark","stone","blue","steps","perblast"]},
-"H5":{"name":"Glass Spine","tier":"SH","boss":false,"hard":true,"tnt":26,"el":["concrete","glass","dark","steps","perblast"]}}}
+"H5":{"name":"Glass Spine","tier":"SH","boss":false,"hard":true,"tnt":26,"el":["concrete","glass","dark","steps","perblast"]},
+"E01":{"name":"Long Legs","tier":"N","boss":false,"hard":false,"tnt":19,"el":["wood","concrete","glass","dark","barrels","steps","drop"]},
+"E02":{"name":"Shot Tower","tier":"N","boss":false,"hard":false,"tnt":23,"el":["wood","brick","dark","steps","drop"]},
+"E03":{"name":"Tram Depot","tier":"N","boss":false,"hard":false,"tnt":19,"el":["wood","brick","glass","dark","barrels","steps"]},
+"E04":{"name":"Market Hall","tier":"N","boss":false,"hard":false,"tnt":19,"el":["wood","brick","glass","steps","drop"]},
+"E06":{"name":"Boiler Stack","tier":"N","boss":false,"hard":false,"tnt":17,"el":["brick","concrete","dark","steps","drop"]}}}
