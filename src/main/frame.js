@@ -36,14 +36,15 @@
     // F5 (22/11/2026, tester round UX-72 / UX-71, polish R22; ?r22=0 = off): (a) BOSS openings keep the hero framing (3/4 yaw, fill) but
     // the projected bounding-box corners of the whole lot (target + protected blue buildings + their dress) must sit 16 px inside both
     // screen sides and inside the play rect: the camera backs off (up to zMax) and the view offset slides until they do (L11 cut its
-    // right-hand block at x 387). Hard levels already fit the lot (F4). (b) API.refit(): when planning resumes after a blast that left
+    // right-hand block at x 387). Hard levels already fit the lot (F4); on both, once the ease is over, the box is read off the live camera
+    // for a few frames and the offset / zoom nudged until it holds (the engine's yaw sway turns the view 1-3 degrees off the solved yaw). (b) API.refit(): when planning resumes after a blast that left
     // TNT (or after the "+1 TNT" rescue) the camera eases in 500 ms (cut with Reduce motion) onto what still counts (live target
     // members at their current pose; + the protected buildings on hard / boss levels) with the hard-opening margins (16 px sides,
     // FILL_HH of the play height), keeping the player's current yaw and pitch. Pinch-out / BLAST hand back exactly as F3.
     var R22 = Qf.get("r22") !== "0";
     var isGuard = function(){ return R22 && HARD && !!(L && L.boss) && !isHard(); };
     var FR = { on:!OFF, cf:CF, S:null, W:0, n:0 };
-    var API = window.__blast.frame = { on:function(){ return FR.on; }, cfg:function(){ return CF; }, state:function(){ var S = FR.S; return S ? { lv:S.lv, live:S.live, W:+FR.W.toFixed(3), zOpen:+S.zOpen.toFixed(4), zFrom:+S.zFrom.toFixed(4), t:+S.t.toFixed(2), easing:S.t < S.dur, hard:!!S.hard, yawOpen:+S.yawOpen.toFixed(3), yawD:+S.yawD.toFixed(3), sx:Math.round(S.sx), sy:Math.round(S.sy), fitW:S.fitW, fitH:S.fitH, bind:S.bind, guard:!!S.guard, guardN:S.guardN || 0, refit:!!S.refit } : null; }, measure:null };
+    var API = window.__blast.frame = { on:function(){ return FR.on; }, cfg:function(){ return CF; }, state:function(){ var S = FR.S; return S ? { lv:S.lv, live:S.live, W:+FR.W.toFixed(3), zOpen:+S.zOpen.toFixed(4), zFrom:+S.zFrom.toFixed(4), t:+S.t.toFixed(2), easing:S.t < S.dur, hard:!!S.hard, yawOpen:+S.yawOpen.toFixed(3), yawD:+S.yawD.toFixed(3), sx:Math.round(S.sx), sy:Math.round(S.sy), fitW:S.fitW, fitH:S.fitH, bind:S.bind, guard:!!S.guard, guardN:S.guardN || 0, refit:!!S.refit, sxT:Math.round(S.sxT), syT:Math.round(S.syT), fixN:S.fixN || 0, settled:!(S.t < S.dur) && Math.abs(S.sx - S.sxT) < 1 && Math.abs(S.sy - S.syT) < 1 && (!(R22 && (S.refit || S.hard || S.gpts)) || (S.fixN || 0) >= 40) } : null; }, measure:null };
     var TILT = CF.tilt;   // v14-monument.js updateCamera: the view levels out by TILT x close when zoomed in (pitch - TILT x tiltK)
     var _pc = new THREE.PerspectiveCamera(GAME_FOV, 1, 0.1, 4000), _v = new THREE.Vector3(), _q = new THREE.Quaternion(), _h = new THREE.Vector3();
     var heroIds = function(){ return String((L && L.hero) || "A").split(","); };
@@ -105,6 +106,19 @@
     updateCamera = function(rdt){
       var S = FR.S, game = screen === "game" && phase !== "title";
       if(!S || !game){ if(myX !== null && camera.view){ camera.setViewOffset(VW, VH, inX, inY, VW, VH); } myX = myY = null; FR.W = 0; return uc0(rdt); }
+      // F5 (b): once the ease is over, read the box off the camera as the last frame drew it (sway, clearance, pan and every later
+      // wrapper applied) for a few frames and nudge the offset (and, if it is too big, the zoom) until it sits 16 px inside the sides
+      // and inside the play rect, + 3 px for the sway. The same correction holds a hard / boss opening's lot (F4 / F5 a): the engine's
+      // yaw sway turns the view 1-3 degrees off the solved yaw.
+      var fixP = S.refit || S.hard ? S.pts : S.gpts;
+      if(R22 && fixP && S.live && FR.W > 0.98 && S.t >= S.dur && (S.fixN || 0) < 40 && ((S.fixF = (S.fixF || 0) + 1) % 3 === 0)){
+        camera.updateMatrixWorld(); camera.updateProjectionMatrix(); var A2 = area(), P2 = fixP, x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
+        for(var i2=0;i2<P2.length;i2+=3){ _v.set(P2[i2], P2[i2+1], P2[i2+2]).project(camera); var px = (_v.x + 1)/2*VW, py = (1 - _v.y)/2*VH; if(px < x0) x0 = px; if(px > x1) x1 = px; if(py < y0) y0 = py; if(py > y1) y1 = py; }
+        var L0 = SIDE_PX + 3, R0 = VW - SIDE_PX - 3, T0 = A2.t + 3, B0 = VH - A2.b - 3, ddx = 0, ddy = 0, kz = Math.max((x1 - x0)/(R0 - L0), (y1 - y0)/(B0 - T0));
+        if(kz > 1.01){ zoomT = clampZoom(zoomK*kz); S.zOpen = zoomT; S.zEnd = Math.max(S.zEnd, zoomT + 0.25); if(!S.refit) S.zFrom = Math.max(S.zFrom, zoomT); }
+        else { if(x0 < L0) ddx = x0 - L0; else if(x1 > R0) ddx = x1 - R0; if(y0 < T0) ddy = y0 - T0; else if(y1 > B0) ddy = y1 - B0; }
+        if(ddx || ddy){ S.sxT += ddx; S.syT += ddy; S.sx += ddx; S.sy += ddy; }
+        S.fixN = (S.fixN || 0) + 1; if(!ddx && !ddy && kz <= 1.01) S.fixN = 40; }
       // F2: the ease (game time of the render loop, capped like the rest of the camera)
       if(S.live && S.t < S.dur){ S.t = Math.min(S.dur, S.t + rdt); var e = 1 - Math.pow(1 - S.t/S.dur, 3); zoomT = zoomK = S.zFrom + (S.zOpen - S.zFrom)*e; zoomSp.v = 0; }
       // F3: the weight (state x zoom: the whole-lot zoom 1 = no framing)
@@ -124,16 +138,7 @@
       var v = camera.view; if(!v) return;
       if(myX === null || v.offsetX !== myX || v.offsetY !== myY){ inX = v.offsetX; inY = v.offsetY; }
       if(W > 0){ myX = inX + W*S.sx; myY = inY + W*(S.sy - viewShift); camera.setViewOffset(VW, VH, myX, myY, VW, VH); }
-      // F5 (b): once the re-frame ease is over, read the box off the live camera (sway, clearance and pan included) and nudge the
-      // offset (and, if it is too big, the zoom) until it sits 16 px inside the sides and inside the play rect, + 3 px for the sway (a few frames)
-      if(S.refit && S.live && W > 0.98 && S.t >= S.dur && (S.fixN || 0) < 40 && ((S.fixF = (S.fixF || 0) + 1) % 3 === 0)){
-        camera.updateMatrixWorld(); camera.updateProjectionMatrix(); var A2 = area(), P2 = S.pts, x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
-        for(var i2=0;i2<P2.length;i2+=3){ _v.set(P2[i2], P2[i2+1], P2[i2+2]).project(camera); var px = (_v.x + 1)/2*VW, py = (1 - _v.y)/2*VH; if(px < x0) x0 = px; if(px > x1) x1 = px; if(py < y0) y0 = py; if(py > y1) y1 = py; }
-        var L0 = SIDE_PX + 3, R0 = VW - SIDE_PX - 3, T0 = A2.t + 3, B0 = VH - A2.b - 3, ddx = 0, ddy = 0, kz = Math.max((x1 - x0)/(R0 - L0), (y1 - y0)/(B0 - T0));
-        if(kz > 1.01){ zoomT = clampZoom(zoomK*kz); S.zOpen = zoomT; S.zEnd = Math.max(S.zEnd, zoomT + 0.25); }
-        else { if(x0 < L0) ddx = x0 - L0; else if(x1 > R0) ddx = x1 - R0; if(y0 < T0) ddy = y0 - T0; else if(y1 > B0) ddy = y1 - B0; }
-        if(ddx || ddy){ S.sxT += ddx; S.syT += ddy; S.sx += ddx; S.sy += ddy; }
-        S.fixN = (S.fixN || 0) + 1; if(!ddx && !ddy && kz <= 1.01) S.fixN = 40; }
+
       else if(myX !== null){ camera.setViewOffset(VW, VH, inX, inY, VW, VH); myX = myY = null; }
     };
     }
