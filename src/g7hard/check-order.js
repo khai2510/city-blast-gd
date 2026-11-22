@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 /* g7hard order checker (22/11, Khai: "no material / obstacle before it is introduced"). Walks PLACE (patch.js) with the intro
  * triggers (main/intro.js INTRO_SCHED + INTRO_AT in patch.js) over the element audit (order-audit.json, read from the built game)
- * and asserts, for all levels (41; 46 with the easy pack E01-E06, 22/11): no element before its intro level; an element's first level is its intro level; at most one new
+ * and asserts, for all levels (41; 46 with the easy pack E01-E06, 22/11; 51 with E05 E07-E10): no element before its intro level; an element's first level is its intro level; at most one new
  * element per level; nothing new on a Hard / boss; no two Hard / boss in a row. Elements the game has no card for are listed (KNOWN).
- * Easy pack (22/11): an element first seen on an easy level (42-46) is a FAIL, card or not (they come after every intro).
+ * Easy pack (22/11): an element first seen on an easy level (42-51) is a FAIL, card or not (they come after every intro).
  *   node src/g7hard/check-order.js            exit 1 on any FAIL */
 'use strict';
 const fs = require('fs'), path = require('path');

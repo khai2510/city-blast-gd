@@ -1,15 +1,15 @@
-# E05 "Star Dome": result (Normal, TEACH, 20 TNT): PASS on the easy-pack bars
+# E05 "Star Dome": result (Normal, TEACH, 22 TNT): PASS on the easy-pack bars
 
 | Step | Result | File |
 |---|---|---|
 | 1. GD spec | lesson, shape, roles, wow, realization | `1-GD-SPEC.md` |
 | 2. Figma | Figma-style sheet from the game (opening + the lesson in four frames, 393 × 852) | `E05-sheet.jpg` |
 | 3. Builder | `g7obs` (observatory: an eight-sided brick drum of two storeys on 16 brick posts, a door, arched and round windows, string course, cornice and gallery rail; floors as a ring of cassettes round a hole; one heavy stepped silver dome (`hard7t`) with an observing slit; inside, the telescope pier: two slim dense heavy pieces (`hard7p` = `hard7v` at 7 800 kg/m³) on a stone plinth, standing free in the floor holes, the telescope on top as decor) and `g7study` (timber study wing: two storeys, glazed front, arched windows, desks and books inside, a slate roof with a transit hut and a weather mast) in `pipeline7/engine.js` | `make-level.mjs` → `level.json` |
-| 4. Tester | run r5 (base: main's `31-polish.html`): PASS every bar; `run.mjs` prints FAIL only for oneWave (91 %), which is reported only on easy levels | `results.json` (run r5) |
+| 4. Tester | run r5 (base: main's `31-polish.html`, alone): PASS at 20 TNT; the final run of all 10 easy levels in one session (main base 22/11) needed 22: the budget is set to 22. `run.mjs` prints FAIL only for oneWave (91–93 %), reported only on easy levels | `results.json` (run r5) |
 
 Hero position (for a later camera preset): part A (observatory) at x 0, z 0, drum 10 m across, ≈ 12 m to the dome top; wings at x ± 8.8. Lot ≈ 24 × 17 m.
 
-## Numbers (run r5, budget 20)
+## Numbers (run r5, alone, budget 20; the final 10-level run in brackets, budget 22)
 
 | Test | Bar | Result |
 |---|---|---|
@@ -19,9 +19,9 @@ Hero position (for a later camera preset): part A (observatory) at x 0, z 0, dru
 | footOnly | < 80 % | 67 % |
 | oneWave | reported only | 91 % |
 | fair, 3 seeds | 3/3 | WIN × 3 |
-| spare TNT | ≥ 2 | 2 / 3 / 2 |
-| blasts | ≥ 2 | 3 / 4 / 4 |
-| estimated time | 20–75 s | 45 / 53 / 54 s |
+| spare TNT | ≥ 2 | 2 / 3 / 2 (final: 5 / 3 / 5 at 22) |
+| blasts | ≥ 2 | 3 / 4 / 4 (final: 5 / 5 / 7) |
+| estimated time | 20–75 s | 45 / 53 / 54 s (final: 62 / 64 / **80** s: the third seed is 5 s over) |
 | fair, open probe (40 TNT) | — | 19 used, 5 waves, 92 % |
 
 - **Curve** (n bombs on the drum foot, one blast; % / collapse): 1: 6/6 · 2: 11/11 · 3: 17/17 · 4: 21/21 · 6: 26/26 · 8: 31/31 · 12: 31/31. Biggest jump +6: a steady climb with a ceiling (the core and the dome still count).
@@ -47,6 +47,6 @@ The ground storey of the drum folds and the upper drum and dome settle onto the 
 3. Lot compacted to ≈ 24 m (Lead 22/11).
 
 ## Open points for Khai
-- Budget 20 TNT, machine spare 2–3 (bottom of the Normal band).
+- Budget 22 TNT. Alone at 20 the machine keeps 2–3; in the long final session one seed needed more, so 22 (spare 3–5). The fair player's third seed took 7 blasts / 80 s there (bar 75 s; `run.mjs` judges the first seed, 62 s): E05 is the slowest of the batch.
 - The wow is "the pier holds up the dome" rather than "the dome drags the drum" (see above).
 - The fail line "Open the shell first. The core still counts." is the only text.

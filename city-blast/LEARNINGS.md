@@ -142,3 +142,21 @@ Link test (artifact, private): https://claude.ai/artifact/CDNLd5gsjLaTaPGT7W4pes
 - Gợi ý:
   - Mac: thiết kế, Figma, chốt bản lên link test.
   - Máy ảo: chạy bộ test nặng (mỗi lần 4–11 phút, chỉ 1 Chrome), làm song song màn tiếp theo trên nhánh `level/Lxx`.
+
+## 8. Gói dễ đợt 2: E05, E07–E10 (22/11, Agents-Game)
+
+| Mã | Tên | Bài học | Trạng thái |
+|---|---|---|---|
+| E05 | Star Dome (đài thiên văn: trống gạch 8 cạnh, vòm, trụ kính thiên văn) | phá vỏ trước, lõi sau: trụ `hard7p` không chạm được khi trống còn đứng | PASS, 22 TNT, N; đường cong tối đa +6 |
+| E07 | Bathhouse (nhà tắm công cộng mái vòm, 2 dãy cột, trường học xanh) | giữ toà xanh (nhẹ): nghiêng về phía trường là thua, nổ nhỏ phía trước thì vòm rơi tại chỗ | PASS, 18 TNT, N; đường cong +40 (đúng ngưỡng) |
+| E08 | Grain Elevator (nhà đầu silo bê tông, 2 × 2 silo, nhà cân) | góc bê tông cốt thép `hrc` phải đánh nhiều lần: 5 % → 5 % → 61 % | PASS, 20 TNT, N |
+| E09 | High Cistern (tháp nước gạch, bồn sắt trên giá thép) | làm rơi trước (nhẹ): bom vào bồn trên cao 0 %, rơi rồi 1 bom +27 | PASS, 20 TNT, N |
+| E10 | Rail Terminus (nhà ga đầu mối + nhà chờ tàu, thùng đỏ, trường học) | tổng hợp: chân, hướng, thùng đỏ, toà xanh | PASS, 14 TNT, N |
+
+- **TNT với tới 3,8 m.** Lõi giấu trong vỏ mà nằm trong 3,8 m của cột vỏ thì bom vào vỏ làm nứt lõi luôn (E05 lượt 1–2: allFoot 83–90 %). Lõi mảnh và đặc (`hard7p` = `hard7v` 7 800 kg/m³), cách mặt ngoài cột vỏ hơn 3,8 m, đứng trên bệ đá (anchor) để bài "foot" không coi nó là chân.
+- **Khối nặng đặt sát sàn trên cao**: bom vào khối đó làm vỡ tầng ngay dưới (E09: 3 TNT vào bồn làm sập tầng trên cùng, bồn rơi 2–3,6 m và thành "đã rơi"). Kê khối nặng lên giá thép 1,6 m và dùng cột RC bọc gạch (`g7bk`) cho các tầng trên.
+- **Khối nặng rơi từ 24 m vỡ khi chạm đất** (E08: mái nặng `hard7v`, `fail hard7v impact fell24.4`) và thành điểm miễn phí. Đặt khối nặng thấp hơn (thùng chứa trong tầng trên cùng) thay vì làm mái nặng.
+- **Đường cong của màn dạy luật nghiêng**: khi toà chính là phần lớn khối lượng, 1 → 2 bom nhảy +47…+52 (E07, E10). Giảm bằng cách làm toà chính nhẹ đi (mặt kính thay tường gạch) và toà phụ nặng hơn (tường hậu gạch, mái ngói nặng), không đụng luật.
+- **Lô gọn ≤ ≈ 24 m, rộng và sâu gần bằng nhau** (Lead 22/11: bước khung camera của bản chính coi màn có `hard7` như màn khó và mở xa). Chụp ảnh duyệt ở 393 × 852.
+- **Kết quả máy chơi `fair` lệch theo phiên**: E05 đứng một mình thắng ở 20 TNT, chạy chung 10 màn thì cần 22. Đặt ngân sách theo lần chạy chung (bản chính).
+- `run.mjs` in FAIL cho E05 / E07 chỉ vì oneWave (91–100 %), như E03 / E04 / E06: với màn dễ chỉ báo.
