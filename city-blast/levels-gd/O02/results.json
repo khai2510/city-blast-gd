@@ -1,0 +1,162 @@
+{
+ "when": "2026-11-22T16:05:36.990Z",
+ "bp": "O02",
+ "name": "Hop Kiln",
+ "tnt": 5,
+ "bar": "T",
+ "metrics": {
+  "members": 97,
+  "hard": 0,
+  "soft": 97,
+  "hardPct": 0,
+  "main": {
+   "members": 27,
+   "hard": 0,
+   "soft": 27,
+   "hardPct": 0,
+   "pos": {
+    "top": 0,
+    "mid": 0,
+    "bottom": 0,
+    "edge": 0,
+    "core": 0,
+    "front": 0,
+    "back": 0
+   },
+   "core": "no",
+   "hardLayers": 0,
+   "depthRows": 3,
+   "frontHard": 0,
+   "backHard": 0,
+   "floors": 3
+  },
+  "stacks": 4,
+  "parts": [
+   "A",
+   "S",
+   "B",
+   "C"
+  ]
+ },
+ "sol": {
+  "pct": 99,
+  "win": true,
+  "res": "WIN",
+  "placed": [
+   "ok",
+   "ok",
+   "ok",
+   "ok"
+  ],
+  "waves": 1,
+  "keep": 0
+ },
+ "oneBomb": {
+  "pct": 48,
+  "collapse": 52,
+  "at": "bk@A:f0",
+  "tried": 20
+ },
+ "lazy": {
+  "pct": 47,
+  "collapse": 54
+ },
+ "fair": [
+  {
+   "win": false,
+   "res": "LOSE pct",
+   "pct": 15,
+   "used": 5,
+   "left": 0,
+   "waves": 1,
+   "firstWave": 15,
+   "keep": 0,
+   "estSec": 12,
+   "log": "bld5=15"
+  },
+  {
+   "win": false,
+   "res": "LOSE pct",
+   "pct": 15,
+   "used": 5,
+   "left": 0,
+   "waves": 1,
+   "firstWave": 15,
+   "keep": 0,
+   "estSec": 13,
+   "log": "bld5=15"
+  },
+  {
+   "win": false,
+   "res": "LOSE pct",
+   "pct": 15,
+   "used": 5,
+   "left": 0,
+   "waves": 1,
+   "firstWave": 15,
+   "keep": 0,
+   "estSec": 12,
+   "log": "bld5=15"
+  }
+ ],
+ "allFoot": {
+  "pct": 68,
+  "used": 5,
+  "collapse": 85,
+  "keep": 0
+ },
+ "footOnly": {
+  "pct": 68,
+  "waves": 1,
+  "left": 0,
+  "keep": 0
+ },
+ "oneWave": {
+  "pct": 59,
+  "used": 5,
+  "reach": 85,
+  "collapse": 75
+ },
+ "curve": [
+  {
+   "n": 1,
+   "pct": 42,
+   "collapse": 45
+  },
+  {
+   "n": 2,
+   "pct": 47,
+   "collapse": 52
+  },
+  {
+   "n": 3,
+   "pct": 52,
+   "collapse": 62
+  },
+  {
+   "n": 4,
+   "pct": 52,
+   "collapse": 59
+  },
+  {
+   "n": 6,
+   "pct": 51,
+   "collapse": 59
+  },
+  {
+   "n": 8,
+   "pct": 52,
+   "collapse": 65
+  },
+  {
+   "n": 12,
+   "pct": 52,
+   "collapse": 65
+  }
+ ],
+ "verdict": "MISS",
+ "issues": [
+  "fair 0/3",
+  "spare 0"
+ ]
+}

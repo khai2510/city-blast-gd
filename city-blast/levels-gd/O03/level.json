@@ -1,0 +1,150 @@
+[
+ {
+  "name": "Airfield Tower",
+  "bp": "O03",
+  "slot": 3,
+  "replaces": "o3",
+  "tier": "N",
+  "f": 12,
+  "kind": "scene",
+  "hero": "A,S,B,C",
+  "heroId": "G7-O03",
+  "teaches": "concrete",
+  "target": 0.85,
+  "yaw": 0,
+  "d": 1,
+  "base": {
+   "A": {
+    "preset": "stiff-tip",
+    "shove": 2.5
+   },
+   "*": "weak"
+  },
+  "sf": [],
+  "pattern": "tutorial: two grey columns side by side drop the tower forward across the baggage hall; one column alone only cracks it; each wing takes its own column",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7oTwr",
+    "x": 0,
+    "z": -8,
+    "hx": 3,
+    "gh": 5,
+    "sh": 3.3,
+    "ns": 4
+   },
+   {
+    "id": "S",
+    "kind": "g7oBag",
+    "x": 0,
+    "z": 2.4,
+    "hx": 4.8,
+    "hz": 2,
+    "h": 2.4,
+    "nx": 4
+   },
+   {
+    "id": "B",
+    "kind": "g7oWing",
+    "x": -9,
+    "z": -7.4,
+    "hx": 3.4,
+    "hz": 2.8,
+    "side": -1,
+    "nb": 3
+   },
+   {
+    "id": "C",
+    "kind": "g7oWing",
+    "x": 9,
+    "z": -7.4,
+    "hx": 3.4,
+    "hz": 2.8,
+    "side": 1,
+    "nb": 3
+   }
+  ],
+  "charges": {
+   "tnt": 40
+  },
+  "hint": "A:z+",
+  "tip": "",
+  "dud": "Not yet. Two columns side by side!",
+  "ftip": "Grey columns: one TNT each. Two side by side.",
+  "lesson": {
+   "check": [
+    [
+     [
+      "tnt",
+      "A:z+",
+      0,
+      0
+     ],
+     [
+      "tnt",
+      "B:z+",
+      0,
+      0
+     ],
+     [
+      "tnt",
+      "C:z+",
+      0,
+      0
+     ]
+    ]
+   ]
+  },
+  "sol": [
+   [
+    "tnt",
+    "A:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "A:z+",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "B:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "C:z+",
+    0,
+    0
+   ]
+  ],
+  "bot": {
+   "hints": [
+    [
+     "A",
+     "A:z+",
+     1
+    ],
+    [
+     "A",
+     "A:z+",
+     1
+    ],
+    [
+     "A",
+     "B:z+",
+     1
+    ],
+    [
+     "A",
+     "C:z+",
+     1
+    ]
+   ]
+  },
+  "tntStart": 5
+ }
+]

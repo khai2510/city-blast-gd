@@ -1,0 +1,169 @@
+{
+ "when": "2026-11-22T16:04:43.181Z",
+ "bp": "O01",
+ "name": "Ranger Lookout",
+ "tnt": 5,
+ "bar": "T",
+ "metrics": {
+  "members": 98,
+  "hard": 0,
+  "soft": 98,
+  "hardPct": 0,
+  "main": {
+   "members": 30,
+   "hard": 0,
+   "soft": 30,
+   "hardPct": 0,
+   "pos": {
+    "top": 0,
+    "mid": 0,
+    "bottom": 0,
+    "edge": 0,
+    "core": 0,
+    "front": 0,
+    "back": 0
+   },
+   "core": "no",
+   "hardLayers": 0,
+   "depthRows": 4,
+   "frontHard": 0,
+   "backHard": 0,
+   "floors": 6
+  },
+  "stacks": 4,
+  "parts": [
+   "A",
+   "S",
+   "B",
+   "C"
+  ]
+ },
+ "sol": {
+  "pct": 98,
+  "win": true,
+  "res": "WIN",
+  "placed": [
+   "ok",
+   "ok",
+   "ok"
+  ],
+  "waves": 1,
+  "keep": 0
+ },
+ "solDbl": {
+  "pct": 92,
+  "win": true,
+  "res": "WIN",
+  "placed": "0oknomemberok",
+  "waves": 3,
+  "keep": 0
+ },
+ "oneBomb": {
+  "pct": 67,
+  "collapse": 71,
+  "at": "wpost@C:f0",
+  "tried": 20
+ },
+ "lazy": {
+  "pct": 87,
+  "collapse": 100
+ },
+ "fair": [
+  {
+   "win": false,
+   "res": "LOSE pct",
+   "pct": 68,
+   "used": 5,
+   "left": 0,
+   "waves": 1,
+   "firstWave": 68,
+   "keep": 0,
+   "estSec": 13,
+   "log": "bld5=68"
+  },
+  {
+   "win": false,
+   "res": "LOSE pct",
+   "pct": 68,
+   "used": 5,
+   "left": 0,
+   "waves": 1,
+   "firstWave": 68,
+   "keep": 0,
+   "estSec": 13,
+   "log": "bld5=68"
+  },
+  {
+   "win": false,
+   "res": "LOSE pct",
+   "pct": 69,
+   "used": 5,
+   "left": 0,
+   "waves": 1,
+   "firstWave": 69,
+   "keep": 0,
+   "estSec": 14,
+   "log": "bld5=69"
+  }
+ ],
+ "allFoot": {
+  "pct": 100,
+  "used": 5,
+  "collapse": 100,
+  "keep": 0
+ },
+ "footOnly": {
+  "pct": 100,
+  "waves": 1,
+  "left": 0,
+  "keep": 0
+ },
+ "oneWave": {
+  "pct": 66,
+  "used": 5,
+  "reach": 83,
+  "collapse": 71
+ },
+ "curve": [
+  {
+   "n": 1,
+   "pct": 41,
+   "collapse": 36
+  },
+  {
+   "n": 2,
+   "pct": 53,
+   "collapse": 47
+  },
+  {
+   "n": 3,
+   "pct": 54,
+   "collapse": 52
+  },
+  {
+   "n": 4,
+   "pct": 56,
+   "collapse": 53
+  },
+  {
+   "n": 6,
+   "pct": 56,
+   "collapse": 53
+  },
+  {
+   "n": 8,
+   "pct": 56,
+   "collapse": 53
+  },
+  {
+   "n": 12,
+   "pct": 56,
+   "collapse": 53
+  }
+ ],
+ "verdict": "MISS",
+ "issues": [
+  "fair 0/3",
+  "spare 0"
+ ]
+}

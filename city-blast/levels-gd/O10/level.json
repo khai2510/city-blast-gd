@@ -1,0 +1,129 @@
+[
+ {
+  "name": "Pier Pavilion",
+  "bp": "O10",
+  "slot": 10,
+  "replaces": "o14",
+  "tier": "N",
+  "f": 12,
+  "kind": "scene",
+  "hero": "A,S,B,C",
+  "heroId": "G7-O10",
+  "teaches": "steel",
+  "target": 0.85,
+  "yaw": 0,
+  "d": 1,
+  "base": {
+   "A": {
+    "preset": "stiff-tip",
+    "shove": 2.5
+   },
+   "*": "weak"
+  },
+  "sf": [],
+  "pattern": "materials ladder: concrete pile caps under steel legs under a brick and timber pavilion; two caps side by side pitch it onto the hut row",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7oPav",
+    "x": 0,
+    "z": -7,
+    "hx": 3.4,
+    "hz": 3,
+    "ph": 3,
+    "lh": 2.2
+   },
+   {
+    "id": "S",
+    "kind": "g7oHuts",
+    "x": 0,
+    "z": -1.2,
+    "n": 5,
+    "w": 1.8,
+    "hz": 1.4,
+    "h": 2.4
+   },
+   {
+    "id": "B",
+    "kind": "g7oCott",
+    "x": -9.8,
+    "z": -6.4,
+    "hx": 3.2,
+    "hz": 2.8,
+    "side": -1
+   },
+   {
+    "id": "C",
+    "kind": "g7oCott",
+    "x": 9.8,
+    "z": -6.4,
+    "hx": 3.2,
+    "hz": 2.8,
+    "side": 1
+   }
+  ],
+  "charges": {
+   "tnt": 40
+  },
+  "hint": "A:z+",
+  "tip": "",
+  "dud": "Not yet. Two legs side by side!",
+  "ftip": "Hit what holds the steel. Two side by side.",
+  "lesson": {
+   "check": [
+    []
+   ]
+  },
+  "sol": [
+   [
+    "tnt",
+    "A:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "A:z+",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "B:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "C:z+",
+    0,
+    0
+   ]
+  ],
+  "bot": {
+   "hints": [
+    [
+     "A",
+     "A:z+",
+     1
+    ],
+    [
+     "A",
+     "A:z+",
+     1
+    ],
+    [
+     "A",
+     "B:z+",
+     1
+    ],
+    [
+     "A",
+     "C:z+",
+     1
+    ]
+   ]
+  },
+  "tntStart": 8
+ }
+]

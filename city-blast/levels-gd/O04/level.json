@@ -1,0 +1,147 @@
+[
+ {
+  "name": "Fire Station",
+  "bp": "O04",
+  "slot": 4,
+  "replaces": "o36",
+  "tier": "N",
+  "f": 12,
+  "kind": "scene",
+  "hero": "A,S,C",
+  "heroId": "G7-O04",
+  "teaches": "keep",
+  "target": 0.85,
+  "yaw": 0,
+  "d": 1,
+  "base": {
+   "A": {
+    "preset": "stiff-tip",
+    "shove": 2.5
+   },
+   "*": "weak"
+  },
+  "sf": [],
+  "pattern": "blue intro: two brick piers tip the hose tower forward onto the engine house, away from the school; the crew house takes its own pier",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7oHose",
+    "x": 0,
+    "z": -8,
+    "hx": 2.8,
+    "ah": 4.6,
+    "sh": 3.4,
+    "ns": 3
+   },
+   {
+    "id": "S",
+    "kind": "g7oEng",
+    "x": 0,
+    "z": 4.6,
+    "hx": 4.8,
+    "hz": 2.2,
+    "h": 3
+   },
+   {
+    "id": "C",
+    "kind": "g7oCott",
+    "x": 9,
+    "z": -7.2,
+    "hx": 3.2,
+    "hz": 2.8,
+    "side": 1
+   }
+  ],
+  "keeps": [
+   {
+    "kind": "keep6",
+    "x": -9,
+    "z": -7.2,
+    "floors": 3,
+    "cx": 3,
+    "cz": 3,
+    "name": "the school",
+    "role": "school",
+    "fixType": "school"
+   }
+  ],
+  "keep": {
+   "name": "the school",
+   "sides": [],
+   "type": "school",
+   "role": "school",
+   "full": 1
+  },
+  "charges": {
+   "tnt": 40
+  },
+  "hint": "A:z+",
+  "tip": "",
+  "dud": "Not yet. Two legs side by side!",
+  "ftip": "Bring it down in front. Keep the blue safe.",
+  "lesson": {
+   "check": [
+    [
+     [
+      "tnt",
+      "A:z+",
+      0,
+      0
+     ],
+     [
+      "tnt",
+      "A:z+",
+      0,
+      1
+     ],
+     [
+      "tnt",
+      "C:x-",
+      0,
+      0
+     ]
+    ]
+   ]
+  },
+  "sol": [
+   [
+    "tnt",
+    "A:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "A:z+",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "C:z+",
+    0,
+    0
+   ]
+  ],
+  "bot": {
+   "hints": [
+    [
+     "A",
+     "A:z+",
+     1
+    ],
+    [
+     "A",
+     "A:z+",
+     1
+    ],
+    [
+     "A",
+     "C:z+",
+     1
+    ]
+   ]
+  },
+  "tntStart": 7
+ }
+]

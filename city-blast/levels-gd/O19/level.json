@@ -1,0 +1,148 @@
+[
+ {
+  "name": "Library",
+  "bp": "O19",
+  "slot": 19,
+  "replaces": "o18",
+  "tier": "N",
+  "f": 12,
+  "kind": "scene",
+  "hero": "A,S,C",
+  "heroId": "G7-O19",
+  "teaches": "rotate",
+  "target": 0.85,
+  "yaw": 0,
+  "d": 1,
+  "base": {
+   "A": {
+    "preset": "stiff-tip",
+    "shove": 2.5
+   },
+   "*": "weak"
+  },
+  "sf": [],
+  "pattern": "rotate + dark: the stack tower must fall forward onto the reading hall; its front legs are only reached from the side",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7oLib",
+    "x": 0,
+    "z": -9,
+    "hx": 3.4,
+    "gh": 4.4,
+    "sh": 3.4,
+    "ns": 4
+   },
+   {
+    "id": "S",
+    "kind": "g7oRead",
+    "x": 0,
+    "z": -1.6,
+    "hx": 5.4,
+    "hz": 2.6
+   },
+   {
+    "id": "C",
+    "kind": "g7oCott",
+    "x": 9.8,
+    "z": -8.4,
+    "hx": 3.2,
+    "hz": 2.8,
+    "side": 1
+   }
+  ],
+  "keeps": [
+   {
+    "kind": "keep6",
+    "x": -9.8,
+    "z": -8.4,
+    "floors": 3,
+    "cx": 3,
+    "cz": 3,
+    "name": "the school",
+    "role": "school",
+    "fixType": "school"
+   }
+  ],
+  "keep": {
+   "name": "the school",
+   "sides": [],
+   "type": "school",
+   "role": "school",
+   "full": 1
+  },
+  "faces": {
+   "right": [
+    "z+"
+   ],
+   "wrong": [
+    "z-",
+    "x+",
+    "x-"
+   ]
+  },
+  "charges": {
+   "tnt": 40
+  },
+  "hint": "A:z+",
+  "tip": "",
+  "dud": "Not yet. Two legs side by side!",
+  "ftip": "Aim it at the hall. Turn the view.",
+  "lesson": {
+   "check": [
+    []
+   ]
+  },
+  "sol": [
+   [
+    "tnt",
+    "A:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "A:z+",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "S:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "C:z+",
+    0,
+    0
+   ]
+  ],
+  "bot": {
+   "hints": [
+    [
+     "A",
+     "A:z+",
+     1
+    ],
+    [
+     "A",
+     "A:z+",
+     1
+    ],
+    [
+     "A",
+     "S:z+",
+     1
+    ],
+    [
+     "A",
+     "C:z+",
+     1
+    ]
+   ]
+  },
+  "tntStart": 10
+ }
+]

@@ -1,0 +1,151 @@
+[
+ {
+  "name": "Roadside Motel",
+  "bp": "O18",
+  "slot": 18,
+  "replaces": "o12",
+  "tier": "N",
+  "f": 12,
+  "kind": "scene",
+  "hero": "A,S,B,C",
+  "heroId": "G7-O18",
+  "teaches": "rotate",
+  "target": 0.85,
+  "yaw": 0,
+  "d": 1,
+  "base": {
+   "A": {
+    "preset": "stiff-tip",
+    "shove": 2.5
+   },
+   "*": "weak"
+  },
+  "sf": [],
+  "pattern": "rotate + dark: the sign pylon stands on dark back legs; turned to the back, two of them (more TNT each) drop it across the motel row",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7oSign",
+    "x": 0,
+    "z": -2,
+    "hx": 1.8,
+    "gh": 4,
+    "sh": 3.6,
+    "ns": 4
+   },
+   {
+    "id": "S",
+    "kind": "g7oMotel",
+    "x": 0,
+    "z": -7.4,
+    "n": 4,
+    "w": 3,
+    "hz": 2.6,
+    "h": 3.2
+   },
+   {
+    "id": "B",
+    "kind": "g7oCott",
+    "x": -9,
+    "z": -2,
+    "hx": 3.2,
+    "hz": 2.8,
+    "side": -1
+   },
+   {
+    "id": "C",
+    "kind": "g7oCott",
+    "x": 9,
+    "z": -2,
+    "hx": 3.2,
+    "hz": 2.8,
+    "side": 1
+   }
+  ],
+  "faces": {
+   "right": [
+    "z-"
+   ],
+   "wrong": [
+    "z+",
+    "x+",
+    "x-"
+   ]
+  },
+  "charges": {
+   "tnt": 40
+  },
+  "hint": "A:z-",
+  "tip": "",
+  "dud": "Not yet. Dark piers need more TNT!",
+  "ftip": "Dark legs take more TNT. Look round the back.",
+  "lesson": {
+   "check": [
+    []
+   ]
+  },
+  "sol": [
+   [
+    "tnt",
+    "A:z-",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "A:z-",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "A:z-",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "A:z-",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "B:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "C:z+",
+    0,
+    0
+   ]
+  ],
+  "bot": {
+   "hints": [
+    [
+     "A",
+     "A:z-",
+     2
+    ],
+    [
+     "A",
+     "A:z-",
+     2
+    ],
+    [
+     "A",
+     "B:z+",
+     1
+    ],
+    [
+     "A",
+     "C:z+",
+     1
+    ]
+   ]
+  },
+  "tntStart": 10
+ }
+]

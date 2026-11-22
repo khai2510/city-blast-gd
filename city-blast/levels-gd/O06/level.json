@@ -1,0 +1,128 @@
+[
+ {
+  "name": "Harbour Crane",
+  "bp": "O06",
+  "slot": 6,
+  "replaces": "o8",
+  "tier": "N",
+  "f": 12,
+  "kind": "scene",
+  "hero": "A,S,B,C",
+  "heroId": "G7-O06",
+  "teaches": "steel",
+  "target": 0.85,
+  "yaw": 0,
+  "d": 1,
+  "base": {
+   "A": {
+    "preset": "stiff-tip",
+    "shove": 2.5
+   },
+   "*": "weak"
+  },
+  "sf": [],
+  "pattern": "steel intro: TNT on the steel legs does little; two concrete pedestals side by side drop the crane forward onto the ship; each warehouse takes its own pier",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7oCrane",
+    "x": 0,
+    "z": -6,
+    "hx": 3.2,
+    "hz": 2.6,
+    "ph": 2.6,
+    "lh": 7
+   },
+   {
+    "id": "S",
+    "kind": "g7oShip",
+    "x": 0,
+    "z": 4.6,
+    "hx": 5.4,
+    "hz": 1.8,
+    "h": 2
+   },
+   {
+    "id": "B",
+    "kind": "g7oWhse",
+    "x": -9,
+    "z": -6,
+    "hx": 3.2,
+    "hz": 3,
+    "nb": 3
+   },
+   {
+    "id": "C",
+    "kind": "g7oWhse",
+    "x": 9,
+    "z": -6,
+    "hx": 3.2,
+    "hz": 3,
+    "nb": 3
+   }
+  ],
+  "charges": {
+   "tnt": 40
+  },
+  "hint": "A:z+",
+  "tip": "",
+  "dud": "Not yet. Two legs side by side!",
+  "ftip": "Steel holds. Break what it stands on.",
+  "lesson": {
+   "check": [
+    []
+   ]
+  },
+  "sol": [
+   [
+    "tnt",
+    "A:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "A:z+",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "B:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "C:z+",
+    0,
+    0
+   ]
+  ],
+  "bot": {
+   "hints": [
+    [
+     "A",
+     "A:z+",
+     1
+    ],
+    [
+     "A",
+     "A:z+",
+     1
+    ],
+    [
+     "A",
+     "B:z+",
+     1
+    ],
+    [
+     "A",
+     "C:z+",
+     1
+    ]
+   ]
+  },
+  "tntStart": 8
+ }
+]

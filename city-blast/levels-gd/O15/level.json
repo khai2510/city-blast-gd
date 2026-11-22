@@ -1,0 +1,127 @@
+[
+ {
+  "name": "Gas Works",
+  "bp": "O15",
+  "slot": 15,
+  "replaces": "o19",
+  "tier": "N",
+  "f": 12,
+  "kind": "scene",
+  "hero": "A,S,B,C",
+  "heroId": "G7-O15",
+  "teaches": "steel",
+  "target": 0.85,
+  "yaw": 0,
+  "d": 1,
+  "base": {
+   "A": {
+    "preset": "stiff-tip",
+    "shove": 2.5
+   },
+   "*": "weak"
+  },
+  "sf": [],
+  "pattern": "steel on brick: two brick pedestals side by side lean the steel guide frame over onto the retort house",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7oGas",
+    "x": 0,
+    "z": -8,
+    "r": 4.2,
+    "ph": 2.4,
+    "sh": 6
+   },
+   {
+    "id": "S",
+    "kind": "g7oRetort",
+    "x": 0,
+    "z": 4.6,
+    "hx": 5.6,
+    "hz": 2.2,
+    "h": 3.4
+   },
+   {
+    "id": "B",
+    "kind": "g7oWhse",
+    "x": -9.9,
+    "z": -8,
+    "hx": 3.2,
+    "hz": 3,
+    "nb": 3
+   },
+   {
+    "id": "C",
+    "kind": "g7oWhse",
+    "x": 9.9,
+    "z": -8,
+    "hx": 3.2,
+    "hz": 3,
+    "nb": 3
+   }
+  ],
+  "charges": {
+   "tnt": 40
+  },
+  "hint": "A:z+",
+  "tip": "",
+  "dud": "Not yet. Two legs side by side!",
+  "ftip": "Steel stands on brick. Break two side by side.",
+  "lesson": {
+   "check": [
+    []
+   ]
+  },
+  "sol": [
+   [
+    "tnt",
+    "A:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "A:z+",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "B:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "C:z+",
+    0,
+    0
+   ]
+  ],
+  "bot": {
+   "hints": [
+    [
+     "A",
+     "A:z+",
+     1
+    ],
+    [
+     "A",
+     "A:z+",
+     1
+    ],
+    [
+     "A",
+     "B:z+",
+     1
+    ],
+    [
+     "A",
+     "C:z+",
+     1
+    ]
+   ]
+  },
+  "tntStart": 9
+ }
+]

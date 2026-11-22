@@ -1,0 +1,120 @@
+[
+ {
+  "name": "Monorail Station",
+  "bp": "O13",
+  "slot": 13,
+  "replaces": "o15",
+  "tier": "N",
+  "f": 12,
+  "kind": "scene",
+  "hero": "A,B,C",
+  "heroId": "G7-O13",
+  "teaches": "support",
+  "target": 0.85,
+  "yaw": 0,
+  "d": 1,
+  "base": {
+   "A": "stiff-tip",
+   "*": "weak"
+  },
+  "sf": [],
+  "pattern": "support chain: the viaduct spans rest on the station platform; drop the station and both spans swing down",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7oMono",
+    "x": 0,
+    "z": -5,
+    "hx": 4.2,
+    "hz": 2.6,
+    "gh": 6,
+    "bg": 91
+   },
+   {
+    "id": "B",
+    "kind": "g7oSpan",
+    "x": -7.4,
+    "z": -5,
+    "side": -1,
+    "len": 8,
+    "y": 6,
+    "hz": 2,
+    "bg": 92
+   },
+   {
+    "id": "C",
+    "kind": "g7oSpan",
+    "x": 7.4,
+    "z": -5,
+    "side": 1,
+    "len": 8,
+    "y": 6,
+    "hz": 2,
+    "bg": 93
+   }
+  ],
+  "charges": {
+   "tnt": 40
+  },
+  "hint": "A:z+",
+  "tip": "",
+  "dud": "Not yet. Two legs side by side!",
+  "ftip": "What rests on it falls with it.",
+  "lesson": {
+   "check": [
+    []
+   ]
+  },
+  "sol": [
+   [
+    "tnt",
+    "A:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "A:z+",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "B:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "C:z+",
+    0,
+    0
+   ]
+  ],
+  "bot": {
+   "hints": [
+    [
+     "A",
+     "A:z+",
+     1
+    ],
+    [
+     "A",
+     "A:z+",
+     1
+    ],
+    [
+     "A",
+     "B:z+",
+     1
+    ],
+    [
+     "A",
+     "C:z+",
+     1
+    ]
+   ]
+  },
+  "tntStart": 8
+ }
+]

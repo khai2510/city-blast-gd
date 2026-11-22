@@ -1,0 +1,180 @@
+[
+ {
+  "name": "Valley Station",
+  "bp": "O05",
+  "slot": 5,
+  "replaces": "o6",
+  "tier": "N",
+  "f": 12,
+  "kind": "scene",
+  "hero": "A,S,B,C",
+  "heroId": "G7-O05",
+  "teaches": "rotate",
+  "target": 0.85,
+  "yaw": 0,
+  "d": 1,
+  "base": {
+   "A": "stiff-tip",
+   "*": "weak"
+  },
+  "sf": [],
+  "pattern": "rotate: the front legs drop the station on the blue house; turned to the back, two legs drop it onto the ticket hall",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7oCable",
+    "x": 0,
+    "z": -3,
+    "hx": 3.2,
+    "gh": 4.8,
+    "sh": 3.3,
+    "ns": 2
+   },
+   {
+    "id": "S",
+    "kind": "g7oTicket",
+    "x": 0,
+    "z": -15.5,
+    "hx": 5,
+    "hz": 3,
+    "nb": 2
+   },
+   {
+    "id": "B",
+    "kind": "g7oCabin",
+    "x": -9,
+    "z": -3,
+    "hx": 3.2,
+    "hz": 2.8,
+    "side": -1
+   },
+   {
+    "id": "C",
+    "kind": "g7oCabin",
+    "x": 9,
+    "z": -3,
+    "hx": 3.2,
+    "hz": 2.8,
+    "side": 1
+   }
+  ],
+  "keeps": [
+   {
+    "kind": "keep6",
+    "x": 0,
+    "z": 6.5,
+    "floors": 1,
+    "cx": 4,
+    "cz": 2,
+    "name": "the guest house",
+    "role": "hospital",
+    "fixType": "hospital"
+   }
+  ],
+  "keep": {
+   "name": "the guest house",
+   "sides": [],
+   "type": "hospital",
+   "role": "hospital",
+   "full": 1
+  },
+  "faces": {
+   "right": [
+    "z-"
+   ],
+   "wrong": [
+    "z+",
+    "x+",
+    "x-"
+   ]
+  },
+  "charges": {
+   "tnt": 40
+  },
+  "hint": "A:z-",
+  "tip": "",
+  "dud": "Not yet. Two legs side by side!",
+  "ftip": "It falls toward the legs you break. Turn around.",
+  "lesson": {
+   "check": [
+    [
+     [
+      "tnt",
+      "A:z+",
+      0,
+      0
+     ],
+     [
+      "tnt",
+      "A:z+",
+      0,
+      1
+     ],
+     [
+      "tnt",
+      "B:z+",
+      0,
+      0
+     ],
+     [
+      "tnt",
+      "C:z+",
+      0,
+      0
+     ]
+    ]
+   ]
+  },
+  "sol": [
+   [
+    "tnt",
+    "A:z-",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "A:z-",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "B:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "C:z+",
+    0,
+    0
+   ]
+  ],
+  "bot": {
+   "hints": [
+    [
+     "A",
+     "A:z-",
+     1
+    ],
+    [
+     "A",
+     "A:z-",
+     1
+    ],
+    [
+     "A",
+     "B:z+",
+     1
+    ],
+    [
+     "A",
+     "C:z+",
+     1
+    ]
+   ]
+  },
+  "tntStart": 8
+ }
+]

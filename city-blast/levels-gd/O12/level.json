@@ -1,0 +1,129 @@
+[
+ {
+  "name": "Drive-in",
+  "bp": "O12",
+  "slot": 12,
+  "replaces": "o21",
+  "tier": "N",
+  "f": 12,
+  "kind": "scene",
+  "hero": "A,S,B,C",
+  "heroId": "G7-O12",
+  "teaches": "wreck",
+  "target": 0.85,
+  "yaw": 0,
+  "d": 1,
+  "base": {
+   "A": {
+    "preset": "stiff-tip",
+    "shove": 2.5
+   },
+   "*": "weak"
+  },
+  "sf": [],
+  "pattern": "a wide screen on a row of concrete footings: two side by side drop it forward across the booth; the diners take their own pier",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7oScreen",
+    "x": 0,
+    "z": -8,
+    "hx": 5.4,
+    "hz": 1.6,
+    "fh": 2.2,
+    "sh": 4.4,
+    "nx": 4
+   },
+   {
+    "id": "S",
+    "kind": "g7oBooth",
+    "x": 0,
+    "z": -3.2,
+    "hx": 4.6,
+    "hz": 2.2,
+    "h": 3
+   },
+   {
+    "id": "B",
+    "kind": "g7oTicket",
+    "x": -10.4,
+    "z": -7,
+    "hx": 2.6,
+    "hz": 2.8,
+    "nb": 2
+   },
+   {
+    "id": "C",
+    "kind": "g7oTicket",
+    "x": 10.4,
+    "z": -7,
+    "hx": 2.6,
+    "hz": 2.8,
+    "nb": 2
+   }
+  ],
+  "charges": {
+   "tnt": 40
+  },
+  "hint": "A:z+",
+  "tip": "",
+  "dud": "Not yet. Two legs side by side!",
+  "ftip": "A wall stands on its feet. Two side by side.",
+  "lesson": {
+   "check": [
+    []
+   ]
+  },
+  "sol": [
+   [
+    "tnt",
+    "A:z+",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "A:z+",
+    0,
+    2
+   ],
+   [
+    "tnt",
+    "B:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "C:z+",
+    0,
+    0
+   ]
+  ],
+  "bot": {
+   "hints": [
+    [
+     "A",
+     "A:z+",
+     1
+    ],
+    [
+     "A",
+     "A:z+",
+     1
+    ],
+    [
+     "A",
+     "B:z+",
+     1
+    ],
+    [
+     "A",
+     "C:z+",
+     1
+    ]
+   ]
+  },
+  "tntStart": 9
+ }
+]
