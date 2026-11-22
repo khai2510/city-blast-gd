@@ -6,7 +6,7 @@
  *    - the levels7-data block (LV7DEFS = release/g7-hard-levels.json, pushed onto LEVELS, window.__lv7base) right before
  *      "try{\n// ---- UILAYOUT v2". ?lv7=0 = no hard levels, no g7 engine: the old 36-level game.
  *    Every anchor must occur exactly once, else the step stops (exit 1). Mac's files are read, never changed.
- * 2. Placement (Lead's decision 20/11, moved 21/11 to slots 10/16/20/30/36, SYNC.md): PLACE below. The data block appends H1-H5 after L36 as build.mjs does; at the end
+ * 2. Placement (Lead: 20/11, 21/11 slots 10/16/20/30/36, 22/11 ORDER22 = every element after its intro level, SYNC.md): PLACE below. The data block appends H1-H5 after L36 as build.mjs does; at the end
  *    of main() (after every patch and the g7 engine) g7hard/order-end.js reorders LEVELS in place to PLACE. Level-NUMBER keyed
  *    features keep following their ORIGINAL level through one table, LV7O (g7hard/order-early.js), and the site rewrites in SITES.
  *    ?lv7ord=0 = no reorder (Mac's layout: old L1-36 keep 1-36, H1-H5 = 37-41; for Mac's tools and the old-number checks).
@@ -21,13 +21,29 @@ const ENGINE = path.join(ROOT, 'city-blast', 'pipeline7', 'engine.js');
 const LEVELS7 = path.join(ROOT, 'city-blast', 'release', 'g7-hard-levels.json');
 // hard-level code -> bp in g7-hard-levels.json (release/INTEGRATE.md §1)
 const HBP = { H1: 'L01v4', H2: 'L02', H3: 'L03', H4: 'L04', H5: 'L05' };
-// new level number = position in this list (1-based); "oN" = old level N; old levels not listed follow in their old order.
-// 21/11 (tester round GD-48, Lead): the hard levels go to the curve plan's slots 10 / 16 / 20 / 30 / 36 (same relative order H2, H3,
-// H1, H4, H5); old L1-36 fill the other slots in their old order (old L1-9 keep 1-9, old L32-36 = 37-41).
-const HAT = { 10: 'H2', 16: 'H3', 20: 'H1', 30: 'H4', 36: 'H5' };
-const PLACE = []; for (let n = 1, o = 1; n <= 36; n++) PLACE.push(HAT[n] || 'o' + o++);
-// orders earlier builds wrote into saves (the ".lv7o" mark -> that build's PLACE): a save keeps its levels when the order changes.
-// "1" = the 20/11 build (H at 4 / 6 / 8 / 10 / 12). Newer builds write their own slot list as the mark ("s:" + slots).
+// new level number = position in this list (1-based); "oN" = old level N, "Hk" = hard level k; every one of the 41 levels is listed once
+// (an old level left out would follow in its old order at the end). 22/11 (Khai: "no material / obstacle before it is introduced",
+// Lead): ORDER22 below, audit and rules in city-blast/SYNC.md (Agents-Game 22/11). The 21/11 order (H at 10 / 16 / 20 / 30 / 36) is
+// in saves as its "s:" mark and migrates like any other order.
+// ORDER22 (22/11): 1-3 wood / brick / concrete · 4 blue (old L36) · 5 turn (L6) · 6 steel (L8) · 8 first Hard (L7) · 11 boss (L10) ·
+// 14 blast in steps (L11) · 17 dark pier (L17) · 20 H3 · 21 glass (L25) · 23 boss (L20) · 25 barrels (L32) · 30 H2 · 32 H5 · 33 trap
+// barrels (L34) · 34 boss (L30) · 38 H4 · 40 H1. Checked by city-blast SYNC 22/11 "no element before its intro level".
+const PLACE = [
+  'o1', 'o2', 'o3', 'o36', 'o6', 'o8', 'o9', 'o7', 'o13', 'o14',
+  'o10', 'o21', 'o15', 'o11', 'o19', 'o16', 'o17', 'o12', 'o18', 'H3',
+  'o25', 'o4', 'o20', 'o31', 'o32', 'o24', 'o5', 'o28', 'o33', 'H2',
+  'o26', 'H5', 'o34', 'o30', 'o27', 'o35', 'o22', 'H4', 'o23', 'H1',
+  'o29',
+];
+// intro cards / spotlights that do not sit on their original level: card id (main/intro.js INTRO_SCHED) -> the level (code as in
+// PLACE) where that element is introduced in this order. The card fires when that level is played (LV7O.introAt), wherever it stands.
+const INTRO_AT = {
+  brick:'o2', concrete:'o3',   // the first level where brick / concrete stand (was one level later, D-blast-SCHED's TAP2 shift)
+  keep:'o36',                  // blue buildings: old L36 is the first level with blue and nothing else new (old L4 / L5 also show glass)
+  steps:'o11',                 // listed so its window (lv .. upto = 4 levels) follows L11 (old L15 now stands before it)
+  wreck:'o21', net:'o31', sky:'o27',   // booster cards on the rest level right after each boss (boss + 1, as before; GD-69: not with the steps lesson)
+  trap:'o34',                  // trap-barrel look on the N level before Dome Works (L35, Hard): nothing new on a Hard (D-blast-SCHED: L34)
+};
 const LEGACY = { '1': ['o1', 'o2', 'o3', 'H2', 'o4', 'H3', 'o5', 'H1', 'o6', 'H4', 'o7', 'H5'] };
 
 // fail lines (L.ftip: the lose card's line when a hard level ends short, levels6 failTip; 21/11 tester round GD-55): each names the real
@@ -48,16 +64,18 @@ const fail = (m) => { console.error('g7-hard: ' + m); process.exit(1); };
 for (const [c, t] of Object.entries(FTIP)) { const l = defs.find(x => x.bp === HBP[c]); if (!l) fail('FTIP: no level ' + c); if (t.split(/\s+/).length > 9 || /\b(road|street|lot|stack|stacked|stacking)\b/i.test(t)) fail('FTIP ' + c + ': > 9 words or a dropped word'); l.ftip = t; }
 const count = (s) => h.split(s).length - 1;
 // slots: >= 0 = old level index, -(k + 1) = hard level k of LV7DEFS
-const toSlots = (list, what) => {
+const toSlots = (list, what, part) => {
   const sl = list.map(p => {
     if (/^o\d+$/.test(p)) return +p.slice(1) - 1;
     const k = defs.findIndex(l => l.bp === HBP[p]); if (k < 0) fail('no level with bp ' + HBP[p] + ' (' + p + ') in ' + LEVELS7); return -(k + 1);
   });
   if (new Set(sl).size !== sl.length) fail(what + ' lists a level twice');
-  if (defs.some((l, k) => !sl.includes(-(k + 1)))) fail(what + ' does not place every hard level');
+  if (!part && defs.some((l, k) => !sl.includes(-(k + 1)))) fail(what + ' does not place every hard level');
   return sl;
 };
 const slots = toSlots(PLACE, 'PLACE');
+if (PLACE.length !== 36 + defs.length) fail('PLACE lists ' + PLACE.length + ' levels, want ' + (36 + defs.length));
+const introAt = Object.fromEntries(Object.entries(INTRO_AT).map(([id, c]) => { const sl = toSlots([c], 'INTRO_AT ' + id, true)[0]; return [id, sl >= 0 ? sl : 36 + (-sl - 1)]; }));
 const legacy = Object.fromEntries(Object.entries(LEGACY).map(([m, l]) => [m, toSlots(l, 'LEGACY ' + m)]));
 
 // ---- 1. anchors (checked on the input, before anything is inserted)
@@ -74,7 +92,7 @@ const SITES = [
   ['lot debris art per level', 'LA_DEBRIS[levelIdx + 1]', 'LA_DEBRIS[LV7O.id(levelIdx) + 1]', 1],
   ['frame.js opening-camera overrides (old L3, L25)', 'OVR[levelIdx + 1]', 'OVR[LV7O.orig1(levelIdx)]', 1],
   ['intro schedule (INTRO_SCHED lv / upto) in new numbers', '\n];\n// charge kinds: TNT only on L1-36',
-    '\n];\nINTRO_SCHED.forEach(function(e){ e.lv = LV7O.num(e.lv); if(e.upto) e.upto = LV7O.num(e.upto); });   // g7hard: old level numbers -> new\n// charge kinds: TNT only on L1-36', 1],
+    '\n];\nINTRO_SCHED.forEach(function(e){ var a = LV7O.introAt(e.id); if(e.upto) e.upto = a ? a + (e.upto - e.lv) : LV7O.num(e.upto); e.lv = a || LV7O.num(e.lv); });   // g7hard: old level numbers -> new; a card moved by INTRO_AT goes to its intro level\n// charge kinds: TNT only on L1-36', 1],
   ['intro cards / swipe: none on a hard level', 'function inQueue(i){\n  var n = i + 1, q = [];', 'function inQueue(i){\n  if(LV7O.isH(i)) return [];   // g7hard: hard levels stay hint-free\n  var n = i + 1, q = [];', 1],
   ['intro "Blast again!" moment: none on a hard level', '  var n = levelIdx + 1, e = inSchedOf("wave")', '  if(LV7O.isH(levelIdx)) return null;\n  var n = levelIdx + 1, e = inSchedOf("wave")', 1],
   ['intro look moment (trap barrels): none on a hard level', '  var n = levelIdx + 1, e = inSchedOf("look")', '  if(LV7O.isH(levelIdx)) return;\n  var n = levelIdx + 1, e = inSchedOf("look")', 1],
@@ -82,9 +100,11 @@ const SITES = [
     'if(L6.tntOnly){ BOOST.tnt1.hidden = true; BOOST.tnt1.unlock = 999; }\nLV7O.boost(BOOST);   // g7hard', 1],
   ['Sky Strike unlock (boss win L30, defined later by boosters2 sky.js) in new numbers', 'BOOST.sky = { name:"Sky Strike", short:"Strike", unlock:30, free:2, price:300, pack:3, pre:false, icon:"sky", line:"Drop it from the sky." };',
     'BOOST.sky = { name:"Sky Strike", short:"Strike", unlock:30, free:2, price:300, pack:3, pre:false, icon:"sky", line:"Drop it from the sky." }; LV7O.boost(BOOST);   // g7hard', 1],
-  ['interstitial ads from old L10', 'if((save.level | 0) < 9) return null;', 'if((save.level | 0) < LV7O.pos(9)) return null;', 1],
-  ['No Ads Home button from old L15', '(save.level | 0) >= 14; }', '(save.level | 0) >= LV7O.pos(14); }', 1],
-  ['rewarded rescue / win x2 from old L5', 'levelIdx >= 4 &&', 'levelIdx >= LV7O.pos(4) &&', 2],
+  // thresholds ("from level N on") count progress, not one level: LV7O.nth(k) = the slot of the (k+1)-th non-hard level of the order
+  // (= LV7O.pos(k) while the old levels kept their old relative order, 20/11 and 21/11)
+  ['interstitial ads from the 10th old level', 'if((save.level | 0) < 9) return null;', 'if((save.level | 0) < LV7O.nth(9)) return null;', 1],
+  ['No Ads Home button from the 15th old level', '(save.level | 0) >= 14; }', '(save.level | 0) >= LV7O.nth(14); }', 1],
+  ['rewarded rescue / win x2 from the 5th old level', 'levelIdx >= 4 &&', 'levelIdx >= LV7O.nth(4) &&', 2],
   ['tap2 K3 double-tap refresher hand: never on a hard level', 'screen === "game" && levelIdx >= 2 && wave <= 1 && !selC;', 'screen === "game" && levelIdx >= 2 && !LV7O.isH(levelIdx) && wave <= 1 && !selC;', 1],
 ];
 for (const [a, n] of [[MARK, 1], [UI, 1], [EARLY, 1]]) if (count(a) !== n) fail('anchor ' + JSON.stringify(a) + ' found ' + count(a) + 'x (want ' + n + ')');
@@ -93,7 +113,7 @@ if (count('// ---- main/levels7.js') || count('// ---- main/levels7-data.js')) f
 for (const [, f, r] of SITES) h = h.split(f).join(r);
 
 // ---- 3. insert: LV7O (early, before levelDef), the level data (UILAYOUT anchor), the engine + the reorder (end of main)
-h = h.replace(EARLY, () => '\n' + early.replace('__NH__', String(defs.length)).replace('__SLOTS__', JSON.stringify(slots)).replace('__LEGACY__', JSON.stringify(legacy)) + EARLY);
+h = h.replace(EARLY, () => '\n' + early.replace('__NH__', String(defs.length)).replace('__SLOTS__', JSON.stringify(slots)).replace('__LEGACY__', JSON.stringify(legacy)).replace('__INTRO__', JSON.stringify(introAt)) + EARLY);
 const data = '// ---- main/levels7-data.js (g7hard/patch.js = pipeline7/build.mjs, test=false; data: city-blast/release/g7-hard-levels.json, do not edit by hand)\n' +
   'if(!/[?&]lv7=0(&|$)/.test(location.search)) try{ (function(){ var LV7DEFS = ' + JSON.stringify(defs) + ';\n' +
   '  LV7DEFS.forEach(function(l){ LEVELS.push(l); }); window.__lv7base = LEVELS.length - LV7DEFS.length;\n' +
@@ -104,7 +124,7 @@ const data = '// ---- main/levels7-data.js (g7hard/patch.js = pipeline7/build.mj
   '    writeSave(); }\n})(); }catch(e){ console.error("main/levels7-data.js", e); }\n';
 h = h.replace(UI, () => data + UI);
 h = h.replace(MARK, () => engine + '\n' + end + '\n' + MARK);
-if (count('__LEGACY__') || count('__SLOTS__') || count('__NH__')) fail('order-early.js placeholder left in the output');
+if (count('__LEGACY__') || count('__SLOTS__') || count('__NH__') || count('__INTRO__')) fail('order-early.js placeholder left in the output');
 for (const m of ['// ---- main/levels7.js', '// ---- main/levels7-data.js', '// ---- g7hard/order-early.js', '// ---- g7hard/order-end.js']) if (count(m) !== 1) fail('output carries ' + m + ' ' + count(m) + 'x');
 fs.writeFileSync(OUT, h);
 const HC = Object.fromEntries(Object.entries(HBP).map(([c, b]) => [b, c])), nm = (s) => s >= 0 ? 'L' + (s + 1) : HC[defs[-s - 1].bp];
