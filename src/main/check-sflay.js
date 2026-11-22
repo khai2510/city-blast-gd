@@ -152,6 +152,10 @@ const layout = async (p, W, H, tag) => {
     const h2 = st2.hole || hole; if (h2) { await p.touchscreen.tap(h2.x, h2.y); await p.waitForTimeout(900); }
     const st3 = await p.evaluate(() => ({ forced: window.__blast.intro.state().forced, on: !!document.querySelector('#bbar .bst[data-k="wreck"].on'), inv: window.__blast.boost.inv().wreck || 0 }));
     item('SF8', 'The forced tap on the moved Ball button releases the spotlight and arms the Ball', !st3.forced && st3.on, JSON.stringify(st3));
+    // polish R22 the cancel x on the armed Ball: 48 px, on screen, on the Ball's outer corner, clear of the Net above and of BLAST
+    const xr = await rect(p, '#r22X'), r3 = await SF(p), X = xr ? { x: xr.x, y: xr.y, r: xr.x + xr.w, b: xr.y + xr.h } : null;
+    if (X) await shot(p, 'sf-ball-armed-x');
+    item('SF16', 'Armed Ball: the R22 cancel x (48 px) sits on the Ball\'s outer upper corner, on screen, clear of the Net button and of BLAST', !X || (xr.w >= 48 && xr.h >= 48 && X.x >= 0 && X.b <= 852 && ovl(X, r3.wreck) && !ovl(X, r3.net) && !ovl(X, r3.blast)), JSON.stringify({ x: X, ball: r3.wreck, net: r3.net, blast: r3.blast }));
     await close(p);
   }
   // ================= SF9 the LV picker button (on by default) and the gear: visible, tappable, clear of the TNT card

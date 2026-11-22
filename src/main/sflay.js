@@ -76,6 +76,10 @@
       B + " #undo{position:absolute!important;left:calc(var(--sfSide) + var(--sfBs) + 10px)!important;bottom:calc(var(--sfB) + var(--sfBlH) + 8px)!important;top:auto!important;right:auto!important}",
       // the R21 "Skip ahead" pill: centred above BLAST, between the columns
       "html.sfl body #ff#ff{left:50%!important;right:auto!important;translate:-50% 0!important;bottom:calc(var(--sfB) + var(--sfBlH) + 12px)!important}",
+      // polish R22 (BUG-1): the 48 px cancel x of an armed Ball / Sky Strike sits on the chip's OUTER upper corner (its top-left corner
+      // would cover the Net above the Ball or the end of BLAST beside Sky Strike)
+      "html.sfl body #r22X#r22X{top:auto!important;bottom:calc(var(--sfB) + var(--sfBs) - 42px)!important;left:calc(var(--sfSide) - 10px)!important;right:auto!important}",
+      "html.sfl.sfXsky body #r22X#r22X{left:auto!important;right:calc(var(--sfSide) - 10px)!important}",
       // the collateral line (fixed, under the top row)
       B + " #collat#collat{top:var(--sfTipT)!important}"
     ].join("\n");
@@ -157,14 +161,15 @@
     setInterval(function(){
       var bl = screen === "game" && (phase === "count" || phase === "boom" || phase === "settle" || phase === "done");
       if(bl !== lastBl){ lastBl = bl; H.classList.toggle("sfBl", bl); topDirty = true; }
-      if(screen === "game"){ padAll(); gear(); }
+      if(screen === "game"){ padAll(); gear(); xSide(); }
     }, 120);
     // polish R20 UX-51 pushes the level cap >= 8 px right of Pause with inline !important left / width (Pause was on its left in the old
     // row); here Pause is top-right and the cap is centred, so those inline values are taken off as soon as they are written
     var UX51 = { n:0 };
     var unPush = function(){ ["lvPill", "meter"].forEach(function(id){ var e = $s(id); if(e && (e.style.getPropertyValue("left") || e.style.getPropertyValue("width"))){ e.style.removeProperty("left"); e.style.removeProperty("width"); UX51.n++; } }); };
     if(window.MutationObserver) ["lvPill", "meter"].forEach(function(id){ var e = $s(id); if(e) new MutationObserver(unPush).observe(e, { attributes:true, attributeFilter:["style"] }); });
-    var bs0 = bstSync; bstSync = function(){ var r = bs0.apply(this, arguments); try{ padAll(); }catch(e){} return r; };
+    var xSide = function(){ var sk = false; try{ sk = !!(skyArmed && !skyLive) && !(ballAim && !ballLive); }catch(e){} if(H.classList.contains("sfXsky") !== sk) H.classList.toggle("sfXsky", sk); };
+    var bs0 = bstSync; bstSync = function(){ try{ xSide(); }catch(e){} var r = bs0.apply(this, arguments); try{ padAll(); xSide(); }catch(e){} return r; };
     fit(); setTimeout(fit, 350); gear();
     window.addEventListener("resize", function(){ setTimeout(fit, 300); });
     // test API: on-screen boxes of the moved controls (null = not shown)
