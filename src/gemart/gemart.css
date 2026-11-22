@@ -1,0 +1,70 @@
+/* ---- gemart (src/gemart, Agents-Game 22/11/2026): the Gemini UI kit as a skin. Only with html.gem (?art=1); view only.
+   @IMG(...) = src/gemart/assets/<name>.webp as a data URI (patch.js). --gh = the element's own height in px (gemart.js),
+   so pill caps keep their shape at every height (9-slice: border-image, the text is drawn on top as before). */
+html.gem{
+  --gm-green:@IMG(btn-green); --gm-green-press:@IMG(btn-green-press); --gm-green-off:@IMG(btn-green-off);
+  --gm-blue:@IMG(btn-blue); --gm-cream:@IMG(btn-cream); --gm-round:@IMG(btn-round);
+  --gm-tog-on:@IMG(tog-on); --gm-tog-off:@IMG(tog-off); --gm-track:@IMG(bar-track); --gm-fill:@IMG(bar-fill);
+  --gm-panel:@IMG(panel); --gm-ribbon:@IMG(ribbon);
+  --gm-ball:@IMG(ic-ball); --gm-net:@IMG(ic-net); --gm-sky:@IMG(ic-sky); --gm-lock:@IMG(ic-lock); --gm-tnt:@IMG(ic-tnt); --gm-coin:@IMG(ic-coin);
+  /* the game's own icon tokens (uiclean / ui2 set them inline on <html>; !important wins over inline) */
+  --ul-ic-tnt:@IMG(ic-tnt)!important; --ul-ic-ball:@IMG(ic-ball)!important;
+}
+/* ---- green primary (Play, Done, Resume, Try Again, Got It, +1 TNT ...): one pill, caps = half the height */
+html.gem body .big.mint,html.gem body .big.go,html.gem body #inCard .inB,html.gem body #result .card .big:not(.sec):not(.gold):not(.red):not(.hard){
+  background:none!important;box-shadow:none!important;border-color:transparent!important;border-style:solid!important;
+  border-image:var(--gm-green) 116 116 116 116 fill/50% calc(var(--gh,60px)*.5)/0 0 calc(var(--gh,60px)*.06) 0 stretch!important;
+}
+html.gem body .big.mint:active,html.gem body .big.go:active,html.gem body #inCard .inB:active{border-image-source:var(--gm-green-press)!important;border-image-slice:120 fill!important}
+html.gem body .big.mint:disabled,html.gem body .big.mint.cant,html.gem body .big.go:disabled,html.gem body .big.cant{
+  background:none!important;box-shadow:none!important;border-color:transparent!important;border-style:solid!important;
+  border-image:var(--gm-green-off) 120 fill/50% calc(var(--gh,60px)*.5)/0 0 calc(var(--gh,60px)*.06) 0 stretch!important}
+html.gem body .big.mint::before,html.gem body .big.mint::after,html.gem body .big.go::before,html.gem body .big.go::after,html.gem body #inCard .inB::before,html.gem body #inCard .inB::after{background:none!important;box-shadow:none!important;border:0!important}
+/* ---- blue secondary (Pause: Restart / Home; result: secondary) */
+html.gem body .big.sec{
+  background:none!important;box-shadow:none!important;border-color:transparent!important;border-style:solid!important;
+  border-image:var(--gm-blue) 117 fill/50% calc(var(--gh,52px)*.5)/0 0 calc(var(--gh,52px)*.06) 0 stretch!important}
+html.gem body .big.sec::before,html.gem body .big.sec::after{background:none!important;box-shadow:none!important}
+/* ---- quiet cream (Settings / Pause rows, cream pills) */
+html.gem body .pillbtn:not(.warn),html.gem body .pmRow{
+  background:none!important;box-shadow:none!important;border-color:transparent!important;border-style:solid!important;
+  border-image:var(--gm-cream) 124 fill/50% calc(var(--gh,48px)*.5)/0 0 calc(var(--gh,48px)*.05) 0 stretch!important}
+/* ---- toggles: the knob is in the image */
+html.gem body .tog .sw,html.gem body .pmRow .sw{background:var(--gm-tog-on) center/100% 100% no-repeat!important;box-shadow:none!important;border:0!important;width:48px!important;height:36px!important;border-radius:0!important}
+html.gem body .tog.off .sw,html.gem body .pmRow[aria-checked="false"] .sw{background-image:var(--gm-tog-off)!important}
+html.gem body .tog .sw::after,html.gem body .tog .sw::before,html.gem body .pmRow .sw::after,html.gem body .pmRow .sw::before{opacity:0!important}
+/* ---- round icon buttons (pause, gear, home): navy disc, the white glyph on top */
+html.gem body #pauseBtn,html.gem body .round,html.gem body .pmRound{background:var(--gm-round) center/100% 100% no-repeat!important;box-shadow:none!important;border-color:transparent!important}
+html.gem body #gearBtn .i,html.gem body #pauseBtn .i,html.gem body .round .i,html.gem body .pmRound .i{display:block!important;visibility:visible!important;opacity:1!important;color:#fff!important;fill:currentColor;stroke:currentColor;filter:drop-shadow(0 2px 0 rgba(10,20,60,.55))}
+html.gem body #gearBtn{background-image:var(--gm-round)!important}
+/* ---- demolition meter (HUD + result card): navy track, orange jelly; gold at / over PASS, red when the protected one is hit */
+html.gem body #meter,html.gem body #rMeter{background:none!important;box-shadow:none!important;border-color:transparent!important;border-style:solid!important;
+  border-image:var(--gm-track) 114 fill/50% calc(var(--gh,24px)*.5)/calc(var(--gh,24px)*.08) calc(var(--gh,24px)*.1) calc(var(--gh,24px)*.16) calc(var(--gh,24px)*.1) stretch!important}
+html.gem body #mFill,html.gem body #result #rmFill{background-size:0 0!important;box-shadow:none!important;
+  border-image:var(--gm-fill) 47 fill/50% calc(var(--gh,18px)*.5)/0 stretch!important;border-color:transparent!important}
+html.gem body #mFill.go,html.gem body #result #rmFill.go{filter:hue-rotate(22deg) saturate(1.25) brightness(1.12)}
+html.gem body #result.r18prot #rmFill{filter:hue-rotate(-18deg) saturate(1.2)}
+html.gem body #mPct,html.gem body #rPct{color:#fff!important;-webkit-text-stroke:3px #1F2E6B!important;paint-order:stroke fill;text-shadow:0 2px 0 rgba(10,20,60,.5)!important}
+/* ---- popup panels: navy frame, cream card (frame drawn partly outside the box so the content keeps its room) */
+html.gem body #settings .card,html.gem body #result .card,html.gem body .bcard,html.gem body #inCard{
+  background:none!important;box-shadow:none!important;border-color:transparent!important;border-style:solid!important;
+  border-image:var(--gm-panel) 84 fill/40px/12px stretch!important}
+/* ---- title ribbon (fail / win card, Pause, pre-level): tails keep their shape, the middle stretches */
+html.gem body #result #rTitle,html.gem body #result #rTitle.no,html.gem body .bhead,html.gem body #settings .chead{background-image:none!important;background-color:transparent!important;box-shadow:none!important;border-color:transparent!important;border-style:solid!important;
+  border-image:var(--gm-ribbon) 0 118 fill/0 calc(var(--gh,70px)*.57) stretch!important}
+html.gem body .bhead,html.gem body #settings .chead{border-width:0 2px!important;min-height:52px;display:flex;align-items:center;justify-content:center;color:#fff!important;-webkit-text-stroke:4px #7A3A0C!important;paint-order:stroke fill}
+/* ---- icons: coin, boosters, locked slot */
+html.gem body .coin{background-image:var(--gm-coin)!important;background-size:contain!important;background-position:center!important;background-repeat:no-repeat!important;background-color:transparent!important;box-shadow:none!important;border-radius:0!important}
+html.gem body .bst[data-k="net"] .bi,html.gem body .bst[data-k="net"] img.kit,html.gem body .bst[data-k="sky"] .bi,html.gem body .bst[data-k="sky"] img.kit{opacity:0!important}
+html.gem body .bst[data-k="net"]::after,html.gem body .bst[data-k="sky"]::after{content:""!important;position:absolute!important;inset:10%!important;background:var(--gm-net) center/contain no-repeat!important;pointer-events:none!important;display:block!important;border:0!important;box-shadow:none!important;transform:none!important}
+html.gem body .bst[data-k="sky"]::after{background-image:var(--gm-sky)!important}
+html.gem body .bst.inLock::after{display:none!important}
+html.gem body #bottom .bst.bst.inLock .inLv svg{display:none!important}
+html.gem body #bottom .bst.bst.inLock .inLv::before{content:"";display:block;width:26px;height:26px;background:var(--gm-lock) center/contain no-repeat;opacity:.9}
+html.gem body .bpt[data-k="wreck"] img,html.gem body .bpt[data-k="wreck"] .bi{content:var(--gm-ball)}
+html.gem body .bpt[data-k="net"] img,html.gem body .bpt[data-k="net"] .bi{content:var(--gm-net)}
+html.gem body .bpt[data-k="sky"] img,html.gem body .bpt[data-k="sky"] .bi{content:var(--gm-sky)}
+html.gem body .bpt.lock img,html.gem body .bpt.lock .bi{content:var(--gm-lock)}
+/* TNT tray chip: the Gemini TNT bundle on its corner (the count and label stay) */
+html.gem body #chips .chip[data-k="tnt"]{overflow:visible!important}
+html.gem body #chips .chip[data-k="tnt"]::after{content:""!important;position:absolute!important;left:-16px;top:-14px;width:34px;height:34px;background:var(--gm-tnt) center/contain no-repeat!important;pointer-events:none;display:block!important;transform:rotate(-8deg);filter:drop-shadow(0 2px 1px rgba(10,20,60,.35))}
