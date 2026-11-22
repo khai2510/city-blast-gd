@@ -7,7 +7,7 @@
   "tier": "T",
   "f": 9,
   "kind": "scene",
-  "hero": "A,S,B,C",
+  "hero": "A,S",
   "heroId": "G7-O01",
   "teaches": "wood",
   "target": 0.85,
@@ -31,7 +31,8 @@
     "hx": 2.8,
     "lh": 5.2,
     "sh": 3.4,
-    "ns": 4
+    "ns": 4,
+    "lw": 1
    },
    {
     "id": "S",
@@ -42,28 +43,10 @@
     "hz": 2,
     "h": 2.2,
     "nx": 3
-   },
-   {
-    "id": "B",
-    "kind": "g7oCabin",
-    "x": -8.6,
-    "z": -7,
-    "hx": 3.2,
-    "hz": 2.8,
-    "side": -1
-   },
-   {
-    "id": "C",
-    "kind": "g7oCabin",
-    "x": 8.6,
-    "z": -7,
-    "hx": 3.2,
-    "hz": 2.8,
-    "side": 1
    }
   ],
   "charges": {
-   "tnt": 6
+   "tnt": 5
   },
   "hint": "A:z+",
   "tip": "",
@@ -87,13 +70,7 @@
    ],
    [
     "tnt",
-    "B:z+",
-    0,
-    0
-   ],
-   [
-    "tnt",
-    "C:z+",
+    "S:z+",
     0,
     0
    ]
@@ -107,17 +84,12 @@
     ],
     [
      "A",
-     "B:z+",
-     1
-    ],
-    [
-     "A",
-     "C:z+",
+     "S:z+",
      1
     ]
    ]
   },
-  "tntStart": 6
+  "tntStart": 5
  },
  {
   "name": "Fire Station",
@@ -157,10 +129,10 @@
     "id": "S",
     "kind": "g7oEng",
     "x": 0,
-    "z": 4.6,
+    "z": 7,
     "hx": 10,
     "hz": 2.2,
-    "h": 3,
+    "h": 2.6,
     "nx": 5,
     "bays": 4
    },
@@ -1386,5 +1358,291 @@
    ]
   },
   "tntStart": 17
+ },
+ {
+  "name": "Car Park",
+  "bp": "O17",
+  "slot": 17,
+  "replaces": "o17",
+  "tier": "R",
+  "f": 12,
+  "kind": "scene",
+  "hero": "A,B,C",
+  "heroId": "G7-O17",
+  "teaches": "rc",
+  "target": 0.85,
+  "yaw": 0,
+  "d": 1,
+  "hard7": true,
+  "base": {
+   "A": {
+    "preset": "stiff-tip",
+    "shove": 2.5
+   },
+   "*": "weak"
+  },
+  "sf": [],
+  "pattern": "dark piers: the car park stands on reinforced piers that take more than one TNT; two side by side tip it and the decks pancake",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7oPark",
+    "x": 0,
+    "z": -6,
+    "hx": 5,
+    "hz": 4,
+    "h": 2.9,
+    "ns": 4,
+    "heavy": 1.35
+   },
+   {
+    "id": "B",
+    "kind": "g7oWing",
+    "x": -10.6,
+    "z": -6,
+    "hx": 3.4,
+    "hz": 2.8,
+    "side": -1,
+    "nb": 3
+   },
+   {
+    "id": "C",
+    "kind": "g7oWing",
+    "x": 10.6,
+    "z": -6,
+    "hx": 3.4,
+    "hz": 2.8,
+    "side": 1,
+    "nb": 3
+   }
+  ],
+  "charges": {
+   "tnt": 14
+  },
+  "hint": "A:z+",
+  "tip": "",
+  "dud": "Not yet. Dark piers need more TNT!",
+  "ftip": "Dark piers take more TNT than grey ones.",
+  "lesson": {
+   "check": [
+    []
+   ]
+  },
+  "sol": [
+   [
+    "tnt",
+    "A:z+",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "A:z+",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "A:z+",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "A:z+",
+    0,
+    2
+   ],
+   [
+    "tnt",
+    "A:z+",
+    0,
+    2
+   ],
+   [
+    "tnt",
+    "A:z+",
+    0,
+    2
+   ],
+   [
+    "tnt",
+    "B:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "C:z+",
+    0,
+    0
+   ]
+  ],
+  "bot": {
+   "hints": [
+    [
+     "A",
+     "A:z+",
+     2
+    ],
+    [
+     "A",
+     "A:z+",
+     2
+    ],
+    [
+     "A",
+     "B:z+",
+     1
+    ],
+    [
+     "A",
+     "C:z+",
+     1
+    ]
+   ]
+  },
+  "tntStart": 14
+ },
+ {
+  "name": "Roadside Motel",
+  "bp": "O18",
+  "slot": 18,
+  "replaces": "o12",
+  "tier": "N",
+  "f": 12,
+  "kind": "scene",
+  "hero": "A,S,B,C",
+  "heroId": "G7-O18",
+  "teaches": "rotate",
+  "target": 0.85,
+  "yaw": 0,
+  "d": 1,
+  "hard7": true,
+  "base": {
+   "A": {
+    "preset": "stiff-tip",
+    "shove": 2.5
+   },
+   "*": "weak"
+  },
+  "sf": [],
+  "pattern": "rotate + dark: the sign pylon stands on dark back legs; turned to the back, two of them (more TNT each) drop it across the motel row",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7oSign",
+    "x": 0,
+    "z": -2,
+    "hx": 1.8,
+    "gh": 4,
+    "sh": 3.6,
+    "ns": 4,
+    "heavy": 1.35
+   },
+   {
+    "id": "S",
+    "kind": "g7oMotel",
+    "x": 0,
+    "z": -7.4,
+    "n": 4,
+    "w": 3,
+    "hz": 2.6,
+    "h": 3.2
+   },
+   {
+    "id": "B",
+    "kind": "g7oCott",
+    "x": -9,
+    "z": -2,
+    "hx": 3.2,
+    "hz": 2.8,
+    "side": -1
+   },
+   {
+    "id": "C",
+    "kind": "g7oCott",
+    "x": 9,
+    "z": -2,
+    "hx": 3.2,
+    "hz": 2.8,
+    "side": 1
+   }
+  ],
+  "charges": {
+   "tnt": 15
+  },
+  "hint": "A:z-",
+  "tip": "",
+  "dud": "Not yet. Dark piers need more TNT!",
+  "ftip": "Dark legs take more TNT. Look round the back.",
+  "lesson": {
+   "check": [
+    []
+   ]
+  },
+  "sol": [
+   [
+    "tnt",
+    "A:z-",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "A:z-",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "A:z-",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "A:z-",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "B:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "C:z+",
+    0,
+    0
+   ]
+  ],
+  "bot": {
+   "hints": [
+    [
+     "A",
+     "A:z-",
+     2
+    ],
+    [
+     "A",
+     "A:z-",
+     2
+    ],
+    [
+     "A",
+     "B:z+",
+     1
+    ],
+    [
+     "A",
+     "C:z+",
+     1
+    ]
+   ]
+  },
+  "tntStart": 15
  }
 ]

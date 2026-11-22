@@ -1,0 +1,164 @@
+{
+ "when": "2026-11-22T21:08:42.751Z",
+ "bp": "O18",
+ "name": "Roadside Motel",
+ "tnt": 15,
+ "bar": "N",
+ "metrics": {
+  "members": 116,
+  "hard": 3,
+  "soft": 113,
+  "hardPct": 3,
+  "main": {
+   "members": 26,
+   "hard": 3,
+   "soft": 23,
+   "hardPct": 12,
+   "pos": {
+    "top": 1,
+    "mid": 0,
+    "bottom": 2,
+    "edge": 2,
+    "core": 1,
+    "front": 0,
+    "back": 2
+   },
+   "core": "yes",
+   "hardLayers": 2,
+   "depthRows": 3,
+   "frontHard": 0,
+   "backHard": 2,
+   "floors": 6
+  },
+  "stacks": 4,
+  "parts": [
+   "A",
+   "S",
+   "B",
+   "C"
+  ]
+ },
+ "sol": {
+  "pct": 79,
+  "win": false,
+  "res": "plan",
+  "placed": [
+   "ok",
+   "ok",
+   "ok",
+   "ok",
+   "ok",
+   "ok"
+  ],
+  "waves": 1,
+  "keep": 0
+ },
+ "oneBomb": {
+  "pct": 39,
+  "collapse": 40,
+  "at": "wwall@S:f0",
+  "tried": 20
+ },
+ "lazy": {
+  "pct": 38,
+  "collapse": 59
+ },
+ "fair": [
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 100,
+   "used": 12,
+   "left": 3,
+   "waves": 2,
+   "firstWave": 79,
+   "keep": 0,
+   "estSec": 25,
+   "log": "bld11=79 heap1=100"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 100,
+   "used": 13,
+   "left": 2,
+   "waves": 2,
+   "firstWave": 78,
+   "keep": 0,
+   "estSec": 27,
+   "log": "bld11=78 heap2=100"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 100,
+   "used": 12,
+   "left": 3,
+   "waves": 2,
+   "firstWave": 79,
+   "keep": 0,
+   "estSec": 25,
+   "log": "bld11=79 heap1=100"
+  }
+ ],
+ "allFoot": {
+  "pct": 79,
+  "used": 15,
+  "collapse": 100,
+  "keep": 0
+ },
+ "footOnly": {
+  "pct": 74,
+  "waves": 2,
+  "left": 7,
+  "keep": 0
+ },
+ "oneWave": {
+  "pct": 100,
+  "used": 15,
+  "reach": 101,
+  "collapse": 100
+ },
+ "curve": [
+  {
+   "n": 1,
+   "pct": 23,
+   "collapse": 23
+  },
+  {
+   "n": 2,
+   "pct": 38,
+   "collapse": 59
+  },
+  {
+   "n": 3,
+   "pct": 37,
+   "collapse": 59
+  },
+  {
+   "n": 4,
+   "pct": 38,
+   "collapse": 59
+  },
+  {
+   "n": 6,
+   "pct": 38,
+   "collapse": 59
+  },
+  {
+   "n": 8,
+   "pct": 38,
+   "collapse": 59
+  },
+  {
+   "n": 12,
+   "pct": 38,
+   "collapse": 59
+  }
+ ],
+ "jump": 15,
+ "verdict": "MISS",
+ "issues": [
+  "expert plan plan 79%"
+ ]
+}

@@ -1,13 +1,13 @@
 {
- "when": "2026-11-22T17:33:25.318Z",
+ "when": "2026-11-22T21:09:26.689Z",
  "bp": "O01",
  "name": "Ranger Lookout",
  "tnt": 5,
  "bar": "T",
  "metrics": {
-  "members": 103,
+  "members": 46,
   "hard": 0,
-  "soft": 103,
+  "soft": 46,
   "hardPct": 0,
   "main": {
    "members": 35,
@@ -30,20 +30,17 @@
    "backHard": 0,
    "floors": 7
   },
-  "stacks": 4,
+  "stacks": 2,
   "parts": [
    "A",
-   "S",
-   "B",
-   "C"
+   "S"
   ]
  },
  "sol": {
-  "pct": 96,
+  "pct": 100,
   "win": true,
   "res": "WIN",
   "placed": [
-   "ok",
    "ok",
    "ok"
   ],
@@ -51,59 +48,59 @@
   "keep": 0
  },
  "solDbl": {
-  "pct": 87,
+  "pct": 86,
   "win": true,
   "res": "WIN",
-  "placed": "0oknomemberok",
-  "waves": 3,
+  "placed": "0ok",
+  "waves": 1,
   "keep": 0
  },
  "oneBomb": {
-  "pct": 63,
-  "collapse": 62,
-  "at": "wwall@C:f1",
-  "tried": 20
+  "pct": 87,
+  "collapse": 86,
+  "at": "wpost@A:f0",
+  "tried": 16
  },
  "lazy": {
-  "pct": 79,
-  "collapse": 90
+  "pct": 87,
+  "collapse": 86
  },
  "fair": [
   {
    "win": true,
    "res": "WIN",
-   "pct": 98,
+   "pct": 100,
    "used": 5,
    "left": 0,
    "waves": 1,
-   "firstWave": 98,
+   "firstWave": 100,
    "keep": 0,
-   "estSec": 14,
-   "log": "bld5=98"
+   "estSec": 13,
+   "log": "bld5=100"
   },
   {
    "win": true,
    "res": "WIN",
-   "pct": 97,
+   "pct": 100,
    "used": 5,
    "left": 0,
    "waves": 1,
-   "firstWave": 97,
+   "firstWave": 100,
    "keep": 0,
-   "estSec": 14,
-   "log": "bld5=97"
+   "estSec": 13,
+   "log": "bld5=100"
   },
   {
    "win": true,
    "res": "WIN",
-   "pct": 94,
+   "pct": 100,
    "used": 5,
    "left": 0,
    "waves": 1,
-   "firstWave": 94,
+   "firstWave": 100,
    "keep": 0,
-   "estSec": 14,
-   "log": "bld5=94"
+   "estSec": 13,
+   "log": "bld5=100"
   }
  ],
  "allFoot": {
@@ -119,50 +116,51 @@
   "keep": 0
  },
  "oneWave": {
-  "pct": 69,
+  "pct": 100,
   "used": 5,
-  "reach": 87,
-  "collapse": 72
+  "reach": 36,
+  "collapse": 100
  },
  "curve": [
   {
    "n": 1,
-   "pct": 48,
-   "collapse": 38
+   "pct": 87,
+   "collapse": 86
   },
   {
    "n": 2,
-   "pct": 50,
-   "collapse": 39
+   "pct": 86,
+   "collapse": 86
   },
   {
    "n": 3,
-   "pct": 52,
-   "collapse": 43
+   "pct": 84,
+   "collapse": 86
   },
   {
    "n": 4,
-   "pct": 53,
-   "collapse": 44
+   "pct": 86,
+   "collapse": 86
   },
   {
    "n": 6,
-   "pct": 53,
-   "collapse": 44
+   "pct": 86,
+   "collapse": 86
   },
   {
    "n": 8,
-   "pct": 53,
-   "collapse": 44
+   "pct": 86,
+   "collapse": 86
   },
   {
    "n": 12,
-   "pct": 53,
-   "collapse": 44
+   "pct": 86,
+   "collapse": 86
   }
  ],
  "verdict": "MISS",
  "issues": [
+  "oneBomb 87%",
   "spare 0"
  ]
 }

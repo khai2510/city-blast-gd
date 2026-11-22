@@ -1,0 +1,165 @@
+{
+ "when": "2026-11-22T20:45:34.922Z",
+ "bp": "O17",
+ "name": "Car Park",
+ "tnt": 14,
+ "bar": "N",
+ "metrics": {
+  "members": 136,
+  "hard": 16,
+  "soft": 120,
+  "hardPct": 12,
+  "main": {
+   "members": 58,
+   "hard": 16,
+   "soft": 42,
+   "hardPct": 28,
+   "pos": {
+    "top": 2,
+    "mid": 0,
+    "bottom": 14,
+    "edge": 14,
+    "core": 2,
+    "front": 6,
+    "back": 6
+   },
+   "core": "yes",
+   "hardLayers": 3,
+   "depthRows": 4,
+   "frontHard": 6,
+   "backHard": 6,
+   "floors": 5
+  },
+  "stacks": 3,
+  "parts": [
+   "A",
+   "B",
+   "C"
+  ]
+ },
+ "sol": {
+  "pct": 44,
+  "win": false,
+  "res": "plan",
+  "placed": [
+   "ok",
+   "ok",
+   "ok",
+   "ok",
+   "ok",
+   "ok",
+   "ok",
+   "ok"
+  ],
+  "waves": 1,
+  "keep": 0
+ },
+ "oneBomb": {
+  "pct": 21,
+  "collapse": 21,
+  "at": "concrete@B:f1",
+  "tried": 18
+ },
+ "lazy": {
+  "pct": 4,
+  "collapse": 4
+ },
+ "fair": [
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 98,
+   "used": 12,
+   "left": 2,
+   "waves": 2,
+   "firstWave": 67,
+   "keep": 0,
+   "estSec": 27,
+   "log": "bld9=67 heap3=98"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 97,
+   "used": 12,
+   "left": 2,
+   "waves": 2,
+   "firstWave": 65,
+   "keep": 0,
+   "estSec": 27,
+   "log": "bld9=65 heap3=97"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 99,
+   "used": 12,
+   "left": 2,
+   "waves": 2,
+   "firstWave": 68,
+   "keep": 0,
+   "estSec": 27,
+   "log": "bld9=68 heap3=99"
+  }
+ ],
+ "allFoot": {
+  "pct": 63,
+  "used": 14,
+  "collapse": 100,
+  "keep": 0
+ },
+ "footOnly": {
+  "pct": 62,
+  "waves": 2,
+  "left": 2,
+  "keep": 0
+ },
+ "oneWave": {
+  "pct": 65,
+  "used": 14,
+  "reach": 114,
+  "collapse": 100
+ },
+ "curve": [
+  {
+   "n": 1,
+   "pct": 3,
+   "collapse": 3
+  },
+  {
+   "n": 2,
+   "pct": 9,
+   "collapse": 11
+  },
+  {
+   "n": 3,
+   "pct": 10,
+   "collapse": 11
+  },
+  {
+   "n": 4,
+   "pct": 43,
+   "collapse": 79
+  },
+  {
+   "n": 6,
+   "pct": 42,
+   "collapse": 79
+  },
+  {
+   "n": 8,
+   "pct": 49,
+   "collapse": 83
+  },
+  {
+   "n": 12,
+   "pct": 59,
+   "collapse": 100
+  }
+ ],
+ "jump": 33,
+ "verdict": "MISS",
+ "issues": [
+  "expert plan plan 44%"
+ ]
+}

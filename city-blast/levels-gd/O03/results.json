@@ -1,18 +1,18 @@
 {
- "when": "2026-11-22T16:07:02.167Z",
+ "when": "2026-11-22T21:06:05.029Z",
  "bp": "O03",
  "name": "Airfield Tower",
- "tnt": 5,
+ "tnt": 6,
  "bar": "T",
  "metrics": {
-  "members": 159,
+  "members": 173,
   "hard": 0,
-  "soft": 159,
+  "soft": 173,
   "hardPct": 0,
   "main": {
-   "members": 65,
+   "members": 82,
    "hard": 0,
-   "soft": 65,
+   "soft": 82,
    "hardPct": 0,
    "pos": {
     "top": 0,
@@ -28,7 +28,7 @@
    "depthRows": 3,
    "frontHard": 0,
    "backHard": 0,
-   "floors": 5
+   "floors": 6
   },
   "stacks": 4,
   "parts": [
@@ -39,7 +39,7 @@
   ]
  },
  "sol": {
-  "pct": 99,
+  "pct": 90,
   "win": true,
   "res": "WIN",
   "placed": [
@@ -52,106 +52,106 @@
   "keep": 0
  },
  "oneBomb": {
-  "pct": 43,
-  "collapse": 45,
+  "pct": 58,
+  "collapse": 67,
   "at": "concrete@A:f1",
   "tried": 20
  },
  "lazy": {
-  "pct": 48,
-  "collapse": 49
+  "pct": 51,
+  "collapse": 53
  },
  "fair": [
   {
    "win": false,
    "res": "LOSE pct",
-   "pct": 47,
-   "used": 5,
+   "pct": 53,
+   "used": 6,
    "left": 0,
    "waves": 1,
-   "firstWave": 47,
+   "firstWave": 53,
    "keep": 0,
-   "estSec": 13,
-   "log": "bld5=47"
+   "estSec": 15,
+   "log": "bld6=53"
   },
   {
    "win": false,
    "res": "LOSE pct",
-   "pct": 47,
-   "used": 5,
+   "pct": 52,
+   "used": 6,
    "left": 0,
    "waves": 1,
-   "firstWave": 47,
+   "firstWave": 52,
    "keep": 0,
-   "estSec": 13,
-   "log": "bld5=47"
+   "estSec": 14,
+   "log": "bld6=52"
   },
   {
    "win": false,
    "res": "LOSE pct",
-   "pct": 47,
-   "used": 5,
+   "pct": 53,
+   "used": 6,
    "left": 0,
    "waves": 1,
-   "firstWave": 47,
+   "firstWave": 53,
    "keep": 0,
-   "estSec": 13,
-   "log": "bld5=47"
+   "estSec": 15,
+   "log": "bld6=53"
   }
  ],
  "allFoot": {
-  "pct": 91,
-  "used": 5,
+  "pct": 98,
+  "used": 6,
   "collapse": 100,
   "keep": 0
  },
  "footOnly": {
-  "pct": 91,
+  "pct": 98,
   "waves": 1,
   "left": 0,
   "keep": 0
  },
  "oneWave": {
-  "pct": 57,
-  "used": 5,
-  "reach": 145,
-  "collapse": 74
+  "pct": 65,
+  "used": 6,
+  "reach": 158,
+  "collapse": 76
  },
  "curve": [
   {
    "n": 1,
    "pct": 1,
-   "collapse": 2
+   "collapse": 1
   },
   {
    "n": 2,
-   "pct": 45,
+   "pct": 46,
    "collapse": 51
   },
   {
    "n": 3,
    "pct": 47,
-   "collapse": 57
+   "collapse": 53
   },
   {
    "n": 4,
-   "pct": 46,
-   "collapse": 50
-  },
-  {
-   "n": 6,
-   "pct": 47,
+   "pct": 49,
    "collapse": 51
   },
   {
+   "n": 6,
+   "pct": 63,
+   "collapse": 72
+  },
+  {
    "n": 8,
-   "pct": 47,
-   "collapse": 52
+   "pct": 52,
+   "collapse": 56
   },
   {
    "n": 12,
-   "pct": 47,
-   "collapse": 52
+   "pct": 52,
+   "collapse": 56
   }
  ],
  "verdict": "MISS",

@@ -15,7 +15,7 @@ const lvl = {
   sf: [], pattern: 'tutorial: two grey columns side by side drop the tower forward across the baggage hall; one column alone only cracks it; each wing takes its own column',
   parts: [
     { id: 'A', kind: 'g7oTwr', x: 0, z: TZ, hx: E('HX', 3.0), gh: E('GH', 5.0), sh: E('SH', 3.3), ns: E('NS', 4) },
-    { id: 'S', kind: 'g7oBag', x: 0, z: SZ, hx: E('SHX', 4.8), hz: 2.0, h: E('SHH', 2.4), nx: 4 },
+    { id: 'S', kind: 'g7oBag', x: E('SX', 3.8), z: SZ, hx: E('SHX', 3.2), hz: 2.0, h: E('SHH', 2.4), nx: 3 },
     { id: 'B', kind: 'g7oWing', x: -CX, z: TZ + 0.6, hx: 3.4, hz: 2.8, side: -1, nb: E('NB', 3) },
     { id: 'C', kind: 'g7oWing', x: CX, z: TZ + 0.6, hx: 3.4, hz: 2.8, side: 1, nb: E('NB', 3) }
   ],
@@ -28,6 +28,6 @@ lvl.sol = [T('A:z+', 0, 0), T('A:z+', 0, 1), T('B:z+', 0, 0), T('C:z+', 0, 0)];
 lvl.bot = { hints: [['A', 'A:z+', 1], ['A', 'A:z+', 1], ['A', 'B:z+', 1], ['A', 'C:z+', 1]] };
 if (!E('SIDES', 1)) { lvl.parts = lvl.parts.filter(p => p.id === 'A' || p.id === 'S'); lvl.sol = lvl.sol.filter(e => /^[AS]:/.test(e[1])); lvl.bot.hints = lvl.bot.hints.filter(h => /^[AS]:/.test(h[1])); lvl.sol.push(T('S:z+', 0, 0)); lvl.bot.hints.push(['A', 'S:z+', 1]); if (lvl.lesson.check[0].length) lvl.lesson.check = [lvl.lesson.check[0].filter(e => /^[AS]:/.test(e[1]))]; }
 lvl.hero = lvl.parts.map(p => p.id).join(',');   // the opening frames every building (main/frame.js heroIds), not only the main one
-lvl.tntStart = E('TNT', 5);
+lvl.tntStart = E('TNT', 6);
 writeFileSync(new URL('./level.json', import.meta.url), JSON.stringify([lvl], null, 1));
 console.log('ok O03', 'tower z', TZ, 'wings ±' + CX, 'hall z', SZ);

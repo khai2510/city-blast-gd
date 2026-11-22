@@ -28,7 +28,7 @@ Scope (Lead, 22/11, second message): every **non-Hard, non-boss** slot of ORDER2
 - **Bars:** slots 1–3 tutorial tier (easier, fewer TNT: 5; oneBomb < 70 %; fair bot 3/3, spare ≥ 1; the expert plan wins in the
   main build; allFoot / footOnly / oneWave reported). From slot 4: LEVEL-PROCESS Normal bars: oneBomb < 70 %, fair 3/3 (or, on an
   aim / rotate level, the right face wins and the wrong faces do not), spare ≥ 2, 20–75 s, the expert plan wins in main; oneWave
-  reported only (as the easy pack); "≥ 2 blasts" does not apply before slot 14 (the steps lesson), it is reported.
+  reported only (as the easy pack); "≥ 2 blasts" and the 20–75 s time do not apply before slot 14 (the steps lesson: before it a level is one blast, and one blast is quick), they are reported. Slot 1 keeps the L1 contract (one double tap wins), so its oneBomb is reported. On a level with heavy pieces (17 on) the expert plan's one blast drops the building and the heavy pieces need a second (as the easy pack); the fair bot proves the win.
 - **allFoot / footOnly < 80 % — a decision for Khai (reported, not enforced, before slot 17).** The easy pack keeps "all TNT at the
   foot" under 80 % with heavy pieces that count until broken (`hard7v`, a *dark* element) and drums. ORDER22 forbids both before
   their cards (dark 17, barrels 25), and before slot 14 the lesson of every early level *is* "hit the foot" (wood, brick, concrete,
@@ -67,29 +67,30 @@ leaning tower, lattice, saucer, twin spires, Art Deco needle, flatiron, dome hal
 tower, twin sails, cube houses…), L01–L05 (pagoda, fortress keep, opera, canal houses, glass spine) and E01–E10 (slab on pilotis,
 shot tower, tram depot, market hall, observatory, chimney + boiler house, bathhouse, grain elevator, water tower, rail terminus).
 
-## Status (22/11 evening)
+## Status (22/11 night)
 
-Before shots: `OLD-POLISH-shots/` (current main, 393×852, real LV picker). After: each level folder (`shot-open.jpg` from main,
-`shot-blast1*.jpg` the expert plan in one blast). Numbers: each `O<slot>-SUMMARY.md`.
+Before shots: `OLD-POLISH-shots/before-NN.jpg` (current main, 393×852, real LV picker). After: each level folder: `shot-open.jpg` (main build, 393×852, real LV picker), `shot-before.jpg` (old | new side by side), `shot-blast1*.jpg` (the expert plan in one blast, test build). Numbers: each `O<slot>-SUMMARY.md`.
 
-| Slot | Code | Replaces | State | TNT | Note |
+| Slot | Code | Replaces | State | TNT | Numbers |
 |---|---|---|---|---|---|
-| 1 | O01 Ranger Lookout | L1 | **PASS, wired** | 5 | fair 3/3 at 5 (the falling tower takes the shed and the cabins), oneBomb 63 % |
-| 2 | O02 Hop Kiln | L2 | built, **not wired: Khai** | 5 | fair bot 0/3 at 5 TNT (D-blast-K2), 3/3 at 10. See "Decision for Khai" |
-| 3 | O03 Airfield Tower | L3 | built, **not wired: Khai** | 5 | same as slot 2. Its expert plan wins in one blast (98 %), the old L3 problem is gone |
-| 4 | O04 Fire Station | L36 | **PASS, wired** | 11 | |
-| 5 | O05 Valley Station | L6 | **PASS, wired** | 13 | front legs drop it on the blue (lose); back / sides win |
-| 6 | O06 Harbour Crane | L8 | **PASS, wired** | 13 | |
-| 7 | O07 Pit Head | L9 | **PASS, wired** | 8 | the aim test did not separate (a wrong fall + clean-up still wins): a steel practice level |
-| 9 | O09 Floodlit Stand | L13 | miss | — | the stand does not react to foot TNT (curve 2→6 %), fair 2/3 |
-| 10 | O10 Pier Pavilion | L14 | **PASS, wired** | 14 | |
-| 12 | O12 Drive-in | L21 | **PASS, wired** | 16 | the Ball card stays on this slot |
-| 13 | O13 Monorail Station | L15 | testing | 7 | |
-| 14 | O14 Seaside Hotel | L11 | miss | — | the upper block does not need a second blast yet (one blast 91 %), oneBomb 71 % |
-| 15 | O15 Gas Works | L19 | **PASS, wired** | 17 | |
-| 17 | O17 Car Park | L17 | testing | — | heavy roof pieces (dark is introduced here) to keep allFoot < 80 % |
-| 18 | O18 Roadside Motel | L12 | testing | — | same |
-| 19 | O19 Library | L18 | testing | — | same; oneBomb 70 % before |
+| 1 | O01 Ranger Lookout | L1 | **PASS, wired** | 5 | oneBomb 87 %, fair 3/3 spare 0, allFoot 100 % |
+| 2 | O02 Hop Kiln | L2 | built, **not wired: Khai** | 5–6 | fair bot 0/3 at 5 and 6 TNT (D-blast-K2 says 4–6), 3/3 at 10; oneBomb 48 %. See "Decision for Khai" |
+| 3 | O03 Airfield Tower | L3 | built, **not wired: Khai** | 5–6 | same; its expert plan wins in one blast (90–98 %): the old L3 problem is gone with it |
+| 4 | O04 Fire Station | L36 | **PASS, wired** | 11 | oneBomb 50 %, fair 3/3 spare 2, allFoot 94 % |
+| 5 | O05 Valley Station | L6 | **PASS, wired** | 13 | oneBomb 58 %, fair 3/3 spare 2, allFoot 100 % |
+| 6 | O06 Harbour Crane | L8 | **PASS, wired** | 13 | oneBomb 24 %, fair 3/3 spare 2, allFoot 92 % |
+| 7 | O07 Pit Head | L9 | **PASS, wired** | 8 | oneBomb 57 %, fair 3/3 spare 2, allFoot 96 % |
+| 9 | O09 Floodlit Stand | L13 | **PASS, wired** | 11 | oneBomb 29 %, fair 3/3 spare 2, allFoot 79 % |
+| 10 | O10 Pier Pavilion | L14 | **PASS, wired** | 14 | oneBomb 39 %, fair 3/3 spare 2, allFoot 88 % |
+| 12 | O12 Drive-in | L21 | **PASS, wired** | 16 | oneBomb 53 %, fair 3/3 spare 3, allFoot 88 % |
+| 13 | O13 Monorail Station | L15 | **PASS, wired** | 7 | oneBomb 13 %, fair 3/3 spare 2, allFoot 91 % |
+| 14 | O14 Seaside Hotel | L11 | **miss, not wired** | 20 | courtyard version: fair 3/3 in 2–4 blasts (the steps lesson works), but oneBomb 76 % (a TNT on the slab's 1st-floor panel drops it) and allFoot 99 % |
+| 15 | O15 Gas Works | L19 | **PASS, wired** | 17 | oneBomb 46 %, fair 3/3 spare 2, allFoot 95 % |
+| 17 | O17 Car Park | L17 | **PASS, wired** | 14 | oneBomb 21 %, fair 3/3 spare 2, allFoot 63 % |
+| 18 | O18 Roadside Motel | L12 | **PASS, wired** | 15 | oneBomb 39 %, fair 3/3 spare 2, allFoot 79 % |
+| 19 | O19 Library | L18 | **miss, not wired** | 15 | oneBomb 76 % (a TNT on a 1st-floor wall drops the stack tower), est 18 s |
+
+Changed from the plan above: slot 1 is two buildings (the L1 contract: one double tap wins, check-main PL1–PL3); slots 7, 9, 18, 19 were built as aim levels but a wrong-way fall plus a clean-up still wins, so they ship as practice levels (fair bars); slot 14 became a courtyard (the hotel's legs inside a ring of wings); slots 17–18 use heavy roof pieces (`hard7v`, dark: introduced on 17) with `hard7` scoring, so they open with the whole-lot framing.
 
 ## Decision for Khai (slots 2–3)
 
@@ -99,3 +100,18 @@ but one bomb then wins too (oneBomb 88–100 %: the base score's height term). S
 - **A:** keep 5 TNT (K2). The player's plan (the hand's legs + one TNT a side building) wins with 1 spare; the fair bot loses. Wire.
 - **B:** 10 TNT on slots 2–3 (changes K2). The fair bot wins 3/3.
 - **C:** keep the old L2 / L3 on slots 2–3.
+
+## Main-build checks (22/11 night, build with the 12 wired rebuilds, sources b81fae813599)
+
+| Check | Result | Baseline (origin/main 0fa9452, same checks) |
+|---|---|---|
+| loadcheck | ok, 0 console errors | ok |
+| `src/g7hard/check-order.js` | PASS (46 slots; 2 KNOWN: stone / drop / perblast have no card) | PASS |
+| real taps, LV picker, 393×852 (16 slots 1–19: opens, plans, one tap places a TNT) | 16/16, 0 errors; camera 73–114 m from the lot (never inside a building) | 15/15 |
+| expert plan (`sol`) in main, one blast | WIN on slots 1, 4, 5, 6, 7, 9, 10, 12, 13, 15 (slot 1 also one TNT a blast); 17 / 18: 44 % / 79 % after the first blast (heavy pieces need the second, as designed) | — |
+| `?oldlv=1` | the old L1–L36 come back on their slots (Old Whirly, Sail Lot … ; plan check on 1, 4) | — |
+| check-main flow | 22 / 2 fail (B3, B18) | same |
+| check-main intro | 1 / 6 fail (I2–I7; the run stops at I7) | same |
+| check-main lv | 4 / 2 fail (C1, C4) | same |
+| check-main tap2 | 19 / 10 fail (T9, T12, T13, T19, T22, T24–T28) | same |
+| check-main polish | 17 / 3 fail (PL5, PL8, PL15) | same |

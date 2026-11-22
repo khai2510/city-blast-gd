@@ -12,7 +12,7 @@ const lvl = {
   base: { A: { preset: 'stiff-tip', shove: E('SHOVE', 2.5) }, '*': 'weak' },
   sf: [], pattern: 'dark piers: the car park stands on reinforced piers that take more than one TNT; two side by side tip it and the decks pancake',
   parts: [
-    { id: 'A', kind: 'g7oPark', x: 0, z: TZ, hx: E('HX', 5.0), hz: E('HZ', 4.0), h: 2.9, ns: E('NS', 4), heavy: E('HEAVY', 1) },
+    { id: 'A', kind: 'g7oPark', x: 0, z: TZ, hx: E('HX', 5.0), hz: E('HZ', 4.0), h: 2.9, ns: E('NS', 4), heavy: E('HEAVY', 1.35) },
     { id: 'B', kind: 'g7oWing', x: -CX, z: TZ, hx: 3.4, hz: 2.8, side: -1, nb: 3 },
     { id: 'C', kind: 'g7oWing', x: CX, z: TZ, hx: 3.4, hz: 2.8, side: 1, nb: 3 }
   ],
@@ -24,6 +24,6 @@ const lvl = {
 lvl.sol = [T('A:z+', 0, 1), T('A:z+', 0, 1), T('A:z+', 0, 1), T('A:z+', 0, 2), T('A:z+', 0, 2), T('A:z+', 0, 2), T('B:z+', 0, 0), T('C:z+', 0, 0)];
 lvl.bot = { hints: [['A', 'A:z+', 2], ['A', 'A:z+', 2], ['A', 'B:z+', 1], ['A', 'C:z+', 1]] };
 lvl.hero = lvl.parts.map(p => p.id).join(',');   // the opening frames every building (main/frame.js heroIds), not only the main one
-lvl.tntStart = E('TNT', 10);
+lvl.tntStart = E('TNT', 14);
 writeFileSync(new URL('./level.json', import.meta.url), JSON.stringify([lvl], null, 1));
 console.log('ok O17');

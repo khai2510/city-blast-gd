@@ -1801,7 +1801,7 @@ try{ (function(){
       kd(base, "box", K.gravel, 0, 0.03, 0, 2*hx0 + 4.6, 0.06, 2*hx0 + 4.6); kd(base, "box", K.gravelD, 0, 0.05, 0, 2*hx0 + 1.2, 0.04, 2*hx0 + 1.2);
       var hxs = [hx0]; for(s = 1; s <= nS; s++) hxs.push(Math.max(1.9, hx0 - s*0.2));
       for(s = 0; s <= nS; s++){ var hx = hxs[s], h = s ? SH : LH;
-        var st = H.boxSt({ y0:y, h:h, hx:hx, hz:hx, nx:2, nz:2, pw:s ? 0.46 : 0.6, mw:0.46, fl:s, MT:MT, deck:"mdW", skin:"open", dk:0.3, tp:K.woodD, td:K.wood });
+        var st = H.boxSt({ y0:y, h:h, hx:hx, hz:hx, nx:2, nz:2, pw:s ? 0.46 : (P.lw || 0.6), mw:0.46, fl:s, MT:MT, deck:"mdW", skin:"open", dk:0.3, tp:K.woodD, td:K.wood });
         sts.push(st);
         st.piers.forEach(function(p){ if(!s) kd(p, "box", K.stone, p.spawn.x, 0.3, p.spawn.z, 1.0, 0.6, 1.0);   // the stone footings
           kd(p, "ibox", K.wood, p.spawn.x, p.spawn.y, p.spawn.z, 2*p.half[0] + 0.04, 2*p.half[1] - 0.2, 0.08); });

@@ -13,7 +13,7 @@ const lvl = {
   base: { A: { preset: 'stiff-tip', shove: E('SHOVE', 2.5) }, '*': 'weak' },
   sf: [], pattern: 'rotate + dark: the stack tower must fall forward onto the reading hall; its front legs are only reached from the side',
   parts: [
-    { id: 'A', kind: 'g7oLib', x: 0, z: TZ, hx: 3.4, gh: 4.4, sh: 3.4, ns: E('NS', 4), heavy: E('HEAVY', 1) },
+    { id: 'A', kind: 'g7oLib', x: 0, z: TZ, hx: 3.4, gh: 4.4, sh: 3.4, ns: E('NS', 4), heavy: E('HEAVY', 1.35) },
     { id: 'S', kind: 'g7oRead', x: 0, z: HZ, hx: E('SHX', 5.4), hz: 2.6 },
     { id: 'C', kind: 'g7oCott', x: CX, z: TZ + 0.6, hx: 3.2, hz: 2.8, side: 1 }
   ],

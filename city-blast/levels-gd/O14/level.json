@@ -7,7 +7,7 @@
   "tier": "N",
   "f": 12,
   "kind": "scene",
-  "hero": "A,S,C",
+  "hero": "A,S,D,B,C",
   "heroId": "G7-O14",
   "teaches": "steps",
   "target": 0.85,
@@ -21,65 +21,61 @@
    "*": "weak"
   },
   "sf": [],
-  "pattern": "blast in steps: the foot drops the lower block, the upper block rides down nearly whole onto the heap; a second blast clears it",
+  "pattern": "blast in steps: the hotel legs are inside a ring of wings: open a wing first, then drop the hotel across it",
   "parts": [
    {
     "id": "A",
     "kind": "g7oHotel",
     "x": 0,
-    "z": -8,
+    "z": -4,
     "hx": 4.2,
     "hz": 3,
     "h": 3,
     "nl": 3,
     "nu": 3,
-    "bg0": 95,
-    "tough": 1
+    "bg0": 95
    },
    {
     "id": "S",
-    "kind": "g7oHuts",
+    "kind": "g7oTicket",
     "x": 0,
-    "z": 4.4,
-    "n": 5,
-    "w": 1.8,
-    "hz": 1.4,
-    "h": 2.4
+    "z": 2.3999999999999995,
+    "hx": 10,
+    "hz": 2.4,
+    "nb": 2
+   },
+   {
+    "id": "D",
+    "kind": "g7oTicket",
+    "x": 0,
+    "z": -10.399999999999999,
+    "hx": 10,
+    "hz": 2.4,
+    "nb": 2
+   },
+   {
+    "id": "B",
+    "kind": "g7oTicket",
+    "x": -7.6000000000000005,
+    "z": -4,
+    "hx": 2.4,
+    "hz": 3.7999999999999994,
+    "nb": 2
    },
    {
     "id": "C",
-    "kind": "g7oCott",
-    "x": 9.8,
-    "z": -7.4,
-    "hx": 3.2,
-    "hz": 2.8,
-    "side": 1
+    "kind": "g7oTicket",
+    "x": 7.6000000000000005,
+    "z": -4,
+    "hx": 2.4,
+    "hz": 3.7999999999999994,
+    "nb": 2
    }
   ],
-  "keeps": [
-   {
-    "kind": "keep6",
-    "x": -9.8,
-    "z": -7.4,
-    "floors": 3,
-    "cx": 2,
-    "cz": 2,
-    "name": "the beach house",
-    "role": "school",
-    "fixType": "school"
-   }
-  ],
-  "keep": {
-   "name": "the beach house",
-   "sides": [],
-   "type": "school",
-   "role": "school",
-   "full": 1
-  },
   "charges": {
    "tnt": 40
   },
-  "hint": "A:z+",
+  "hint": "S:z+",
   "tip": "",
   "dud": "Not yet. Two legs side by side!",
   "ftip": "One blast is not always enough. Blast again.",
@@ -88,7 +84,20 @@
     []
    ]
   },
+  "dbl": 1,
   "sol": [
+   [
+    "tnt",
+    "S:z+",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "S:z+",
+    0,
+    2
+   ],
    [
     "tnt",
     "A:z+",
@@ -103,17 +112,33 @@
    ],
    [
     "tnt",
+    "B:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
     "C:z+",
     0,
     0
+   ],
+   [
+    "tnt",
+    "D:z+",
+    0,
+    1
    ]
   ],
-  "solWaves": 2,
   "bot": {
    "hints": [
     [
      "A",
-     "A:z+",
+     "S:z+",
+     1
+    ],
+    [
+     "A",
+     "S:z+",
      1
     ],
     [
@@ -123,11 +148,11 @@
     ],
     [
      "A",
-     "C:z+",
+     "A:z+",
      1
     ]
    ]
   },
-  "tntStart": 9
+  "tntStart": 20
  }
 ]

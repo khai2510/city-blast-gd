@@ -6,7 +6,7 @@
 // hits the blue.
 import { writeFileSync } from 'node:fs';
 const E = (k, d) => process.env[k] != null ? +process.env[k] : d;
-const TZ = E('TZ', -8), CX = E('CX', 8.6), SZ = E('SZ', 4.6);
+const TZ = E('TZ', -8), CX = E('CX', 8.6), SZ = E('SZ', 7.0);
 const T = (sel, f, i) => ['tnt', sel, f || 0, i || 0];
 const lvl = {
   name: 'Fire Station', bp: 'O04', slot: 4, replaces: 'o36', tier: process.env.TIER || 'N', f: 12, kind: 'scene', hero: 'A', heroId: 'G7-O04', teaches: 'keep',
@@ -15,7 +15,7 @@ const lvl = {
   sf: [], pattern: 'blue intro: two brick piers tip the hose tower forward onto the engine house, away from the school; the crew house takes its own pier',
   parts: [
     { id: 'A', kind: 'g7oHose', x: 0, z: TZ, hx: E('HX', 2.8), ah: E('AH', 4.6), sh: E('SH', 3.4), ns: E('NS', 3) },
-    { id: 'S', kind: 'g7oEng', x: 0, z: SZ, hx: E('SHX', 10.0), hz: 2.2, h: E('SHH', 3.0), nx: E('SNX', 5), bays: E('SBAYS', 4) },
+    { id: 'S', kind: 'g7oEng', x: 0, z: SZ, hx: E('SHX', 10.0), hz: 2.2, h: E('SHH', 2.6), nx: E('SNX', 5), bays: E('SBAYS', 4) },
     { id: 'C', kind: 'g7oCott', x: CX, z: TZ + 0.8, hx: 3.2, hz: 2.8, side: 1 }
   ],
   keeps: [{ kind: 'keep6', x: -CX, z: TZ + 0.8, floors: E('KF', 3), cx: E('KCX', 3), cz: E('KCZ', 3), name: 'the school', role: 'school', fixType: 'school' }],

@@ -1,13 +1,13 @@
 {
- "when": "2026-11-22T17:55:29.098Z",
+ "when": "2026-11-22T21:03:25.851Z",
  "bp": "O04",
  "name": "Fire Station",
  "tnt": 11,
  "bar": "N",
  "metrics": {
-  "members": 82,
+  "members": 90,
   "hard": 0,
-  "soft": 82,
+  "soft": 90,
   "hardPct": 0,
   "main": {
    "members": 42,
@@ -38,7 +38,7 @@
   ]
  },
  "sol": {
-  "pct": 98,
+  "pct": 99,
   "win": true,
   "res": "WIN",
   "placed": [
@@ -52,38 +52,38 @@
  },
  "oneBomb": {
   "pct": 50,
-  "collapse": 44,
-  "at": "wwall@A:f1",
+  "collapse": 41,
+  "at": "wpost@A:f1",
   "tried": 18
  },
  "lazy": {
-  "pct": 51,
-  "collapse": 46
+  "pct": 47,
+  "collapse": 40
  },
  "fair": [
   {
    "win": true,
    "res": "WIN",
-   "pct": 98,
+   "pct": 99,
    "used": 9,
    "left": 2,
    "waves": 1,
-   "firstWave": 98,
+   "firstWave": 99,
    "keep": 0,
-   "estSec": 17,
-   "log": "bld9=98"
+   "estSec": 18,
+   "log": "bld9=99"
   },
   {
    "win": true,
    "res": "WIN",
-   "pct": 98,
+   "pct": 99,
    "used": 9,
    "left": 2,
    "waves": 1,
-   "firstWave": 98,
+   "firstWave": 99,
    "keep": 0,
    "estSec": 17,
-   "log": "bld9=98"
+   "log": "bld9=99"
   },
   {
    "win": true,
@@ -99,63 +99,63 @@
   }
  ],
  "allFoot": {
-  "pct": 99,
+  "pct": 94,
   "used": 11,
-  "collapse": 100,
+  "collapse": 98,
   "keep": 14
  },
  "footOnly": {
-  "pct": 97,
+  "pct": 86,
   "waves": 1,
   "left": 5,
   "keep": 14
  },
  "oneWave": {
-  "pct": 99,
+  "pct": 100,
   "used": 11,
-  "reach": 70,
+  "reach": 76,
   "collapse": 100
  },
  "curve": [
   {
    "n": 1,
-   "pct": 48,
-   "collapse": 44
+   "pct": 46,
+   "collapse": 40
   },
   {
    "n": 2,
-   "pct": 48,
-   "collapse": 44
+   "pct": 43,
+   "collapse": 40
   },
   {
    "n": 3,
-   "pct": 48,
-   "collapse": 44
+   "pct": 45,
+   "collapse": 40
   },
   {
    "n": 4,
-   "pct": 48,
-   "collapse": 44
+   "pct": 44,
+   "collapse": 40
   },
   {
    "n": 6,
-   "pct": 51,
-   "collapse": 47
+   "pct": 50,
+   "collapse": 48
   },
   {
    "n": 8,
-   "pct": 54,
-   "collapse": 53
+   "pct": 65,
+   "collapse": 73
   },
   {
    "n": 12,
-   "pct": 54,
-   "collapse": 53
+   "pct": 65,
+   "collapse": 73
   }
  ],
- "jump": 3,
+ "jump": 15,
  "verdict": "MISS",
  "issues": [
-  "est 17/17/17s"
+  "est 18/17/17s"
  ]
 }

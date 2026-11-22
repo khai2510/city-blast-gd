@@ -1,0 +1,162 @@
+{
+ "when": "2026-11-22T20:43:05.224Z",
+ "bp": "O09",
+ "name": "Floodlit Stand",
+ "tnt": 11,
+ "bar": "N",
+ "metrics": {
+  "members": 81,
+  "hard": 27,
+  "soft": 54,
+  "hardPct": 33,
+  "main": {
+   "members": 41,
+   "hard": 3,
+   "soft": 38,
+   "hardPct": 7,
+   "pos": {
+    "top": 0,
+    "mid": 3,
+    "bottom": 0,
+    "edge": 2,
+    "core": 1,
+    "front": 0,
+    "back": 0
+   },
+   "core": "yes",
+   "hardLayers": 1,
+   "depthRows": 4,
+   "frontHard": 0,
+   "backHard": 0,
+   "floors": 5
+  },
+  "stacks": 3,
+  "parts": [
+   "A",
+   "B",
+   "C"
+  ]
+ },
+ "sol": {
+  "pct": 90,
+  "win": true,
+  "res": "WIN",
+  "placed": [
+   "ok",
+   "ok",
+   "ok",
+   "ok",
+   "ok"
+  ],
+  "waves": 1,
+  "keep": 0
+ },
+ "oneBomb": {
+  "pct": 29,
+  "collapse": 49,
+  "at": "concrete@A:f0",
+  "tried": 18
+ },
+ "lazy": {
+  "pct": 29,
+  "collapse": 49
+ },
+ "fair": [
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 100,
+   "used": 9,
+   "left": 2,
+   "waves": 2,
+   "firstWave": 78,
+   "keep": 0,
+   "estSec": 23,
+   "log": "bld7=78 bld2=100"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 98,
+   "used": 9,
+   "left": 2,
+   "waves": 2,
+   "firstWave": 76,
+   "keep": 0,
+   "estSec": 23,
+   "log": "bld7=76 bld2=98"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 99,
+   "used": 8,
+   "left": 3,
+   "waves": 2,
+   "firstWave": 78,
+   "keep": 0,
+   "estSec": 23,
+   "log": "bld7=78 bld1=99"
+  }
+ ],
+ "allFoot": {
+  "pct": 79,
+  "used": 11,
+  "collapse": 97,
+  "keep": 0
+ },
+ "footOnly": {
+  "pct": 96,
+  "waves": 2,
+  "left": 4,
+  "keep": 0
+ },
+ "oneWave": {
+  "pct": 96,
+  "used": 11,
+  "reach": 54,
+  "collapse": 99
+ },
+ "curve": [
+  {
+   "n": 1,
+   "pct": 13,
+   "collapse": 22
+  },
+  {
+   "n": 2,
+   "pct": 17,
+   "collapse": 29
+  },
+  {
+   "n": 3,
+   "pct": 25,
+   "collapse": 44
+  },
+  {
+   "n": 4,
+   "pct": 26,
+   "collapse": 44
+  },
+  {
+   "n": 6,
+   "pct": 26,
+   "collapse": 44
+  },
+  {
+   "n": 8,
+   "pct": 26,
+   "collapse": 44
+  },
+  {
+   "n": 12,
+   "pct": 26,
+   "collapse": 44
+  }
+ ],
+ "jump": 8,
+ "verdict": "MISS",
+ "issues": [
+  "footOnly 96%"
+ ]
+}

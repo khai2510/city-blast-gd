@@ -12,7 +12,7 @@ const lvl = {
   base: { A: { preset: 'stiff-tip', shove: E('SHOVE', 2.5) }, '*': 'weak' },
   sf: [], pattern: 'rotate + dark: the sign pylon stands on dark back legs; turned to the back, two of them (more TNT each) drop it across the motel row',
   parts: [
-    { id: 'A', kind: 'g7oSign', x: 0, z: TZ, hx: 1.8, gh: 4.0, sh: E('SH', 3.6), ns: E('NS', 4), heavy: E('HEAVY', 1) },
+    { id: 'A', kind: 'g7oSign', x: 0, z: TZ, hx: 1.8, gh: 4.0, sh: E('SH', 3.6), ns: E('NS', 4), heavy: E('HEAVY', 1.35) },
     { id: 'S', kind: 'g7oMotel', x: 0, z: MZ, n: E('NM', 4), w: 3.0, hz: 2.6, h: 3.2 },
     { id: 'B', kind: 'g7oCott', x: -CX, z: TZ, hx: 3.2, hz: 2.8, side: -1 },
     { id: 'C', kind: 'g7oCott', x: CX, z: TZ, hx: 3.2, hz: 2.8, side: 1 }
@@ -26,6 +26,6 @@ const lvl = {
 lvl.sol = [T('A:z-', 0, 0), T('A:z-', 0, 0), T('A:z-', 0, 1), T('A:z-', 0, 1), T('B:z+', 0, 0), T('C:z+', 0, 0)];
 lvl.bot = { hints: [['A', 'A:z-', 2], ['A', 'A:z-', 2], ['A', 'B:z+', 1], ['A', 'C:z+', 1]] };
 lvl.hero = lvl.parts.map(p => p.id).join(',');
-lvl.tntStart = E('TNT', 13);
+lvl.tntStart = E('TNT', 15);
 writeFileSync(new URL('./level.json', import.meta.url), JSON.stringify([lvl], null, 1));
 console.log('ok O18');

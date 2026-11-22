@@ -25,3 +25,9 @@ the second blast on the upper block: the terrace, the sign and the parasols come
 oneBomb < 70 %; fair 3/3 (or the right face wins and the wrong faces do not, on an aim / rotate level), spare ≥ 2, 20–75 s; the expert plan wins in the main build; at rest nothing moves, 0 bonds broken; allFoot / footOnly / oneWave / curve reported (enforced from slot 17).
 
 Fail line (≤ 9 words): **"One blast is not always enough. Blast again."** No opening tip.
+
+## 22/11 note: courtyard version (run R)
+The two-block version did not need a second blast (the upper block lands low on the heap: 91 % in one). Rebuilt as a courtyard:
+the hotel slab stands inside a ring of four timber wings (`make-level.mjs`), so its legs are out of reach until a wing is opened.
+The fair bot now needs 2–4 blasts (the steps lesson works), but one TNT on the slab's first-floor panel drops it (oneBomb 76 %) and
+allFoot is 99 %: not wired (OLD-POLISH.md).

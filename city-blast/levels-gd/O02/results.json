@@ -1,13 +1,13 @@
 {
- "when": "2026-11-22T16:05:36.990Z",
+ "when": "2026-11-22T21:04:29.786Z",
  "bp": "O02",
  "name": "Hop Kiln",
- "tnt": 5,
+ "tnt": 6,
  "bar": "T",
  "metrics": {
-  "members": 97,
+  "members": 94,
   "hard": 0,
-  "soft": 97,
+  "soft": 94,
   "hardPct": 0,
   "main": {
    "members": 27,
@@ -39,9 +39,9 @@
   ]
  },
  "sol": {
-  "pct": 99,
-  "win": true,
-  "res": "WIN",
+  "pct": 84,
+  "win": false,
+  "res": "plan",
   "placed": [
    "ok",
    "ok",
@@ -53,109 +53,110 @@
  },
  "oneBomb": {
   "pct": 48,
-  "collapse": 52,
+  "collapse": 54,
   "at": "bk@A:f0",
   "tried": 20
  },
  "lazy": {
-  "pct": 47,
-  "collapse": 54
+  "pct": 46,
+  "collapse": 52
  },
  "fair": [
   {
    "win": false,
    "res": "LOSE pct",
-   "pct": 15,
-   "used": 5,
+   "pct": 52,
+   "used": 6,
    "left": 0,
    "waves": 1,
-   "firstWave": 15,
+   "firstWave": 52,
    "keep": 0,
-   "estSec": 12,
-   "log": "bld5=15"
+   "estSec": 15,
+   "log": "bld6=52"
   },
   {
    "win": false,
    "res": "LOSE pct",
-   "pct": 15,
-   "used": 5,
+   "pct": 52,
+   "used": 6,
    "left": 0,
    "waves": 1,
-   "firstWave": 15,
+   "firstWave": 52,
    "keep": 0,
-   "estSec": 13,
-   "log": "bld5=15"
+   "estSec": 15,
+   "log": "bld6=52"
   },
   {
    "win": false,
    "res": "LOSE pct",
-   "pct": 15,
-   "used": 5,
+   "pct": 52,
+   "used": 6,
    "left": 0,
    "waves": 1,
-   "firstWave": 15,
+   "firstWave": 52,
    "keep": 0,
-   "estSec": 12,
-   "log": "bld5=15"
+   "estSec": 15,
+   "log": "bld6=52"
   }
  ],
  "allFoot": {
-  "pct": 68,
-  "used": 5,
-  "collapse": 85,
+  "pct": 85,
+  "used": 6,
+  "collapse": 98,
   "keep": 0
  },
  "footOnly": {
-  "pct": 68,
+  "pct": 85,
   "waves": 1,
   "left": 0,
   "keep": 0
  },
  "oneWave": {
-  "pct": 59,
-  "used": 5,
-  "reach": 85,
-  "collapse": 75
+  "pct": 61,
+  "used": 6,
+  "reach": 82,
+  "collapse": 77
  },
  "curve": [
   {
    "n": 1,
-   "pct": 42,
-   "collapse": 45
+   "pct": 48,
+   "collapse": 49
   },
   {
    "n": 2,
-   "pct": 47,
-   "collapse": 52
+   "pct": 53,
+   "collapse": 56
   },
   {
    "n": 3,
-   "pct": 52,
-   "collapse": 62
+   "pct": 49,
+   "collapse": 56
   },
   {
    "n": 4,
-   "pct": 52,
-   "collapse": 59
+   "pct": 51,
+   "collapse": 56
   },
   {
    "n": 6,
-   "pct": 51,
-   "collapse": 59
+   "pct": 48,
+   "collapse": 56
   },
   {
    "n": 8,
-   "pct": 52,
-   "collapse": 65
+   "pct": 53,
+   "collapse": 61
   },
   {
    "n": 12,
-   "pct": 52,
-   "collapse": 65
+   "pct": 53,
+   "collapse": 61
   }
  ],
  "verdict": "MISS",
  "issues": [
+  "expert plan plan 84%",
   "fair 0/3",
   "spare 0"
  ]
