@@ -1,53 +1,69 @@
-# Royal Smash (Cypher Games): study notes, 21–22/11
+# Royal Smash (Cypher Games) vs City Blast: visual and UI study, 22/11
 
-This is a summary of the Mac session's report. The Mac session played the game on Khai's phone at Khai's request.
+This summarises the Mac session's second report, made at Khai's request: visual design only, no game design (GD). It replaces the GD notes of the first report.
 
-The screenshots stay on the Mac and are not stored in this public repo. This file is reference only, not a task. Applying anything from it needs Khai (D-blast-NONEW).
+Royal Smash (RS) was played on Khai's phone. The Mac kept 12 RS shots and 3 City Blast shots (home, L1, L40). They are not stored in this public repo.
 
-## Core loop
+This is reference, not a task. Khai decides what to apply (D-blast-NONEW). Take principles only: do not reuse RS's cannon, crown, royal palette, table-and-pole or name.
 
-This section is from Level 50 "Super Hard", played with 11 balls; the level was lost.
+## 1. What makes Royal Smash look polished
 
-- **Shooting:** tap a point to shoot. There is no aim drag and no power bar. A cannon at the bottom middle fires 1 ball per tap.
-- **Resource:** a large "Balls N" card in the top-left corner.
-- **Board:** a cube tower on a narrow table with one leg. Blocks are knocked off the edge, and stacks tilt and fall. The goal is probably to clear the table, but this is unconfirmed because the win screen was not seen.
-- **Materials:** read by colour and texture only, with no HP bars or numbers:
-  - ice blue blocks are light;
-  - dark navy blocks with a crown are heavy;
-  - an orange crate sits on top.
+- **Shapes:** every play object is one rounded cube on a 1-unit grid. Each has a bevel, a lit top edge, a darker bottom edge, and an inset panel with a debossed icon. The look is toy-like and very readable.
+- **Materials:** three, far apart in value and saturation:
+  - pale translucent cyan ice with sparkles;
+  - matte dark navy;
+  - glossy saturated orange.
 
-## Theme and art
+  They stay distinct even in a greyscale thumbnail.
+- **Colour:** small palette. The background is warm (sand) and the board is cool, so the board pops without outlines.
+- **Background:** bright and sparse, with props only at the edges.
+- **Camera:** fixed front view with the whole structure centred and margins around it. The cannon sits in the foreground, cropped by the bottom edge, which gives depth and a sense of "my tool".
+- **HUD:** six elements, all in the corners; the centre stays clear.
+  - Top-left: a white Balls card with a dark label tab, gold trim and a huge number.
+  - A navy gear with a gold ring.
+  - Purple booster circles with gold rings; the icons spill out of the circle.
+  - Badges: a red count, a green "+", and a blue "▶+1" pill.
+- **Typography:** one rounded heavy font with white fill, dark stroke and drop shadow. Numbers are 2–3× the size of labels.
+- **Popup kit:** every popup reuses the same pieces:
+  - a navy header with a gold frame;
+  - a cream panel;
+  - a green CTA;
+  - a red round X;
+  - a faint background pattern;
+  - a "⚠ Super Hard! ⚠" banner.
+- **Settings:** a vertical dropdown of 4 round buttons over a dimmed screen, not a separate panel.
+- **VFX:**
+  - muzzle flash;
+  - a light beam showing the trajectory through the ice;
+  - sparkles along the trail;
+  - blocks that tumble in 3D on impact, and a stack that sways;
+  - idle sparkles on the ice.
 
-- The theme sits on the interactive objects: the cannon, the icons and the popup trim. The background is a bright beach that could change per world.
-- The view is a 2.5D front view with chunky cubes. The background is warm and the objects are cool, so the board stands out.
-- The HUD has 6 elements: the Balls card, Settings, and 4 round boosters around the cannon. The screen centre stays clear.
-- The fail popup has a dark patterned background, a gold frame, a red X and a large green CTA.
+## 2. City Blast now, compared
 
-## Points of difference
+| Area | Now | Suggestion |
+|---|---|---|
+| Materials | Realistic textures but low value contrast. The windmill is brown on brown dirt; in L40 the red and green houses have similar value. | Give each material one value and colour code used everywhere: light-cyan glass, warm-orange brick, dark cool-grey reinforced concrete. Add a light rim light or outline so the building separates from the ground. |
+| Background | Grass, trees, fences and road weigh as much as the building. | Thin out props near the building, add distance fog or desaturation and a light vignette. Make the building the warmest and most saturated thing on screen. |
+| Camera | At L40 the buildings fill the screen and cover each other. | Default framing shows the whole structure with 10–15% margin. |
+| HUD (L1) | Three grey locked booster slots float mid-scene beside the building. Frame styles are mixed: navy pill, grey circles, blue card with gold border. | Move boosters to a bottom bar or the corners, and shrink or hide locked slots until they unlock. Use one frame style. |
+| Home (possible bug, needs a check) | A "LEVEL 1" sign hangs from the crane with an "8" sign behind it. There are two big identical green buttons: "Play · Level 1" and "Level 8". | Keep one main CTA; give the other a secondary style or remove it. |
+| Typography | Already close to RS. | Standardise three text tokens (title, label, number) with one stroke and one shadow. |
+| Foreground | No "tool" is visible. | Consider our own detonator or plunger, cropped at the bottom edge and animated on BLAST. |
+| VFX | — | Flash on each TNT placement; short shake plus a dust ring on BLAST; chunky debris; idle animation (flag, crane, smoke); crack states before collapse. |
 
-1. The one-leg table turns risk into balance: before each shot the player asks which side it will fall. It reads well to someone watching, so it suits ads.
-2. Materials are read by colour, not by numbers.
-3. Input is minimal: the skill is in where to shoot, not in aiming.
-4. The popup labels the level "⚠ Super Hard! ⚠", which sets expectations.
-5. The fail flow has several layers, in this order:
-   - Continue for +5 balls (900 coins);
-   - a real-money bundle;
-   - "Hold to See the Table";
-   - an interstitial playable ad of about 15 s before the X appears;
-   - a Retry popup with a pre-level booster pick.
+## 3. Wider comparison (general knowledge)
 
-## Ideas for City Blast (principles only)
+- **Royal Match-style premium casual:** gold frames and chunky icons. RS borrows this kit, which is why it looks expensive. City Blast should build its own kit with the same structure in its own colours, for example construction yellow, navy and concrete white.
+- **Classic physics destruction (wood, stone, glass):** materials are told apart by colour, and cracks show before a break. This is what City Blast lacks most.
+- **Hypercasual tower smash:** very readable but not premium. RS sits between this and Royal Match, and City Blast should aim for the same spot.
 
-Do not reuse the cannon, the crown, the royal palette, the table-and-leg, or the name.
+## 4. Polish priorities (no game-design changes)
 
-- Put one big TNT-count card in a corner and keep the centre clear.
-- Use a consistent material language of colour and texture: light glass, medium brick, heavy reinforced concrete (RC). Players should read at a glance what breaks easily.
-- Let the stage show the risk before charges are set: a narrow foundation, a cliff edge, a raft or a crane. This fits H1–H5.
-- Show a Hard / Super Hard tag on the start and fail popups of hard levels. This matches the 21/11 proposal.
-- Add "Hold to see the city" on the fail popup.
-- Give each world its own background (landmark silhouettes inspired by real ones, not replicas). Keep the objects and the HUD the same across worlds.
-
-## Not covered
-
-- The win screen, map and shop were not seen.
-- No coins or money were spent, and the ad was not tapped.
+1. Material colour code plus rim light.
+2. HUD cleanup: boosters to a bottom bar, handle the locked slots, one frame style.
+3. Home screen: fix the double CTA and the double sign.
+4. Background fog and fewer props near the building.
+5. Popup kit plus a difficulty banner.
+6. Juice: TNT flash, BLAST shake and dust, damage states, idle animation.
+7. Optional: a foreground detonator.
