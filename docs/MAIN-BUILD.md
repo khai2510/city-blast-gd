@@ -363,3 +363,12 @@ TAPEXACT, NOSTACK, THRESH-2, NOLOT, COIN, ADOPT (3), SCHED (cards only). Status,
   hand taps leg A, leg B, BLAST. `main/intro.js`: Brick L3, Concrete L4, Blue building L5; Road / Lot / Stack rows gone.
 - No street rule (the road stays as scenery), no lot6 paint on L36, win coins 10 / 20 / 30, loss 0; Daily / No Ads / coin "+" hidden.
 - Checks: `ONLY=tap2` T1-T14; A2, A13, A20, I3, I11, I12 changed (cite the D-xxx); B21 / B22 coins; `blastBtn` = double tap on L1.
+
+## 14. Gemini art TEST, step `gem-art` (Agents-Game, 22/11/2026)
+
+Khai wants to compare the Gemini (Nano Banana) art with the current look. Step `gem-art` (`src/gemart/patch.js`) runs right before the Mac's `rs-look` (which stays last). **Off by default**: the normal build only carries the inert code; `?art=1` turns it on, `?art=0` off. `GEM_ART_DEFAULT=on node src/tools/build-main.js <out>` bakes it on for a test-link file only. View only: no rule, level, order, flow, save key or text changes.
+
+- Assets: `python3 -I src/gemart/prep.py <dir with the 22 PNGs> src/gemart/assets` (magenta key with un-mix + de-spill, navy drop shadows kept, auto-crop, two-up sheets split, the A01g bar split into an empty track + the orange fill, textures flattened and seam cross-faded, C01 cut at the grass line). Prompts: floormen `games/blast/art/gemini-prompts-2026-11-22.md`. The 18 MB originals are not in the repo; 25 WebP, ~300 KB.
+- UI (`gemart.css`, all under `html.gem`): green primary `.big.mint/.go`, `#inCard .inB`, result primary (9-slice `border-image`, caps from the element height `--gh` set by `gemart.js`; pressed / disabled images), blue `.big.sec`, cream `.pillbtn` / `.pmRow` rows, toggles `.tog .sw`, round `#pauseBtn` / `.round` / `.pmRound`, meter `#meter` / `#rMeter` + fills (`.go` gold and `r18prot` red by filter), panels `#settings .card` / `#result .card` / `.bcard` / `#inCard`, ribbon `#rTitle` / `.bhead` / `#settings .chead`.
+- Icons: `--ul-ic-tnt` / `--ul-ic-ball` tokens, Net / Sky Strike tray tiles, the lock on locked slots, `.coin`, a TNT bundle on the TNT chip.
+- 3D (`gemart-engine.js`, `gemart-engine2.js`): swaps the figmadirect `FD_MAT` inputs (glass / brick / concrete / steel / stone tiles in metres), a dark-pier branch inside the concrete hook (member colour / family colour < 0.74 = B06), and the C01 image as the far band (`LA_SKY.rep` 20, `main/look.js` band grade skipped on it).
