@@ -35,3 +35,6 @@ Two bombs on the right legs: the head building leans into the shed, the first ba
 | at rest | nothing moves or dies in 8 s; 0 bonds cracked |
 
 Fail line (≤ 9 words, a principle): **"Read it first: which legs, which side, what stays."** No opening tip.
+
+## As built (after tuning)
+Positions, sizes and keys above are the first design. Tuning (Lead 22/11: lots ≤ ≈ 24 m; bar fixes) moved the layout and added heavy pieces; the built values, hero position and the reasons are in `E10-SUMMARY.md` ("Fixes made on the way").

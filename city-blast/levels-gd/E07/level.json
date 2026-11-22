@@ -1,0 +1,99 @@
+[
+ {
+  "name": "Bathhouse",
+  "bp": "E07",
+  "tier": "N",
+  "f": 7,
+  "kind": "scene",
+  "hero": "A",
+  "heroId": "G7-E07",
+  "teaches": "keep",
+  "target": 0.85,
+  "yaw": 0.1,
+  "d": 1,
+  "fillMax": 0.73,
+  "hard7": true,
+  "drop7": {
+   "keys": [
+    "mdB"
+   ],
+   "fall": 1.5,
+   "armor": 0.97
+  },
+  "sf": [],
+  "pattern": "restraint: a domed bathhouse on 8 piers between two colonnade wings, a school (blue) behind the right wing at a generous gap; small blasts drop the dome into the hall, a big blast or a tip back-right reaches the school",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7bath",
+    "x": 0,
+    "z": 0,
+    "hx": 5,
+    "hz": 5,
+    "dr": 4,
+    "ph": 6.5,
+    "hold": 1.6,
+    "domeKey": "hard7t",
+    "dq": 2.6,
+    "oneDome": 1,
+    "atticKey": "hard7t",
+    "allGlass": 1,
+    "bg": 111
+   },
+   {
+    "id": "B",
+    "kind": "g7colo",
+    "x": -8.6,
+    "z": 0,
+    "hx": 1.8,
+    "hz": 4.2,
+    "side": -1,
+    "mat": "brick",
+    "pw": 0.7,
+    "roofKey": "hard7t",
+    "bg": 115
+   },
+   {
+    "id": "C",
+    "kind": "g7colo",
+    "x": 8.6,
+    "z": 0,
+    "hx": 1.8,
+    "hz": 4.2,
+    "side": 1,
+    "mat": "brick",
+    "pw": 0.7,
+    "roofKey": "hard7t",
+    "bg": 116
+   }
+  ],
+  "keeps": [
+   {
+    "kind": "keep6",
+    "x": 7,
+    "z": -7.9,
+    "floors": 2,
+    "cx": 3,
+    "cz": 2,
+    "name": "the school",
+    "role": "school",
+    "fixType": "school"
+   }
+  ],
+  "keep": {
+   "name": "the school",
+   "sides": [],
+   "type": "school",
+   "role": "school",
+   "full": 1
+  },
+  "tanks": [],
+  "charges": {
+   "tnt": 40
+  },
+  "tip": "",
+  "ftip": "Small blasts drop it in place. Keep blue clear.",
+  "sol": [],
+  "tntStart": 18
+ }
+]

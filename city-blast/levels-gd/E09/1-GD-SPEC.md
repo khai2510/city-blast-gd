@@ -37,3 +37,6 @@ The tower gives way storey by storey under the falling cistern; it lands with a 
 | at rest | nothing moves or dies in 8 s; 0 bonds cracked |
 
 Fail line (≤ 9 words, a principle): **"Bring the heavy piece down first. Then crack it."** No opening tip.
+
+## As built (after tuning)
+Positions, sizes and keys above are the first design. Tuning (Lead 22/11: lots ≤ ≈ 24 m; bar fixes) moved the layout and added heavy pieces; the built values, hero position and the reasons are in `E09-SUMMARY.md` ("Fixes made on the way").

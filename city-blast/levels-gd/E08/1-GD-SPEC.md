@@ -37,3 +37,6 @@ Opened on the silo side, 27 m of concrete lies down along the silo row: the gall
 | at rest | nothing moves or dies in 8 s; 0 bonds cracked |
 
 Fail line (≤ 9 words, a principle): **"Cracked concrete stays cracked. Hit it again."** No opening tip.
+
+## As built (after tuning)
+Positions, sizes and keys above are the first design. Tuning (Lead 22/11: lots ≤ ≈ 24 m; bar fixes) moved the layout and added heavy pieces; the built values, hero position and the reasons are in `E08-SUMMARY.md` ("Fixes made on the way").
