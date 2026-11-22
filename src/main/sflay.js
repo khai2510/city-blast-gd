@@ -78,8 +78,10 @@
       "html.sfl body #ff#ff{left:50%!important;right:auto!important;translate:-50% 0!important;bottom:calc(var(--sfB) + var(--sfBlH) + 12px)!important}",
       // polish R22 (BUG-1): the 48 px cancel x of an armed Ball / Sky Strike sits on the chip's OUTER upper corner (its top-left corner
       // would cover the Net above the Ball or the end of BLAST beside Sky Strike)
-      "html.sfl body #r22X#r22X{top:auto!important;bottom:calc(var(--sfB) + var(--sfBs) - 42px)!important;left:calc(var(--sfSide) - 10px)!important;right:auto!important}",
-      "html.sfl.sfXsky body #r22X#r22X{left:auto!important;right:calc(var(--sfSide) - 10px)!important}",
+      // (18 px above it, flush with the screen side); its hit area is its round shape (clip-path), so a tap on the chip's centre still
+      // reaches the chip (R22: a 2nd chip tap cancels too)
+      "html.sfl body #r22X#r22X{top:auto!important;bottom:calc(var(--sfB) + var(--sfBs) - 30px)!important;left:calc(var(--sfSide) - 14px)!important;right:auto!important;clip-path:circle(calc(50% + 4px))}",
+      "html.sfl.sfXsky body #r22X#r22X{left:auto!important;right:calc(var(--sfSide) - 14px)!important}",
       // the collateral line (fixed, under the top row)
       B + " #collat#collat{top:var(--sfTipT)!important}"
     ].join("\n");
@@ -107,7 +109,7 @@
     var fit = function(){
       var cs = getComputedStyle(probe), t = parseFloat(cs.paddingTop) || 0, b = parseFloat(cs.paddingBottom) || 0, l = parseFloat(cs.paddingLeft) || 0, r = parseFloat(cs.paddingRight) || 0;
       var W = Math.min(innerWidth, VW || innerWidth), cut = window.__blast.safe && window.__blast.safe.cut ? window.__blast.safe.cut() : null;
-      var side = 14 + Math.max(l, r), bs = Math.round(Math.max(52, Math.min(64, W*0.158))), gap = 12, bm = Math.max(12, b + 6);
+      var side = 14 + Math.max(l, r), bs = Math.round(Math.max(52, Math.min(64, W*0.158))), gap = 18, bm = Math.max(12, b + 6);
       var cardK = W < 380 ? 1.38 : 1.5, cardT = cut ? 16 : t + 10, rowT = cut ? cut.y + cut.h + 6 : t + 12, gearT = cut ? 22 : t + 14;
       if(NOEAR){ var pq0 = $s("pauseBtn") ? $s("pauseBtn").getBoundingClientRect() : null, gh = pq0 && pq0.height ? pq0.height : 54, ph = $s("lvPill") && $s("lvPill").getBoundingClientRect().height || 33;
         rowT = Math.max(rowT, t + Math.ceil((gh - ph)/2) + 2); gearT = Math.round(rowT + ph/2 - gh/2); }
