@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 /* g7hard order checker (22/11, Khai: "no material / obstacle before it is introduced"). Walks PLACE (patch.js) with the intro
  * triggers (main/intro.js INTRO_SCHED + INTRO_AT in patch.js) over the element audit (order-audit.json, read from the built game)
- * and asserts, for all 41 levels: no element before its intro level; an element's first level is its intro level; at most one new
+ * and asserts, for all levels (41; 46 with the easy pack E01-E06, 22/11): no element before its intro level; an element's first level is its intro level; at most one new
  * element per level; nothing new on a Hard / boss; no two Hard / boss in a row. Elements the game has no card for are listed (KNOWN).
+ * Easy pack (22/11): an element first seen on an easy level (42-46) is a FAIL, card or not (they come after every intro).
  *   node src/g7hard/check-order.js            exit 1 on any FAIL */
 'use strict';
 const fs = require('fs'), path = require('path');
@@ -16,7 +17,8 @@ const CARD = { wood:['timber','o1'], brick:['brick','o3'], concrete:['concrete',
   steps:['steps','o11'], dark:['rc','o17'], glass:['glass','o25'], barrels:['barrels','o32'], trap:['trap','o35'] };
 const NOCARD = ['stone', 'drop', 'perblast'];
 const pos = {}; ORDER.forEach((c, i) => { pos[c] = i + 1; });
-if (ORDER.length !== 41 || new Set(ORDER).size !== 41 || Object.keys(L).some(c => !pos[c])) { console.log('FAIL PLACE is not a permutation of the 41 levels'); process.exit(1); }
+const NLV = Object.keys(L).length;   // 41 + the easy pack (22/11: 46)
+if (ORDER.length !== NLV || new Set(ORDER).size !== NLV || Object.keys(L).some(c => !pos[c])) { console.log('FAIL PLACE is not a permutation of the ' + NLV + ' audited levels'); process.exit(1); }
 const introPos = {}; for (const [e, [id, lv]] of Object.entries(CARD)) introPos[e] = pos[AT[id] || lv];
 ORDER.forEach((c, i) => { for (const [e, p] of Object.entries(introPos)) if (p === i + 1) L[c].el.add(e); });   // a card shows its element
 const first = {}; ORDER.forEach((c, i) => L[c].el.forEach(e => { if (!first[e]) first[e] = i + 1; }));
@@ -28,6 +30,7 @@ ORDER.forEach((c, i) => { const n = i + 1, l = L[c], news = [...l.el].filter(e =
   if (taught.length > 1) { fail++; notes.push('FAIL ' + taught.length + ' new at once'); }
   if (l.hard && taught.length) { fail++; notes.push('FAIL new element on a Hard / boss'); }
   taught.forEach(e => { if (introPos[e] !== n) { fail++; notes.push('FAIL ' + e + ' first seen here, intro at ' + introPos[e]); } });
+  if (/^E\d\d$/.test(c) && news.length) { fail++; notes.push('FAIL easy-pack level brings a new element: ' + news.join(', ')); }
   if (untaught.length) { known++; notes.push('KNOWN no card in the game: ' + untaught.join(', ') + (l.hard ? ' (first seen on this Hard)' : '')); }
   if (i && l.hard && L[ORDER[i - 1]].hard) { fail++; notes.push('FAIL two Hard / boss in a row'); }
   rows.push(String(n).padStart(2) + ' ' + c.padEnd(4) + ' ' + (l.boss ? 'B ' : l.tier.padEnd(2)) + ' ' + l.name.padEnd(16) + ' new: ' + (news.join(', ') || '-').padEnd(18) + ' ' + notes.join(' · ')); });
