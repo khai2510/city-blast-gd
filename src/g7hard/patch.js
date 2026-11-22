@@ -19,6 +19,10 @@ if (!IN || !OUT) { console.error('usage: patch.js <in.html> <out.html>'); proces
 const ROOT = path.join(__dirname, '..', '..');
 const ENGINE = path.join(ROOT, 'city-blast', 'pipeline7', 'engine.js');
 const LEVELS7 = path.join(ROOT, 'city-blast', 'release', 'g7-hard-levels.json');
+// the easy pack (Agents-Game 22/11, Khai 22/11 "tạm thời duyệt, đưa lên main, có nút chọn level"): city-blast/levels-gd/E0n exported by
+// g7hard/export-easy.js (budget = the tester's tntStart). Appended after H1-H5 in LV7DEFS (appended index 36 + 5 + k); not "hard":
+// no Hard tag, normal picker label; like H they are hint-free g7 levels (LV7O.isG). Code in PLACE = its bp (E01 ...).
+const EASY7 = path.join(ROOT, 'city-blast', 'release', 'g7-easy-levels.json');
 // hard-level code -> bp in g7-hard-levels.json (release/INTEGRATE.md §1)
 const HBP = { H1: 'L01v4', H2: 'L02', H3: 'L03', H4: 'L04', H5: 'L05' };
 // new level number = position in this list (1-based); "oN" = old level N, "Hk" = hard level k; every one of the 41 levels is listed once
@@ -28,12 +32,13 @@ const HBP = { H1: 'L01v4', H2: 'L02', H3: 'L03', H4: 'L04', H5: 'L05' };
 // ORDER22 (22/11): 1-3 wood / brick / concrete · 4 blue (old L36) · 5 turn (L6) · 6 steel (L8) · 8 first Hard (L7) · 11 boss (L10) ·
 // 14 blast in steps (L11) · 17 dark pier (L17) · 20 H3 · 21 glass (L25) · 23 boss (L20) · 25 barrels (L32) · 30 H2 · 32 H5 · 33 trap
 // barrels (L34) · 34 boss (L30) · 38 H4 · 40 H1. Checked by city-blast SYNC 22/11 "no element before its intro level".
+// 22/11 easy pack (Lead): E01 E02 E03 E04 E06 appended as 42-46, slots 1-41 unchanged (every element they use is introduced before 42).
 const PLACE = [
   'o1', 'o2', 'o3', 'o36', 'o6', 'o8', 'o9', 'o7', 'o13', 'o14',
   'o10', 'o21', 'o15', 'o11', 'o19', 'o16', 'o17', 'o12', 'o18', 'H3',
   'o25', 'o4', 'o20', 'o31', 'o32', 'o24', 'o5', 'o28', 'o33', 'H2',
   'o26', 'H5', 'o34', 'o30', 'o27', 'o35', 'o22', 'H4', 'o23', 'H1',
-  'o29',
+  'o29', 'E01', 'E02', 'E03', 'E04', 'E06',
 ];
 // intro cards / spotlights that do not sit on their original level: card id (main/intro.js INTRO_SCHED) -> the level (code as in
 // PLACE) where that element is introduced in this order. The card fires when that level is played (LV7O.introAt), wherever it stands.
@@ -58,25 +63,27 @@ const FTIP = {
 };
 
 let h = fs.readFileSync(IN, 'utf8');
-const engine = fs.readFileSync(ENGINE, 'utf8'), defs = JSON.parse(fs.readFileSync(LEVELS7, 'utf8'));
+const engine = fs.readFileSync(ENGINE, 'utf8'), hdefs = JSON.parse(fs.readFileSync(LEVELS7, 'utf8')), edefs = JSON.parse(fs.readFileSync(EASY7, 'utf8'));
+const defs = hdefs.concat(edefs);   // LV7DEFS: H1-H5 (Mac's file order) then the easy pack
 const early = fs.readFileSync(path.join(__dirname, 'order-early.js'), 'utf8'), end = fs.readFileSync(path.join(__dirname, 'order-end.js'), 'utf8');
 const fail = (m) => { console.error('g7-hard: ' + m); process.exit(1); };
-for (const [c, t] of Object.entries(FTIP)) { const l = defs.find(x => x.bp === HBP[c]); if (!l) fail('FTIP: no level ' + c); if (t.split(/\s+/).length > 9 || /\b(road|street|lot|stack|stacked|stacking)\b/i.test(t)) fail('FTIP ' + c + ': > 9 words or a dropped word'); l.ftip = t; }
+for (const l of edefs) { if (!/^E\d\d$/.test(l.bp) || l.tip !== '' || !l.ftip || l.ftip.split(/\s+/).length > 9 || /\b(road|street|lot|stack|stacked|stacking)\b/i.test(l.ftip)) fail('easy ' + l.bp + ': bad code, a tip, or ftip > 9 words / a dropped word'); if (hdefs.some(h => h.bp === l.bp)) fail('easy ' + l.bp + ' clashes with a hard level'); }
+for (const [c, t] of Object.entries(FTIP)) { const l = hdefs.find(x => x.bp === HBP[c]); if (!l) fail('FTIP: no level ' + c); if (t.split(/\s+/).length > 9 || /\b(road|street|lot|stack|stacked|stacking)\b/i.test(t)) fail('FTIP ' + c + ': > 9 words or a dropped word'); l.ftip = t; }
 const count = (s) => h.split(s).length - 1;
 // slots: >= 0 = old level index, -(k + 1) = hard level k of LV7DEFS
 const toSlots = (list, what, part) => {
   const sl = list.map(p => {
     if (/^o\d+$/.test(p)) return +p.slice(1) - 1;
-    const k = defs.findIndex(l => l.bp === HBP[p]); if (k < 0) fail('no level with bp ' + HBP[p] + ' (' + p + ') in ' + LEVELS7); return -(k + 1);
+    const bp = /^E\d\d$/.test(p) ? p : HBP[p], k = defs.findIndex(l => l.bp === bp); if (k < 0) fail('no level with bp ' + bp + ' (' + p + ') in ' + LEVELS7 + ' / ' + EASY7); return -(k + 1);
   });
   if (new Set(sl).size !== sl.length) fail(what + ' lists a level twice');
-  if (!part && defs.some((l, k) => !sl.includes(-(k + 1)))) fail(what + ' does not place every hard level');
+  if (!part && defs.some((l, k) => !sl.includes(-(k + 1)))) fail(what + ' does not place every g7 level (hard + easy)');
   return sl;
 };
 const slots = toSlots(PLACE, 'PLACE');
 if (PLACE.length !== 36 + defs.length) fail('PLACE lists ' + PLACE.length + ' levels, want ' + (36 + defs.length));
 const introAt = Object.fromEntries(Object.entries(INTRO_AT).map(([id, c]) => { const sl = toSlots([c], 'INTRO_AT ' + id, true)[0]; return [id, sl >= 0 ? sl : 36 + (-sl - 1)]; }));
-const legacy = Object.fromEntries(Object.entries(LEGACY).map(([m, l]) => [m, toSlots(l, 'LEGACY ' + m)]));
+const legacy = Object.fromEntries(Object.entries(LEGACY).map(([m, l]) => [m, toSlots(l, 'LEGACY ' + m, true)]));   // part: the 20/11 order had no easy levels
 
 // ---- 1. anchors (checked on the input, before anything is inserted)
 const MARK = '} // main\n})();', UI = 'try{\n// ---- UILAYOUT v2', EARLY = '\nfunction levelDef(i){\n';
@@ -93,9 +100,9 @@ const SITES = [
   ['frame.js opening-camera overrides (old L3, L25)', 'OVR[levelIdx + 1]', 'OVR[LV7O.orig1(levelIdx)]', 1],
   ['intro schedule (INTRO_SCHED lv / upto) in new numbers', '\n];\n// charge kinds: TNT only on L1-36',
     '\n];\nINTRO_SCHED.forEach(function(e){ var a = LV7O.introAt(e.id); if(e.upto) e.upto = a ? a + (e.upto - e.lv) : LV7O.num(e.upto); e.lv = a || LV7O.num(e.lv); });   // g7hard: old level numbers -> new; a card moved by INTRO_AT goes to its intro level\n// charge kinds: TNT only on L1-36', 1],
-  ['intro cards / swipe: none on a hard level', 'function inQueue(i){\n  var n = i + 1, q = [];', 'function inQueue(i){\n  if(LV7O.isH(i)) return [];   // g7hard: hard levels stay hint-free\n  var n = i + 1, q = [];', 1],
-  ['intro "Blast again!" moment: none on a hard level', '  var n = levelIdx + 1, e = inSchedOf("wave")', '  if(LV7O.isH(levelIdx)) return null;\n  var n = levelIdx + 1, e = inSchedOf("wave")', 1],
-  ['intro look moment (trap barrels): none on a hard level', '  var n = levelIdx + 1, e = inSchedOf("look")', '  if(LV7O.isH(levelIdx)) return;\n  var n = levelIdx + 1, e = inSchedOf("look")', 1],
+  ['intro cards / swipe: none on a hard level', 'function inQueue(i){\n  var n = i + 1, q = [];', 'function inQueue(i){\n  if(LV7O.isG(i)) return [];   // g7hard: g7 levels (hard + easy) stay hint-free\n  var n = i + 1, q = [];', 1],
+  ['intro "Blast again!" moment: none on a hard level', '  var n = levelIdx + 1, e = inSchedOf("wave")', '  if(LV7O.isG(levelIdx)) return null;\n  var n = levelIdx + 1, e = inSchedOf("wave")', 1],
+  ['intro look moment (trap barrels): none on a hard level', '  var n = levelIdx + 1, e = inSchedOf("look")', '  if(LV7O.isG(levelIdx)) return;\n  var n = levelIdx + 1, e = inSchedOf("look")', 1],
   ['booster unlock levels (boss wins L10 / L20 / L30) in new numbers', 'if(L6.tntOnly){ BOOST.tnt1.hidden = true; BOOST.tnt1.unlock = 999; }',
     'if(L6.tntOnly){ BOOST.tnt1.hidden = true; BOOST.tnt1.unlock = 999; }\nLV7O.boost(BOOST);   // g7hard', 1],
   ['Sky Strike unlock (boss win L30, defined later by boosters2 sky.js) in new numbers', 'BOOST.sky = { name:"Sky Strike", short:"Strike", unlock:30, free:2, price:300, pack:3, pre:false, icon:"sky", line:"Drop it from the sky." };',
@@ -105,7 +112,7 @@ const SITES = [
   ['interstitial ads from the 10th old level', 'if((save.level | 0) < 9) return null;', 'if((save.level | 0) < LV7O.nth(9)) return null;', 1],
   ['No Ads Home button from the 15th old level', '(save.level | 0) >= 14; }', '(save.level | 0) >= LV7O.nth(14); }', 1],
   ['rewarded rescue / win x2 from the 5th old level', 'levelIdx >= 4 &&', 'levelIdx >= LV7O.nth(4) &&', 2],
-  ['tap2 K3 double-tap refresher hand: never on a hard level', 'screen === "game" && levelIdx >= 2 && wave <= 1 && !selC;', 'screen === "game" && levelIdx >= 2 && !LV7O.isH(levelIdx) && wave <= 1 && !selC;', 1],
+  ['tap2 K3 double-tap refresher hand: never on a hard level', 'screen === "game" && levelIdx >= 2 && wave <= 1 && !selC;', 'screen === "game" && levelIdx >= 2 && !LV7O.isG(levelIdx) && wave <= 1 && !selC;', 1],
 ];
 for (const [a, n] of [[MARK, 1], [UI, 1], [EARLY, 1]]) if (count(a) !== n) fail('anchor ' + JSON.stringify(a) + ' found ' + count(a) + 'x (want ' + n + ')');
 for (const [what, f, , n] of SITES) if (count(f) !== n) fail('site "' + what + '": ' + JSON.stringify(f.slice(0, 60)) + ' found ' + count(f) + 'x (want ' + n + ')');
@@ -113,19 +120,19 @@ if (count('// ---- main/levels7.js') || count('// ---- main/levels7-data.js')) f
 for (const [, f, r] of SITES) h = h.split(f).join(r);
 
 // ---- 3. insert: LV7O (early, before levelDef), the level data (UILAYOUT anchor), the engine + the reorder (end of main)
-h = h.replace(EARLY, () => '\n' + early.replace('__NH__', String(defs.length)).replace('__SLOTS__', JSON.stringify(slots)).replace('__LEGACY__', JSON.stringify(legacy)).replace('__INTRO__', JSON.stringify(introAt)) + EARLY);
-const data = '// ---- main/levels7-data.js (g7hard/patch.js = pipeline7/build.mjs, test=false; data: city-blast/release/g7-hard-levels.json, do not edit by hand)\n' +
+h = h.replace(EARLY, () => '\n' + early.replace('__NH__', String(hdefs.length)).replace('__NE__', String(edefs.length)).replace('__SLOTS__', JSON.stringify(slots)).replace('__LEGACY__', JSON.stringify(legacy)).replace('__INTRO__', JSON.stringify(introAt)) + EARLY);
+const data = '// ---- main/levels7-data.js (g7hard/patch.js = pipeline7/build.mjs, test=false; data: city-blast/release/g7-hard-levels.json + g7-easy-levels.json ' + require('crypto').createHash('sha256').update(fs.readFileSync(EASY7)).digest('hex').slice(0, 10) + ', do not edit by hand)\n' +
   'if(!/[?&]lv7=0(&|$)/.test(location.search)) try{ (function(){ var LV7DEFS = ' + JSON.stringify(defs) + ';\n' +
   '  LV7DEFS.forEach(function(l){ LEVELS.push(l); }); window.__lv7base = LEVELS.length - LV7DEFS.length;\n' +
   '  if(window.__lv7base !== LV7O.base) console.error("main/levels7-data.js: base " + window.__lv7base + " != LV7O " + LV7O.base);\n' +
-  '  var first = Math.min.apply(null, LV7DEFS.map(function(l, k){ return LV7O.pos(window.__lv7base + k); }));   // ?pack7=1: start at the first hard level\n' +
+  '  var first = Math.min.apply(null, LV7DEFS.slice(0, LV7O.nhd).map(function(l, k){ return LV7O.pos(window.__lv7base + k); }));   // ?pack7=1: start at the first hard level\n' +
   '  if(/[?&]pack7=1(&|$)/.test(location.search) && save.level < first){ save.level = first;\n' +
   '    try{ save.bseen = save.bseen || {}; Object.keys(BOOST).forEach(function(k){ if(!BOOST[k].hidden) save.bseen[k] = 2; }); }catch(e){}\n' +
   '    writeSave(); }\n})(); }catch(e){ console.error("main/levels7-data.js", e); }\n';
 h = h.replace(UI, () => data + UI);
 h = h.replace(MARK, () => engine + '\n' + end + '\n' + MARK);
-if (count('__LEGACY__') || count('__SLOTS__') || count('__NH__') || count('__INTRO__')) fail('order-early.js placeholder left in the output');
+if (count('__LEGACY__') || count('__SLOTS__') || count('__NH__') || count('__NE__') || count('__INTRO__')) fail('order-early.js placeholder left in the output');
 for (const m of ['// ---- main/levels7.js', '// ---- main/levels7-data.js', '// ---- g7hard/order-early.js', '// ---- g7hard/order-end.js']) if (count(m) !== 1) fail('output carries ' + m + ' ' + count(m) + 'x');
 fs.writeFileSync(OUT, h);
-const HC = Object.fromEntries(Object.entries(HBP).map(([c, b]) => [b, c])), nm = (s) => s >= 0 ? 'L' + (s + 1) : HC[defs[-s - 1].bp];
-console.log('ok   g7 engine + ' + defs.length + ' hard levels, ' + SITES.length + ' number-keyed sites; order ' + slots.map(nm).join(' ') + ' then L' + (PLACE.length - defs.length + 1) + '+');
+const HC = Object.fromEntries(Object.entries(HBP).map(([c, b]) => [b, c])), nm = (s) => s >= 0 ? 'L' + (s + 1) : HC[defs[-s - 1].bp] || defs[-s - 1].bp;
+console.log('ok   g7 engine + ' + hdefs.length + ' hard + ' + edefs.length + ' easy levels, ' + SITES.length + ' number-keyed sites; order ' + slots.map(nm).join(' ') + ' then L' + (PLACE.length - defs.length + 1) + '+');
