@@ -3,6 +3,7 @@
   "name": "Star Dome",
   "bp": "E05",
   "tier": "N",
+  "slot": 36,
   "f": 7,
   "kind": "scene",
   "hero": "A",
@@ -13,13 +14,6 @@
   "d": 1,
   "fillMax": 0.73,
   "hard7": true,
-  "drop7": {
-   "keys": [
-    "mdB"
-   ],
-   "fall": 1.5,
-   "armor": 0.97
-  },
   "sf": [],
   "pattern": "shell + core: an RC telescope pier (hard7v, counted until cracked) stands free inside a brick drum under a dome; the drum hides it from every view, so the shell comes first, the core after",
   "parts": [
@@ -32,9 +26,9 @@
     "h0": 4.4,
     "h1": 3.6,
     "core": 1.3,
-    "coreKey": "hard7p",
+    "coreKey": "concrete",
     "plinth": 1.2,
-    "domeKey": "hard7t",
+    "domeKey": "bk",
     "oneDome": 1,
     "coreGap": 1.2,
     "bg0": 101
@@ -67,6 +61,6 @@
   "tip": "",
   "ftip": "Open the shell first. The core still counts.",
   "sol": [],
-  "tntStart": 23
+  "tntStart": 19
  }
 ]

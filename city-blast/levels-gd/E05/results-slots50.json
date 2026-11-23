@@ -1,0 +1,202 @@
+{
+ "when": "2026-11-23T19:22:02.320Z",
+ "bp": "E05",
+ "name": "Star Dome",
+ "slot": 36,
+ "bar": "N",
+ "steps": true,
+ "rest": {
+  "dead": 0,
+  "moved": 0,
+  "bonds": [
+   485,
+   485
+  ],
+  "list": [],
+  "keys": {
+   "concrete": 2,
+   "bk": 25,
+   "bkw": 8,
+   "mdB": 16,
+   "wpost": 32,
+   "mdW": 4,
+   "mglass": 8,
+   "wwall": 24,
+   "g7roofL": 2
+  },
+  "mass": {
+   "A": 400224,
+   "B": 36467,
+   "C": 36467
+  },
+  "members": 121,
+  "pad": {
+   "x": [
+    -10.8,
+    10.8
+   ],
+   "z": [
+    -5,
+    5
+   ],
+   "rmax": 11.3,
+   "at": "wpost@B"
+  }
+ },
+ "cal": [
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 94,
+   "used": 14,
+   "left": 26,
+   "waves": 6,
+   "firstWave": 60,
+   "keep": 0,
+   "estSec": 68,
+   "log": "bld4=60 bld2=62 bld3=68 bld1=71 bld3=73 heap1=94"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 97,
+   "used": 17,
+   "left": 23,
+   "waves": 4,
+   "firstWave": 61,
+   "keep": 0,
+   "estSec": 53,
+   "log": "bld5=61 bld6=72 bld4=77 heap2=97"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 95,
+   "used": 16,
+   "left": 24,
+   "waves": 4,
+   "firstWave": 60,
+   "keep": 0,
+   "estSec": 52,
+   "log": "bld5=60 bld7=73 bld3=74 heap1=95"
+  }
+ ],
+ "fair": [
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 100,
+   "used": 16,
+   "left": 3,
+   "waves": 5,
+   "firstWave": 61,
+   "keep": 0,
+   "estSec": 61,
+   "log": "bld5=61 bld2=66 bld4=76 bld4=80 heap1=100"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 91,
+   "used": 15,
+   "left": 4,
+   "waves": 4,
+   "firstWave": 62,
+   "keep": 0,
+   "estSec": 51,
+   "log": "bld5=62 bld6=69 bld3=71 heap1=91"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 95,
+   "used": 16,
+   "left": 3,
+   "waves": 4,
+   "firstWave": 61,
+   "keep": 0,
+   "estSec": 52,
+   "log": "bld5=61 bld6=70 bld4=75 heap1=95"
+  }
+ ],
+ "tnt": 19,
+ "sol": {
+  "pct": 0,
+  "win": false,
+  "res": "plan",
+  "placed": 0,
+  "keep": 0
+ },
+ "oneBomb": {
+  "pct": 14,
+  "collapse": 14,
+  "at": "bk@A:f1",
+  "tried": 18
+ },
+ "lazy": {
+  "pct": 11,
+  "collapse": 13
+ },
+ "allFoot": {
+  "pct": 79,
+  "used": 19,
+  "collapse": 100,
+  "keep": 0
+ },
+ "footOnly": {
+  "pct": 80,
+  "waves": 4,
+  "left": 0,
+  "keep": 0
+ },
+ "oneWave": {
+  "pct": 77,
+  "used": 19,
+  "reach": 99,
+  "collapse": 100
+ },
+ "curve": [
+  {
+   "n": 1,
+   "pct": 6,
+   "collapse": 6
+  },
+  {
+   "n": 2,
+   "pct": 14,
+   "collapse": 14
+  },
+  {
+   "n": 3,
+   "pct": 17,
+   "collapse": 17
+  },
+  {
+   "n": 4,
+   "pct": 21,
+   "collapse": 21
+  },
+  {
+   "n": 6,
+   "pct": 69,
+   "collapse": 92
+  },
+  {
+   "n": 8,
+   "pct": 72,
+   "collapse": 95
+  },
+  {
+   "n": 12,
+   "pct": 74,
+   "collapse": 95
+  }
+ ],
+ "jump": 48,
+ "verdict": "PASS",
+ "issues": [],
+ "reported": [
+  "curve jump +48",
+  "footOnly 80%"
+ ]
+}

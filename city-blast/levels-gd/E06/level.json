@@ -3,6 +3,7 @@
   "name": "Boiler Stack",
   "bp": "E06",
   "tier": "N",
+  "slot": 9,
   "f": 7,
   "kind": "scene",
   "hero": "A",
@@ -13,14 +14,6 @@
   "d": 1,
   "fillMax": 0.73,
   "hard7": true,
-  "drop7": {
-   "keys": [
-    "mdB",
-    "mdC"
-   ],
-   "fall": 1.5,
-   "armor": 0.97
-  },
   "hit7": {
    "keys": [
     "bk",
@@ -38,26 +31,28 @@
    {
     "id": "A",
     "kind": "g7stack",
-    "x": -12.15,
+    "x": -8.25,
     "z": 0,
     "bx": 2.9,
     "legH": 4.6,
     "n": 5,
     "sh": 3.1,
     "hold": 2,
-    "bg": 51
+    "bg": 51,
+    "legKey": "bk"
    },
    {
     "id": "B",
     "kind": "g7boil",
-    "x": 0,
+    "x": 3.9,
     "z": 0,
     "n": 2,
     "bw": 3.6,
     "hz": 6,
     "ph": 7,
     "bg0": 52,
-    "heavy": 1
+    "heavy": 1,
+    "heavyKey": "g7roofL"
    }
   ],
   "tanks": [],
@@ -65,8 +60,33 @@
    "tnt": 40
   },
   "tip": "",
-  "ftip": "Open the side it should fall. Tanks still count.",
-  "sol": [],
-  "tntStart": 17
+  "ftip": "Open the side it should fall.",
+  "sol": [
+   [
+    "tnt",
+    "A:x+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "A:x+",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "B:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "B:z+",
+    0,
+    2
+   ]
+  ],
+  "tntStart": 11
  }
 ]

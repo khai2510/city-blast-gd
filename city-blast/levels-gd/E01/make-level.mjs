@@ -6,16 +6,19 @@ import { writeFileSync } from 'node:fs';
 const hx = 3.5, gap = 0.1, W = 3*2*hx + 2*gap, PG = +(process.env.PG || 1.6), PH = 2.6;
 const px = W/2 + PG + PH;                       // clubhouse centre
 const dx = W/2 - 0.5;                           // drums: under the slab end, between its two end legs
+// SLOTS-50 (D-blast-L50, 23/11): play slot 50 (R teach of heavy pieces: the floors are plain (no drop7 before 70), the RC legs plain concrete (no dark RC before 60); heavy roof pieces, drums, glass and steps stay). SLOT50=0 = the 22/11 level.
+const S50 = process.env.SLOT50 !== '0';
+const T = (sel, f, i) => ['tnt', sel, f || 0, i || 0];
 const lvl = {
-  name: 'Long Legs', bp: 'E01', tier: 'N', tntStart: +(process.env.TNT || 19), f: 7, kind: 'scene', hero: 'A', heroId: 'G7-E01', teaches: 'legs',
+  name: 'Long Legs', bp: 'E01', tier: 'N', slot: S50 ? 50 : undefined, tntStart: +(process.env.TNT || (S50 ? 18 : 19)), f: 7, kind: 'scene', hero: 'A', heroId: 'G7-E01', teaches: 'legs',
   target: 0.85, yaw: +(process.env.YAW || 0.12), d: 1, fillMax: 0.73,
   hard7: true, hit7: { keys: [], drums: true },
   // the floors (plain mdC) shrug off TNT while the slab stands (a bomb on the facade only breaks glass), and crack with one TNT
   // once they lie in the heap (drop7 as plumbing: the same rule as L01's roof slabs, here on every floor)
-  drop7: process.env.SOFTD === '0' ? undefined : { keys: ['mdC'], fall: 1.5, armor: 0.97 },
+  drop7: process.env.SOFTD === '0' || S50 ? undefined : { keys: ['mdC'], fall: 1.5, armor: 0.97 },
   sf: [], pattern: 'legs: a raised slab on pilotis, three sections; bombs on the legs drop a section, the heavy roof pieces land whole and need one more',
   parts: [
-    { id: 'A', kind: 'g7slab', x: 0, z: 0, hx, hz: 4.5, secs: 3, legH: +(process.env.LEGH || 6.0), floors: +(process.env.FL || 5), bg0: 81, softDeck: +(process.env.SOFTD || 1) },
+    { id: 'A', kind: 'g7slab', x: 0, z: 0, hx, hz: 4.5, secs: 3, legH: +(process.env.LEGH || 6.0), floors: +(process.env.FL || 5), bg0: 81, softDeck: +(process.env.SOFTD || 1), ...(S50 ? { legKey: 'concrete' } : {}) },
     { id: 'B', kind: 'g7stilt', x: -px, z: 0, hx: PH, hz: 3.0, legH: 4.0, side: -1, bg: 84 },
     { id: 'C', kind: 'g7stilt', x: px, z: 0, hx: PH, hz: 3.0, legH: 4.0, side: 1, bg: 85 }
   ],
@@ -25,5 +28,8 @@ const lvl = {
   ftip: 'Hit the legs. Heavy pieces still count.',
   sol: []
 };
+// D-blast-PAD (Khai 23/11): every building stands inside the sand pad, the lot centred on the pad centre (0, 0): OX / OZ move the whole lot
+const padShift = (l, ox, oz) => { const r = (v) => +(+v).toFixed(2); l.parts.forEach(p => { p.x = r(p.x + ox); p.z = r(p.z + oz); }); (l.keeps || []).forEach(k => { k.x = r(k.x + ox); k.z = r(k.z + oz); }); l.tanks = (l.tanks || []).map(([x, z]) => [r(x + ox), r(z + oz)]); };
+if (process.env.SLOT50 !== '0') padShift(lvl, +(process.env.OX || 0), +(process.env.OZ || 0));
 writeFileSync(new URL('./level.json', import.meta.url), JSON.stringify([lvl], null, 1));
 console.log('ok', 'clubhouses at x = ±' + px.toFixed(2), 'drums at ±' + dx.toFixed(2));
