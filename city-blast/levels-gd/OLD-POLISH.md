@@ -214,4 +214,6 @@ face loses. **Shots** in each folder: `shot-open.jpg`, `shot-blast1-mid.jpg`, `s
 - Thin margins: O26 expert plan 85 % (exactly the bar), O04B oneBomb 69 % (a TNT on a glass pane takes the posts next to it),
   O14 oneBomb 68 %.
 - TNT went up where the fair bot needs 3 a building (4–5 buildings): O25 / O26 / O27 / O31 / O33 14–16, O29 19, O34 20.
-- Pad: footprint radius 12–19 m (estimate); the camera agent's `src/main/check-pad.js` on the p4 build is the judge (below).
+- Pad (D-blast-PAD): `src/main/check-pad.js` on the batch-2 main build (sources c0037073aa77, pad ×1.2, r 28.7–32.2 m): **0 violations** on
+  the 26 rebuilt-old slots (1 2 4 6 8 10 12 13 15 16 17 18 20 22 23 27 28 30 31 32 33 40 41 42 43 45), slot 22 Doorstop Corner included
+  (O05B replaces the old o5 that had B, C, D and the blue outside the pad). Load check: ok, 0 errors.
