@@ -2618,15 +2618,18 @@ try{ (function(){
     // ---- O29 / O34 g7oRowH: one narrow house of a terrace row (each its own bond group: the row leans like books). Brick or timber
     // piers + walls, P.nb storeys, a gable to the street, a bay window, a chimney; colours from P.k.
     V5_PARTS.g7oRowH = function(P){
-      var n0 = blocks.length, hx = P.hx || 1.6, hz = P.hz || 2.6, nb = P.nb || 3, mat = P.mat || "brick", y = 0, st, cols = [K.cream, K.seaGreen, K.creamD, K.orange, K.brickL, K.yellow], c = cols[(P.k || 0) % cols.length];
-      var base = addBlock(0, -0.25, 0, 2*hx + 0.6, 0.5, 2*hz + 2.4, "base", {anchor:true}); kd(base, "box", K.stone, 0, 0.03, 0.6, 2*hx + 0.4, 0.06, 2*hz + 2.0);
-      for(var s = 0; s < nb; s++){ var h = s ? 2.9 : 3.3;
-        st = H.boxSt({ y0:y, h:h, hx:hx, hz:hz, nx:2, nz:2, pw:0.45, mw:0.45, fl:s, MT:api.mat(mat), deck:mat === "wood" ? "mdW" : "mdB", skin:"wall", mat:mat, wall:mat === "wood" ? "wwall" : "bkw", dk:0.25, tp:mat === "wood" ? K.white : K.brickD, td:K.woodD, tw:c });
-        st.walls.forEach(function(w){ if(w.a1face === "z+"){ if(!s) onF(w, "box", K.navy, -0.3, -0.5, 0.8, 2.0, 0.08); win(w, s ? 0 : 0.45, 0.25, s ? 1.0 : 0.6, 1.1, (s + (P.k || 0)) % 3 === 0, 0); } });
-        y += h; }
-      var at = roofBody(0, 0, y, hx - 0.02, hz - 0.02, 0.4, nb, 1.8, K.tile, K.tileD, 0, c);
-      kd(at, "box", K.brickD, 0, y + 1.9, -hz*0.5, 0.5, 1.6, 0.5);
-      if(P.bg) bgSet(n0, P.bg); return { w:2*hx + 0.6, d:2*hz + 2.4 };
+      var n0 = blocks.length, hx = P.hx || 1.6, hz = P.hz || 2.6, nb = P.nb || 3, nH = P.n || 1, gap = P.gap || 1.0, cols = [K.cream, K.seaGreen, K.creamD, K.orange, K.brickL, K.yellow];
+      var L = nH*2*hz + (nH - 1)*gap, z0 = -L/2 + hz;   // P.n houses one behind the other along z (a row that falls like books), each its own bond group
+      var base = addBlock(0, -0.25, 0, 2*hx + 0.6, 0.5, L + 2.4, "base", {anchor:true}); kd(base, "box", K.stone, 0, 0.03, 0, 2*hx + 0.4, 0.06, L + 2.0);
+      for(var hh = 0; hh < nH; hh++){ var nS = blocks.length, cz = z0 + hh*(2*hz + gap), kk = (P.k || 0) + hh, c = cols[kk % cols.length], mat = P.mats ? P.mats[hh % P.mats.length] : (P.mat || "brick"), y = 0, st;
+        for(var s = 0; s < nb; s++){ var h = s ? 2.9 : 3.3;
+          st = H.boxSt({ y0:y, h:h, hx:hx, hz:hz, cz:cz, nx:2, nz:2, pw:0.45, mw:0.45, fl:s, MT:api.mat(mat), deck:mat === "wood" ? "mdW" : "mdB", skin:"wall", mat:mat, wall:mat === "wood" ? "wwall" : "bkw", dk:0.25, tp:mat === "wood" ? K.white : K.brickD, td:K.woodD, tw:c });
+          st.walls.forEach(function(w){ if(w.a1face === "z+"){ if(!s) onF(w, "box", K.navy, -0.3, -0.5, 0.8, 2.0, 0.08); win(w, s ? 0 : 0.45, 0.25, s ? 1.0 : 0.6, 1.1, (s + kk) % 3 === 0, 0); } });
+          y += h; }
+        var at = roofBody(0, cz, y, hx - 0.02, hz - 0.02, 0.4, nb, 1.8, K.tile, K.tileD, 0, c);
+        kd(at, "box", K.brickD, 0, y + 1.9, cz - hz*0.5, 0.5, 1.6, 0.5);
+        bgSet(nS, (P.bg || 111) + hh); }
+      return { w:2*hx + 0.6, d:L + 2.4 };
     };
     // ---- O31 g7oStack "Stack Tower" (F19): blocks stacked off-centre like books: each storey a box of its own size and offset, panels
     // in alternating colours, a roof garden on the top block. 8 concrete legs under the first block.

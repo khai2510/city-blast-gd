@@ -3,6 +3,7 @@
 // (pipeline7/engine.js, g7 OLD POLISH). Wood + brick + concrete + dark. One axis (z): the sign pylon in the middle (grey front legs,
 // dark back legs), the motel row behind it on the axis (the landing), the car lot in front; a brick office each side.
 import { writeFileSync } from 'node:fs';
+import { centre } from '../pad-centre.mjs';
 const E = (k, d) => process.env[k] != null ? +process.env[k] : d;
 const TZ = E('TZ', -2), CX = E('CX', 9.0), MZ = E('MZ', -7.4);
 const T = (sel, f, i) => ['tnt', sel, f || 0, i || 0];
@@ -27,5 +28,14 @@ lvl.sol = [T('A:z-', 0, 0), T('A:z-', 0, 0), T('A:z-', 0, 1), T('A:z-', 0, 1), T
 lvl.bot = { hints: [['A', 'A:z-', 2], ['A', 'A:z-', 2], ['A', 'B:z+', 1], ['A', 'C:z+', 1]] };
 lvl.hero = lvl.parts.map(p => p.id).join(',');
 lvl.tntStart = E('TNT', 15);
+// batch 2 (23/11, SLOTS-50 slot 18, D-blast-L50): CONV=1 (default) = members launched later than slot 18 become earlier ones
+// (P.conv in pipeline7/engine.js re-keys and re-tints them); no heavy piece, no hard7 scoring, one blast. CONV=0 = the 22/11 build.
+if (E('CONV', 1)) {
+  lvl.parts.forEach(p => { p.conv = { rc: 'concrete', rcs: 'concrete' }; });
+  lvl.parts.forEach(p => { if (p.heavy) p.heavy = 0; }); delete lvl.hard7;
+  lvl.ftip = 'It falls where the legs go. Look round.';
+  lvl.batch = 2; lvl.launch = { el: ['wood', 'brick', 'concrete', 'rotate'], slot: 18, before: ['wood', 'brick', 'concrete', 'dark', 'heavy', 'rotate'] };
+}
+if (!E('NOPAD', 0)) centre(lvl);   // D-blast-PAD (Khai 23/11): the scene centred on the sand pad (a rigid shift)
 writeFileSync(new URL('./level.json', import.meta.url), JSON.stringify([lvl], null, 1));
 console.log('ok O18');

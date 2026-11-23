@@ -5,6 +5,7 @@
 const half = (p) => {
   if (p.kind === 'g7oHuts') { const W = (p.n || 5) * (p.w || 1.8) + ((p.n || 5) - 1) * 0.25; return [W / 2 + 1, (p.hz || 1.4) + 1.2]; }
   if (p.kind === 'g7oMotel') { const W = (p.n || 4) * (p.w || 3) + ((p.n || 4) - 1) * 0.1; return [W / 2 + 1, (p.hz || 2.6) + 2]; }
+  if (p.kind === 'g7oRowH') { const n = p.n || 1, L = n * 2 * (p.hz || 2.6) + (n - 1) * (p.gap || 1); return [(p.hx || 1.6) + 0.5, L / 2 + 1.2]; }
   if (p.kind === 'g7oSpan') return [(p.len || 8) / 2 + 0.5, (p.hz || 2) + 0.5];
   const hx = p.hx || p.r || 3, hz = p.hz || p.r || p.hx || 3;
   return [hx + 2, hz + 2];

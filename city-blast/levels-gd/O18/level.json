@@ -13,7 +13,6 @@
   "target": 0.85,
   "yaw": 0,
   "d": 1,
-  "hard7": true,
   "base": {
    "A": {
     "preset": "stiff-tip",
@@ -28,40 +27,56 @@
     "id": "A",
     "kind": "g7oSign",
     "x": 0,
-    "z": -2,
+    "z": 2.6,
     "hx": 1.8,
     "gh": 4,
     "sh": 3.6,
     "ns": 4,
-    "heavy": 1.35
+    "heavy": 0,
+    "conv": {
+     "rc": "concrete",
+     "rcs": "concrete"
+    }
    },
    {
     "id": "S",
     "kind": "g7oMotel",
     "x": 0,
-    "z": -7.4,
+    "z": -2.8,
     "n": 4,
     "w": 3,
     "hz": 2.6,
-    "h": 3.2
+    "h": 3.2,
+    "conv": {
+     "rc": "concrete",
+     "rcs": "concrete"
+    }
    },
    {
     "id": "B",
     "kind": "g7oCott",
     "x": -9,
-    "z": -2,
+    "z": 2.6,
     "hx": 3.2,
     "hz": 2.8,
-    "side": -1
+    "side": -1,
+    "conv": {
+     "rc": "concrete",
+     "rcs": "concrete"
+    }
    },
    {
     "id": "C",
     "kind": "g7oCott",
     "x": 9,
-    "z": -2,
+    "z": 2.6,
     "hx": 3.2,
     "hz": 2.8,
-    "side": 1
+    "side": 1,
+    "conv": {
+     "rc": "concrete",
+     "rcs": "concrete"
+    }
    }
   ],
   "charges": {
@@ -70,7 +85,7 @@
   "hint": "A:z-",
   "tip": "",
   "dud": "Not yet. Dark piers need more TNT!",
-  "ftip": "Dark legs take more TNT. Look round the back.",
+  "ftip": "It falls where the legs go. Look round.",
   "lesson": {
    "check": [
     []
@@ -138,6 +153,29 @@
     ]
    ]
   },
-  "tntStart": 15
+  "tntStart": 15,
+  "batch": 2,
+  "launch": {
+   "el": [
+    "wood",
+    "brick",
+    "concrete",
+    "rotate"
+   ],
+   "slot": 18,
+   "before": [
+    "wood",
+    "brick",
+    "concrete",
+    "dark",
+    "heavy",
+    "rotate"
+   ]
+  },
+  "pad": {
+   "dx": 0,
+   "dz": 4.6,
+   "r": 16
+  }
  }
 ]

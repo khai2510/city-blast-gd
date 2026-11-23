@@ -1,0 +1,163 @@
+[
+ {
+  "name": "Tube Bundle",
+  "bp": "O23",
+  "slot": 0,
+  "replaces": "o23",
+  "tier": "N",
+  "f": 12,
+  "kind": "scene",
+  "hero": "A,S,B,C",
+  "heroId": "G7-O23",
+  "teaches": null,
+  "target": 0.85,
+  "yaw": 0,
+  "d": 1,
+  "base": {
+   "A": {
+    "preset": "stiff-tip",
+    "shove": 2.5
+   },
+   "*": "weak"
+  },
+  "sf": [],
+  "pattern": "tip it down the row: two legs side by side and the tube bundle lies down along the hut row in front",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7oTubes",
+    "x": 0,
+    "z": -2.3,
+    "hx": 3.4,
+    "gh": 4,
+    "sh": 3,
+    "n1": 4,
+    "n2": 3,
+    "n3": 5,
+    "n4": 2
+   },
+   {
+    "id": "S",
+    "kind": "g7oHuts",
+    "x": 0,
+    "z": 5.1,
+    "n": 5,
+    "w": 1.8,
+    "hz": 1.4,
+    "h": 2.4
+   },
+   {
+    "id": "B",
+    "kind": "g7oCott",
+    "x": -10.2,
+    "z": -1.7,
+    "hx": 3.2,
+    "hz": 2.8,
+    "side": -1
+   },
+   {
+    "id": "C",
+    "kind": "g7oCott",
+    "x": 10.2,
+    "z": -1.7,
+    "hx": 3.2,
+    "hz": 2.8,
+    "side": 1
+   }
+  ],
+  "charges": {
+   "tnt": 40
+  },
+  "hint": "A:z+",
+  "tip": "",
+  "dud": "Not yet. Two legs side by side!",
+  "ftip": "Two legs side by side. It falls that way.",
+  "lesson": {
+   "check": [
+    []
+   ]
+  },
+  "sol": [
+   [
+    "tnt",
+    "A:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "A:z+",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "S:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "B:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "C:z+",
+    0,
+    0
+   ]
+  ],
+  "bot": {
+   "hints": [
+    [
+     "A",
+     "A:z+",
+     1
+    ],
+    [
+     "A",
+     "A:z+",
+     1
+    ],
+    [
+     "A",
+     "S:z+",
+     1
+    ],
+    [
+     "A",
+     "B:z+",
+     1
+    ],
+    [
+     "A",
+     "C:z+",
+     1
+    ]
+   ]
+  },
+  "tntStart": 12,
+  "pad": {
+   "dx": 0,
+   "dz": 5.7,
+   "r": 16.7
+  },
+  "batch": 2,
+  "launch": {
+   "el": [
+    "wood",
+    "brick",
+    "concrete"
+   ],
+   "slot": 8,
+   "before": [
+    "wood",
+    "brick",
+    "concrete",
+    "steel"
+   ]
+  }
+ }
+]
