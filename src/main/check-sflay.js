@@ -69,7 +69,7 @@ const layout = async (p, W, H, tag) => {
   const INFO = await (async () => { const p = await open('', seed({})); const o = await p.evaluate(() => { const lv = window.__blast.levels(), isH = (i) => !!(window.LV7O && LV7O.isH && LV7O.isH(i));
     let wl = 12; try { wl = window.__blast.intro.lockLv('wreck') || wl; } catch (e) {}
     let bl = 3; try { bl = window.__blast.intro.sched().find(e => e.id === 'brick').lv || bl; } catch (e) {}
-    return { bl, n: lv.length, boss: lv.findIndex((x, i) => x.boss && !isH(i)), hard: lv.findIndex((x, i) => isH(i)), plain: lv.findIndex((x, i) => i >= wl && !x.boss && !isH(i) && !x.keep), wl, front: lv.map((x, i) => ({ i, o: window.LV7O ? LV7O.orig1(i) : i + 1, b: !!x.boss, h: isH(i) })).filter(q => !q.b && !q.h && q.o !== 4 && q.o !== 5 && q.i !== 2 && q.i !== 24 && q.i >= 5).slice(0, 3).map(q => q.i) }; });
+    return { bl, n: lv.length, boss: lv.findIndex((x, i) => x.boss && !isH(i)), hard: lv.findIndex((x, i) => isH(i)), plain: lv.findIndex((x, i) => i >= wl && !x.boss && !isH(i) && !x.keep), wl, front: lv.map((x, i) => ({ i, o: window.LV7O ? LV7O.orig1(i) : i + 1, b: !!x.boss, h: isH(i), ch: !!(window.__blast.frame.camHard && window.__blast.frame.camHard(i)) })).filter(q => !q.b && !q.h && !q.ch && q.o !== 4 && q.o !== 5 && q.i !== 2 && q.i !== 24 && q.i >= 5).slice(0, 3).map(q => q.i) }; });
     await close(p); return o; })();
   console.log('levels: ' + INFO.n + ' · Ball unlock L' + INFO.wl + ' · Brick card L' + INFO.bl + ' · first hard L' + (INFO.hard + 1) + ' · first boss L' + (INFO.boss + 1) + ' · plain after Ball L' + (INFO.plain + 1));
 

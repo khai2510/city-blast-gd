@@ -13,6 +13,7 @@
   //   S6 Planning camera: hero front-on (old L4 / L5 keep their tuned yaw: A1 lessons), pitch lower, ~90% of the width (or 92% of the play
   //      height), centred between the top row and the booster columns. Only main/frame.js's opening config (CF) is changed, per level.
   //      Hard levels (L.hard7, frame.js F4 "whole lot") and boss levels (frame.js F5 guard) keep main's CF untouched.
+  //      23/11: so do the easy pack and the rebuilt old levels (frame.js F6 CAM-HARD, the hard camera; ?camhard=0 = front-on as before).
   // #bottom stays a real bottom band (only its height and children move): every layer that reads #bottom's top (intro spotlight field
   // targets, R20 probe, the camera's play area through botH) keeps working; the TNT card leaves the band with position:fixed.
   // Test API window.__blast.sflay: on(), geo(), rects(), cam, frameDefault, fit(), wig.
@@ -148,11 +149,12 @@
     startLevel = function(i){
       try{ fit(); }catch(e){}
       try{ if(FCF){ var p = typeof i === "number" ? i : levelIdx, Lv = LEVELS[p] || null, o1 = typeof LV7O !== "undefined" && LV7O.orig1 ? LV7O.orig1(p) : p + 1;
-        var keep = !CAM.on || !Lv || !!Lv.hard7 || !!Lv.boss;
+        var fr = window.__blast.frame, ch = !!(fr && fr.camHard && fr.camHard(p));   // frame.js F6 (23/11, ?camhard=0 = off): easy / rebuilt old levels take the hard camera
+        var keep = !CAM.on || !Lv || !!Lv.hard7 || !!Lv.boss || ch;
         Object.assign(FCF, F0);
         if(!keep){ FCF.pitch = CAM.pitch; FCF.fillW = CAM.fillW; FCF.fillH = CAM.fillH;
           if(KEEP_YAW[o1]){ FCF.yawMin = 0; FCF.yawMax = 9; } else { FCF.yawMin = 0; FCF.yawMax = 0; } }
-        CAMLOG.n++; if(keep) CAMLOG.kept++; CAMLOG.last = { slot:p + 1, orig:o1, kept:keep, hard7:!!(Lv && Lv.hard7), boss:!!(Lv && Lv.boss) }; } }catch(e){ console.error("main/sflay.js cam", e); }
+        CAMLOG.n++; if(keep) CAMLOG.kept++; CAMLOG.last = { slot:p + 1, orig:o1, kept:keep, hard7:!!(Lv && Lv.hard7), boss:!!(Lv && Lv.boss), camhard:ch }; } }catch(e){ console.error("main/sflay.js cam", e); }
       topDirty = botDirty = true;
       var r = sl0.apply(this, arguments);
       try{ padAll(); gear(); fit(); }catch(e){}
