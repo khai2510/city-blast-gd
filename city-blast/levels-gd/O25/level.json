@@ -1,0 +1,163 @@
+[
+ {
+  "name": "Glass Point",
+  "bp": "O25",
+  "slot": 0,
+  "replaces": "o25",
+  "tier": "N",
+  "f": 12,
+  "kind": "scene",
+  "hero": "A,S,B,C",
+  "heroId": "G7-O25",
+  "teaches": null,
+  "target": 0.85,
+  "yaw": 0,
+  "d": 1,
+  "base": {
+   "A": {
+    "preset": "stiff-tip",
+    "shove": 2.5
+   },
+   "*": "weak"
+  },
+  "sf": [],
+  "pattern": "glass holds nothing: the panes break, the concrete frame carries it; two legs side by side drop it onto the hall",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7oGlassPt",
+    "x": 0,
+    "z": -3.7,
+    "hx": 3,
+    "gh": 4.2,
+    "sh": 3.2,
+    "ns": 4
+   },
+   {
+    "id": "S",
+    "kind": "g7oBag",
+    "x": 0,
+    "z": 4.7,
+    "hx": 4.4,
+    "hz": 2,
+    "h": 2.6,
+    "nx": 4
+   },
+   {
+    "id": "B",
+    "kind": "g7oWing",
+    "x": -10.2,
+    "z": -3.1,
+    "hx": 3.4,
+    "hz": 2.8,
+    "side": -1,
+    "nb": 3
+   },
+   {
+    "id": "C",
+    "kind": "g7oWing",
+    "x": 10.2,
+    "z": -3.1,
+    "hx": 3.4,
+    "hz": 2.8,
+    "side": 1,
+    "nb": 3
+   }
+  ],
+  "charges": {
+   "tnt": 40
+  },
+  "hint": "A:z+",
+  "tip": "",
+  "dud": "Not yet. Two legs side by side!",
+  "ftip": "Glass holds nothing. Hit the frame.",
+  "lesson": {
+   "check": [
+    []
+   ]
+  },
+  "sol": [
+   [
+    "tnt",
+    "A:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "A:z+",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "S:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "B:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "C:z+",
+    0,
+    0
+   ]
+  ],
+  "bot": {
+   "hints": [
+    [
+     "A",
+     "A:z+",
+     1
+    ],
+    [
+     "A",
+     "A:z+",
+     1
+    ],
+    [
+     "A",
+     "S:z+",
+     1
+    ],
+    [
+     "A",
+     "B:z+",
+     1
+    ],
+    [
+     "A",
+     "C:z+",
+     1
+    ]
+   ]
+  },
+  "tntStart": 14,
+  "pad": {
+   "dx": 0,
+   "dz": 4.3,
+   "r": 17.5
+  },
+  "batch": 2,
+  "launch": {
+   "el": [
+    "wood",
+    "brick",
+    "concrete",
+    "glass"
+   ],
+   "slot": 20,
+   "before": [
+    "brick",
+    "concrete",
+    "glass",
+    "dark"
+   ]
+  }
+ }
+]

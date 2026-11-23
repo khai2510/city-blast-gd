@@ -1,0 +1,192 @@
+[
+ {
+  "name": "Doorstop Corner",
+  "bp": "O05B",
+  "slot": 0,
+  "replaces": "o5",
+  "tier": "N",
+  "f": 12,
+  "kind": "scene",
+  "hero": "A,S,B,C",
+  "heroId": "G7-O05B",
+  "teaches": "rotate",
+  "target": 0.85,
+  "yaw": 0,
+  "d": 1,
+  "base": {
+   "A": {
+    "preset": "stiff-tip",
+    "shove": 2.5
+   },
+   "*": "weak"
+  },
+  "sf": [],
+  "pattern": "rotate: the blue school in front of the glass nose, the hall behind; two back legs lay the wedge on the hall",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7oWedge",
+    "x": 0,
+    "z": -0.4,
+    "hx": 3.6,
+    "hz": 3.4,
+    "gh": 4,
+    "sh": 3.2,
+    "ns": 4
+   },
+   {
+    "id": "S",
+    "kind": "g7oTicket",
+    "x": 0,
+    "z": -9.9,
+    "hx": 5,
+    "hz": 3,
+    "nb": 2
+   },
+   {
+    "id": "B",
+    "kind": "g7oCott",
+    "x": -10.2,
+    "z": -0.4,
+    "hx": 3.2,
+    "hz": 2.8,
+    "side": -1
+   },
+   {
+    "id": "C",
+    "kind": "g7oCott",
+    "x": 10.2,
+    "z": -0.4,
+    "hx": 3.2,
+    "hz": 2.8,
+    "side": 1
+   }
+  ],
+  "charges": {
+   "tnt": 40
+  },
+  "hint": "A:z+",
+  "tip": "",
+  "dud": "Not yet. Two legs side by side!",
+  "ftip": "Turn the view. Blast the back.",
+  "lesson": {
+   "check": [
+    []
+   ]
+  },
+  "keeps": [
+   {
+    "kind": "keep6",
+    "x": 0,
+    "z": 10.2,
+    "floors": 2,
+    "cx": 3,
+    "cz": 2,
+    "name": "the school",
+    "role": "school",
+    "fixType": "school"
+   }
+  ],
+  "keep": {
+   "name": "the school",
+   "sides": [],
+   "type": "school",
+   "role": "school",
+   "full": 1
+  },
+  "faces": {
+   "right": [
+    "z-"
+   ],
+   "wrong": [
+    "z+"
+   ]
+  },
+  "sol": [
+   [
+    "tnt",
+    "A:z-",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "A:z-",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "S:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "B:z-",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "C:z-",
+    0,
+    0
+   ]
+  ],
+  "bot": {
+   "hints": [
+    [
+     "A",
+     "A:z-",
+     1
+    ],
+    [
+     "A",
+     "A:z-",
+     1
+    ],
+    [
+     "A",
+     "S:z+",
+     1
+    ],
+    [
+     "A",
+     "B:z-",
+     1
+    ],
+    [
+     "A",
+     "C:z-",
+     1
+    ]
+   ]
+  },
+  "tntStart": 12,
+  "pad": {
+   "dx": 0,
+   "dz": 3.6,
+   "r": 16.5
+  },
+  "batch": 2,
+  "launch": {
+   "el": [
+    "wood",
+    "brick",
+    "glass",
+    "blue",
+    "rotate"
+   ],
+   "slot": 22,
+   "before": [
+    "wood",
+    "brick",
+    "concrete",
+    "glass",
+    "blue",
+    "rotate"
+   ]
+  }
+ }
+]

@@ -74,8 +74,8 @@ Before shots: `OLD-POLISH-shots/before-NN.jpg` (current main, 393×852, real LV 
 | Slot | Code | Replaces | State | TNT | Numbers |
 |---|---|---|---|---|---|
 | 1 | O01 Ranger Lookout | L1 | **PASS, wired** | 5 | oneBomb 87 %, fair 3/3 spare 0, allFoot 100 % |
-| 2 | O02 Hop Kiln | L2 | built, **not wired: Khai** | 5–6 | fair bot 0/3 at 5 and 6 TNT (D-blast-K2 says 4–6), 3/3 at 10; oneBomb 48 %. See "Decision for Khai" |
-| 3 | O03 Airfield Tower | L3 | built, **not wired: Khai** | 5–6 | same; its expert plan wins in one blast (90–98 %): the old L3 problem is gone with it |
+| 2 | O02 Hop Kiln | L2 | **wired, D-blast-O23** (10 TNT, 23/11) | 5–6 | fair bot 0/3 at 5 and 6 TNT (D-blast-K2 says 4–6), 3/3 at 10; oneBomb 48 %. See "Decision for Khai" |
+| 3 | O03 Airfield Tower | L3 | **wired, D-blast-O23** (10 TNT, 23/11) | 5–6 | same; its expert plan wins in one blast (90–98 %): the old L3 problem is gone with it |
 | 4 | O04 Fire Station | L36 | **PASS, wired** | 11 | oneBomb 50 %, fair 3/3 spare 2, allFoot 94 % |
 | 5 | O05 Valley Station | L6 | **PASS, wired** | 13 | oneBomb 58 %, fair 3/3 spare 2, allFoot 100 % |
 | 6 | O06 Harbour Crane | L8 | **PASS, wired** | 13 | oneBomb 24 %, fair 3/3 spare 2, allFoot 92 % |
@@ -84,15 +84,15 @@ Before shots: `OLD-POLISH-shots/before-NN.jpg` (current main, 393×852, real LV 
 | 10 | O10 Pier Pavilion | L14 | **PASS, wired** | 14 | oneBomb 39 %, fair 3/3 spare 2, allFoot 88 % |
 | 12 | O12 Drive-in | L21 | **PASS, wired** | 16 | oneBomb 53 %, fair 3/3 spare 3, allFoot 88 % |
 | 13 | O13 Monorail Station | L15 | **PASS, wired** | 7 | oneBomb 13 %, fair 3/3 spare 2, allFoot 91 % |
-| 14 | O14 Seaside Hotel | L11 | **miss, not wired** | 20 | courtyard version: fair 3/3 in 2–4 blasts (the steps lesson works), but oneBomb 76 % (a TNT on the slab's 1st-floor panel drops it) and allFoot 99 % |
+| 14 | O14 Seaside Hotel | L11 | **miss, not wired** (batch 2: still a miss, see below) | 20 | courtyard version: fair 3/3 in 2–4 blasts (the steps lesson works), but oneBomb 76 % (a TNT on the slab's 1st-floor panel drops it) and allFoot 99 % |
 | 15 | O15 Gas Works | L19 | **PASS, wired** | 17 | oneBomb 46 %, fair 3/3 spare 2, allFoot 95 % |
 | 17 | O17 Car Park | L17 | **PASS, wired** | 14 | oneBomb 21 %, fair 3/3 spare 2, allFoot 63 % |
 | 18 | O18 Roadside Motel | L12 | **PASS, wired** | 15 | oneBomb 39 %, fair 3/3 spare 2, allFoot 79 % |
-| 19 | O19 Library | L18 | **miss, not wired** | 15 | oneBomb 76 % (a TNT on a 1st-floor wall drops the stack tower), est 18 s |
+| 19 | O19 Library | L18 | **wired 23/11 (batch 2, converted)** | 15 | oneBomb 76 % (a TNT on a 1st-floor wall drops the stack tower), est 18 s |
 
 Changed from the plan above: slot 1 is two buildings (the L1 contract: one double tap wins, check-main PL1–PL3); slots 7, 9, 18, 19 were built as aim levels but a wrong-way fall plus a clean-up still wins, so they ship as practice levels (fair bars); slot 14 became a courtyard (the hotel's legs inside a ring of wings); slots 17–18 use heavy roof pieces (`hard7v`, dark: introduced on 17) with `hard7` scoring, so they open with the whole-lot framing.
 
-## Decision for Khai (slots 2–3)
+## Decision for Khai (slots 2–3): decided 23/11, D-blast-O23 = option B (10 TNT on O02 / O03, wired; batch 2 below)
 
 The tutorial budget is 5 TNT (D-blast-K2: tutorial levels 4–6, old L1–L3 had 5). The fair bot places up to 3 TNT on every building in
 one blast, so a scene of a main building, its landing and two side buildings needs ~10 TNT for the bot; with 2 buildings it wins at 5
@@ -115,3 +115,103 @@ but one bomb then wins too (oneBomb 88–100 %: the base score's height term). S
 | check-main lv | 4 / 2 fail (C1, C4) | same |
 | check-main tap2 | 19 / 10 fail (T9, T12, T13, T19, T22, T24–T28) | same |
 | check-main polish | 17 / 3 fail (PL5, PL8, PL15) | same |
+
+## Batch 2 (23/11, Agents-Game): the launch schedule (D-blast-LAUNCH, D-blast-L50, SLOTS-50.md)
+
+Khai 23/11: no level may hold an element before its launch (wood 1 · brick 4 · concrete 8 · Ball 12 · blue 15 · glass 20 · barrels 25 ·
+Net 30 · steps 35 · steel 40 · Sky 45 · heavy 50 · dark 60 · drop 70 · trap 80 · stone 90 · per-blast 100), and slots 1–50 follow
+`SLOTS-50.md`. Batch 2 works through the OLD-level rows of that blueprint in slot order (Hard / boss rows are placed as-is by another
+step; E-levels and the NEW slots belong to other agents).
+
+**Method.**
+- **Convert** (members only, same hero and lesson): `P.conv` on a part (level data, `{old key: new key}`) re-keys and re-tints the
+  members after the builder ran (`pipeline7/engine.js`, the g7o wrapper): `steel → concrete`, `mdS → mdC / mdW`, `rc / rcs → concrete`;
+  a heavy roof piece is dropped (`heavy: 0`) and `hard7` scoring is off (one blast). Builder options for the two where the shape changes:
+  `g7oGas noSteel:"wood"` (timber guide frame, slot 6) and `g7oHead wood:1` (timber headframe, slot 2). `CONV=0` / `NOSTEEL=0` /
+  `WOOD=0` in each `make-level.mjs` rebuilds the 22/11 version.
+- **Rebuild** (old art → easy-pack bar): the OLD hero kept (name and landmark type), built with the g7 tower kit `g7oT2` (block
+  `g7 OLD POLISH 2`): a ground storey of 8 legs that the level's tip rule tags, then shaft storeys (box or eight-sided, panels or
+  glass), each hero its own crown and dress. One scene shape (`levels-gd/old2-kit.mjs`): main building on the axis, its landing in
+  front, a side building each side. Codes: old level number (O22 = o22 …); `O04B` / `O05B` for o4 / o5 (O04 / O05 are taken).
+- **Pad (D-blast-PAD).** Every scene is centred on the sand pad by a rigid shift (`levels-gd/pad-centre.mjs`, `L.pad = {dx, dz, r}`,
+  r = the farthest estimated footprint corner). The camera agent's pad check is the judge; r is listed below.
+- **Bars:** OLD-POLISH bars above (oneBomb < 70 %, the expert plan wins in ONE blast before slot 35, fair 3/3 or right face wins /
+  wrong faces lose on a turn level, spare ≥ 2 (tutorial: the hand's plan ≥ 1), 0 bonds broken at rest). allFoot / footOnly / time
+  are reported, not enforced (no heavy or dark piece before 50 / 60). Tuning runs: `oldrun.mjs` `QUICK=1` (sol + oneBomb + fair seed 1).
+
+**Per level: lesson kept, elements before → after.** (Before = the old level / the 22/11 build in main; after = the member keys the
+look check counted, `results-look.json`, mapped as in `audit-old.js`; earliest slot = the latest launch among them.)
+
+| Slot (SLOTS-50) | Code | Old level → hero | Lesson (kept / re-expressed) | What changed |
+|---|---|---|---|---|
+| 2 | O07 | o9 Pit Head (22/11 build) | two feet side by side, then BLAST (L2 hand on `sol[0]`'s face) | steel headframe on concrete feet + brick houses → timber trestle on timber feet, falls forward across a timber woodshed, log cabins each side |
+| 4 | O02 | o2 Hop Kiln | brick card | 10 TNT (D-blast-O23); the expert plan also takes the landing (4 TNT left it at 84 %) |
+| 6 | O15 | o19 Gas Works | the frame stands on brick piers | steel guide frame → timber frame; the retort house moved in (z 4.6 → 1.0) and takes its own TNT (the timber frame drops in place) |
+| 8 | O03 | o3 Airfield Tower | concrete card | 10 TNT (D-blast-O23); landing added to the expert plan |
+| 10 | O13 | o15 Monorail Station | one span leans on the next | steel platform posts / canopy / guideway → concrete |
+| 12 | O12 | o21 Drive-in | the Ball reaches the high screen | steel screen frame → concrete posts, timber decks |
+| 13 | O10 | o14 Pier Pavilion | piles carry the deck | steel trestle legs → concrete (`noSteel`), fail line without "steel" |
+| 17 | O09 | o13 Floodlit Stand | legs first, aim inward | steel posts / floodlight masts / roof → concrete |
+| 18 | O18 | o12 Roadside Motel | the load-bearing piers are on the far side (rotate) | dark back piers → concrete, heavy cabinet removed, no `hard7`, one blast |
+| 20 | O04B | o4 Needle Court → stepped needle (F16 type) | **glass card**: glass breaks, carries nothing | rebuild: glass storeys on concrete posts, blue hospital beside it; one `sol` entry on a pane for the card's forced tap |
+| 22 | O05B | o5 Doorstop Corner → wedge (F24 type) | turn the view: the front fall hits the blue | rebuild: brick wedge with a glass nose, blue school in front, timber hall behind |
+| 23 | O25 | o25 Glass Point (F06 type) | glass holds nothing, hit the frame | rebuild; the old dark frame → concrete |
+| 27 | O34 | o34 Tock Yard → clock tower (F01 type) | row, then barrels | rebuild; steel → none; the row's last house falls on the barrels by the coal shed |
+| 28 | O33 | o33 Rivet Depot → lattice tower (F03 type) | drums behind a shield | rebuild; steel lattice → plain concrete lattice; the barrels stand behind the depot |
+| 30 | O17 | o17 Car Park | Net card relief: the decks pancake | dark piers → concrete, heavy roof pieces removed, no `hard7`, one blast |
+| 31 | O19 | o18 Library | the stack must fall on the hall, school safe (turn) | dark back piers → concrete, no heavy lantern, no `hard7`, NS 4 → 3 (fixes oneBomb 76 %) |
+| 32 | O29 | o29 Old Tock Row → clock tower (F01 type) | one push, the whole row goes | rebuild; glass / steel → none; the row is one part of houses that fall like books |
+| 33 | O26 | o26 The Bullet (F25 type) | slim glass tower: legs, not glass | rebuild; the old "stack on steel" → a ring of concrete legs behind glass |
+| 35 | O14 | o11 Seaside Hotel | "Blast again": the upper block lands whole | V3: the two-block hotel tips onto a 3-storey beach hall in front, the tough upper block should rest on its roof |
+| 41 | O22 | o22 The Pencil (F26 type) | turn the view, blast the back (blue in front) | rebuild; steel → none (concrete) |
+| 42 | O23 | o23 Tube Bundle (F34 type) | tip it down the row | rebuild; steel → none (concrete tubes) |
+| 43 | O27 | o27 The Splinter (F31 type) | tip the glass tower down the row | rebuild; steel → none |
+| 45 | O31 | o31 Stack Tower (F19 type) | stacked blocks ride one storey of legs | rebuild; the old "dark one each / steel stack" → concrete + brick |
+
+Not done in batch 2: o32 Sky Saucer (SLOTS-50 §4 keeps its `hrc` hero for slots 61–63; the `g7oSaucer` builder is in the kit for later), E-levels and the NEW slots (other agents), Hard / boss rows (placed as-is).
+
+### Batch 2 status (23/11 night; numbers from `results.json` of each folder: fair = seeds run, `QUICK=1` runs one seed, the full
+runs queued after the wiring overwrite them with 3 seeds)
+
+| Slot | Code | Name | Replaces | TNT | oneBomb | expert plan (1 blast) | fair bot | spare (min) | faces | elements before → after | earliest slot | pad r (m) | wired |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 2 | O07 | Pit Head | o9 | 10 | 40 % | WIN 90 % | 3/3 (full run) | 0 (bot); the hand's plan 5 | — | wood brick concrete steel → wood | 2 | 16.2 | yes |
+| 4 | O02 | Hop Kiln | o2 | 10 | 46 % | WIN 96 % | 3/3 (full run, 10 TNT) | 0 (bot); the hand's plan 5 | — | wood brick → wood brick (unchanged) | 4 | 16.5 | yes |
+| 6 | O15 | Gas Works | o19 | 17 | 27 % | WIN 91 % | 1/1 | 3 | — | brick concrete steel → wood brick | 6 | 17.3 | yes |
+| 8 | O03 | Airfield Tower | o3 | 10 | 53 % | WIN 95 % | 3/3 | 0 (bot); the hand's plan 5 | — | wood brick concrete → wood brick concrete (unchanged) | 8 | 16.9 | yes |
+| 10 | O13 | Monorail Station | o15 | 7 | 32 % | WIN 100 % | 1/1 | 2 | — | concrete steel → concrete | 10 | 12.2 | yes |
+| 12 | O12 | Drive-in | o21 | 16 | 60 % | WIN 90 % | 1/1 | 4 | — | wood concrete steel → wood concrete | 12 | 16.3 | yes |
+| 13 | O10 | Pier Pavilion | o14 | 14 | 39 % | WIN 97 % | 1/1 | 2 | — | wood brick concrete steel → wood brick concrete | 8 | 16.1 | yes |
+| 17 | O09 | Floodlit Stand | o13 | 11 | 38 % | WIN 96 % | 1/1 | 4 | — | concrete steel → concrete | 17 | 14.6 | yes |
+| 18 | O18 | Roadside Motel | o12 | 15 | 35 % | WIN 100 % | 1/1 | 4 | — | wood brick concrete dark heavy rotate → wood brick concrete rotate | 18 | 16 | yes |
+| 20 | O04B | Needle Court | o4 | 12 | 69 % | WIN 96 % | 1/1 | 3 | — | wood concrete glass blue → wood brick concrete glass blue | 20 | 19.1 | yes |
+| 22 | O05B | Doorstop Corner | o5 | 12 | 54 % | WIN 95 % | 1/1 | 4 | R z- WIN 97% blue 0 · W z+ LOSE collateral 48% blue 22 | wood brick concrete glass blue rotate → wood brick glass blue rotate | 22 | 16.5 | yes |
+| 23 | O25 | Glass Point | o25 | 14 | 39 % | WIN 98 % | 1/1 | 2 | — | brick concrete glass dark → wood brick concrete glass | 20 | 17.5 | yes |
+| 27 | O34 | Tock Yard | o34 | 20 | 54 % | WIN 91 % | 1/1 | 2 | — | brick concrete steel barrels → wood brick barrels | 25 | 19.1 | yes |
+| 28 | O33 | Rivet Depot | o33 | 14 | 31 % | WIN 100 % | 1/1 | 2 | — | wood brick concrete glass steel barrels → brick concrete barrels | 25 | 18.6 | yes |
+| 30 | O17 | Car Park | o17 | 14 | 18 % | WIN 94 % | 1/1 | 5 | — | brick concrete dark heavy → brick concrete | 30 | 16.7 | yes |
+| 31 | O19 | Library | o18 | 15 | 63 % | WIN 97 % | 1/1 | 3 | — | wood brick concrete dark heavy blue rotate → brick concrete blue rotate | 31 | 17.9 | yes |
+| 32 | O29 | Old Tock Row | o29 | 19 | 57 % | WIN 89 % | 1/1 | 3 | — | wood brick concrete glass steel → wood brick | 4 | 18.4 | yes |
+| 33 | O26 | The Bullet | o26 | 16 | 47 % | WIN 85 % | 1/1 | 2 | — | wood brick concrete glass steel → wood brick concrete glass | 20 | 17.7 | yes |
+| 35 | O14 | Seaside Hotel | o11 | 14 | 68 % | WIN 92 % | 1/1 | 2 | — | wood concrete steps → wood brick concrete blue steps | 35 | 18.7 | no |
+| 41 | O22 | The Pencil | o22 | 12 | 58 % | WIN 97 % | 0/1 | 10 | R z- WIN 98% blue 0 · W z+ LOSE collateral 54% blue 33 | wood concrete steel rotate → wood brick concrete blue rotate | 15 | 16.2 | yes |
+| 42 | O23 | Tube Bundle | o23 | 12 | 53 % | WIN 99 % | 1/1 | 2 | — | wood brick concrete steel → wood brick concrete | 8 | 16.7 | yes |
+| 43 | O27 | The Splinter | o27 | 14 | 44 % | WIN 98 % | 1/1 | 2 | — | wood brick concrete glass steel → wood brick concrete glass | 20 | 17.2 | yes |
+| 45 | O31 | Stack Tower | o31 | 14 | 49 % | WIN 96 % | 1/1 | 3 | — | wood concrete glass steel dark → brick concrete | 8 | 18.4 | yes |
+
+Tutorial rows (2, 4, 8): the fair bot spends 3 TNT a building, so at 10 TNT it ends with 0; the tutorial bar is the hand's plan
+(spare ≥ 1). Turn levels (22, 41): the fair bot taps front-on and loses on the blue by design; the bar is right face wins / wrong
+face loses. **Shots** in each folder: `shot-open.jpg`, `shot-blast1-mid.jpg`, `shot-blast1.jpg` (test build, 393 × 852);
+`shot-convert.jpg` = the 22/11 build | the converted one; `shot-before.jpg` = old level | new where an old shot exists.
+
+**Misses / open points (honest):**
+- **O14 Seaside Hotel (slot 35, steps teach): not wired.** V3 (hotel tips onto a 3-storey beach hall, tough upper block) passes the
+  numbers (oneBomb 68 %, fair 1/1 in 2 blasts, spare 2) but the expert plan wins in ONE blast (92 %): the upper block does not stay
+  up on the hall roof, so the "blast again" lesson is not there. Without heavy pieces (launch 50) a landed block counts as down; the
+  lesson needs a piece that counts until broken, or a reach rule (courtyard, oneBomb 76 % on 22/11). Decision for Khai / Lead.
+- **O07 at slot 2 needs Khai:** 10 TNT like D-blast-O23. At 5 TNT (D-blast-K2) the fair bot loses 0/3 with the two cabins, and
+  without them one bomb gives 78 %. Wired at 10.
+- Thin margins: O26 expert plan 85 % (exactly the bar), O04B oneBomb 69 % (a TNT on a glass pane takes the posts next to it),
+  O14 oneBomb 68 %.
+- TNT went up where the fair bot needs 3 a building (4–5 buildings): O25 / O26 / O27 / O31 / O33 14–16, O29 19, O34 20.
+- Pad: footprint radius 12–19 m (estimate); the camera agent's `src/main/check-pad.js` on the p4 build is the judge (below).

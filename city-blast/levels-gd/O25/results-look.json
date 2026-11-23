@@ -1,0 +1,104 @@
+{
+ "rest": {
+  "keys": {
+   "concrete": 76,
+   "mdC": 11,
+   "mglass": 32,
+   "bk": 8,
+   "mdW": 2,
+   "bkw": 41,
+   "g7roofL": 1
+  },
+  "members": 171,
+  "parts": {
+   "A": 77,
+   "S": 16,
+   "B": 39,
+   "C": 39
+  },
+  "height": {
+   "A": 17,
+   "S": 3.1,
+   "B": 9.7,
+   "C": 9.7
+  },
+  "dead": 0,
+  "moved": 0,
+  "bondsBefore": 735,
+  "bondsAfter": 735,
+  "list": [],
+  "pct": 0
+ },
+ "sol": {
+  "placed": [
+   "ok",
+   "ok",
+   "ok",
+   "ok",
+   "ok"
+  ],
+  "after": {
+   "pct": 98,
+   "phase": "done",
+   "res": {
+    "level": 37,
+    "ok": true,
+    "overPts": 13,
+    "pct": 0.9771690044989049,
+    "coll": 0,
+    "over": false,
+    "coins": 471,
+    "bonus": 1634,
+    "combo": 44,
+    "code": "ok",
+    "reason": "DEMOLISHED!",
+    "why": "",
+    "waves": 1,
+    "dud": false,
+    "shots": [
+     {
+      "f": 0,
+      "k": "tnt",
+      "x": -2.5499727725982666,
+      "z": -0.5199979496002198,
+      "metal": false
+     },
+     {
+      "f": 0,
+      "k": "tnt",
+      "x": 2.565428258094471e-05,
+      "z": -0.5199923944473266,
+      "metal": false
+     },
+     {
+      "f": 0,
+      "k": "tnt",
+      "x": -4.124998092651367,
+      "z": 6.880004482269287,
+      "metal": false
+     },
+     {
+      "f": 0,
+      "k": "tnt",
+      "x": -13.299991607666016,
+      "z": -0.11999841451644899,
+      "metal": false
+     },
+     {
+      "f": 0,
+      "k": "tnt",
+      "x": 7.1000075340271,
+      "z": -0.11999817609786989,
+      "metal": false
+     }
+    ],
+    "used": 5,
+    "par": 9,
+    "height": 0,
+    "street": 0,
+    "unlock": false,
+    "debrisCoins": 522
+   }
+  }
+ }
+}

@@ -7,7 +7,7 @@
   "tier": "N",
   "f": 12,
   "kind": "scene",
-  "hero": "A,S,D,B,C",
+  "hero": "A,S,C",
   "heroId": "G7-O14",
   "teaches": "steps",
   "target": 0.85,
@@ -21,55 +21,38 @@
    "*": "weak"
   },
   "sf": [],
-  "pattern": "blast in steps: the hotel legs are inside a ring of wings: open a wing first, then drop the hotel across it",
+  "pattern": "blast in steps: the hotel tips onto the beach hall; its upper block lands whole on the hall roof; blast again",
   "parts": [
    {
     "id": "A",
     "kind": "g7oHotel",
-    "x": 0,
-    "z": -4,
-    "hx": 4.2,
+    "x": 0.55,
+    "z": -3.05,
+    "hx": 4,
     "hz": 3,
     "h": 3,
-    "nl": 3,
-    "nu": 3,
-    "bg0": 95
+    "nl": 2,
+    "nu": 4,
+    "bg0": 95,
+    "tough": 1
    },
    {
     "id": "S",
     "kind": "g7oTicket",
-    "x": 0,
-    "z": 2.3999999999999995,
-    "hx": 10,
-    "hz": 2.4,
-    "nb": 2
-   },
-   {
-    "id": "D",
-    "kind": "g7oTicket",
-    "x": 0,
-    "z": -10.399999999999999,
-    "hx": 10,
-    "hz": 2.4,
-    "nb": 2
-   },
-   {
-    "id": "B",
-    "kind": "g7oTicket",
-    "x": -7.6000000000000005,
-    "z": -4,
-    "hx": 2.4,
-    "hz": 3.7999999999999994,
-    "nb": 2
+    "x": 0.55,
+    "z": 3.75,
+    "hx": 5.4,
+    "hz": 3,
+    "nb": 3
    },
    {
     "id": "C",
-    "kind": "g7oTicket",
-    "x": 7.6000000000000005,
-    "z": -4,
-    "hx": 2.4,
-    "hz": 3.7999999999999994,
-    "nb": 2
+    "kind": "g7oCott",
+    "x": 11.35,
+    "z": -2.45,
+    "hx": 3.2,
+    "hz": 2.8,
+    "side": 1
    }
   ],
   "charges": {
@@ -88,61 +71,27 @@
   "sol": [
    [
     "tnt",
-    "S:z+",
-    0,
-    1
-   ],
-   [
-    "tnt",
-    "S:z+",
-    0,
-    2
-   ],
-   [
-    "tnt",
     "A:z+",
-    0,
-    1
-   ],
-   [
-    "tnt",
-    "A:z+",
-    0,
-    2
-   ],
-   [
-    "tnt",
-    "B:z+",
     0,
     0
+   ],
+   [
+    "tnt",
+    "A:z+",
+    0,
+    1
    ],
    [
     "tnt",
     "C:z+",
     0,
     0
-   ],
-   [
-    "tnt",
-    "D:z+",
-    0,
-    1
    ]
   ],
   "bot": {
    "hints": [
     [
      "A",
-     "S:z+",
-     1
-    ],
-    [
-     "A",
-     "S:z+",
-     1
-    ],
-    [
-     "A",
      "A:z+",
      1
     ],
@@ -150,9 +99,76 @@
      "A",
      "A:z+",
      1
+    ],
+    [
+     "A",
+     "C:z+",
+     1
+    ],
+    [
+     "A",
+     "S:z+",
+     2
     ]
    ]
   },
-  "tntStart": 20
+  "tntStart": 14,
+  "keeps": [
+   {
+    "kind": "keep6",
+    "x": -10.25,
+    "z": -2.45,
+    "floors": 2,
+    "cx": 3,
+    "cz": 3,
+    "name": "the school",
+    "role": "school",
+    "fixType": "school"
+   }
+  ],
+  "keep": {
+   "name": "the school",
+   "sides": [],
+   "type": "school",
+   "role": "school",
+   "full": 1
+  },
+  "solW": [
+   [
+    [
+     "tnt",
+     "S:z+",
+     0,
+     0
+    ],
+    [
+     "tnt",
+     "S:z+",
+     0,
+     1
+    ]
+   ]
+  ],
+  "batch": 2,
+  "launch": {
+   "el": [
+    "wood",
+    "brick",
+    "concrete",
+    "blue",
+    "steps"
+   ],
+   "slot": 35,
+   "before": [
+    "wood",
+    "concrete",
+    "steps"
+   ]
+  },
+  "pad": {
+   "dx": 0.55,
+   "dz": 4.95,
+   "r": 18.7
+  }
  }
 ]
