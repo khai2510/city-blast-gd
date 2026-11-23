@@ -1527,7 +1527,7 @@ try{ (function(){
       var g = H.boxSt({ y0:0, h:LH, hx:hx, hz:hz, nx:3, nz:3, pw:1.15, mw:0.95, fl:0, MT:{ pier:"hrc", deck:"mdC" }, deck:"mdC", skin:P.gwall === 0 ? "open" : { "z-":"wall", def:"open" }, wall:"cpan", dk:0.55, tp:K.conc, td:K.concD, tw:K.concL });
       plainDeck(g.decks, "mdC");
       g.piers.forEach(function(p){ var corner = Math.abs(p.a1x) > hx - 1 && Math.abs(p.a1z) > hz - 1;
-        if(!corner) setKey(p, "rc", K.conc);
+        if(!corner) setKey(p, P.midKey || "rc", K.conc);   // HOVER-1123: midKey "hrc" = the middles take repeated hits too (no stage decor), so a blast never leaves the head house on cracked corners with its middles gone
         else { p.tint = 0xC9C3B6; api.rcDecor(p, Math.sign(p.a1x), 0, p.spawn.x + Math.sign(p.a1x)*(p.half[0] + 0.02), p.spawn.z, 2*p.half[2]); api.rcDecor(p, 0, Math.sign(p.a1z), p.spawn.x, p.spawn.z + Math.sign(p.a1z)*(p.half[2] + 0.02), 2*p.half[0]); }
         kd(p, "box", K.concD, p.spawn.x, 0.3, p.spawn.z, 2*p.half[0] + 0.2, 0.6, 2*p.half[2] + 0.2);
         for(var q = 0; q < 4; q++) kd(p, "ibox", K.concD, p.spawn.x, 1.2 + q*1.0, p.spawn.z + Math.sign(p.a1z || 1)*(p.half[2] + 0.01), 2*p.half[0] - 0.12, 0.04, 0.03); });   // board marks
@@ -1574,6 +1574,7 @@ try{ (function(){
       var base = addBlock(0, -0.25, 0, W + 3, 0.5, Dz + 5, "base", {anchor:true}); kd(base, "box", K.cobble, 0, 0.03, 0.4, W + 2.6, 0.06, Dz + 4.6);
       for(r = 0; r < nr; r++) for(i = 0; i < ns; i++){ var cx = x0 + i*(D + gap), cz = z0 + r*(D + gap), nS = blocks.length, y = 0, top = null;
         for(j = 0; j < k; j++){ var b = mem(P.key || "g7silo", cx, y + dh/2, cz, D - 0.4, dh - 0.02, D - 0.4, j, i, j, K.concL); b.tint = K.concL;
+          if(P.shatter) b.def = Object.assign({}, b.def, { shatter:P.shatter });   // HOVER-1123: a drum that drops onto the heap breaks (no silo left leaning on its neighbour)
           kd(b, "cyl", j % 2 ? K.conc : K.concL, cx, y + dh/2, cz, D, dh - 0.04, D); kd(b, "cyl", K.concD, cx, y + dh - 0.12, cz, D + 0.08, 0.16, D + 0.08);
           if(j === 0 && r === nr - 1) kd(b, "box", K.ink, cx, 1.0, cz + D/2 - 0.05, 0.9, 1.6, 0.12);
           for(var q = 0; q < 2; q++) kd(b, "ibox", K.concD, cx, y + 1.2 + q*1.6, cz + D/2 + 0.01, D*0.12, 0.05, 0.04);

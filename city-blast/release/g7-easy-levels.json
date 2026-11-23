@@ -478,6 +478,7 @@
     "plinth": 1.2,
     "domeKey": "hard7t",
     "oneDome": 1,
+    "coreGap": 1.2,
     "bg0": 101
    },
    {
@@ -503,12 +504,12 @@
   ],
   "tanks": [],
   "charges": {
-   "tnt": 22
+   "tnt": 23
   },
   "tip": "",
   "ftip": "Open the shell first. The core still counts.",
   "sol": [],
-  "tntStart": 22
+  "tntStart": 23
  },
  {
   "name": "Bathhouse",
@@ -655,6 +656,7 @@
     "bin": 1,
     "bin2": 3.4,
     "gwall": 0,
+    "midKey": "hrc",
     "bg": 120
    },
    {
@@ -668,6 +670,7 @@
     "gap": 0.2,
     "k": 3,
     "dh": 4.2,
+    "shatter": 2.5,
     "bg0": 121
    },
    {
@@ -683,12 +686,12 @@
   ],
   "tanks": [],
   "charges": {
-   "tnt": 20
+   "tnt": 26
   },
   "tip": "",
   "ftip": "Cracked concrete stays cracked. Hit it again.",
   "sol": [],
-  "tntStart": 20
+  "tntStart": 26
  },
  {
   "name": "High Cistern",

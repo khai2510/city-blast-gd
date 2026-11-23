@@ -36,6 +36,7 @@
     "plinth": 1.2,
     "domeKey": "hard7t",
     "oneDome": 1,
+    "coreGap": 1.2,
     "bg0": 101
    },
    {
@@ -66,6 +67,6 @@
   "tip": "",
   "ftip": "Open the shell first. The core still counts.",
   "sol": [],
-  "tntStart": 22
+  "tntStart": 23
  }
 ]

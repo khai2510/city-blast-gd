@@ -13,7 +13,7 @@ const lvl = {
   drop7: { keys: ['mdB'], fall: 1.5, armor: 0.97 },
   sf: [], pattern: 'shell + core: an RC telescope pier (hard7v, counted until cracked) stands free inside a brick drum under a dome; the drum hides it from every view, so the shell comes first, the core after',
   parts: [
-    { id: 'A', kind: 'g7obs', x: 0, z: 0, r, h0: +(process.env.H0 || 4.4), h1: +(process.env.H1 || 3.6), core: +(process.env.CW || 1.3), coreKey: process.env.CK || 'hard7p', plinth: +(process.env.PL || 1.2), domeKey: process.env.DK || 'hard7t', oneDome: 1, bg0: 101 },
+    { id: 'A', kind: 'g7obs', x: 0, z: 0, r, h0: +(process.env.H0 || 4.4), h1: +(process.env.H1 || 3.6), core: +(process.env.CW || 1.3), coreKey: process.env.CK || 'hard7p', plinth: +(process.env.PL || 1.2), domeKey: process.env.DK || 'hard7t', oneDome: 1, coreGap: +(process.env.CG ?? 1.2), bg0: 101 },   // HOVER-1123: the pier stops 1.2 m short of the dome, so the dome and upper drum come down with the ground storey (0 = the dome rests on the hidden pier: U-4)
     { id: 'B', kind: 'g7study', x: -wx, z: 0, hx: WX, hz: 3.2, side: -1, bg: 105 },
     { id: 'C', kind: 'g7study', x: wx, z: 0, hx: WX, hz: 3.2, side: 1, bg: 106 }
   ],
@@ -23,6 +23,6 @@ const lvl = {
   ftip: 'Open the shell first. The core still counts.',
   sol: []
 };
-lvl.tntStart = +(process.env.TNT || 22);
+lvl.tntStart = +(process.env.TNT || 23);   // HOVER-1123: 23 (the gate on main 31-polish: fair 3/3, spare 3-5)
 writeFileSync(new URL('./level.json', import.meta.url), JSON.stringify([lvl], null, 1));
 console.log('ok', 'wings at ±' + wx.toFixed(2));

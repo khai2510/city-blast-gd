@@ -49,3 +49,4 @@ Hero position (for a later camera preset): part A (head house) at x −1.3, z 0,
 - Budget 20 TNT, machine spare 3.
 - The curve is low and flat (max 15 % at 12 bombs in one blast): by design one blast cannot break an `hrc` corner pair; the gain comes over blasts.
 - The fail line "Cracked concrete stays cracked. Hit it again." is the only text.
+- **23/11 HOVER-1123 (U-4):** middle piers `rc` → `hrc` (one blast on the legs no longer leaves the house on cracked corners with its middles gone; two blasts on a face drop it), silo drums `shatter` 2.5 (no leaning silo). Budget 20 → 26. The lesson probe above (3 hits on one corner) is now 2 blasts on a face. Numbers: `../HOVER-1123/HOVER.md`.

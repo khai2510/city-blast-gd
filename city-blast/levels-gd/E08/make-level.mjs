@@ -13,8 +13,8 @@ const lvl = {
   hit7: { keys: ['g7silo'], armor: 0.001, f: +(process.env.HF || 3), reach: 1.0 },
   sf: [], pattern: 'patience: a concrete head house on 8 piers, the corners massive RC (3 TNT, damage stays); two piers side by side tip it; tipped onto the silo row it lays the silos down',
   parts: [
-    { id: 'A', kind: 'g7elev', x: -mid, z: 0, hx: HX, hz: 3.2, legH: 5.4, n: +(process.env.NF || 5), hold: 2.0, side: 1, roofKey: process.env.RK || 'g7roofL', rh: +(process.env.RH || 1.0), bin: +(process.env.BIN ?? 1), bin2: +(process.env.BIN2 || 3.4), gwall: 0, bg: 120 },
-    { id: 'B', kind: 'g7silo', x: +(sx - mid).toFixed(2), z: 0, n: NS, rows: NR, D, gap: SG, k: +(process.env.K || 3), dh: 4.2, bg0: 121 },
+    { id: 'A', kind: 'g7elev', x: -mid, z: 0, hx: HX, hz: 3.2, legH: 5.4, n: +(process.env.NF || 5), hold: 2.0, side: 1, roofKey: process.env.RK || 'g7roofL', rh: +(process.env.RH || 1.0), bin: +(process.env.BIN ?? 1), bin2: +(process.env.BIN2 || 3.4), gwall: 0, midKey: process.env.MK || 'hrc', bg: 120 },   // HOVER-1123: middles hrc too (were rc): one blast never leaves the house on cracked corners with its middles gone (U-4)
+    { id: 'B', kind: 'g7silo', x: +(sx - mid).toFixed(2), z: 0, n: NS, rows: NR, D, gap: SG, k: +(process.env.K || 3), dh: 4.2, shatter: +(process.env.SS || 2.5), bg0: 121 },   // HOVER-1123: a drum that drops breaks (no silo left leaning)
     { id: 'C', kind: 'g7weigh', x: +(wx - mid).toFixed(2), z: 0.6, hx: WX, hz: 2.6, side: -1, bg: 126 }
   ],
   tanks: [],
@@ -23,6 +23,6 @@ const lvl = {
   ftip: 'Cracked concrete stays cracked. Hit it again.',
   sol: []
 };
-lvl.tntStart = +(process.env.TNT || 20);
+lvl.tntStart = +(process.env.TNT || 26);   // HOVER-1123: 26 (was 20; hrc middles take repeated hits: fair 3/3, spare 3-4)
 writeFileSync(new URL('./level.json', import.meta.url), JSON.stringify([lvl], null, 1));
 console.log('ok', 'head', -mid.toFixed(2), 'silos', (sx - mid).toFixed(2), 'weigh', (wx - mid).toFixed(2));

@@ -50,3 +50,4 @@ The ground storey of the drum folds and the upper drum and dome settle onto the 
 - Budget 22 TNT. Alone at 20 the machine keeps 2–3; in the long final session one seed needed more, so 22 (spare 3–5). The fair player's third seed took 7 blasts / 80 s there (bar 75 s; `run.mjs` judges the first seed, 62 s): E05 is the slowest of the batch.
 - The wow is "the pier holds up the dome" rather than "the dome drags the drum" (see above).
 - The fail line "Open the shell first. The core still counts." is the only text.
+- **23/11 HOVER-1123 (U-4):** `coreGap` 0 → 1.2 m: the dome and upper drum no longer rest on the hidden pier, they come down with the ground storey and the lower pier stands in the open. The "wow, as built" above (the pier holds the dome) is gone on purpose. Budget 22 → 23. Numbers: `../HOVER-1123/HOVER.md`.
