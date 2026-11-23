@@ -1,0 +1,167 @@
+{
+ "when": "2026-11-23T22:46:59.136Z",
+ "bp": "E03",
+ "name": "Tram Depot",
+ "slot": 25,
+ "bar": "N",
+ "steps": false,
+ "rest": {
+  "dead": 0,
+  "moved": 0,
+  "bonds": [
+   503,
+   503
+  ],
+  "list": [],
+  "keys": {
+   "bk": 40,
+   "mdB": 12,
+   "bkw": 26,
+   "g7roofD": 3,
+   "g7roofL": 5,
+   "mdW": 6,
+   "wpost": 16,
+   "mglass": 12,
+   "wwall": 4,
+   "tank": 6,
+   "rail": 1,
+   "awn2": 1
+  },
+  "mass": {
+   "A": 771411,
+   "B": 113994,
+   "C": 113994,
+   "null": 4136
+  },
+  "members": 132,
+  "pad": {
+   "x": [
+    -16.3,
+    16.3
+   ],
+   "z": [
+    -7.5,
+    7.5
+   ],
+   "rmax": 16.7,
+   "at": "wpost@B"
+  }
+ },
+ "fair": [
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 94,
+   "used": 6,
+   "left": 5,
+   "waves": 2,
+   "firstWave": 82,
+   "keep": 0,
+   "estSec": 24,
+   "log": "bld5=82 bld1=94"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 93,
+   "used": 8,
+   "left": 3,
+   "waves": 3,
+   "firstWave": 62,
+   "keep": 0,
+   "estSec": 33,
+   "log": "bld5=62 bld2=84 bld1=93"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 89,
+   "used": 9,
+   "left": 2,
+   "waves": 3,
+   "firstWave": 38,
+   "keep": 0,
+   "estSec": 33,
+   "log": "bld4=38 bld4=79 bld1=89"
+  }
+ ],
+ "tnt": 11,
+ "sol": {
+  "pct": 90,
+  "win": true,
+  "res": "WIN",
+  "placed": 5,
+  "keep": 0
+ },
+ "oneBomb": {
+  "pct": 33,
+  "collapse": 38,
+  "at": "bk@B:f0",
+  "tried": 18
+ },
+ "lazy": {
+  "pct": 72,
+  "collapse": 77
+ },
+ "allFoot": {
+  "pct": 73,
+  "used": 11,
+  "collapse": 77,
+  "keep": 0
+ },
+ "footOnly": {
+  "pct": 96,
+  "waves": 2,
+  "left": 0,
+  "keep": 0
+ },
+ "oneWave": {
+  "pct": 75,
+  "used": 11,
+  "reach": 104,
+  "collapse": 77
+ },
+ "curve": [
+  {
+   "n": 1,
+   "pct": 4,
+   "collapse": 4
+  },
+  {
+   "n": 2,
+   "pct": 35,
+   "collapse": 37
+  },
+  {
+   "n": 3,
+   "pct": 36,
+   "collapse": 39
+  },
+  {
+   "n": 4,
+   "pct": 36,
+   "collapse": 39
+  },
+  {
+   "n": 6,
+   "pct": 36,
+   "collapse": 42
+  },
+  {
+   "n": 8,
+   "pct": 56,
+   "collapse": 61
+  },
+  {
+   "n": 12,
+   "pct": 59,
+   "collapse": 61
+  }
+ ],
+ "jump": 31,
+ "verdict": "PASS",
+ "issues": [],
+ "reported": [
+  "footOnly 96%"
+ ]
+}
