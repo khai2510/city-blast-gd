@@ -216,7 +216,11 @@ function inQueue(i){
       if(!BOOST[e.k] || BOOST[e.k].hidden) return;
       var had = !!(save.bseen && save.bseen[e.k]);
       if(had && !s.c){ return; }                                   // an old save already got it from boosters2: nothing to show
-      if(n >= e.lv && (save.level|0) >= e.lv - 1 && (!s.c || !s.f)) q.push(e);   // reached the unlock level (old saves: the next level)
+      // 23/11 (GD-76): the card fires ON its intro level (L12, the Drive-in built for the Ball), also on a jump there from the picker; after
+      // it only when the save has reached it (old saves / a level skipped). Once claimed it is never queued again: the forced first use
+      // belongs to the level it was claimed on only and ends on use or when that level ends (inClear), so it never carries into L13+.
+      if(s.c) return;
+      if(n === e.lv || (n > e.lv && (save.level|0) >= e.lv - 1)) q.push(e);
     } else if(n === e.lv && (!s.c || !s.f)) q.push(e);
   });
   return q.filter(function(e){ return e.how !== "swipe"; }).concat(q.filter(function(e){ return e.how === "swipe"; }));   // a swipe lesson waits for the level's cards
@@ -278,7 +282,7 @@ function inForcedWait(e, n){
   var t = inTarget(e);
   if(!t){ if(n < 40){ IN.wt = setTimeout(function(){ inForcedWait(e, n + 1); }, 100); return; }
     IN.log.push("skip:" + e.id); inDone(e); return; }                        // nothing on screen to point at: never trap the player
-  IN.forced = e; dim.classList.remove("hidden"); inPlace(t); IN.log.push((e.look ? "look:" : "forced:") + e.id);
+  IN.forced = e; IN.fb = 0; dim.classList.remove("hidden"); inPlace(t); IN.log.push((e.look ? "look:" : "forced:") + e.id);
   if(e.look){ clearTimeout(IN.lt); IN.lt = setTimeout(function(){ if(IN.forced === e){ inRelease(); inDone(e); } }, 2200); }   // look only: released by itself (or by any tap)
   (function loop(){ if(IN.forced !== e) return; var tt = inTarget(e, true); if(tt) inPlace(tt); IN.raf = requestAnimationFrame(loop); })();
 }
@@ -334,9 +338,14 @@ dim.addEventListener("click", function(x){
   x.stopPropagation(); x.preventDefault();
   var e = IN.forced, t = IN.t; if(!e || !t) return;
   if(e.look){ clearTimeout(IN.lt); inRelease(); IN.log.push("lookTap:" + e.id); inDone(e); return; }
+  var pb = e.kind === "booster" && $("pauseBtn") ? $("pauseBtn").getBoundingClientRect() : null;   // GD-76: Pause (the way out of the level) is never swallowed:
+  if(pb && pb.width && x.clientX >= pb.left - 4 && x.clientX <= pb.right + 4 && x.clientY >= pb.top - 4 && x.clientY <= pb.bottom + 4){   // it ends the forced use (saved)
+    inRelease(); IN.log.push("pause:" + e.id); inDone(e); $("pauseBtn").click(); return; }
   if(Math.hypot(x.clientX - t.x, x.clientY - t.y) > t.r + 6){
     if(e.place && phase === "plan" && IN.pass && IN.pass(x.clientX, x.clientY, e)){ inRelease(); audioInit(); IN.log.push("pass:" + e.id); onTap(x.clientX, x.clientY); inDone(e); return; }   // R20 (polish.js GD-43): a tap on another valid member places there, the hand goes
-    IN.log.push("blocked"); IN.blocked = (IN.blocked || 0) + 1; return; }
+    IN.log.push("blocked"); IN.blocked = (IN.blocked || 0) + 1; IN.fb = (IN.fb || 0) + 1;
+    if(IN.fb >= 2 && t.btn){ t.btn.classList.remove("inGot"); void t.btn.offsetWidth; t.btn.classList.add("inGot"); setTimeout(function(){ t.btn.classList.remove("inGot"); }, 400); }   // GD-76: from the 2nd swallowed tap the booster pops (existing inGot)
+    return; }
   inRelease(); audioInit();
   var p = document.createElement("div"); p.id = "inPing"; p.style.left = Math.round(t.x) + "px"; p.style.top = Math.round(t.y) + "px"; document.body.appendChild(p); setTimeout(function(){ p.remove(); }, 500);
   if(e.kind === "booster"){ IN.log.push("use:" + e.id); t.btn.click(); }
@@ -346,7 +355,10 @@ dim.addEventListener("click", function(x){
 }, true);
 function inRelease(){ IN.forced = null; cancelAnimationFrame(IN.raf); dim.classList.add("hidden"); }
 function inDone(e){ inMark(e.id, "f"); if(IN.q[0] === e) IN.q.shift(); setTimeout(inNext, 350); }
-function inClear(){ clearTimeout(IN.wt); clearTimeout(IN.outT); clearTimeout(IN.lt); inSwipeOff(); inMomOff(); inRelease(); IN.card = null; IN.q = []; card.classList.add("hidden"); card.classList.remove("out", "fly"); }
+// GD-76 (23/11): a claimed booster whose forced first use is pending or showing when the level ends / retries / is left: that use is
+// done (saved), so the spotlight that swallows every other tap never comes back on a later level.
+function inEndForced(){ var e = IN.forced || IN.q[0]; if(e && e.kind === "booster" && inS(e.id).c && !inS(e.id).f){ inMark(e.id, "f"); IN.log.push("forcedEnd:" + e.id); } }
+function inClear(){ inEndForced(); IN.fb = 0; clearTimeout(IN.wt); clearTimeout(IN.outT); clearTimeout(IN.lt); inSwipeOff(); inMomOff(); inRelease(); IN.card = null; IN.q = []; card.classList.add("hidden"); card.classList.remove("out", "fly"); }
 // leaving the level (Home, map, result) closes whatever is open; it shows again next time (not marked done)
 var show0 = show; show = function(id){ if(id === "title" || id === "result" || id === "shop") inClear(); return show0.apply(this, arguments); };
 

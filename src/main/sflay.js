@@ -91,8 +91,13 @@
     var $s = function(id){ return document.getElementById(id); };
     var PAD = '<span class="sfPad"><svg viewBox="0 0 32 32" aria-hidden="true"><use href="#i-lock"/></svg></span>';
     var WIG = { n:0, last:null };
+    // 23/11 (UX-81): the tap also says when it opens, in the EXISTING toast ("Unlocks at Level N", N = the intro schedule's unlock level in
+    // the play order, as the pre-level sheet). Written to #toast directly: in a level uiclean mutes toast() words. Not on L1 (hand only, 0 words).
+    var lkLv = function(k){ var n = null; try{ n = window.__blast.intro && window.__blast.intro.lockLv(k); }catch(e){} return n || ((BOOST[k] && BOOST[k].unlock | 0) + 1); };
+    var lkToast = function(k){ var t = $s("toast"); if(!t || levelIdx === 0) return; t.textContent = "Unlocks at Level " + lkLv(k); t.classList.add("on"); WIG.toast = t.textContent;
+      try{ clearTimeout(toastTimer); toastTimer = setTimeout(function(){ t.classList.remove("on"); }, 2000); }catch(e){ setTimeout(function(){ t.classList.remove("on"); }, 2000); } };
     var wig = function(k){ var b = $s("bbar") && $s("bbar").querySelector('.bst[data-k="' + k + '"]'); WIG.n++; WIG.last = k;
-      try{ snd("ui_tap"); }catch(e){} var pd = b && b.querySelector(".sfPad");
+      try{ snd("ui_tap"); }catch(e){} lkToast(k); var pd = b && b.querySelector(".sfPad");
       if(pd && pd.animate && !REDUCED) pd.animate([{ transform:"translateX(0)" }, { transform:"translateX(-5px) rotate(-8deg)" }, { transform:"translateX(5px) rotate(8deg)" }, { transform:"translateX(-3px)" }, { transform:"translateX(0)" }], { duration:320, easing:"ease-out" }); };
     var bot = $s("bottom"), LK = {};
     KS.forEach(function(k){ var c = document.createElement("button"); c.type = "button"; c.className = "sfLk"; c.dataset.k = k; c.setAttribute("aria-label", "Locked booster");
@@ -100,7 +105,8 @@
     // every booster button gets a padlock child (shown only while locked); its catcher is on while it is locked
     var padAll = function(){ var bar = $s("bbar"); if(!bar) return;
       [].forEach.call(bar.children, function(b){ if(!b.querySelector(".sfPad")) b.insertAdjacentHTML("beforeend", PAD); });
-      KS.forEach(function(k){ var b = bar.querySelector('.bst[data-k="' + k + '"]'), on = !!(b && b.classList.contains("lock") && (!NOLK || b.getBoundingClientRect().width > 0)); if(LK[k].classList.contains("on") !== on) LK[k].classList.toggle("on", on); }); };
+      KS.forEach(function(k){ var b = bar.querySelector('.bst[data-k="' + k + '"]'), on = !!(b && b.classList.contains("lock") && (!NOLK || b.getBoundingClientRect().width > 0)); if(LK[k].classList.contains("on") !== on) LK[k].classList.toggle("on", on);
+        var al = (BOOST[k] ? BOOST[k].name + ", u" : "U") + "nlocks at Level " + lkLv(k); if(on && LK[k].getAttribute("aria-label") !== al) LK[k].setAttribute("aria-label", al); }); };
     // S2: the gear icon on the Pause button (Pause = Settings rows)
     var gear = function(){ var u = document.querySelector("#pauseBtn use"); if(u && u.getAttribute("href") !== "#i-gear"){ u.setAttribute("href", "#i-gear"); u.setAttributeNS("http://www.w3.org/1999/xlink", "href", "#i-gear"); } var b = $s("pauseBtn"); if(b) b.setAttribute("aria-label", "Pause and settings"); };
 
@@ -180,7 +186,7 @@
     var R = function(e){ if(typeof e === "string") e = document.querySelector(e); if(!e) return null; var q = e.getBoundingClientRect(), s = getComputedStyle(e);
       return q.width > 0 && q.height > 0 && s.display !== "none" && s.visibility !== "hidden" ? { x:Math.round(q.left), y:Math.round(q.top), w:Math.round(q.width), h:Math.round(q.height), r:Math.round(q.right), b:Math.round(q.bottom) } : null; };
     window.__blast.sflay = { on:function(){ return true; }, geo:function(){ return Object.assign({ top:topH(), bot:botH() }, G); }, cam:CAM, camLog:function(){ return JSON.parse(JSON.stringify(CAMLOG)); },
-      frameDefault:F0, fit:fit, ux51:function(){ return UX51.n; }, wig:function(){ return { n:WIG.n, last:WIG.last }; },
+      frameDefault:F0, fit:fit, ux51:function(){ return UX51.n; }, wig:function(){ return { n:WIG.n, last:WIG.last, toast:WIG.toast || null }; },
       rects:function(){ var o = { tnt:R("#chips .chip"), gear:R("#pauseBtn"), level:R("#lvPill"), meter:R("#meter"), blast:R("#blast"), dev:R("#lvBtn"), ff:R("#ff"), tip:R("#tip"), bottom:R("#bottom") };
         KS.forEach(function(k){ o[k] = R('#bbar .bst[data-k="' + k + '"]'); o[k + "Lk"] = R(LK[k]); var b = $s("bbar") && $s("bbar").querySelector('.bst[data-k="' + k + '"]'); if(o[k]) o[k].lock = !!(b && b.classList.contains("lock")); });
         return o; } };

@@ -369,6 +369,18 @@ var vd17 = verdict; verdict = function(){ var v = vd17.apply(this, arguments);
   if(v && v.code === "collateral"){ v.reason = "HIT A BLUE BUILDING!"; v.why = kWord(String(v.why || "")).replace(/^You damaged the neighbour\b/, "You damaged a blue building"); }
   return v; };
 var ft17 = failTip; failTip = function(r){ var t = ft17.apply(this, arguments); return r && r.code === "collateral" ? kWord(t) : t; };
+// 23/11 (U-3 / GD-71, GD-62): a "not enough down" fail on a site that is already FLAT (nothing that still stands rises above rubble
+// height: <= 30 % of the building's height, at most 3 m) has its missing points in pieces lying on the ground (heavy pieces count until
+// broken; low ones never "drop"). The level's line then blamed what is no longer there ("Dark piers take more TNT..."): the flat case says
+// what still counts instead. Text only. Not on a hard level (Mac's lines), not when the level's own line already names the heavy pieces.
+var FLAT_TIP = "Heavy pieces still count. Hit them.";   // one line on the 393 px fail card (no orphan, UX-84)
+P.flat = null;
+function siteFlat(){ var h = 0; try{ h = standingHeight(); }catch(e){ return null; } var lim = Math.min(3, Math.max(1.6, buildingH*0.3));
+  P.flat = { sh:+h.toFixed(2), bh:+(+buildingH || 0).toFixed(2), lim:+lim.toFixed(2), flat:h <= lim }; return P.flat; }
+var ftFlat = failTip; failTip = function(r){ var t = ftFlat.apply(this, arguments);
+  try{ if(!r || r.code !== "pct" || !L || (window.LV7O && LV7O.isH && LV7O.isH(levelIdx)) || /heavy pieces/i.test(String(t || ""))) return t;
+    var f = siteFlat(); if(f && f.flat && buildingH > 0){ lg("flatTip:" + f.sh + "/" + f.bh); return FLAT_TIP; } }catch(e){}
+  return t; };
 var lt17 = levelTip; levelTip = function(){ return kWord(lt17.apply(this, arguments), true); };
 var kSnap = function(){ if(typeof shields === "undefined" || !shields.length) return; PROT.snaps++; shields.forEach(function(sh){ sh.jd = shieldDamage(sh); }); };
 var we17 = waveEnd; waveEnd = function(){ kSnap(); return we17.apply(this, arguments); };
@@ -615,7 +627,9 @@ var to19 = $("toast");
 if(to19) new MutationObserver(function(){
   if(screen !== "game"){ if(to19.style.bottom) to19.style.bottom = ""; return; }
   if(!to19.classList.contains("on")) return;
-  var row = 1e9; [].forEach.call(document.querySelectorAll("#bottom .chip, #bottom .bst"), function(e){ var q = e.getBoundingClientRect(); if(q.width > 0 && q.height > 0) row = Math.min(row, q.top); });
+  // 23/11 (UX-81): only the chips / buttons in the lower half count: with sflay the TNT card is fixed top-left (still in #bottom) and
+  // pushed every in-level toast above the top edge (y < 0, unseen)
+  var row = 1e9; [].forEach.call(document.querySelectorAll("#bottom .chip, #bottom .bst"), function(e){ var q = e.getBoundingClientRect(); if(q.width > 0 && q.height > 0 && q.top > innerHeight*0.5) row = Math.min(row, q.top); });
   if(row >= 1e9) return;
   var tb = to19.getBoundingClientRect(); if(!tb.height) return;
   var cur = parseFloat(getComputedStyle(to19).bottom) || 0, want = cur + Math.max(0, tb.bottom - (row - 12));
@@ -1037,6 +1051,6 @@ window.__blast.polish = {
   home:function(){ return { runs:HC.runs, last:HC.last, lock:HC.lock }; }, anyTap:function(){ return P.anyTap || 0; },
   win:function(){ var c = P.win.cam; return { n:P.win.n, stamp:P.win.stamp, plus:P.win.plus, camN:P.win.camN, cam:c ? { off:Math.round(c.off), k:+c.k.toFixed(2), sy0:Math.round(c.sy0) } : null, home:P.win.home, plusAt:P.win.plusAt || null, camBy:P.win.camBy || (P.win.camN ? "polish" : null), lookM:P.win.lookM || null, camDone:P.win.camDone == null ? null : P.win.camDone }; },
   demo:function(){ return { shown:P.demo.shown, on:P.demo.until > performance.now(), miss:P.demo.miss, frames:P.demo.frames || 0, pt:P.demo.pt || null }; },
-  camNow:P.camNow, mapFit:mapFit, lockchips:LOCKCHIPS
+  camNow:P.camNow, mapFit:mapFit, lockchips:LOCKCHIPS, flat:function(){ return siteFlat(); }
 };
 })(); }catch(e){ console.error("main/polish.js", e); }
