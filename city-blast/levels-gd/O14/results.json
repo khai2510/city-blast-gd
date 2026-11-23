@@ -1,0 +1,96 @@
+{
+ "when": "2026-11-23T20:40:20.521Z",
+ "bp": "O14",
+ "name": "Seaside Hotel",
+ "tnt": 14,
+ "bar": "N",
+ "metrics": {
+  "members": 187,
+  "hard": 0,
+  "soft": 187,
+  "hardPct": 0,
+  "main": {
+   "members": 108,
+   "hard": 0,
+   "soft": 108,
+   "hardPct": 0,
+   "pos": {
+    "top": 0,
+    "mid": 0,
+    "bottom": 0,
+    "edge": 0,
+    "core": 0,
+    "front": 0,
+    "back": 0
+   },
+   "core": "no",
+   "hardLayers": 0,
+   "depthRows": 5,
+   "frontHard": 0,
+   "backHard": 0,
+   "floors": 6
+  },
+  "stacks": 3,
+  "parts": [
+   "A",
+   "S",
+   "C"
+  ]
+ },
+ "sol": {
+  "pct": 92,
+  "win": true,
+  "res": "WIN",
+  "placed": [
+   "ok",
+   "ok",
+   "ok"
+  ],
+  "waves": 1,
+  "keep": 0
+ },
+ "solDbl": {
+  "pct": 89,
+  "win": true,
+  "res": "WIN",
+  "placed": "0okokok",
+  "waves": 3,
+  "keep": 0
+ },
+ "oneBomb": {
+  "pct": 68,
+  "collapse": 84,
+  "at": "cpan@A:f1",
+  "tried": 18
+ },
+ "lazy": {
+  "pct": 67,
+  "collapse": 82
+ },
+ "fair": [
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 97,
+   "used": 12,
+   "left": 2,
+   "waves": 2,
+   "firstWave": 44,
+   "keep": 0,
+   "estSec": 28,
+   "log": "bld9=44 bld3=97"
+  }
+ ],
+ "oneWave": {
+  "pct": 0
+ },
+ "footOnly": {
+  "pct": 0
+ },
+ "allFoot": {
+  "pct": 0
+ },
+ "curve": [],
+ "verdict": "PASS",
+ "issues": []
+}

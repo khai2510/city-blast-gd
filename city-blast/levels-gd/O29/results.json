@@ -1,0 +1,90 @@
+{
+ "when": "2026-11-23T20:55:10.063Z",
+ "bp": "O29",
+ "name": "Old Tock Row",
+ "tnt": 19,
+ "bar": "N",
+ "metrics": {
+  "members": 188,
+  "hard": 0,
+  "soft": 188,
+  "hardPct": 0,
+  "main": {
+   "members": 77,
+   "hard": 0,
+   "soft": 77,
+   "hardPct": 0,
+   "pos": {
+    "top": 0,
+    "mid": 0,
+    "bottom": 0,
+    "edge": 0,
+    "core": 0,
+    "front": 0,
+    "back": 0
+   },
+   "core": "no",
+   "hardLayers": 0,
+   "depthRows": 5,
+   "frontHard": 0,
+   "backHard": 0,
+   "floors": 5
+  },
+  "stacks": 4,
+  "parts": [
+   "A",
+   "S",
+   "B",
+   "C"
+  ]
+ },
+ "sol": {
+  "pct": 89,
+  "win": true,
+  "res": "WIN",
+  "placed": [
+   "ok",
+   "ok",
+   "ok",
+   "ok"
+  ],
+  "waves": 1,
+  "keep": 0
+ },
+ "oneBomb": {
+  "pct": 57,
+  "collapse": 57,
+  "at": "bk@A:f1",
+  "tried": 20
+ },
+ "lazy": {
+  "pct": 57,
+  "collapse": 57
+ },
+ "fair": [
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 97,
+   "used": 16,
+   "left": 3,
+   "waves": 3,
+   "firstWave": 78,
+   "keep": 0,
+   "estSec": 43,
+   "log": "bld12=78 bld3=82 bld1=97"
+  }
+ ],
+ "oneWave": {
+  "pct": 0
+ },
+ "footOnly": {
+  "pct": 0
+ },
+ "allFoot": {
+  "pct": 0
+ },
+ "curve": [],
+ "verdict": "PASS",
+ "issues": []
+}
