@@ -17,6 +17,8 @@
 // The mark names the order the save was written in: "s:" + the slot list (21/11 on), "1" = the 20/11 order (LEGACY in patch.js),
 // none = the appended layout. A save from any other order (22/11: one rule for all): best / bp follow their level; save.level = the
 // first level of the new order the player has not beaten yet (beaten = every level before save.level in the save's own order).
+// ORDER1123 (23/11, Lead: "a save at old slot 20 lands on the same level"): save.level = the slot of the SAME level the save stood on
+// (the level it was about to play); levels the new order puts before it stay open in the picker. best / bp follow their level as before.
 // A save from an order with fewer levels (22/11: the 41-level orders, before the easy pack) that is at or past its end has beaten
 // all of them: it goes to the first new level (41 beaten -> 42), never past it.
 var LV7O = (function(){
@@ -41,9 +43,11 @@ var LV7O = (function(){
   O.orig1 = function(p){ return O.isG(p) || O.isO(p) ? 0 : O.id(p) + 1; };   // 0: no per-old-level opening camera on a rebuilt level
   // intro cards moved to their element's intro level (INTRO_AT in patch.js): card id -> new level number, 0 = keep its own level
   var IA = __INTRO__;
-  O.introAt = function(id){ return O.reorder && IA[id] != null && IA[id] < NB + O.nh ? O.pos(IA[id]) + 1 : 0; };
+  O.introAt = function(id){ if(O.reorder && IA[id] === -1) return 9999;   // ORDER1123: 'off' = this card is not shown (launch after the last level)
+    return O.reorder && IA[id] != null && IA[id] >= 0 && IA[id] < NB + O.nh ? O.pos(IA[id]) + 1 : 0; };
   // booster unlock levels ("save.level >= unlock" = that boss is beaten) in new numbers; once per booster (boosters are added in two places)
-  O.boost = function(B){ Object.keys(B).forEach(function(k){ var b = B[k], u = b && b.unlock; if(b && !b.lv7o && u > 0 && u < 999){ b.unlock = O.num(u); b.lv7o = u; } }); };
+  // ORDER1123: a booster whose Unlocked card was moved (INTRO_AT wreck / net / sky) unlocks on the level before its card (the Hard / boss it follows)
+  O.boost = function(B){ Object.keys(B).forEach(function(k){ var b = B[k], u = b && b.unlock, ia; if(b && !b.lv7o && u > 0 && u < 999){ ia = O.introAt(k); b.unlock = ia ? ia - 1 : O.num(u); b.lv7o = u; } }); };
   // ---- the save: appended layout <-> slots
   var LEG = __LEGACY__, SIG = "s:" + SLOTS.join(",");
   var rOf = function(sl){ var r = [], i; sl.forEach(function(s){ r.push(s >= 0 ? s : NB - s - 1); }); for(i = 0; i < NB; i++) if(r.indexOf(i) < 0) r.push(i); for(i = 0; i < NH; i++) if(r.indexOf(NB + i) < 0) r.push(NB + i); return r; };
@@ -59,7 +63,7 @@ var LV7O = (function(){
   // save had not beaten (beaten = every level before save.level in the save's own order). Past the end stays past the end.
   var mig = function(F){ var T = O.ORD, p = save.level|0, beat = {}, q, lv = T.length, n0 = F.n0 || F.length;
     for(q = 0; q < Math.min(p, n0); q++) beat[F[q]] = 1;
-    if(p < F.length) for(q = 0; q < T.length; q++) if(!beat[T[q]]){ lv = q; break; }
+    if(p < F.length){ lv = T.indexOf(F[p]); if(lv < 0) for(lv = T.length, q = 0; q < T.length; q++) if(!beat[T[q]]){ lv = q; break; } }   // ORDER1123: the same level
     var short = p >= n0 && n0 < F.length;                                  // at / past the end of a shorter order: first level not in it
     if(short){ lv = T.length; for(q = 0; q < T.length; q++) if(!beat[T[q]]){ lv = q; break; } }
     save.level = !short && p >= F.length ? T.length + (p - F.length) : lv;

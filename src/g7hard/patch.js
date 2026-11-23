@@ -38,21 +38,35 @@ const HBP = { H1: 'L01v4', H2: 'L02', H3: 'L03', H4: 'L04', H5: 'L05' };
 // barrels (L34) · 34 boss (L30) · 38 H4 · 40 H1. Checked by city-blast SYNC 22/11 "no element before its intro level".
 // 22/11 easy pack (Lead): E01 E02 E03 E04 E06 appended as 42-46, slots 1-41 unchanged (every element they use is introduced before 42).
 // 22/11 easy pack, second batch: E05 E07 E08 E09 E10 appended as 47-51, slots 1-46 unchanged (nothing new: all taught by 33).
+// ORDER1123 (23/11, Khai "sắp xếp lại level" + D-blast-LAUNCH / D-blast-L50, Lead): slots 1-50 = the blueprint
+// city-blast/levels-gd/SLOTS-50.md (launch slots wood 1 · brick 4 · concrete 8 · Ball 12 · blue 15 · rotate 16 · glass 20 · barrels 25 ·
+// Net 30 · steps 35 · steel 40 · Sky 45 · heavy 50; Hard / boss as-is at 7 11 14 19 24 29 34 39 44 49). Levels still to be converted sit in
+// their slot in their current form. The 5 NEW slots (37 38 46 47 48) hold leftovers as PLACEHOLDERS (o24 o32 E08 o28 E09); o30 = 51.
+// Reasons, before / after, pending conversions: city-blast/levels-gd/ORDER-1123.md. check: src/g7hard/check-order.js.
 const PLACE = [
-  'o1', 'o2', 'o3', 'o36', 'o6', 'o8', 'o9', 'o7', 'o13', 'o14',
-  'o10', 'o21', 'o15', 'o11', 'o19', 'o16', 'o17', 'o12', 'o18', 'H3',
-  'o25', 'o4', 'o20', 'o31', 'o32', 'o24', 'o5', 'o28', 'o33', 'H2',
-  'o26', 'H5', 'o34', 'o30', 'o27', 'o35', 'o22', 'H4', 'o23', 'H1',
-  'o29', 'E01', 'E02', 'E03', 'E04', 'E06', 'E05', 'E07', 'E08', 'E09', 'E10',
+  'o1', 'o9', 'E04', 'o2', 'E02', 'o19', 'o7', 'o3', 'E06', 'o15',
+  'o16', 'o21', 'o14', 'H2', 'o36', 'o6', 'o13', 'o12', 'H3', 'o4',
+  'E07', 'o5', 'o25', 'o10', 'E03', 'E10', 'o34', 'o33', 'o35', 'o17',
+  'o18', 'o29', 'o26', 'H5', 'o11', 'E05', 'o24', 'o32', 'H4', 'o8',
+  'o22', 'o23', 'o27', 'H1', 'o31', 'E08', 'o28', 'E09', 'o20', 'E01',
+  'o30',
 ];
-// intro cards / spotlights that do not sit on their original level: card id (main/intro.js INTRO_SCHED) -> the level (code as in
-// PLACE) where that element is introduced in this order. The card fires when that level is played (LV7O.introAt), wherever it stands.
+// intro cards / spotlights: card id (main/intro.js INTRO_SCHED) -> the level (code as in PLACE) that carries it; 'off' = not shown in
+// this game (its launch is after level 50). The card fires when that level is played (LV7O.introAt), wherever it stands.
+// ORDER1123: every card on its SLOTS-50 launch slot (the first non-hard level of its element once the conversions land).
 const INTRO_AT = {
-  brick:'o2', concrete:'o3',   // the first level where brick / concrete stand (was one level later, D-blast-SCHED's TAP2 shift)
-  keep:'o36',                  // blue buildings: old L36 is the first level with blue and nothing else new (old L4 / L5 also show glass)
-  steps:'o11',                 // listed so its window (lv .. upto = 4 levels) follows L11 (old L15 now stands before it)
-  wreck:'o21', net:'o31', sky:'o27',   // booster cards on the rest level right after each boss (boss + 1, as before; GD-69: not with the steps lesson)
-  trap:'o34',                  // trap-barrel look on the N level before Dome Works (L35, Hard): nothing new on a Hard (D-blast-SCHED: L34)
+  blast:'o9',                  // 2 Pit Head (O07): "Tap to place. BLAST" goes with the L2 hand (slot-keyed, tap2.js)
+  brick:'o2', concrete:'o3',   // 4 Stripey Point / O02, 8 Old Tock / O03
+  wreck:'o21',                 // 12 Drive-in (O12), the rest level after Hard 11
+  keep:'o36',                  // 15 Fire Station (O04), after Hard 14
+  rotate:'o6',                 // 16 Valley Station (O05): "Swipe to turn" (a control)
+  glass:'o4',                  // 20 Needle Court, after Hard 19
+  barrels:'E03',               // 25 Tram Depot, after boss 24 (an easy-pack level: cards are allowed on g7 levels that are not Hard)
+  net:'o17',                   // 30 Car Park (O17), after Hard 29
+  steps:'o11',                 // 35 Shell Hall (O14 when wired), after SH 34; window lv .. upto = 4 levels
+  steel:'o8',                  // 40 Harbour Crane (O06), after SH 39
+  sky:'o31',                   // 45 Stack Tower, after SH 44
+  rc:'off', trap:'off',        // dark RC (60) and trap barrels (80) launch after 50: no card in this game
 };
 const LEGACY = { '1': ['o1', 'o2', 'o3', 'H2', 'o4', 'H3', 'o5', 'H1', 'o6', 'H4', 'o7', 'H5'] };
 
@@ -92,7 +106,7 @@ const toSlots = (list, what, part) => {
 };
 const slots = toSlots(PLACE, 'PLACE');
 if (PLACE.length !== 36 + defs.length) fail('PLACE lists ' + PLACE.length + ' levels, want ' + (36 + defs.length));
-const introAt = Object.fromEntries(Object.entries(INTRO_AT).map(([id, c]) => { const sl = toSlots([c], 'INTRO_AT ' + id, true)[0]; return [id, sl >= 0 ? sl : 36 + (-sl - 1)]; }));
+const introAt = Object.fromEntries(Object.entries(INTRO_AT).map(([id, c]) => { if (c === 'off') return [id, -1]; const sl = toSlots([c], 'INTRO_AT ' + id, true)[0]; return [id, sl >= 0 ? sl : 36 + (-sl - 1)]; }));   // -1 = off
 const legacy = Object.fromEntries(Object.entries(LEGACY).map(([m, l]) => [m, toSlots(l, 'LEGACY ' + m, true)]));   // part: the 20/11 order had no easy levels
 
 // ---- 1. anchors (checked on the input, before anything is inserted)
@@ -110,7 +124,7 @@ const SITES = [
   ['frame.js opening-camera overrides (old L3, L25)', 'OVR[levelIdx + 1]', 'OVR[LV7O.orig1(levelIdx)]', 1],
   ['intro schedule (INTRO_SCHED lv / upto) in new numbers', '\n];\n// charge kinds: TNT only on L1-36',
     '\n];\nINTRO_SCHED.forEach(function(e){ var a = LV7O.introAt(e.id); if(e.upto) e.upto = a ? a + (e.upto - e.lv) : LV7O.num(e.upto); e.lv = a || LV7O.num(e.lv); });   // g7hard: old level numbers -> new; a card moved by INTRO_AT goes to its intro level\n// charge kinds: TNT only on L1-36', 1],
-  ['intro cards / swipe: none on a hard level', 'function inQueue(i){\n  var n = i + 1, q = [];', 'function inQueue(i){\n  if(LV7O.isG(i)) return [];   // g7hard: g7 levels (hard + easy) stay hint-free\n  var n = i + 1, q = [];', 1],
+  ['intro cards / swipe: none on a hard level (easy: only an INTRO_AT card)', 'function inQueue(i){\n  var n = i + 1, q = [];', 'function inQueue(i){\n  if(LV7O.isH(i)) return [];   // g7hard: hard levels stay hint-free (ORDER1123: an easy-pack level carries a card only when INTRO_AT puts one there)\n  var n = i + 1, q = [];', 1],
   ['intro "Blast again!" moment: none on a hard level', '  var n = levelIdx + 1, e = inSchedOf("wave")', '  if(LV7O.isG(levelIdx)) return null;\n  var n = levelIdx + 1, e = inSchedOf("wave")', 1],
   ['intro look moment (trap barrels): none on a hard level', '  var n = levelIdx + 1, e = inSchedOf("look")', '  if(LV7O.isG(levelIdx)) return;\n  var n = levelIdx + 1, e = inSchedOf("look")', 1],
   ['booster unlock levels (boss wins L10 / L20 / L30) in new numbers', 'if(L6.tntOnly){ BOOST.tnt1.hidden = true; BOOST.tnt1.unlock = 999; }',

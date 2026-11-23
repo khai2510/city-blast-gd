@@ -9,7 +9,9 @@
 const fs = require('fs'), path = require('path');
 const ROOT = path.join(__dirname, '..', '..'), GD = path.join(ROOT, 'city-blast', 'levels-gd');
 const OUT = path.join(ROOT, 'city-blast', 'release', 'g7-easy-levels.json');
-const EASY = ['E01', 'E02', 'E03', 'E04', 'E06', 'E05', 'E07', 'E08', 'E09', 'E10'];   // the finished easy levels, in play order (slots 42-51, PLACE in patch.js)
+// ORDER1123 (23/11): this list is the DATA order (LV7DEFS appended index 36 + 5 + k: the save mark "s:" and the level seeds key on it),
+// kept as it was. The PLAY order is PLACE in patch.js only (ORDER1123: E04 3 · E02 5 · E06 9 · E07 21 · E03 25 · E10 26 · E05 36 · E08 46 · E09 48 · E01 50).
+const EASY = ['E01', 'E02', 'E03', 'E04', 'E06', 'E05', 'E07', 'E08', 'E09', 'E10'];   // the finished easy levels, data order (never reorder: saves / seeds)
 const fail = (m) => { console.error('export-easy: ' + m); process.exit(1); };
 const out = EASY.map(e => {
   const a = JSON.parse(fs.readFileSync(path.join(GD, e, 'level.json'), 'utf8'));
