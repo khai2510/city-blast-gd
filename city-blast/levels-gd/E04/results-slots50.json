@@ -1,0 +1,160 @@
+{
+ "when": "2026-11-23T16:37:23.387Z",
+ "bp": "E04",
+ "name": "Market Hall",
+ "slot": 3,
+ "bar": "T",
+ "steps": false,
+ "rest": {
+  "dead": 0,
+  "moved": 0,
+  "bonds": [
+   421,
+   421
+  ],
+  "list": [],
+  "keys": {
+   "g7post": 24,
+   "mdW": 18,
+   "wpost": 44,
+   "wwall": 18,
+   "g7tile": 3
+  },
+  "mass": {
+   "A": 447348,
+   "B": 45373
+  },
+  "members": 107,
+  "pad": {
+   "x": [
+    -9.1,
+    9.1
+   ],
+   "z": [
+    -8,
+    8
+   ],
+   "rmax": 12.1,
+   "at": "wpost@A"
+  }
+ },
+ "fair": [
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 100,
+   "used": 6,
+   "left": 0,
+   "waves": 1,
+   "firstWave": 100,
+   "keep": 0,
+   "estSec": 13,
+   "log": "bld6=100"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 100,
+   "used": 6,
+   "left": 0,
+   "waves": 1,
+   "firstWave": 100,
+   "keep": 0,
+   "estSec": 13,
+   "log": "bld6=100"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 90,
+   "used": 6,
+   "left": 0,
+   "waves": 1,
+   "firstWave": 90,
+   "keep": 0,
+   "estSec": 13,
+   "log": "bld6=90"
+  }
+ ],
+ "tnt": 6,
+ "sol": {
+  "pct": 89,
+  "win": true,
+  "res": "WIN",
+  "placed": 5,
+  "keep": 0
+ },
+ "oneBomb": {
+  "pct": 62,
+  "collapse": 62,
+  "at": "wpost@A:f1",
+  "tried": 16
+ },
+ "lazy": {
+  "pct": 100,
+  "collapse": 100
+ },
+ "allFoot": {
+  "pct": 25,
+  "used": 6,
+  "collapse": 36,
+  "keep": 0
+ },
+ "footOnly": {
+  "pct": 25,
+  "waves": 1,
+  "left": 0,
+  "keep": 0
+ },
+ "oneWave": {
+  "pct": 90,
+  "used": 6,
+  "reach": 74,
+  "collapse": 90
+ },
+ "curve": [
+  {
+   "n": 1,
+   "pct": 35,
+   "collapse": 35
+  },
+  {
+   "n": 2,
+   "pct": 19,
+   "collapse": 30
+  },
+  {
+   "n": 3,
+   "pct": 30,
+   "collapse": 31
+  },
+  {
+   "n": 4,
+   "pct": 30,
+   "collapse": 31
+  },
+  {
+   "n": 6,
+   "pct": 51,
+   "collapse": 62
+  },
+  {
+   "n": 8,
+   "pct": 55,
+   "collapse": 65
+  },
+  {
+   "n": 12,
+   "pct": 65,
+   "collapse": 65
+  }
+ ],
+ "jump": 21,
+ "verdict": "MISS",
+ "issues": [
+  "spare 0"
+ ],
+ "reported": [
+  "est 13/13/13 s"
+ ]
+}

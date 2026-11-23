@@ -1,0 +1,202 @@
+{
+ "when": "2026-11-23T19:30:48.225Z",
+ "bp": "E01",
+ "name": "Long Legs",
+ "slot": 50,
+ "bar": "N",
+ "steps": true,
+ "rest": {
+  "dead": 0,
+  "moved": 0,
+  "bonds": [
+   1252,
+   1252
+  ],
+  "list": [],
+  "keys": {
+   "concrete": 102,
+   "mdC": 36,
+   "mglass": 68,
+   "cpan": 10,
+   "hard7v": 3,
+   "wpost": 32,
+   "mdW": 6,
+   "wwall": 16,
+   "tank": 6,
+   "rail": 1,
+   "awn2": 1
+  },
+  "mass": {
+   "A": 1359046,
+   "B": 42741,
+   "C": 42741,
+   "null": 4136
+  },
+  "members": 281,
+  "pad": {
+   "x": [
+    -17.4,
+    17.4
+   ],
+   "z": [
+    -4.5,
+    4.5
+   ],
+   "rmax": 17.7,
+   "at": "wpost@B"
+  }
+ },
+ "cal": [
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 96,
+   "used": 7,
+   "left": 33,
+   "waves": 2,
+   "firstWave": 69,
+   "keep": 0,
+   "estSec": 22,
+   "log": "bld4=69 heap3=96"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 93,
+   "used": 13,
+   "left": 27,
+   "waves": 3,
+   "firstWave": 77,
+   "keep": 0,
+   "estSec": 40,
+   "log": "bld7=77 heap3=82 heap3=93"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 88,
+   "used": 13,
+   "left": 27,
+   "waves": 4,
+   "firstWave": 64,
+   "keep": 0,
+   "estSec": 49,
+   "log": "bld4=64 heap3=75 heap3=80 heap3=88"
+  }
+ ],
+ "fair": [
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 88,
+   "used": 10,
+   "left": 8,
+   "waves": 3,
+   "firstWave": 63,
+   "keep": 0,
+   "estSec": 33,
+   "log": "bld4=63 heap3=82 heap3=88"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 89,
+   "used": 16,
+   "left": 2,
+   "waves": 4,
+   "firstWave": 62,
+   "keep": 0,
+   "estSec": 47,
+   "log": "bld7=62 heap3=81 heap3=85 heap3=89"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 90,
+   "used": 15,
+   "left": 3,
+   "waves": 4,
+   "firstWave": 28,
+   "keep": 0,
+   "estSec": 47,
+   "log": "bld4=28 bld5=66 heap3=68 heap3=90"
+  }
+ ],
+ "tnt": 18,
+ "sol": {
+  "pct": 0,
+  "win": false,
+  "res": "plan",
+  "placed": 0,
+  "keep": 0
+ },
+ "oneBomb": {
+  "pct": 27,
+  "collapse": 37,
+  "at": "concrete@A:f1",
+  "tried": 18
+ },
+ "lazy": {
+  "pct": 66,
+  "collapse": 97
+ },
+ "allFoot": {
+  "pct": 68,
+  "used": 18,
+  "collapse": 100,
+  "keep": 0
+ },
+ "footOnly": {
+  "pct": 64,
+  "waves": 1,
+  "left": 12,
+  "keep": 0
+ },
+ "oneWave": {
+  "pct": 72,
+  "used": 18,
+  "reach": 231,
+  "collapse": 77
+ },
+ "curve": [
+  {
+   "n": 1,
+   "pct": 22,
+   "collapse": 34
+  },
+  {
+   "n": 2,
+   "pct": 22,
+   "collapse": 35
+  },
+  {
+   "n": 3,
+   "pct": 25,
+   "collapse": 37
+  },
+  {
+   "n": 4,
+   "pct": 37,
+   "collapse": 62
+  },
+  {
+   "n": 6,
+   "pct": 38,
+   "collapse": 62
+  },
+  {
+   "n": 8,
+   "pct": 63,
+   "collapse": 100
+  },
+  {
+   "n": 12,
+   "pct": 65,
+   "collapse": 100
+  }
+ ],
+ "jump": 25,
+ "verdict": "PASS",
+ "issues": [],
+ "reported": []
+}
