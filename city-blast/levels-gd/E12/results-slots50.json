@@ -1,0 +1,207 @@
+{
+ "when": "2026-11-23T20:58:35.835Z",
+ "bp": "E12",
+ "name": "Telephone Exchange",
+ "slot": 38,
+ "bar": "N",
+ "steps": true,
+ "rest": {
+  "dead": 0,
+  "moved": 0,
+  "bonds": [
+   605,
+   605
+  ],
+  "list": [],
+  "keys": {
+   "concrete": 40,
+   "mdC": 20,
+   "cpan": 38,
+   "wpost": 8,
+   "mdW": 2,
+   "wwall": 8,
+   "g7roofL": 1,
+   "keep:kwall": 8,
+   "keep:kwin": 9,
+   "keep:kroof": 1,
+   "keep:kplate": 2,
+   "keep:kcap": 1,
+   "keep:kroofN": 2,
+   "keep:kroofW": 4
+  },
+  "mass": {
+   "A": 327374,
+   "B": 31397
+  },
+  "members": 117,
+  "pad": {
+   "x": [
+    -12.6,
+    12.5
+   ],
+   "z": [
+    -4.2,
+    4.2
+   ],
+   "rmax": 12.7,
+   "at": "wpost@B"
+  }
+ },
+ "cal": [
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 96,
+   "used": 8,
+   "left": 32,
+   "waves": 2,
+   "firstWave": 35,
+   "keep": 0,
+   "estSec": 25,
+   "log": "bld5=35 bld3=96"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 98,
+   "used": 8,
+   "left": 32,
+   "waves": 2,
+   "firstWave": 26,
+   "keep": 0,
+   "estSec": 25,
+   "log": "bld5=26 bld3=98"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 98,
+   "used": 8,
+   "left": 32,
+   "waves": 2,
+   "firstWave": 26,
+   "keep": 0,
+   "estSec": 24,
+   "log": "bld5=26 bld3=98"
+  }
+ ],
+ "fair": [
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 99,
+   "used": 8,
+   "left": 2,
+   "waves": 2,
+   "firstWave": 26,
+   "keep": 0,
+   "estSec": 25,
+   "log": "bld5=26 bld3=99"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 98,
+   "used": 8,
+   "left": 2,
+   "waves": 2,
+   "firstWave": 26,
+   "keep": 0,
+   "estSec": 24,
+   "log": "bld5=26 bld3=98"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 97,
+   "used": 8,
+   "left": 2,
+   "waves": 2,
+   "firstWave": 26,
+   "keep": 0,
+   "estSec": 23,
+   "log": "bld5=26 bld3=97"
+  }
+ ],
+ "tnt": 10,
+ "sol": {
+  "pct": 71,
+  "win": false,
+  "res": "plan",
+  "placed": 3,
+  "keep": 0
+ },
+ "oneBomb": {
+  "pct": 58,
+  "collapse": 61,
+  "at": "concrete@A:f1",
+  "tried": 18
+ },
+ "lazy": {
+  "pct": 84,
+  "collapse": 91
+ },
+ "allFoot": {
+  "pct": 88,
+  "used": 10,
+  "collapse": 94,
+  "keep": 0
+ },
+ "footOnly": {
+  "pct": 94,
+  "waves": 2,
+  "left": 0,
+  "keep": 0
+ },
+ "oneWave": {
+  "pct": 94,
+  "used": 10,
+  "reach": 94,
+  "collapse": 95
+ },
+ "curve": [
+  {
+   "n": 1,
+   "pct": 8,
+   "collapse": 8
+  },
+  {
+   "n": 2,
+   "pct": 13,
+   "collapse": 13
+  },
+  {
+   "n": 3,
+   "pct": 16,
+   "collapse": 16
+  },
+  {
+   "n": 4,
+   "pct": 84,
+   "collapse": 94
+  },
+  {
+   "n": 6,
+   "pct": 91,
+   "collapse": 100
+  },
+  {
+   "n": 8,
+   "pct": 87,
+   "collapse": 96
+  },
+  {
+   "n": 12,
+   "pct": 95,
+   "collapse": 100
+  }
+ ],
+ "jump": 68,
+ "verdict": "PASS",
+ "issues": [],
+ "reported": [
+  "curve jump +68",
+  "allFoot 88%",
+  "footOnly 94%"
+ ]
+}
