@@ -1,0 +1,373 @@
+{
+ "when": "2026-11-23T21:59:56.737Z",
+ "bp": "E10",
+ "name": "Rail Terminus",
+ "slot": 26,
+ "bar": "N",
+ "steps": false,
+ "rest": {
+  "dead": 0,
+  "moved": 0,
+  "bonds": [
+   312,
+   312
+  ],
+  "list": [],
+  "keys": {
+   "bk": 16,
+   "mdB": 3,
+   "g7bk": 16,
+   "g7bkw": 16,
+   "mdW": 2,
+   "bkw": 2,
+   "g7tile": 2,
+   "keep:kwall": 8,
+   "keep:kwin": 9,
+   "keep:kroof": 1,
+   "keep:kplate": 2,
+   "keep:kcap": 1,
+   "keep:kroofN": 2,
+   "keep:kroofW": 4,
+   "tank": 3,
+   "rail": 1,
+   "awn2": 1
+  },
+  "mass": {
+   "A": 243242,
+   "B": 220586,
+   "null": 2075
+  },
+  "members": 62,
+  "pad": {
+   "x": [
+    -9.8,
+    9.8
+   ],
+   "z": [
+    -8.7,
+    8.8
+   ],
+   "rmax": 12.7,
+   "at": "awn2@null"
+  }
+ },
+ "fair": [
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 95,
+   "used": 6,
+   "left": 2,
+   "waves": 1,
+   "firstWave": 95,
+   "keep": 0,
+   "estSec": 14,
+   "log": "bld6=95"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 95,
+   "used": 6,
+   "left": 2,
+   "waves": 1,
+   "firstWave": 95,
+   "keep": 0,
+   "estSec": 13,
+   "log": "bld6=95"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 95,
+   "used": 6,
+   "left": 2,
+   "waves": 1,
+   "firstWave": 95,
+   "keep": 0,
+   "estSec": 13,
+   "log": "bld6=95"
+  }
+ ],
+ "tnt": 8,
+ "solTry": [
+  {
+   "sol": [
+    [
+     "tnt",
+     "A:z+",
+     0,
+     0
+    ],
+    [
+     "tnt",
+     "A:z+",
+     0,
+     1
+    ],
+    [
+     "tnt",
+     "A:z+",
+     0,
+     2
+    ],
+    [
+     "tnt",
+     "B:z+",
+     0,
+     0
+    ],
+    [
+     "tnt",
+     "B:z+",
+     0,
+     2
+    ],
+    [
+     "tnt",
+     "B:z+",
+     0,
+     4
+    ]
+   ],
+   "r": {
+    "pct": 85,
+    "win": false,
+    "keep": 0
+   }
+  },
+  {
+   "sol": [
+    [
+     "tnt",
+     "A:z+",
+     0,
+     1
+    ],
+    [
+     "tnt",
+     "A:z+",
+     0,
+     2
+    ],
+    [
+     "tnt",
+     "A:x+",
+     0,
+     1
+    ],
+    [
+     "tnt",
+     "B:z+",
+     0,
+     0
+    ],
+    [
+     "tnt",
+     "B:z+",
+     0,
+     2
+    ],
+    [
+     "tnt",
+     "B:z+",
+     0,
+     4
+    ]
+   ],
+   "r": {
+    "pct": 85,
+    "win": false,
+    "keep": 0
+   }
+  },
+  {
+   "sol": [
+    [
+     "tnt",
+     "A:z+",
+     0,
+     0
+    ],
+    [
+     "tnt",
+     "A:z+",
+     0,
+     1
+    ],
+    [
+     "tnt",
+     "A:z+",
+     0,
+     2
+    ],
+    [
+     "tnt",
+     "A:x+",
+     0,
+     0
+    ],
+    [
+     "tnt",
+     "A:x+",
+     0,
+     1
+    ],
+    [
+     "tnt",
+     "B:z+",
+     0,
+     0
+    ],
+    [
+     "tnt",
+     "B:z+",
+     0,
+     1
+    ],
+    [
+     "tnt",
+     "B:z+",
+     0,
+     3
+    ]
+   ],
+   "r": {
+    "pct": 86,
+    "win": true,
+    "keep": 0
+   }
+  }
+ ],
+ "solPick": [
+  [
+   "tnt",
+   "A:z+",
+   0,
+   0
+  ],
+  [
+   "tnt",
+   "A:z+",
+   0,
+   1
+  ],
+  [
+   "tnt",
+   "A:z+",
+   0,
+   2
+  ],
+  [
+   "tnt",
+   "A:x+",
+   0,
+   0
+  ],
+  [
+   "tnt",
+   "A:x+",
+   0,
+   1
+  ],
+  [
+   "tnt",
+   "B:z+",
+   0,
+   0
+  ],
+  [
+   "tnt",
+   "B:z+",
+   0,
+   1
+  ],
+  [
+   "tnt",
+   "B:z+",
+   0,
+   3
+  ]
+ ],
+ "sol": {
+  "pct": 86,
+  "win": true,
+  "res": "WIN",
+  "placed": 8,
+  "keep": 0
+ },
+ "oneBomb": {
+  "pct": 60,
+  "collapse": 69,
+  "at": "g7bkw@A:f1",
+  "tried": 18
+ },
+ "lazy": {
+  "pct": 62,
+  "collapse": 68
+ },
+ "allFoot": {
+  "pct": 82,
+  "used": 8,
+  "collapse": 100,
+  "keep": 0
+ },
+ "footOnly": {
+  "pct": 89,
+  "waves": 2,
+  "left": 0,
+  "keep": 0
+ },
+ "oneWave": {
+  "pct": 78,
+  "used": 8,
+  "reach": 50,
+  "collapse": 77
+ },
+ "curve": [
+  {
+   "n": 1,
+   "pct": 2,
+   "collapse": 2
+  },
+  {
+   "n": 2,
+   "pct": 48,
+   "collapse": 52
+  },
+  {
+   "n": 3,
+   "pct": 48,
+   "collapse": 52
+  },
+  {
+   "n": 4,
+   "pct": 46,
+   "collapse": 55
+  },
+  {
+   "n": 6,
+   "pct": 46,
+   "collapse": 55
+  },
+  {
+   "n": 8,
+   "pct": 48,
+   "collapse": 57
+  },
+  {
+   "n": 12,
+   "pct": 48,
+   "collapse": 57
+  }
+ ],
+ "jump": 46,
+ "verdict": "PASS",
+ "issues": [],
+ "reported": [
+  "est 14/13/13 s",
+  "curve jump +46",
+  "allFoot 82%",
+  "footOnly 89%"
+ ]
+}
