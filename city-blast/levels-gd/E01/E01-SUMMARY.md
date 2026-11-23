@@ -48,3 +48,24 @@ Runs C and D let the tester pick the budget (19 both times). Run E then confirme
 - Budget 19 TNT. The machine keeps 5–6, which is the top of the Normal band (2–5); a person may keep more. It could go to 17 after Khai plays it.
 - The fail line "Hit the legs. Heavy pieces still count." is the only text.
 - `drop7` is used here only as plumbing (floors ignore TNT up high). It is not taught; E09 teaches drop-first.
+
+## SLOTS-50 (23/11, D-blast-L50 / D-blast-LAUNCH / D-blast-PAD): play slot 50
+
+Converted: RC legs → concrete, drop7 plumbing off (plain floors); heavy roof pieces, drums, glass, steps kept (the heavy teach).
+
+| | |
+|---|---|
+| Elements before | wood, concrete, glass, dark RC legs, heavy, drums, steps, drop7 |
+| Elements after (read from the built level) | wood, concrete, glass, heavy, drums, steps |
+| Bar | Normal from 35 (steps launched): oneBomb < 70 %, fair 3/3, spare >= 2, >= 2 blasts, 20-75 s; curve, allFoot / footOnly reported (no heavy piece before 50) |
+| TNT | **18** |
+| Expert plan (`sol`, one blast) | — |
+| fair, 3 seeds | 3/3 · spare 8/2/3 · blasts 3/4/4 · 33/47/47 s |
+| oneBomb / lazy | 27 % / 66 % |
+| allFoot / footOnly / oneWave | 68 % / 64 % / 72 % |
+| curve (n TNT at the main foot: %) | 1:22 2:22 3:25 4:37 6:38 8:63 12:65 (max jump +25) |
+| at rest (8 s) | 0 dead, 0 moved, bonds 1252→1252 |
+| pad (D-blast-PAD) | lot centred on (0, 0), farthest corner 17.7 m (pad 15.55 m today, ~18.7 m widened) |
+| verdict | **PASS** · reported: — |
+
+Gate: `gate.mjs` (one Chrome session, test build on main's 31-polish base, `results-slots50.json`, 2026-11-23T19:30 UTC). Shots: `shot-open.jpg` (393 × 852, test build).

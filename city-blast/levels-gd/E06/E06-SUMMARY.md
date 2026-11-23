@@ -45,3 +45,24 @@
 - Budget 17 TNT, spare 2–4 (the bottom of the Normal band; a person who aims needs fewer).
 - The plan's "aim test" is reported, not a pass/fail gate: on an easy level the wrong way costs more TNT but does not lose. Make it a hard gate later if Khai wants.
 - The fail line "Open the side it should fall. Tanks still count." is the only text.
+
+## SLOTS-50 (23/11, D-blast-L50 / D-blast-LAUNCH / D-blast-PAD): play slot 9
+
+Converted: RC legs → brick (bk), feed-water tank hard7v → plain, no drop7, lot centred (was lopsided), one blast.
+
+| | |
+|---|---|
+| Elements before | brick, concrete, dark RC legs, heavy tank, steps, drop7 |
+| Elements after (read from the built level) | brick, concrete |
+| Bar | Normal before 35: oneBomb < 70 %, fair 3/3, spare >= 2, the expert plan (sol) wins in ONE blast; blasts, time, curve, allFoot / footOnly reported (no heavy piece before 50) |
+| TNT | **11** |
+| Expert plan (`sol`, one blast) | WIN 93 % (4 TNT) |
+| fair, 3 seeds | 3/3 · spare 2/2/2 · blasts 2/2/2 · 27/27/27 s |
+| oneBomb / lazy | 66 % / 55 % |
+| allFoot / footOnly / oneWave | 63 % / 73 % / 70 % |
+| curve (n TNT at the main foot: %) | 1:36 2:41 3:46 4:47 6:41 8:43 12:43 (max jump +5) |
+| at rest (8 s) | 0 dead, 0 moved, bonds 441→441 |
+| pad (D-blast-PAD) | lot centred on (0, 0), farthest corner 12.7 m (pad 15.55 m today, ~18.7 m widened) |
+| verdict | **PASS** · reported: — |
+
+Gate: `gate.mjs` (one Chrome session, test build on main's 31-polish base, `results-slots50.json`, 2026-11-23T20:18 UTC). Shots: `shot-open.jpg`, `shot-blast1-mid.jpg`, `shot-blast1.jpg` (the expert plan / first blast) (393 × 852, test build).

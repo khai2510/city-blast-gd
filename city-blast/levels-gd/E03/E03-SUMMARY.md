@@ -40,3 +40,24 @@
 - Budget 19 TNT. The machine keeps 5–11, the top of the Normal band. A FEEL level may be generous; it could go to 16–17 after Khai plays it.
 - The fail line "Red drums blast for free. Heavy pieces still count." is the only text.
 - "Heavy pieces still count" is the same second read as E01. It keeps one TNT from winning, and that is all it is here.
+
+## SLOTS-50 (23/11, D-blast-L50 / D-blast-LAUNCH / D-blast-PAD): play slot 25
+
+Converted: roof tanks / vent lanterns hard7v → plain, drum row only in front of the outer sheds (one TNT by a full-length row won, 82 %), sheds 3.8 → 3.4 m, cabins closer (pad), one blast.
+
+| | |
+|---|---|
+| Elements before | wood, brick, glass, heavy, drums, steps |
+| Elements after (read from the built level) | wood, brick, glass, drums |
+| Bar | Normal before 35: oneBomb < 70 %, fair 3/3, spare >= 2, the expert plan (sol) wins in ONE blast; blasts, time, curve, allFoot / footOnly reported (no heavy piece before 50) |
+| TNT | **11** |
+| Expert plan (`sol`, one blast) | WIN 90 % (5 TNT) |
+| fair, 3 seeds | 3/3 · spare 5/3/2 · blasts 2/3/3 · 24/33/33 s |
+| oneBomb / lazy | 33 % / 72 % |
+| allFoot / footOnly / oneWave | 73 % / 96 % / 75 % |
+| curve (n TNT at the main foot: %) | 1:4 2:35 3:36 4:36 6:36 8:56 12:59 (max jump +31) |
+| at rest (8 s) | 0 dead, 0 moved, bonds 503→503 |
+| pad (D-blast-PAD) | lot centred on (0, 0), farthest corner 16.7 m (pad 15.55 m today, ~18.7 m widened) |
+| verdict | **PASS** · reported: footOnly 96% |
+
+Gate: `gate.mjs` (one Chrome session, test build on main's 31-polish base, `results-slots50.json`, 2026-11-23T22:46 UTC). Shots: `shot-open.jpg`, `shot-blast1-mid.jpg`, `shot-blast1.jpg` (the expert plan / first blast) (393 × 852, test build).

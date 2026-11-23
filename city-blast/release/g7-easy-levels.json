@@ -3,7 +3,8 @@
   "name": "Long Legs",
   "bp": "E01",
   "tier": "N",
-  "tntStart": 19,
+  "slot": 50,
+  "tntStart": 18,
   "f": 7,
   "kind": "scene",
   "hero": "A",
@@ -17,13 +18,6 @@
   "hit7": {
    "keys": [],
    "drums": true
-  },
-  "drop7": {
-   "keys": [
-    "mdC"
-   ],
-   "fall": 1.5,
-   "armor": 0.97
   },
   "sf": [],
   "pattern": "legs: a raised slab on pilotis, three sections; bombs on the legs drop a section, the heavy roof pieces land whole and need one more",
@@ -39,12 +33,13 @@
     "legH": 6,
     "floors": 5,
     "bg0": 81,
-    "softDeck": 1
+    "softDeck": 1,
+    "legKey": "concrete"
    },
    {
     "id": "B",
     "kind": "g7stilt",
-    "x": -14.799999999999999,
+    "x": -14.8,
     "z": 0,
     "hx": 2.6,
     "hz": 3,
@@ -55,7 +50,7 @@
    {
     "id": "C",
     "kind": "g7stilt",
-    "x": 14.799999999999999,
+    "x": 14.8,
     "z": 0,
     "hx": 2.6,
     "hz": 3,
@@ -91,7 +86,7 @@
    ]
   ],
   "charges": {
-   "tnt": 19
+   "tnt": 18
   },
   "tip": "",
   "ftip": "Hit the legs. Heavy pieces still count.",
@@ -101,6 +96,7 @@
   "name": "Shot Tower",
   "bp": "E02",
   "tier": "N",
+  "slot": 5,
   "f": 7,
   "kind": "scene",
   "hero": "A",
@@ -121,13 +117,6 @@
    "armor": 0.001,
    "f": 3,
    "reach": 1
-  },
-  "drop7": {
-   "keys": [
-    "mdB"
-   ],
-   "fall": 1.5,
-   "armor": 0.97
   },
   "sf": [],
   "pattern": "tip: a tall tower on 8 legs; two legs side by side gone = it lies down that way; a long goods shed on each side is the target",
@@ -150,14 +139,18 @@
     ],
     "hopW": 2.6,
     "hopH": 2.2,
-    "cis": 2.8
+    "cis": 2.8,
+    "legKey": "g7bk",
+    "postKey": "g7bk",
+    "deck0Key": "g7bk",
+    "heavyKey": "g7roofL"
    },
    {
     "id": "B",
     "kind": "g7gshed",
-    "x": -12.9,
+    "x": -10.2,
     "z": 0,
-    "hx": 7,
+    "hx": 4.8,
     "hz": 4,
     "nx": 5,
     "side": -1,
@@ -166,9 +159,9 @@
    {
     "id": "C",
     "kind": "g7gshed",
-    "x": 12.9,
+    "x": 10.2,
     "z": 0,
-    "hx": 7,
+    "hx": 4.8,
     "hz": 4,
     "nx": 5,
     "side": 1,
@@ -177,17 +170,43 @@
   ],
   "tanks": [],
   "charges": {
-   "tnt": 23
+   "tnt": 11
   },
   "tip": "",
-  "ftip": "Neighbouring legs tip it. Heavy pieces still count.",
-  "sol": [],
-  "tntStart": 23
+  "ftip": "Two legs side by side tip it.",
+  "sol": [
+   [
+    "tnt",
+    "A:x+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "A:x+",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "B:z+",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "B:z+",
+    0,
+    3
+   ]
+  ],
+  "tntStart": 11
  },
  {
   "name": "Tram Depot",
   "bp": "E03",
   "tier": "N",
+  "slot": 25,
   "f": 7,
   "kind": "scene",
   "hero": "A",
@@ -209,20 +228,21 @@
     "id": "A",
     "kind": "g7depot",
     "x": 0,
-    "z": 0,
+    "z": -0.5,
     "n": 3,
-    "hx": 3.8,
+    "hx": 3.4,
     "hz": 7,
     "ph": 8.5,
     "hold": 1.2,
     "bg0": 61,
-    "hw": 1.5
+    "hw": 1.5,
+    "heavyKey": "g7roofL"
    },
    {
     "id": "B",
     "kind": "g7cabin",
-    "x": -15.799999999999997,
-    "z": 1,
+    "x": -13.8,
+    "z": 0.5,
     "hx": 2.3,
     "hz": 3,
     "nb": 2,
@@ -232,8 +252,8 @@
    {
     "id": "C",
     "kind": "g7cabin",
-    "x": 15.799999999999997,
-    "z": 1,
+    "x": 13.8,
+    "z": 0.5,
     "hx": 2.3,
     "hz": 3,
     "nb": 2,
@@ -243,62 +263,74 @@
   ],
   "tanks": [
    [
-    -10.5,
-    7.55
+    -9.45,
+    7.05
    ],
    [
-    -8.4,
-    7.55
+    -7.35,
+    7.05
    ],
    [
-    -6.3,
-    7.55
+    -5.25,
+    7.05
    ],
    [
-    -4.2,
-    7.55
+    5.25,
+    7.05
    ],
    [
-    -2.1,
-    7.55
+    7.35,
+    7.05
    ],
    [
-    0,
-    7.55
-   ],
-   [
-    2.1,
-    7.55
-   ],
-   [
-    4.2,
-    7.55
-   ],
-   [
-    6.3,
-    7.55
-   ],
-   [
-    8.4,
-    7.55
-   ],
-   [
-    10.5,
-    7.55
+    9.45,
+    7.05
    ]
   ],
   "charges": {
-   "tnt": 19
+   "tnt": 11
   },
   "tip": "",
-  "ftip": "Red drums blast for free. Heavy pieces still count.",
-  "sol": [],
-  "tntStart": 19
+  "ftip": "Red drums blast for free.",
+  "sol": [
+   [
+    "tnt",
+    "A:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "A:z+",
+    0,
+    4
+   ],
+   [
+    "tnt",
+    "A:z+",
+    0,
+    8
+   ],
+   [
+    "tnt",
+    "B:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "C:z+",
+    0,
+    0
+   ]
+  ],
+  "tntStart": 11
  },
  {
   "name": "Market Hall",
   "bp": "E04",
-  "tier": "N",
+  "tier": "T",
+  "slot": 3,
   "f": 7,
   "kind": "scene",
   "hero": "A",
@@ -309,13 +341,6 @@
   "d": 1,
   "fillMax": 0.73,
   "hard7": true,
-  "drop7": {
-   "keys": [
-    "mdB"
-   ],
-   "fall": 1.5,
-   "armor": 0.97
-  },
   "sf": [],
   "pattern": "materials: a timber market (one TNT folds a section) behind a brick arcade (one TNT chips one pier); brick weigh houses at the ends",
   "parts": [
@@ -323,58 +348,77 @@
     "id": "A",
     "kind": "g7mhall",
     "x": 0,
-    "z": 0,
+    "z": -2,
     "n": 3,
     "hx": 3,
     "hz": 6,
     "ph": 5.4,
     "ch": 2.6,
     "rh": 1.6,
-    "bg0": 91
+    "bg0": 91,
+    "clere": 1,
+    "roofKey": "g7tile"
    },
    {
     "id": "B",
     "kind": "g7arcade",
     "x": 0,
-    "z": 9.4,
+    "z": 7.4,
     "n": 6,
     "len": 18.2,
     "d": 1.2,
-    "pw": 0.95,
+    "pw": 0.7,
     "h1": 5,
     "h2": 3.6,
-    "bg": 95
-   },
-   {
-    "id": "C",
-    "kind": "g7kiosk",
-    "x": -14,
-    "z": 0,
-    "hx": 2.4,
-    "bg": 96
-   },
-   {
-    "id": "D",
-    "kind": "g7kiosk",
-    "x": 14,
-    "z": 0,
-    "hx": 2.4,
-    "bg": 97
+    "bg": 95,
+    "mat": "wood"
    }
   ],
   "tanks": [],
   "charges": {
-   "tnt": 19
+   "tnt": 6
   },
   "tip": "",
-  "ftip": "Wood falls easy. Brick chips. Roofs still count.",
-  "sol": [],
-  "tntStart": 19
+  "ftip": "One TNT on timber folds a whole section.",
+  "sol": [
+   [
+    "tnt",
+    "A:z+",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "A:z+",
+    0,
+    4
+   ],
+   [
+    "tnt",
+    "A:z+",
+    0,
+    7
+   ],
+   [
+    "tnt",
+    "B:z+",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "B:z+",
+    0,
+    5
+   ]
+  ],
+  "tntStart": 6
  },
  {
   "name": "Boiler Stack",
   "bp": "E06",
   "tier": "N",
+  "slot": 9,
   "f": 7,
   "kind": "scene",
   "hero": "A",
@@ -385,14 +429,6 @@
   "d": 1,
   "fillMax": 0.73,
   "hard7": true,
-  "drop7": {
-   "keys": [
-    "mdB",
-    "mdC"
-   ],
-   "fall": 1.5,
-   "armor": 0.97
-  },
   "hit7": {
    "keys": [
     "bk",
@@ -410,41 +446,69 @@
    {
     "id": "A",
     "kind": "g7stack",
-    "x": -12.15,
+    "x": -8.25,
     "z": 0,
     "bx": 2.9,
     "legH": 4.6,
     "n": 5,
     "sh": 3.1,
     "hold": 2,
-    "bg": 51
+    "bg": 51,
+    "legKey": "bk"
    },
    {
     "id": "B",
     "kind": "g7boil",
-    "x": 0,
+    "x": 3.9,
     "z": 0,
     "n": 2,
     "bw": 3.6,
     "hz": 6,
     "ph": 7,
     "bg0": 52,
-    "heavy": 1
+    "heavy": 1,
+    "heavyKey": "g7roofL"
    }
   ],
   "tanks": [],
   "charges": {
-   "tnt": 17
+   "tnt": 11
   },
   "tip": "",
-  "ftip": "Open the side it should fall. Tanks still count.",
-  "sol": [],
-  "tntStart": 17
+  "ftip": "Open the side it should fall.",
+  "sol": [
+   [
+    "tnt",
+    "A:x+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "A:x+",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "B:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "B:z+",
+    0,
+    2
+   ]
+  ],
+  "tntStart": 11
  },
  {
   "name": "Star Dome",
   "bp": "E05",
   "tier": "N",
+  "slot": 36,
   "f": 7,
   "kind": "scene",
   "hero": "A",
@@ -455,13 +519,6 @@
   "d": 1,
   "fillMax": 0.73,
   "hard7": true,
-  "drop7": {
-   "keys": [
-    "mdB"
-   ],
-   "fall": 1.5,
-   "armor": 0.97
-  },
   "sf": [],
   "pattern": "shell + core: an RC telescope pier (hard7v, counted until cracked) stands free inside a brick drum under a dome; the drum hides it from every view, so the shell comes first, the core after",
   "parts": [
@@ -474,9 +531,9 @@
     "h0": 4.4,
     "h1": 3.6,
     "core": 1.3,
-    "coreKey": "hard7p",
+    "coreKey": "concrete",
     "plinth": 1.2,
-    "domeKey": "hard7t",
+    "domeKey": "bk",
     "oneDome": 1,
     "coreGap": 1.2,
     "bg0": 101
@@ -504,17 +561,18 @@
   ],
   "tanks": [],
   "charges": {
-   "tnt": 23
+   "tnt": 19
   },
   "tip": "",
   "ftip": "Open the shell first. The core still counts.",
   "sol": [],
-  "tntStart": 23
+  "tntStart": 19
  },
  {
   "name": "Bathhouse",
   "bp": "E07",
   "tier": "N",
+  "slot": 21,
   "f": 7,
   "kind": "scene",
   "hero": "A",
@@ -525,13 +583,6 @@
   "d": 1,
   "fillMax": 0.73,
   "hard7": true,
-  "drop7": {
-   "keys": [
-    "mdB"
-   ],
-   "fall": 1.5,
-   "armor": 0.97
-  },
   "sf": [],
   "pattern": "restraint: a domed bathhouse on 8 piers between two colonnade wings, a school (blue) behind the right wing at a generous gap; small blasts drop the dome into the hall, a big blast or a tip back-right reaches the school",
   "parts": [
@@ -539,16 +590,16 @@
     "id": "A",
     "kind": "g7bath",
     "x": 0,
-    "z": 0,
+    "z": 2.3,
     "hx": 5,
     "hz": 5,
     "dr": 4,
     "ph": 6.5,
     "hold": 1.6,
-    "domeKey": "hard7t",
+    "domeKey": "g7roofD",
     "dq": 2.6,
     "oneDome": 1,
-    "atticKey": "hard7t",
+    "atticKey": "mdB",
     "allGlass": 1,
     "bg": 111
    },
@@ -556,26 +607,26 @@
     "id": "B",
     "kind": "g7colo",
     "x": -8.6,
-    "z": 0,
+    "z": 2.3,
     "hx": 1.8,
     "hz": 4.2,
     "side": -1,
     "mat": "brick",
     "pw": 0.7,
-    "roofKey": "hard7t",
+    "roofKey": "g7roofL",
     "bg": 115
    },
    {
     "id": "C",
     "kind": "g7colo",
     "x": 8.6,
-    "z": 0,
+    "z": 2.3,
     "hx": 1.8,
     "hz": 4.2,
     "side": 1,
     "mat": "brick",
     "pw": 0.7,
-    "roofKey": "hard7t",
+    "roofKey": "g7roofL",
     "bg": 116
    }
   ],
@@ -583,7 +634,7 @@
    {
     "kind": "keep6",
     "x": 7,
-    "z": -7.9,
+    "z": -5.6,
     "floors": 2,
     "cx": 3,
     "cz": 2,
@@ -601,12 +652,79 @@
   },
   "tanks": [],
   "charges": {
-   "tnt": 18
+   "tnt": 14
   },
   "tip": "",
   "ftip": "Small blasts drop it in place. Keep blue clear.",
-  "sol": [],
-  "tntStart": 18
+  "sol": [
+   [
+    "tnt",
+    "A:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "A:z+",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "A:z+",
+    0,
+    2
+   ],
+   [
+    "tnt",
+    "A:x-",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "A:x+",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "B:x-",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "B:x-",
+    0,
+    2
+   ],
+   [
+    "tnt",
+    "C:x+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "C:x+",
+    0,
+    2
+   ],
+   [
+    "tnt",
+    "B:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "C:z+",
+    0,
+    0
+   ]
+  ],
+  "tntStart": 14
  },
  {
   "name": "Grain Elevator",
@@ -766,6 +884,7 @@
   "name": "Rail Terminus",
   "bp": "E10",
   "tier": "N",
+  "slot": 26,
   "f": 7,
   "kind": "scene",
   "hero": "A",
@@ -776,13 +895,6 @@
   "d": 1,
   "fillMax": 0.73,
   "hard7": true,
-  "drop7": {
-   "keys": [
-    "mdB"
-   ],
-   "fall": 1.5,
-   "armor": 0.97
-  },
   "hit7": {
    "keys": [
     "bk",
@@ -801,22 +913,23 @@
    {
     "id": "A",
     "kind": "g7term",
-    "x": -5.75,
-    "z": 0,
+    "x": -6.15,
+    "z": 3.2,
     "hx": 3.6,
     "hz": 3.6,
     "legH": 5,
     "n": 2,
     "hold": 2,
     "side": 1,
-    "heavy": 1,
-    "bg": 140
+    "heavy": 0,
+    "bg": 140,
+    "legKey": "bk"
    },
    {
     "id": "B",
     "kind": "g7shed",
-    "x": 4.7,
-    "z": 0,
+    "x": 4.3,
+    "z": 3.2,
     "n": 2,
     "bw": 2.3,
     "hz": 4.5,
@@ -833,8 +946,8 @@
   "keeps": [
    {
     "kind": "keep6",
-    "x": 6.2,
-    "z": -10.15,
+    "x": 5.8,
+    "z": -6.95,
     "floors": 2,
     "cx": 3,
     "cz": 2,
@@ -852,24 +965,73 @@
   },
   "tanks": [
    [
-    0.45,
-    5.15
+    0.05,
+    8.35
    ],
    [
-    4.7,
-    5.15
+    4.3,
+    8.35
    ],
    [
-    8.95,
-    5.15
+    8.55,
+    8.35
    ]
   ],
   "charges": {
-   "tnt": 14
+   "tnt": 8
   },
   "tip": "",
   "ftip": "Read it first: which legs, which side, what stays.",
-  "sol": [],
-  "tntStart": 14
+  "sol": [
+   [
+    "tnt",
+    "A:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "A:z+",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "A:z+",
+    0,
+    2
+   ],
+   [
+    "tnt",
+    "A:x+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "A:x+",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "B:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "B:z+",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "B:z+",
+    0,
+    3
+   ]
+  ],
+  "tntStart": 8
  }
 ]

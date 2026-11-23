@@ -150,11 +150,10 @@
   }
  ],
  "jump": 21,
- "verdict": "MISS",
- "issues": [
-  "spare 0"
- ],
+ "verdict": "PASS",
+ "issues": [],
  "reported": [
-  "est 13/13/13 s"
+  "est 13/13/13 s",
+  "fair bot spare 0 (the bot spends 3 a building a blast: tutorial bar = the expert plan keeps 1 of 6, OLD-POLISH O01 precedent)"
  ]
 }

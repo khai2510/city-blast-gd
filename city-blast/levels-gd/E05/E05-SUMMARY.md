@@ -51,3 +51,24 @@ The ground storey of the drum folds and the upper drum and dome settle onto the 
 - The wow is "the pier holds up the dome" rather than "the dome drags the drum" (see above).
 - The fail line "Open the shell first. The core still counts." is the only text.
 - **23/11 HOVER-1123 (U-4):** `coreGap` 0 → 1.2 m: the dome and upper drum no longer rest on the hidden pier, they come down with the ground storey and the lower pier stands in the open. The "wow, as built" above (the pier holds the dome) is gone on purpose. Budget 22 → 23. Numbers: `../HOVER-1123/HOVER.md`.
+
+## SLOTS-50 (23/11, D-blast-L50 / D-blast-LAUNCH / D-blast-PAD): play slot 36
+
+Converted: telescope pier hard7p → concrete, dome hard7t → brick, no drop7; keeps >= 2 blasts.
+
+| | |
+|---|---|
+| Elements before | wood, brick, glass, heavy core + dome, steps, drop7 |
+| Elements after (read from the built level) | wood, brick, concrete, glass, steps |
+| Bar | Normal from 35 (steps launched): oneBomb < 70 %, fair 3/3, spare >= 2, >= 2 blasts, 20-75 s; curve, allFoot / footOnly reported (no heavy piece before 50) |
+| TNT | **19** |
+| Expert plan (`sol`, one blast) | — |
+| fair, 3 seeds | 3/3 · spare 3/4/3 · blasts 5/4/4 · 61/51/52 s |
+| oneBomb / lazy | 14 % / 11 % |
+| allFoot / footOnly / oneWave | 79 % / 80 % / 77 % |
+| curve (n TNT at the main foot: %) | 1:6 2:14 3:17 4:21 6:69 8:72 12:74 (max jump +48) |
+| at rest (8 s) | 0 dead, 0 moved, bonds 485→485 |
+| pad (D-blast-PAD) | lot centred on (0, 0), farthest corner 11.3 m (pad 15.55 m today, ~18.7 m widened) |
+| verdict | **PASS** · reported: curve jump +48; footOnly 80% |
+
+Gate: `gate.mjs` (one Chrome session, test build on main's 31-polish base, `results-slots50.json`, 2026-11-23T19:22 UTC). Shots: `shot-open.jpg` (393 × 852, test build).

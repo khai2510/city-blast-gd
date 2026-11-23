@@ -43,3 +43,24 @@
 - **Curve 1 → 2 = +54** (see above): accept it for the levels that teach tipping, or add heavy pieces.
 - Budget 23 TNT, spare 4–6. E01 has 19; 23 is high for slot 6, because the blind player opens the front, the cheap fail, and then has two sheds to clear. A person who aims needs fewer.
 - The fail line "Neighbouring legs tip it. Heavy pieces still count." is the only text.
+
+## SLOTS-50 (23/11, D-blast-L50 / D-blast-LAUNCH / D-blast-PAD): play slot 5
+
+Converted: RC-in-brick legs / posts / leg deck → the kit's brick-clad member g7bk (as the E06 / E10 shafts), hoppers + cistern hard7v → plain (g7roofL), no drop7, sheds 7 → 4.8 m (pad), one blast.
+
+| | |
+|---|---|
+| Elements before | wood, brick, dark RC legs, heavy, steps, drop7 |
+| Elements after (read from the built level) | wood, brick |
+| Bar | Normal before 35: oneBomb < 70 %, fair 3/3, spare >= 2, the expert plan (sol) wins in ONE blast; blasts, time, curve, allFoot / footOnly reported (no heavy piece before 50) |
+| TNT | **11** |
+| Expert plan (`sol`, one blast) | WIN 90 % (4 TNT) |
+| fair, 3 seeds | 3/3 · spare 2/2/2 · blasts 1/1/1 · 18/18/18 s |
+| oneBomb / lazy | 10 % / 72 % |
+| allFoot / footOnly / oneWave | 85 % / 90 % / 89 % |
+| curve (n TNT at the main foot: %) | 1:2 2:77 3:75 4:79 6:91 8:86 12:86 (max jump +75) |
+| at rest (8 s) | 0 dead, 0 moved, bonds 1084→1084 |
+| pad (D-blast-PAD) | lot centred on (0, 0), farthest corner 15.5 m (pad 15.55 m today, ~18.7 m widened) |
+| verdict | **PASS** · reported: est 18/18/18 s; curve jump +75; allFoot 85%; footOnly 90% |
+
+Gate: `gate.mjs` (one Chrome session, test build on main's 31-polish base, `results-slots50.json`, 2026-11-23T20:54 UTC). Shots: `shot-open.jpg`, `shot-blast1-mid.jpg`, `shot-blast1.jpg` (the expert plan / first blast) (393 × 852, test build).
