@@ -1,30 +1,30 @@
 {
- "when": "2026-11-22T20:43:05.224Z",
+ "when": "2026-11-23T17:14:18.798Z",
  "bp": "O09",
  "name": "Floodlit Stand",
  "tnt": 11,
  "bar": "N",
  "metrics": {
   "members": 81,
-  "hard": 27,
-  "soft": 54,
-  "hardPct": 33,
+  "hard": 0,
+  "soft": 81,
+  "hardPct": 0,
   "main": {
    "members": 41,
-   "hard": 3,
-   "soft": 38,
-   "hardPct": 7,
+   "hard": 0,
+   "soft": 41,
+   "hardPct": 0,
    "pos": {
     "top": 0,
-    "mid": 3,
+    "mid": 0,
     "bottom": 0,
-    "edge": 2,
-    "core": 1,
+    "edge": 0,
+    "core": 0,
     "front": 0,
     "back": 0
    },
-   "core": "yes",
-   "hardLayers": 1,
+   "core": "no",
+   "hardLayers": 0,
    "depthRows": 4,
    "frontHard": 0,
    "backHard": 0,
@@ -38,7 +38,7 @@
   ]
  },
  "sol": {
-  "pct": 90,
+  "pct": 96,
   "win": true,
   "res": "WIN",
   "placed": [
@@ -52,9 +52,9 @@
   "keep": 0
  },
  "oneBomb": {
-  "pct": 29,
-  "collapse": 49,
-  "at": "concrete@A:f0",
+  "pct": 38,
+  "collapse": 70,
+  "at": "concrete@B:f1",
   "tried": 18
  },
  "lazy": {
@@ -65,98 +65,26 @@
   {
    "win": true,
    "res": "WIN",
-   "pct": 100,
-   "used": 9,
-   "left": 2,
-   "waves": 2,
-   "firstWave": 78,
-   "keep": 0,
-   "estSec": 23,
-   "log": "bld7=78 bld2=100"
-  },
-  {
-   "win": true,
-   "res": "WIN",
    "pct": 98,
-   "used": 9,
-   "left": 2,
-   "waves": 2,
-   "firstWave": 76,
+   "used": 7,
+   "left": 4,
+   "waves": 1,
+   "firstWave": 98,
    "keep": 0,
-   "estSec": 23,
-   "log": "bld7=76 bld2=98"
-  },
-  {
-   "win": true,
-   "res": "WIN",
-   "pct": 99,
-   "used": 8,
-   "left": 3,
-   "waves": 2,
-   "firstWave": 78,
-   "keep": 0,
-   "estSec": 23,
-   "log": "bld7=78 bld1=99"
+   "estSec": 16,
+   "log": "bld7=98"
   }
  ],
- "allFoot": {
-  "pct": 79,
-  "used": 11,
-  "collapse": 97,
-  "keep": 0
+ "oneWave": {
+  "pct": 0
  },
  "footOnly": {
-  "pct": 96,
-  "waves": 2,
-  "left": 4,
-  "keep": 0
+  "pct": 0
  },
- "oneWave": {
-  "pct": 96,
-  "used": 11,
-  "reach": 54,
-  "collapse": 99
+ "allFoot": {
+  "pct": 0
  },
- "curve": [
-  {
-   "n": 1,
-   "pct": 13,
-   "collapse": 22
-  },
-  {
-   "n": 2,
-   "pct": 17,
-   "collapse": 29
-  },
-  {
-   "n": 3,
-   "pct": 25,
-   "collapse": 44
-  },
-  {
-   "n": 4,
-   "pct": 26,
-   "collapse": 44
-  },
-  {
-   "n": 6,
-   "pct": 26,
-   "collapse": 44
-  },
-  {
-   "n": 8,
-   "pct": 26,
-   "collapse": 44
-  },
-  {
-   "n": 12,
-   "pct": 26,
-   "collapse": 44
-  }
- ],
- "jump": 8,
- "verdict": "MISS",
- "issues": [
-  "footOnly 96%"
- ]
+ "curve": [],
+ "verdict": "PASS",
+ "issues": []
 }

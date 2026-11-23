@@ -1,8 +1,8 @@
 {
- "when": "2026-11-22T21:06:05.029Z",
+ "when": "2026-11-23T16:34:44.765Z",
  "bp": "O03",
  "name": "Airfield Tower",
- "tnt": 6,
+ "tnt": 10,
  "bar": "T",
  "metrics": {
   "members": 173,
@@ -25,7 +25,7 @@
    },
    "core": "no",
    "hardLayers": 0,
-   "depthRows": 3,
+   "depthRows": 5,
    "frontHard": 0,
    "backHard": 0,
    "floors": 6
@@ -39,10 +39,11 @@
   ]
  },
  "sol": {
-  "pct": 90,
+  "pct": 95,
   "win": true,
   "res": "WIN",
   "placed": [
+   "ok",
    "ok",
    "ok",
    "ok",
@@ -52,111 +53,41 @@
   "keep": 0
  },
  "oneBomb": {
-  "pct": 58,
-  "collapse": 67,
+  "pct": 53,
+  "collapse": 58,
   "at": "concrete@A:f1",
   "tried": 20
  },
  "lazy": {
-  "pct": 51,
+  "pct": 53,
   "collapse": 53
  },
  "fair": [
   {
-   "win": false,
-   "res": "LOSE pct",
-   "pct": 53,
-   "used": 6,
+   "win": true,
+   "res": "WIN",
+   "pct": 95,
+   "used": 10,
    "left": 0,
    "waves": 1,
-   "firstWave": 53,
+   "firstWave": 95,
    "keep": 0,
-   "estSec": 15,
-   "log": "bld6=53"
-  },
-  {
-   "win": false,
-   "res": "LOSE pct",
-   "pct": 52,
-   "used": 6,
-   "left": 0,
-   "waves": 1,
-   "firstWave": 52,
-   "keep": 0,
-   "estSec": 14,
-   "log": "bld6=52"
-  },
-  {
-   "win": false,
-   "res": "LOSE pct",
-   "pct": 53,
-   "used": 6,
-   "left": 0,
-   "waves": 1,
-   "firstWave": 53,
-   "keep": 0,
-   "estSec": 15,
-   "log": "bld6=53"
+   "estSec": 19,
+   "log": "bld10=95"
   }
  ],
- "allFoot": {
-  "pct": 98,
-  "used": 6,
-  "collapse": 100,
-  "keep": 0
+ "oneWave": {
+  "pct": 0
  },
  "footOnly": {
-  "pct": 98,
-  "waves": 1,
-  "left": 0,
-  "keep": 0
+  "pct": 0
  },
- "oneWave": {
-  "pct": 65,
-  "used": 6,
-  "reach": 158,
-  "collapse": 76
+ "allFoot": {
+  "pct": 0
  },
- "curve": [
-  {
-   "n": 1,
-   "pct": 1,
-   "collapse": 1
-  },
-  {
-   "n": 2,
-   "pct": 46,
-   "collapse": 51
-  },
-  {
-   "n": 3,
-   "pct": 47,
-   "collapse": 53
-  },
-  {
-   "n": 4,
-   "pct": 49,
-   "collapse": 51
-  },
-  {
-   "n": 6,
-   "pct": 63,
-   "collapse": 72
-  },
-  {
-   "n": 8,
-   "pct": 52,
-   "collapse": 56
-  },
-  {
-   "n": 12,
-   "pct": 52,
-   "collapse": 56
-  }
- ],
+ "curve": [],
  "verdict": "MISS",
  "issues": [
-  "fair 0/3",
   "spare 0"
  ]
 }

@@ -1,1 +1,104 @@
-{"rest":{"keys":{"concrete":80,"mdC":12,"cpan":32,"bk":6,"mdW":2,"bkw":40,"g7roofL":1},"members":173,"parts":{"A":82,"S":13,"B":39,"C":39},"height":{"A":21.2,"S":2.9,"B":9.7,"C":9.7},"dead":0,"moved":0,"bondsBefore":744,"bondsAfter":744,"list":[],"pct":0},"sol":{"placed":["ok","ok","ok","ok"],"after":{"pct":90,"phase":"done","res":{"level":37,"ok":true,"overPts":5,"pct":0.9024740974658888,"coll":0,"over":false,"coins":297,"bonus":1643,"combo":23,"code":"ok","reason":"DEMOLISHED!","why":"","waves":1,"dud":false,"shots":[{"f":0,"k":"tnt","x":-2.549968719482422,"z":-4.820002193450928,"metal":false},{"f":0,"k":"tnt","x":0.000029489185180864297,"z":-4.8199953269958495,"metal":false},{"f":0,"k":"tnt","x":-12.099991798400879,"z":-4.419999141693116,"metal":false},{"f":0,"k":"tnt","x":5.9000067710876465,"z":-4.4199986648559575,"metal":false}],"used":4,"par":9,"height":2.4232521533966063,"street":0,"unlock":false,"debrisCoins":342}}}}
+{
+ "rest": {
+  "keys": {
+   "concrete": 80,
+   "mdC": 12,
+   "cpan": 32,
+   "bk": 6,
+   "mdW": 2,
+   "bkw": 40,
+   "g7roofL": 1
+  },
+  "members": 173,
+  "parts": {
+   "A": 82,
+   "S": 13,
+   "B": 39,
+   "C": 39
+  },
+  "height": {
+   "A": 21.2,
+   "S": 2.9,
+   "B": 9.7,
+   "C": 9.7
+  },
+  "dead": 0,
+  "moved": 0,
+  "bondsBefore": 744,
+  "bondsAfter": 744,
+  "list": [],
+  "pct": 0
+ },
+ "sol": {
+  "placed": [
+   "ok",
+   "ok",
+   "ok",
+   "ok",
+   "ok"
+  ],
+  "after": {
+   "pct": 95,
+   "phase": "done",
+   "res": {
+    "level": 37,
+    "ok": true,
+    "overPts": 10,
+    "pct": 0.9520210740582765,
+    "coll": 0,
+    "over": false,
+    "coins": 372,
+    "bonus": 1620,
+    "combo": 28,
+    "code": "ok",
+    "reason": "DEMOLISHED!",
+    "why": "",
+    "waves": 1,
+    "dud": false,
+    "shots": [
+     {
+      "f": 0,
+      "k": "tnt",
+      "x": -2.549968719482422,
+      "z": -1.5200041484832765,
+      "metal": false
+     },
+     {
+      "f": 0,
+      "k": "tnt",
+      "x": 2.9041037123533897e-05,
+      "z": -1.5199970436096193,
+      "metal": false
+     },
+     {
+      "f": 0,
+      "k": "tnt",
+      "x": -12.099992752075195,
+      "z": -1.1199983549118042,
+      "metal": false
+     },
+     {
+      "f": 0,
+      "k": "tnt",
+      "x": 5.900007247924805,
+      "z": -1.1199982357025147,
+      "metal": false
+     },
+     {
+      "f": 0,
+      "k": "tnt",
+      "x": 0.875000536441803,
+      "z": 7.880004005432129,
+      "metal": false
+     }
+    ],
+    "used": 5,
+    "par": 9,
+    "height": 0,
+    "street": 0,
+    "unlock": false,
+    "debrisCoins": 411
+   }
+  }
+ }
+}

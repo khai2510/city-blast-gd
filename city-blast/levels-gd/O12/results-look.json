@@ -1,1 +1,104 @@
-{"rest":{"keys":{"concrete":16,"mdC":5,"steel":16,"mdS":6,"wwall":38,"cpan":5,"g7roofL":3,"wpost":32,"mdW":4},"members":125,"parts":{"A":39,"S":16,"B":35,"C":35},"height":{"A":11,"S":3.6,"B":6.9,"C":6.9},"dead":0,"moved":0,"bondsBefore":536,"bondsAfter":536,"list":[],"pct":0},"sol":{"placed":["ok","ok","ok","ok"],"after":{"pct":77,"phase":"plan","res":null}}}
+{
+ "rest": {
+  "keys": {
+   "concrete": 32,
+   "mdC": 5,
+   "mdW": 10,
+   "wwall": 38,
+   "cpan": 5,
+   "g7roofL": 3,
+   "wpost": 32
+  },
+  "members": 125,
+  "parts": {
+   "A": 39,
+   "S": 16,
+   "B": 35,
+   "C": 35
+  },
+  "height": {
+   "A": 11,
+   "S": 3.6,
+   "B": 6.9,
+   "C": 6.9
+  },
+  "dead": 0,
+  "moved": 0,
+  "bondsBefore": 536,
+  "bondsAfter": 536,
+  "list": [],
+  "pct": 0
+ },
+ "sol": {
+  "placed": [
+   "ok",
+   "ok",
+   "ok",
+   "ok",
+   "ok"
+  ],
+  "after": {
+   "pct": 90,
+   "phase": "done",
+   "res": {
+    "level": 37,
+    "ok": true,
+    "overPts": 5,
+    "pct": 0.9016899306605776,
+    "coll": 0,
+    "over": false,
+    "coins": 422,
+    "bonus": 1598,
+    "combo": 26,
+    "code": "ok",
+    "reason": "DEMOLISHED!",
+    "why": "",
+    "waves": 1,
+    "dud": false,
+    "shots": [
+     {
+      "f": 0,
+      "k": "tnt",
+      "x": -1.6333175897598267,
+      "z": -0.8199974012374878,
+      "metal": false
+     },
+     {
+      "f": 0,
+      "k": "tnt",
+      "x": 1.633351445198059,
+      "z": -0.8200009775161743,
+      "metal": false
+     },
+     {
+      "f": 0,
+      "k": "tnt",
+      "x": -4.374997615814209,
+      "z": 4.580019741058349,
+      "metal": false
+     },
+     {
+      "f": 0,
+      "k": "tnt",
+      "x": -12.77499771118164,
+      "z": 1.3800022888183594,
+      "metal": false
+     },
+     {
+      "f": 0,
+      "k": "tnt",
+      "x": 8.025001525878906,
+      "z": 1.3800022292137146,
+      "metal": false
+     }
+    ],
+    "used": 5,
+    "par": 9,
+    "height": 1.8499106645584107,
+    "street": 0,
+    "unlock": false,
+    "debrisCoins": 470
+   }
+  }
+ }
+}

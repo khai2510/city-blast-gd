@@ -1,0 +1,90 @@
+{
+ "when": "2026-11-23T16:38:09.310Z",
+ "bp": "O04B",
+ "name": "Needle Court",
+ "tnt": 12,
+ "bar": "N",
+ "metrics": {
+  "members": 156,
+  "hard": 0,
+  "soft": 156,
+  "hardPct": 0,
+  "main": {
+   "members": 94,
+   "hard": 0,
+   "soft": 94,
+   "hardPct": 0,
+   "pos": {
+    "top": 0,
+    "mid": 0,
+    "bottom": 0,
+    "edge": 0,
+    "core": 0,
+    "front": 0,
+    "back": 0
+   },
+   "core": "no",
+   "hardLayers": 0,
+   "depthRows": 8,
+   "frontHard": 0,
+   "backHard": 0,
+   "floors": 6
+  },
+  "stacks": 3,
+  "parts": [
+   "A",
+   "S",
+   "C"
+  ]
+ },
+ "sol": {
+  "pct": 96,
+  "win": true,
+  "res": "WIN",
+  "placed": [
+   "ok",
+   "ok",
+   "ok",
+   "ok",
+   "ok"
+  ],
+  "waves": 1,
+  "keep": 0
+ },
+ "oneBomb": {
+  "pct": 69,
+  "collapse": 76,
+  "at": "mglass@A:f1",
+  "tried": 18
+ },
+ "lazy": {
+  "pct": 67,
+  "collapse": 76
+ },
+ "fair": [
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 96,
+   "used": 9,
+   "left": 3,
+   "waves": 1,
+   "firstWave": 96,
+   "keep": 0,
+   "estSec": 18,
+   "log": "bld9=96"
+  }
+ ],
+ "oneWave": {
+  "pct": 0
+ },
+ "footOnly": {
+  "pct": 0
+ },
+ "allFoot": {
+  "pct": 0
+ },
+ "curve": [],
+ "verdict": "PASS",
+ "issues": []
+}

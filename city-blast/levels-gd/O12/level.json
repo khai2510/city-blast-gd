@@ -27,39 +27,55 @@
     "id": "A",
     "kind": "g7oScreen",
     "x": 0,
-    "z": -8,
+    "z": -2.6,
     "hx": 5.4,
     "hz": 1.6,
     "fh": 2.2,
     "sh": 4.4,
-    "nx": 4
+    "nx": 4,
+    "conv": {
+     "steel": "concrete",
+     "mdS": "mdW"
+    }
    },
    {
     "id": "S",
     "kind": "g7oBooth",
     "x": 0,
-    "z": -3.2,
+    "z": 2.2,
     "hx": 4.6,
     "hz": 2.2,
-    "h": 3
+    "h": 3,
+    "conv": {
+     "steel": "concrete",
+     "mdS": "mdW"
+    }
    },
    {
     "id": "B",
     "kind": "g7oTicket",
     "x": -10.4,
-    "z": -7,
+    "z": -1.6,
     "hx": 2.6,
     "hz": 2.8,
-    "nb": 2
+    "nb": 2,
+    "conv": {
+     "steel": "concrete",
+     "mdS": "mdW"
+    }
    },
    {
     "id": "C",
     "kind": "g7oTicket",
     "x": 10.4,
-    "z": -7,
+    "z": -1.6,
     "hx": 2.6,
     "hz": 2.8,
-    "nb": 2
+    "nb": 2,
+    "conv": {
+     "steel": "concrete",
+     "mdS": "mdW"
+    }
    }
   ],
   "charges": {
@@ -130,6 +146,24 @@
     ]
    ]
   },
-  "tntStart": 16
+  "tntStart": 16,
+  "batch": 2,
+  "launch": {
+   "el": [
+    "wood",
+    "concrete"
+   ],
+   "slot": 12,
+   "before": [
+    "wood",
+    "concrete",
+    "steel"
+   ]
+  },
+  "pad": {
+   "dx": 0,
+   "dz": 5.4,
+   "r": 16.3
+  }
  }
 ]

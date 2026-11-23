@@ -24,33 +24,45 @@
     "id": "A",
     "kind": "g7oMono",
     "x": 0,
-    "z": -5,
+    "z": 0,
     "hx": 4.2,
     "hz": 2.6,
     "gh": 6,
-    "bg": 91
+    "bg": 91,
+    "conv": {
+     "steel": "concrete",
+     "mdS": "mdC"
+    }
    },
    {
     "id": "B",
     "kind": "g7oSpan",
     "x": -7.4,
-    "z": -5,
+    "z": 0,
     "side": -1,
     "len": 8,
     "y": 6,
     "hz": 2,
-    "bg": 92
+    "bg": 92,
+    "conv": {
+     "steel": "concrete",
+     "mdS": "mdC"
+    }
    },
    {
     "id": "C",
     "kind": "g7oSpan",
     "x": 7.4,
-    "z": -5,
+    "z": 0,
     "side": 1,
     "len": 8,
     "y": 6,
     "hz": 2,
-    "bg": 93
+    "bg": 93,
+    "conv": {
+     "steel": "concrete",
+     "mdS": "mdC"
+    }
    }
   ],
   "charges": {
@@ -115,6 +127,22 @@
     ]
    ]
   },
-  "tntStart": 7
+  "tntStart": 7,
+  "batch": 2,
+  "launch": {
+   "el": [
+    "concrete"
+   ],
+   "slot": 10,
+   "before": [
+    "concrete",
+    "steel"
+   ]
+  },
+  "pad": {
+   "dx": 0,
+   "dz": 5,
+   "r": 12.2
+  }
  }
 ]

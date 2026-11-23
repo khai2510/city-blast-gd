@@ -4,28 +4,33 @@
 // the bathing huts on the beach in front of it on the axis (the landing: they go down like a row of books), a brick villa each
 // side (same size, same gap, fronts in line). Two pile caps side by side and the whole pier head pitches forward onto the huts.
 import { writeFileSync } from 'node:fs';
+import { centre } from '../pad-centre.mjs';
+// batch 2 (23/11, D-blast-LAUNCH / D-blast-L50: steel launches at 40, levels 1-39 have only wood / brick / concrete / blue / glass /
+// barrels / steps): NOSTEEL=1 (default) builds the steel members in grey concrete; NOSTEEL=0 = the 22/11 steel build.
 const E = (k, d) => process.env[k] != null ? +process.env[k] : d;
 const TZ = E('TZ', -7), CX = E('CX', 9.8), SZ = E('SZ', -1.2);
 const T = (sel, f, i) => ['tnt', sel, f || 0, i || 0];
 const lvl = {
-  name: 'Pier Pavilion', bp: 'O10', slot: 10, replaces: 'o14', tier: process.env.TIER || 'N', f: 12, kind: 'scene', hero: 'A', heroId: 'G7-O10', teaches: 'steel',
+  name: 'Pier Pavilion', bp: 'O10', slot: 10, replaces: 'o14', tier: process.env.TIER || 'N', f: 12, kind: 'scene', hero: 'A', heroId: 'G7-O10', teaches: E('NOSTEEL', 1) ? 'concrete' : 'steel',
   target: 0.85, yaw: 0, d: 1,
   base: { A: { preset: 'stiff-tip', shove: E('SHOVE', 2.5) }, '*': 'weak' },
   sf: [], pattern: 'materials ladder: concrete pile caps under steel legs under a brick and timber pavilion; two caps side by side pitch it onto the hut row',
   parts: [
-    { id: 'A', kind: 'g7oPav', x: 0, z: TZ, hx: E('HX', 3.4), hz: E('HZ', 3.0), ph: E('PH', 3.0), lh: E('LH', 2.2) },
+    { id: 'A', kind: 'g7oPav', noSteel: E('NOSTEEL', 1), x: 0, z: TZ, hx: E('HX', 3.4), hz: E('HZ', 3.0), ph: E('PH', 3.0), lh: E('LH', 2.2) },
     { id: 'S', kind: 'g7oHuts', x: 0, z: SZ, n: E('NH', 5), w: 1.8, hz: 1.4, h: 2.4 },
     { id: 'B', kind: 'g7oCott', x: -CX, z: TZ + 0.6, hx: 3.2, hz: 2.8, side: -1 },
     { id: 'C', kind: 'g7oCott', x: CX, z: TZ + 0.6, hx: 3.2, hz: 2.8, side: 1 }
   ],
   charges: { tnt: 40 },
   hint: 'A:z+', tip: '', dud: 'Not yet. Two legs side by side!',
-  ftip: 'Hit what holds the steel. Two side by side.',
+  ftip: E('NOSTEEL', 1) ? 'Hit what holds it up. Two side by side.' : 'Hit what holds the steel. Two side by side.',
   lesson: { check: [[]] }
 };
 lvl.sol = [T('A:z+', 0, 0), T('A:z+', 0, 1), T('B:z+', 0, 0), T('C:z+', 0, 0)];
 lvl.bot = { hints: [['A', 'A:z+', 1], ['A', 'A:z+', 1], ['A', 'B:z+', 1], ['A', 'C:z+', 1]] };
 lvl.hero = lvl.parts.map(p => p.id).join(',');   // the opening frames every building (main/frame.js heroIds), not only the main one
 lvl.tntStart = E('TNT', 14);
+if (E('NOSTEEL', 1)) { lvl.batch = 2; lvl.launch = { el: ['wood', 'brick', 'concrete'], slot: 8, before: ['wood', 'brick', 'concrete', 'steel'] }; }
+if (!E('NOPAD', 0)) centre(lvl);   // D-blast-PAD (Khai 23/11): the scene centred on the sand pad (a rigid shift)
 writeFileSync(new URL('./level.json', import.meta.url), JSON.stringify([lvl], null, 1));
 console.log('ok O10', 'pavilion z', TZ, 'villas ±' + CX, 'huts z', SZ);

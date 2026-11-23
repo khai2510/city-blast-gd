@@ -28,7 +28,11 @@
     "z": 0,
     "hx": 6.2,
     "nx": 5,
-    "rh": 8.4
+    "rh": 8.4,
+    "conv": {
+     "steel": "concrete",
+     "mdS": "mdC"
+    }
    },
    {
     "id": "B",
@@ -39,7 +43,11 @@
     "ph": 2,
     "lh": 5,
     "ns": 3,
-    "side": -1
+    "side": -1,
+    "conv": {
+     "steel": "concrete",
+     "mdS": "mdC"
+    }
    },
    {
     "id": "C",
@@ -50,7 +58,11 @@
     "ph": 2,
     "lh": 5,
     "ns": 3,
-    "side": 1
+    "side": 1,
+    "conv": {
+     "steel": "concrete",
+     "mdS": "mdC"
+    }
    }
   ],
   "charges": {
@@ -59,7 +71,7 @@
   "hint": "B:x+",
   "tip": "",
   "dud": "Not yet. Two legs side by side!",
-  "ftip": "Tall steel falls where its feet go. Aim inward.",
+  "ftip": "Tall towers fall where their feet go. Aim inward.",
   "lesson": {
    "check": [
     [
@@ -151,6 +163,22 @@
     ]
    ]
   },
-  "tntStart": 11
+  "tntStart": 11,
+  "batch": 2,
+  "launch": {
+   "el": [
+    "concrete"
+   ],
+   "slot": 17,
+   "before": [
+    "concrete",
+    "steel"
+   ]
+  },
+  "pad": {
+   "dx": 0,
+   "dz": 0,
+   "r": 14.6
+  }
  }
 ]

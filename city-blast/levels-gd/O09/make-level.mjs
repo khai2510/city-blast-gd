@@ -4,6 +4,7 @@
 // its front (same size, same gap). Each tower stands on four concrete pedestals: two on its inner side gone and it falls
 // across the stand's roof (the chain, twice); tipped outward or forward it lands on the empty lot.
 import { writeFileSync } from 'node:fs';
+import { centre } from '../pad-centre.mjs';
 const E = (k, d) => process.env[k] != null ? +process.env[k] : d;
 const CX = E('CX', 9.6), FZ = E('FZ', -2.4);
 const T = (sel, f, i) => ['tnt', sel, f || 0, i || 0];
@@ -27,5 +28,13 @@ lvl.sol = [T('B:x+', 0, 0), T('B:x+', 0, 1), T('C:x-', 0, 0), T('C:x-', 0, 1), T
 lvl.bot = { hints: [['A', 'B:x+', 1], ['A', 'B:x+', 1], ['A', 'C:x-', 1], ['A', 'C:x-', 1], ['A', 'A:z+', 1]] };
 lvl.hero = lvl.parts.map(p => p.id).join(',');   // the opening frames every building (main/frame.js heroIds), not only the main one
 lvl.tntStart = E('TNT', 11);
+// batch 2 (23/11, SLOTS-50 slot 17, D-blast-L50): CONV=1 (default) = members launched later than slot 17 become earlier ones
+// (P.conv in pipeline7/engine.js re-keys and re-tints them). CONV=0 = the 22/11 build.
+if (E('CONV', 1)) {
+  lvl.parts.forEach(p => { p.conv = { steel: 'concrete', mdS: 'mdC' }; });
+  lvl.ftip = 'Tall towers fall where their feet go. Aim inward.';
+  lvl.batch = 2; lvl.launch = { el: ['concrete'], slot: 17, before: ['concrete', 'steel'] };
+}
+if (!E('NOPAD', 0)) centre(lvl);   // D-blast-PAD (Khai 23/11): the scene centred on the sand pad (a rigid shift)
 writeFileSync(new URL('./level.json', import.meta.url), JSON.stringify([lvl], null, 1));
 console.log('ok O09', 'towers ±' + CX);

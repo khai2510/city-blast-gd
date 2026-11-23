@@ -1,8 +1,8 @@
 {
- "when": "2026-11-22T21:04:29.786Z",
+ "when": "2026-11-23T16:17:22.808Z",
  "bp": "O02",
  "name": "Hop Kiln",
- "tnt": 6,
+ "tnt": 10,
  "bar": "T",
  "metrics": {
   "members": 94,
@@ -25,7 +25,7 @@
    },
    "core": "no",
    "hardLayers": 0,
-   "depthRows": 3,
+   "depthRows": 4,
    "frontHard": 0,
    "backHard": 0,
    "floors": 3
@@ -39,10 +39,11 @@
   ]
  },
  "sol": {
-  "pct": 84,
-  "win": false,
-  "res": "plan",
+  "pct": 96,
+  "win": true,
+  "res": "WIN",
   "placed": [
+   "ok",
    "ok",
    "ok",
    "ok",
@@ -52,112 +53,41 @@
   "keep": 0
  },
  "oneBomb": {
-  "pct": 48,
-  "collapse": 54,
+  "pct": 46,
+  "collapse": 50,
   "at": "bk@A:f0",
   "tried": 20
  },
  "lazy": {
-  "pct": 46,
-  "collapse": 52
+  "pct": 47,
+  "collapse": 54
  },
  "fair": [
   {
-   "win": false,
-   "res": "LOSE pct",
-   "pct": 52,
-   "used": 6,
+   "win": true,
+   "res": "WIN",
+   "pct": 100,
+   "used": 10,
    "left": 0,
    "waves": 1,
-   "firstWave": 52,
+   "firstWave": 100,
    "keep": 0,
-   "estSec": 15,
-   "log": "bld6=52"
-  },
-  {
-   "win": false,
-   "res": "LOSE pct",
-   "pct": 52,
-   "used": 6,
-   "left": 0,
-   "waves": 1,
-   "firstWave": 52,
-   "keep": 0,
-   "estSec": 15,
-   "log": "bld6=52"
-  },
-  {
-   "win": false,
-   "res": "LOSE pct",
-   "pct": 52,
-   "used": 6,
-   "left": 0,
-   "waves": 1,
-   "firstWave": 52,
-   "keep": 0,
-   "estSec": 15,
-   "log": "bld6=52"
+   "estSec": 19,
+   "log": "bld10=100"
   }
  ],
- "allFoot": {
-  "pct": 85,
-  "used": 6,
-  "collapse": 98,
-  "keep": 0
+ "oneWave": {
+  "pct": 0
  },
  "footOnly": {
-  "pct": 85,
-  "waves": 1,
-  "left": 0,
-  "keep": 0
+  "pct": 0
  },
- "oneWave": {
-  "pct": 61,
-  "used": 6,
-  "reach": 82,
-  "collapse": 77
+ "allFoot": {
+  "pct": 0
  },
- "curve": [
-  {
-   "n": 1,
-   "pct": 48,
-   "collapse": 49
-  },
-  {
-   "n": 2,
-   "pct": 53,
-   "collapse": 56
-  },
-  {
-   "n": 3,
-   "pct": 49,
-   "collapse": 56
-  },
-  {
-   "n": 4,
-   "pct": 51,
-   "collapse": 56
-  },
-  {
-   "n": 6,
-   "pct": 48,
-   "collapse": 56
-  },
-  {
-   "n": 8,
-   "pct": 53,
-   "collapse": 61
-  },
-  {
-   "n": 12,
-   "pct": 53,
-   "collapse": 61
-  }
- ],
+ "curve": [],
  "verdict": "MISS",
  "issues": [
-  "expert plan plan 84%",
-  "fair 0/3",
   "spare 0"
  ]
 }

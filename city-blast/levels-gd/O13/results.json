@@ -1,33 +1,33 @@
 {
- "when": "2026-11-22T19:01:57.112Z",
+ "when": "2026-11-23T16:17:32.793Z",
  "bp": "O13",
  "name": "Monorail Station",
  "tnt": 7,
  "bar": "N",
  "metrics": {
   "members": 24,
-  "hard": 6,
-  "soft": 18,
-  "hardPct": 25,
+  "hard": 0,
+  "soft": 24,
+  "hardPct": 0,
   "main": {
    "members": 16,
-   "hard": 6,
-   "soft": 10,
-   "hardPct": 38,
+   "hard": 0,
+   "soft": 16,
+   "hardPct": 0,
    "pos": {
-    "top": 6,
+    "top": 0,
     "mid": 0,
     "bottom": 0,
-    "edge": 6,
+    "edge": 0,
     "core": 0,
-    "front": 3,
-    "back": 3
+    "front": 0,
+    "back": 0
    },
    "core": "no",
-   "hardLayers": 1,
+   "hardLayers": 0,
    "depthRows": 4,
-   "frontHard": 3,
-   "backHard": 3,
+   "frontHard": 0,
+   "backHard": 0,
    "floors": 2
   },
   "stacks": 3,
@@ -38,7 +38,7 @@
   ]
  },
  "sol": {
-  "pct": 98,
+  "pct": 100,
   "win": true,
   "res": "WIN",
   "placed": [
@@ -51,28 +51,16 @@
   "keep": 0
  },
  "oneBomb": {
-  "pct": 13,
-  "collapse": 18,
-  "at": "steel@A:f1",
+  "pct": 32,
+  "collapse": 39,
+  "at": "concrete@A:f1",
   "tried": 10
  },
  "lazy": {
-  "pct": 60,
-  "collapse": 88
+  "pct": 71,
+  "collapse": 94
  },
  "fair": [
-  {
-   "win": true,
-   "res": "WIN",
-   "pct": 95,
-   "used": 5,
-   "left": 2,
-   "waves": 1,
-   "firstWave": 95,
-   "keep": 0,
-   "estSec": 12,
-   "log": "bld5=95"
-  },
   {
    "win": true,
    "res": "WIN",
@@ -82,83 +70,20 @@
    "waves": 1,
    "firstWave": 98,
    "keep": 0,
-   "estSec": 14,
-   "log": "bld5=98"
-  },
-  {
-   "win": true,
-   "res": "WIN",
-   "pct": 97,
-   "used": 5,
-   "left": 2,
-   "waves": 1,
-   "firstWave": 97,
-   "keep": 0,
    "estSec": 13,
-   "log": "bld5=97"
+   "log": "bld5=98"
   }
  ],
- "allFoot": {
-  "pct": 91,
-  "used": 7,
-  "collapse": 100,
-  "keep": 0
+ "oneWave": {
+  "pct": 0
  },
  "footOnly": {
-  "pct": 92,
-  "waves": 1,
-  "left": 1,
-  "keep": 0
+  "pct": 0
  },
- "oneWave": {
-  "pct": 91,
-  "used": 7,
-  "reach": 16,
-  "collapse": 100
+ "allFoot": {
+  "pct": 0
  },
- "curve": [
-  {
-   "n": 1,
-   "pct": 4,
-   "collapse": 7
-  },
-  {
-   "n": 2,
-   "pct": 46,
-   "collapse": 70
-  },
-  {
-   "n": 3,
-   "pct": 47,
-   "collapse": 70
-  },
-  {
-   "n": 4,
-   "pct": 43,
-   "collapse": 70
-  },
-  {
-   "n": 6,
-   "pct": 52,
-   "collapse": 74
-  },
-  {
-   "n": 8,
-   "pct": 52,
-   "collapse": 74
-  },
-  {
-   "n": 12,
-   "pct": 52,
-   "collapse": 74
-  }
- ],
- "jump": 42,
- "verdict": "MISS",
- "issues": [
-  "allFoot 91%",
-  "footOnly 92%",
-  "est 12/14/13s",
-  "curve jump +42"
- ]
+ "curve": [],
+ "verdict": "PASS",
+ "issues": []
 }

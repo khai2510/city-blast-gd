@@ -8,7 +8,7 @@ import { createServer } from 'node:http';
 import { launch, open } from './cdp.mjs';
 import { buildHtml } from './build.mjs';
 const lv = JSON.parse(readFileSync(process.env.LEVEL_JSON, 'utf8')), L0 = lv[0], TNT = +(process.env.TNT || L0.tntStart), BAR = process.env.BAR || 'N';
-const SEEDS = (process.env.SEEDS || '1,2,3').split(',').map(Number);
+const QUICK = +(process.env.QUICK || 0), SEEDS = (process.env.SEEDS || (QUICK ? '1' : '1,2,3')).split(',').map(Number);   // QUICK=1 (batch 2, 23/11): sol + oneBomb + fair seed 1 only, for tuning rounds
 const html = buildHtml(lv, true);
 const srv = createServer((q, s) => { s.writeHead(200, { 'content-type': 'text/html' }); s.end(html); }).listen(8792);
 const { proc, port } = await launch(9335); const pg = await open(port, 'http://127.0.0.1:8792/');
@@ -27,9 +27,9 @@ R.metrics = await J(`JSON.stringify(P7.metrics(${idx}))`);
 R.sol = await solRun(false); if(L0.dbl) R.solDbl = await solRun(true); log('sol', JSON.stringify(R.sol), JSON.stringify(R.solDbl || ''));
 R.oneBomb = await J(`JSON.stringify(P7.oneBomb(${idx}, 18))`); R.lazy = await J(`JSON.stringify(P7.lazy(${idx}))`); log('oneBomb', JSON.stringify(R.oneBomb), 'lazy', R.lazy.pct);
 R.fair = []; for(const s of SEEDS) R.fair.push(await J(`P7.fair(${idx}, ${TNT}, ${s}).then(JSON.stringify)`)); log('fair', R.fair.map(f => f.res + ' ' + f.left + 'left ' + f.waves + 'w ' + f.estSec + 's keep' + f.keep).join(' | '));
-R.allFoot = await J(`JSON.stringify(P7.allFoot(${idx}, ${TNT}))`); R.footOnly = await J(`JSON.stringify(P7.footOnly(${idx}, ${TNT}))`); R.oneWave = await J(`JSON.stringify(P7.oneWave(${idx}, ${TNT}, false))`);
+if(!QUICK){ R.allFoot = await J(`JSON.stringify(P7.allFoot(${idx}, ${TNT}))`); R.footOnly = await J(`JSON.stringify(P7.footOnly(${idx}, ${TNT}))`); R.oneWave = await J(`JSON.stringify(P7.oneWave(${idx}, ${TNT}, false))`);
 log('allFoot', R.allFoot.pct, 'footOnly', R.footOnly.pct, 'oneWave', R.oneWave.pct);
-R.curve = await J(`JSON.stringify(P7.curve(${idx}))`); log('curve', R.curve.map(c => c.n + ':' + c.pct).join(' '));
+R.curve = await J(`JSON.stringify(P7.curve(${idx}))`); log('curve', R.curve.map(c => c.n + ':' + c.pct).join(' ')); } else { R.allFoot = R.footOnly = R.oneWave = { pct: 0 }; R.curve = []; }
 if(L0.faces){
   // a fall through two neighbouring ground members of A on a face (selectMembers 'A:<face>' floor 0, the middle pair), one blast, then clean-up
   const faceRun = (face) => J(`(()=>{ const T=__blast.test, L=__blast.lv7.L()[${idx}], k=L.charges.tnt; L.charges={tnt:${TNT}}; T.play(${idx},1); L.charges={tnt:k}; T.run(6);
@@ -45,9 +45,9 @@ if(L0.faces){
 const v = [], fw = R.fair.filter(f => f.win).length, spare = Math.min(...R.fair.map(f => f.left)), est = R.fair.map(f => f.estSec);
 if(R.oneBomb.pct >= 70) v.push('oneBomb ' + R.oneBomb.pct + '%');
 if(!(R.sol.win || (R.solDbl && R.solDbl.win))) v.push('expert plan ' + R.sol.res + ' ' + R.sol.pct + '%');
-if(!L0.faces){ if(fw < 3) v.push('fair ' + fw + '/3'); if(spare < (BAR === 'T' ? 1 : 2)) v.push('spare ' + spare); if(R.fair.some(f => f.keep > 0.05)) v.push('fair hits the blue'); }
+if(!L0.faces){ if(fw < SEEDS.length) v.push('fair ' + fw + '/' + SEEDS.length); if(spare < (BAR === 'T' ? 1 : 2)) v.push('spare ' + spare); if(R.fair.some(f => f.keep > 0.05)) v.push('fair hits the blue'); }
 else { R.faces.forEach(f => { if(f.right && (!f.win || f.keep > 5)) v.push('right face ' + f.face + ' ' + f.res + ' ' + f.pct + '%'); if(!f.right && f.win) v.push('wrong face ' + f.face + ' wins'); }); }
-if(BAR !== 'T'){ if(R.allFoot.pct >= 80 && !(R.allFoot.keep > 5)) v.push('allFoot ' + R.allFoot.pct + '%'); if(R.footOnly.pct >= 80 && !(R.footOnly.keep > 5)) v.push('footOnly ' + R.footOnly.pct + '%');
+if(BAR !== 'T' && process.env.FOOT !== '0'){ if(R.allFoot.pct >= 80 && !(R.allFoot.keep > 5)) v.push('allFoot ' + R.allFoot.pct + '%'); if(R.footOnly.pct >= 80 && !(R.footOnly.keep > 5)) v.push('footOnly ' + R.footOnly.pct + '%');
   if(!L0.faces && est.some(e => e < 20 || e > 75)) v.push('est ' + est.join('/') + 's');
   let jump = 0; for(let k = 1; k < R.curve.length; k++) jump = Math.max(jump, R.curve[k].pct - R.curve[k - 1].pct); R.jump = jump; if(jump > 40) v.push('curve jump +' + jump); }
 R.verdict = v.length ? 'MISS' : 'PASS'; R.issues = v;

@@ -4,6 +4,7 @@
 // One axis (z): the reading hall in front, the stack tower behind it on the axis, the blue school on the left and a brick house on
 // the right (same size, same gap, fronts in line). Tipped back or sideways it misses the hall (or hits the blue).
 import { writeFileSync } from 'node:fs';
+import { centre } from '../pad-centre.mjs';
 const E = (k, d) => process.env[k] != null ? +process.env[k] : d;
 const TZ = E('TZ', -9), CX = E('CX', 9.8), HZ = E('HZ', -1.6);
 const T = (sel, f, i) => ['tnt', sel, f || 0, i || 0];
@@ -29,5 +30,15 @@ lvl.sol = [T('A:z+', 0, 0), T('A:z+', 0, 1), T('S:z+', 0, 0), T('C:z+', 0, 0)];
 lvl.bot = { hints: [['A', 'A:z+', 1], ['A', 'A:z+', 1], ['A', 'S:z+', 1], ['A', 'C:z+', 1]] };
 lvl.hero = 'A,S,C';
 lvl.tntStart = E('TNT', 15);
+// batch 2 (23/11, SLOTS-50 slot 31: stepped floors slide off, school safe; D-blast-L50: no dark before 60, no heavy before 50):
+// CONV=1 (default): the dark back piers become grey concrete, no heavy lantern, no hard7 scoring; a lower stack tower (NS 3) so a
+// single TNT on a first-floor wall no longer takes most of the lot (22/11: oneBomb 76 %). CONV=0 = the 22/11 build.
+if (E('CONV', 1)) {
+  lvl.parts.forEach(p => { p.conv = { rc: 'concrete', rcs: 'concrete' }; if (p.heavy) p.heavy = 0; if (p.kind === 'g7oLib') p.ns = E('NS', 3); });
+  delete lvl.hard7;
+  lvl.ftip = 'Aim it at the hall. Turn the view.';
+  lvl.batch = 2; lvl.launch = { el: ['brick', 'concrete', 'blue', 'rotate'], slot: 31, before: ['wood', 'brick', 'concrete', 'dark', 'heavy', 'blue', 'rotate'] };
+}
+if (!E('NOPAD', 0)) centre(lvl);   // D-blast-PAD (Khai 23/11): the scene centred on the sand pad (a rigid shift)
 writeFileSync(new URL('./level.json', import.meta.url), JSON.stringify([lvl], null, 1));
 console.log('ok O19');

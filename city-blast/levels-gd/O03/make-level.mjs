@@ -5,6 +5,7 @@
 // the tower falls forward across the baggage hall (the chain); each wing takes its own column. The concrete card's spotlight puts its
 // TNT on a column of the plan (sol). Fixes the old L3 "expert plan loses under the g7 engine" (SYNC 22/11): the plan is checked in main.
 import { writeFileSync } from 'node:fs';
+import { centre } from '../pad-centre.mjs';
 const E = (k, d) => process.env[k] != null ? +process.env[k] : d;
 const TZ = E('TZ', -8), CX = E('CX', 9.0), SZ = E('SZ', 2.4);
 const T = (sel, f, i) => ['tnt', sel, f || 0, i || 0];
@@ -25,9 +26,11 @@ const lvl = {
   lesson: { check: [[T('A:z+', 0, 0), T('B:z+', 0, 0), T('C:z+', 0, 0)]] }
 };
 lvl.sol = [T('A:z+', 0, 0), T('A:z+', 0, 1), T('B:z+', 0, 0), T('C:z+', 0, 0)];
+if (E('TNT', 10) >= 10) lvl.sol.push(T('S:z+', 0, 0));   // D-blast-O23 (10 TNT): the expert plan also takes the landing (4 TNT left it at 84 %)
 lvl.bot = { hints: [['A', 'A:z+', 1], ['A', 'A:z+', 1], ['A', 'B:z+', 1], ['A', 'C:z+', 1]] };
 if (!E('SIDES', 1)) { lvl.parts = lvl.parts.filter(p => p.id === 'A' || p.id === 'S'); lvl.sol = lvl.sol.filter(e => /^[AS]:/.test(e[1])); lvl.bot.hints = lvl.bot.hints.filter(h => /^[AS]:/.test(h[1])); lvl.sol.push(T('S:z+', 0, 0)); lvl.bot.hints.push(['A', 'S:z+', 1]); if (lvl.lesson.check[0].length) lvl.lesson.check = [lvl.lesson.check[0].filter(e => /^[AS]:/.test(e[1]))]; }
 lvl.hero = lvl.parts.map(p => p.id).join(',');   // the opening frames every building (main/frame.js heroIds), not only the main one
-lvl.tntStart = E('TNT', 6);
+lvl.tntStart = E('TNT', 10);   // D-blast-O23 (Khai 23/11, option B): 10 TNT on slots 2-3 (overrides D-blast-K2 here only)
+if (!E('NOPAD', 0)) centre(lvl);   // D-blast-PAD (Khai 23/11): the scene centred on the sand pad (a rigid shift)
 writeFileSync(new URL('./level.json', import.meta.url), JSON.stringify([lvl], null, 1));
 console.log('ok O03', 'tower z', TZ, 'wings ±' + CX, 'hall z', SZ);

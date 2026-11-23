@@ -13,7 +13,6 @@
   "target": 0.85,
   "yaw": 0,
   "d": 1,
-  "hard7": true,
   "base": {
    "A": {
     "preset": "stiff-tip",
@@ -27,37 +26,49 @@
    {
     "id": "A",
     "kind": "g7oLib",
-    "x": 0,
-    "z": -9,
+    "x": 0.55,
+    "z": -3.15,
     "hx": 3.4,
     "gh": 4.4,
     "sh": 3.4,
-    "ns": 4,
-    "heavy": 1
+    "ns": 3,
+    "heavy": 0,
+    "conv": {
+     "rc": "concrete",
+     "rcs": "concrete"
+    }
    },
    {
     "id": "S",
     "kind": "g7oRead",
-    "x": 0,
-    "z": -1.6,
+    "x": 0.55,
+    "z": 4.25,
     "hx": 5.4,
-    "hz": 2.6
+    "hz": 2.6,
+    "conv": {
+     "rc": "concrete",
+     "rcs": "concrete"
+    }
    },
    {
     "id": "C",
     "kind": "g7oCott",
-    "x": 9.8,
-    "z": -8.4,
+    "x": 10.35,
+    "z": -2.55,
     "hx": 3.2,
     "hz": 2.8,
-    "side": 1
+    "side": 1,
+    "conv": {
+     "rc": "concrete",
+     "rcs": "concrete"
+    }
    }
   ],
   "keeps": [
    {
     "kind": "keep6",
-    "x": -9.8,
-    "z": -8.4,
+    "x": -9.25,
+    "z": -2.55,
     "floors": 3,
     "cx": 3,
     "cz": 3,
@@ -135,6 +146,30 @@
     ]
    ]
   },
-  "tntStart": 15
+  "tntStart": 15,
+  "batch": 2,
+  "launch": {
+   "el": [
+    "brick",
+    "concrete",
+    "blue",
+    "rotate"
+   ],
+   "slot": 31,
+   "before": [
+    "wood",
+    "brick",
+    "concrete",
+    "dark",
+    "heavy",
+    "blue",
+    "rotate"
+   ]
+  },
+  "pad": {
+   "dx": 0.55,
+   "dz": 5.85,
+   "r": 17.9
+  }
  }
 ]

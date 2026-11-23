@@ -1,0 +1,173 @@
+[
+ {
+  "name": "Needle Court",
+  "bp": "O04B",
+  "slot": 0,
+  "replaces": "o4",
+  "tier": "R",
+  "f": 12,
+  "kind": "scene",
+  "hero": "A,S,C",
+  "heroId": "G7-O04B",
+  "teaches": null,
+  "target": 0.85,
+  "yaw": 0,
+  "d": 1,
+  "base": {
+   "A": {
+    "preset": "stiff-tip",
+    "shove": 2.5
+   },
+   "*": "weak"
+  },
+  "sf": [],
+  "pattern": "glass teach: glass panes break and carry nothing; two concrete legs side by side drop the needle onto the hall",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7oNeedle",
+    "x": 0.55,
+    "z": -4.15,
+    "hx": 3.4,
+    "gh": 4.2,
+    "sh": 3.2,
+    "ng": 3,
+    "nu": 2
+   },
+   {
+    "id": "S",
+    "kind": "g7oTicket",
+    "x": 0.55,
+    "z": 5.25,
+    "hx": 5,
+    "hz": 2.6,
+    "nb": 2
+   },
+   {
+    "id": "C",
+    "kind": "g7oCott",
+    "x": 11.15,
+    "z": -3.55,
+    "hx": 3.2,
+    "hz": 2.8,
+    "side": 1
+   }
+  ],
+  "charges": {
+   "tnt": 40
+  },
+  "hint": "A:z+",
+  "tip": "",
+  "dud": "Not yet. Two legs side by side!",
+  "ftip": "Glass breaks. It holds nothing up.",
+  "lesson": {
+   "check": [
+    []
+   ]
+  },
+  "keeps": [
+   {
+    "kind": "keep6",
+    "x": -10.05,
+    "z": -3.55,
+    "floors": 3,
+    "cx": 3,
+    "cz": 3,
+    "name": "the hospital",
+    "role": "hospital",
+    "fixType": "hospital"
+   }
+  ],
+  "keep": {
+   "name": "the school",
+   "sides": [],
+   "type": "school",
+   "role": "school",
+   "full": 1
+  },
+  "sol": [
+   [
+    "tnt",
+    "A:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "A:z+",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "S:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "C:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "A:z+",
+    1,
+    1
+   ]
+  ],
+  "bot": {
+   "hints": [
+    [
+     "A",
+     "A:z+",
+     1
+    ],
+    [
+     "A",
+     "A:z+",
+     1
+    ],
+    [
+     "A",
+     "S:z+",
+     1
+    ],
+    [
+     "A",
+     "C:z+",
+     1
+    ],
+    [
+     "A",
+     "A:z+",
+     1
+    ]
+   ]
+  },
+  "tntStart": 12,
+  "pad": {
+   "dx": 0.55,
+   "dz": 3.85,
+   "r": 19.1
+  },
+  "batch": 2,
+  "launch": {
+   "el": [
+    "wood",
+    "brick",
+    "concrete",
+    "glass",
+    "blue"
+   ],
+   "slot": 20,
+   "before": [
+    "wood",
+    "concrete",
+    "glass",
+    "blue"
+   ]
+  }
+ }
+]

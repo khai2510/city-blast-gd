@@ -1,0 +1,89 @@
+{
+ "when": "2026-11-23T16:18:19.596Z",
+ "bp": "O19",
+ "name": "Library",
+ "tnt": 15,
+ "bar": "N",
+ "metrics": {
+  "members": 122,
+  "hard": 0,
+  "soft": 122,
+  "hardPct": 0,
+  "main": {
+   "members": 60,
+   "hard": 0,
+   "soft": 60,
+   "hardPct": 0,
+   "pos": {
+    "top": 0,
+    "mid": 0,
+    "bottom": 0,
+    "edge": 0,
+    "core": 0,
+    "front": 0,
+    "back": 0
+   },
+   "core": "no",
+   "hardLayers": 0,
+   "depthRows": 4,
+   "frontHard": 0,
+   "backHard": 0,
+   "floors": 4
+  },
+  "stacks": 3,
+  "parts": [
+   "A",
+   "S",
+   "C"
+  ]
+ },
+ "sol": {
+  "pct": 97,
+  "win": true,
+  "res": "WIN",
+  "placed": [
+   "ok",
+   "ok",
+   "ok",
+   "ok"
+  ],
+  "waves": 1,
+  "keep": 0
+ },
+ "oneBomb": {
+  "pct": 63,
+  "collapse": 79,
+  "at": "bkw@A:f1",
+  "tried": 18
+ },
+ "lazy": {
+  "pct": 63,
+  "collapse": 80
+ },
+ "fair": [
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 87,
+   "used": 12,
+   "left": 3,
+   "waves": 2,
+   "firstWave": 67,
+   "keep": 0,
+   "estSec": 27,
+   "log": "bld9=67 bld3=87"
+  }
+ ],
+ "oneWave": {
+  "pct": 0
+ },
+ "footOnly": {
+  "pct": 0
+ },
+ "allFoot": {
+  "pct": 0
+ },
+ "curve": [],
+ "verdict": "PASS",
+ "issues": []
+}
