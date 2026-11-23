@@ -1,0 +1,202 @@
+{
+ "when": "2026-11-23T20:54:18.167Z",
+ "bp": "E02",
+ "name": "Shot Tower",
+ "slot": 5,
+ "bar": "N",
+ "steps": false,
+ "rest": {
+  "dead": 0,
+  "moved": 0,
+  "bonds": [
+   1084,
+   1084
+  ],
+  "list": [],
+  "keys": {
+   "g7bk": 65,
+   "mdB": 7,
+   "bkw": 56,
+   "g7roofL": 7,
+   "wpost": 48,
+   "mdW": 12,
+   "wwall": 48
+  },
+  "mass": {
+   "A": 598691,
+   "B": 97822,
+   "C": 97822
+  },
+  "members": 243,
+  "pad": {
+   "x": [
+    -15,
+    15
+   ],
+   "z": [
+    -4,
+    4
+   ],
+   "rmax": 15.5,
+   "at": "wpost@B"
+  }
+ },
+ "cal": [
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 94,
+   "used": 9,
+   "left": 31,
+   "waves": 1,
+   "firstWave": 94,
+   "keep": 0,
+   "estSec": 18,
+   "log": "bld9=94"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 94,
+   "used": 9,
+   "left": 31,
+   "waves": 1,
+   "firstWave": 94,
+   "keep": 0,
+   "estSec": 18,
+   "log": "bld9=94"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 95,
+   "used": 9,
+   "left": 31,
+   "waves": 1,
+   "firstWave": 95,
+   "keep": 0,
+   "estSec": 18,
+   "log": "bld9=95"
+  }
+ ],
+ "fair": [
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 95,
+   "used": 9,
+   "left": 2,
+   "waves": 1,
+   "firstWave": 95,
+   "keep": 0,
+   "estSec": 18,
+   "log": "bld9=95"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 95,
+   "used": 9,
+   "left": 2,
+   "waves": 1,
+   "firstWave": 95,
+   "keep": 0,
+   "estSec": 18,
+   "log": "bld9=95"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 94,
+   "used": 9,
+   "left": 2,
+   "waves": 1,
+   "firstWave": 94,
+   "keep": 0,
+   "estSec": 18,
+   "log": "bld9=94"
+  }
+ ],
+ "tnt": 11,
+ "sol": {
+  "pct": 90,
+  "win": true,
+  "res": "WIN",
+  "placed": 4,
+  "keep": 0
+ },
+ "oneBomb": {
+  "pct": 10,
+  "collapse": 10,
+  "at": "wpost@B:f1",
+  "tried": 18
+ },
+ "lazy": {
+  "pct": 72,
+  "collapse": 77
+ },
+ "allFoot": {
+  "pct": 85,
+  "used": 11,
+  "collapse": 91,
+  "keep": 0
+ },
+ "footOnly": {
+  "pct": 90,
+  "waves": 2,
+  "left": 0,
+  "keep": 0
+ },
+ "oneWave": {
+  "pct": 89,
+  "used": 11,
+  "reach": 221,
+  "collapse": 90
+ },
+ "curve": [
+  {
+   "n": 1,
+   "pct": 2,
+   "collapse": 2
+  },
+  {
+   "n": 2,
+   "pct": 77,
+   "collapse": 88
+  },
+  {
+   "n": 3,
+   "pct": 75,
+   "collapse": 88
+  },
+  {
+   "n": 4,
+   "pct": 79,
+   "collapse": 88
+  },
+  {
+   "n": 6,
+   "pct": 91,
+   "collapse": 100
+  },
+  {
+   "n": 8,
+   "pct": 86,
+   "collapse": 93
+  },
+  {
+   "n": 12,
+   "pct": 86,
+   "collapse": 93
+  }
+ ],
+ "jump": 75,
+ "verdict": "PASS",
+ "issues": [],
+ "reported": [
+  "est 18/18/18 s",
+  "curve jump +75",
+  "allFoot 85%",
+  "footOnly 90%"
+ ]
+}
