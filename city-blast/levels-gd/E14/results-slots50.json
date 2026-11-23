@@ -1,0 +1,206 @@
+{
+ "when": "2026-11-23T21:09:39.678Z",
+ "bp": "E14",
+ "name": "Palm House",
+ "slot": 47,
+ "bar": "N",
+ "steps": true,
+ "rest": {
+  "dead": 0,
+  "moved": 0,
+  "bonds": [
+   303,
+   303
+  ],
+  "list": [],
+  "keys": {
+   "concrete": 8,
+   "mdC": 8,
+   "steel": 8,
+   "mglass": 8,
+   "g7roofD": 1,
+   "wpost": 16,
+   "mdW": 4,
+   "wwall": 16,
+   "g7roofL": 2,
+   "tank": 3,
+   "rail": 1,
+   "awn2": 1
+  },
+  "mass": {
+   "A": 127766,
+   "B": 29539,
+   "C": 29539,
+   "null": 2075
+  },
+  "members": 76,
+  "pad": {
+   "x": [
+    -10.8,
+    10.8
+   ],
+   "z": [
+    -4.1,
+    4.2
+   ],
+   "rmax": 11,
+   "at": "wpost@B"
+  }
+ },
+ "cal": [
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 94,
+   "used": 8,
+   "left": 32,
+   "waves": 2,
+   "firstWave": 62,
+   "keep": 0,
+   "estSec": 26,
+   "log": "bld5=62 bld3=94"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 93,
+   "used": 10,
+   "left": 30,
+   "waves": 2,
+   "firstWave": 59,
+   "keep": 0,
+   "estSec": 28,
+   "log": "bld5=59 bld5=93"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 85,
+   "used": 9,
+   "left": 31,
+   "waves": 2,
+   "firstWave": 60,
+   "keep": 0,
+   "estSec": 27,
+   "log": "bld5=60 bld4=85"
+  }
+ ],
+ "fair": [
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 95,
+   "used": 10,
+   "left": 2,
+   "waves": 2,
+   "firstWave": 58,
+   "keep": 0,
+   "estSec": 28,
+   "log": "bld5=58 bld5=95"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 96,
+   "used": 10,
+   "left": 2,
+   "waves": 2,
+   "firstWave": 62,
+   "keep": 0,
+   "estSec": 28,
+   "log": "bld5=62 bld5=96"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 93,
+   "used": 10,
+   "left": 2,
+   "waves": 2,
+   "firstWave": 58,
+   "keep": 0,
+   "estSec": 28,
+   "log": "bld5=58 bld5=93"
+  }
+ ],
+ "tnt": 12,
+ "sol": {
+  "pct": 0,
+  "win": false,
+  "res": "plan",
+  "placed": 2,
+  "keep": 0
+ },
+ "oneBomb": {
+  "pct": 44,
+  "collapse": 44,
+  "at": "mglass@A:f1",
+  "tried": 18
+ },
+ "lazy": {
+  "pct": 37,
+  "collapse": 37
+ },
+ "allFoot": {
+  "pct": 92,
+  "used": 12,
+  "collapse": 98,
+  "keep": 0
+ },
+ "footOnly": {
+  "pct": 96,
+  "waves": 2,
+  "left": 2,
+  "keep": 0
+ },
+ "oneWave": {
+  "pct": 79,
+  "used": 12,
+  "reach": 48,
+  "collapse": 81
+ },
+ "curve": [
+  {
+   "n": 1,
+   "pct": 26,
+   "collapse": 25
+  },
+  {
+   "n": 2,
+   "pct": 45,
+   "collapse": 49
+  },
+  {
+   "n": 3,
+   "pct": 45,
+   "collapse": 50
+  },
+  {
+   "n": 4,
+   "pct": 58,
+   "collapse": 61
+  },
+  {
+   "n": 6,
+   "pct": 79,
+   "collapse": 85
+  },
+  {
+   "n": 8,
+   "pct": 93,
+   "collapse": 95
+  },
+  {
+   "n": 12,
+   "pct": 92,
+   "collapse": 95
+  }
+ ],
+ "jump": 21,
+ "verdict": "PASS",
+ "issues": [],
+ "reported": [
+  "allFoot 92%",
+  "footOnly 96%"
+ ]
+}
