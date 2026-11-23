@@ -19,7 +19,7 @@ steel 40 · Sky Strike 45 · heavy pieces 50 · later: dark RC 60 · drop 70 · 
   Khai:** keep the bosses on 25/50 and move the barrel and heavy launches to 26/51 (this changes D-blast-LAUNCH).
 - **Sawtooth:** a Hard every 4–5 slots (7, 11, 14, 19, 29, 34, 39, 44) plus 2 bosses. Each one is followed by a **relief that is also the launch
   slot** (8, 12, 15, 20, 25, 30, 35, 40, 45, 50). That gives 10 hard-feeling slots out of 50 (20%). No two are in a row.
-- **Converted levels are re-gated** on the bar they were built for (easy-pack / OLD-POLISH; slots 1–3 on tutorial bars, 5 TNT, K2).
+- **Converted levels are re-gated** on the bar they were built for (easy-pack / OLD-POLISH; slots 1–3 on tutorial bars, 5 TNT, K2; O02/O03 at 10 TNT by D-blast-O23).
   A conversion changes members and materials only, never the hero shape or lesson role, except where the lesson column says so.
 - Old levels that were never rebuilt (old art, rubric 2.9) are rebuilt to the easy-pack bar when they are placed (Khai: "fix all easy levels not yet fixed").
 
@@ -31,13 +31,13 @@ Status: **ready** · **as-is** (hard, launch exception) · **convert** (members/
 | # | Tier | Allowed (launched by here) | Lesson / story beat | Fills it | Conversion needed | Owner | Status |
 |---|---|---|---|---|---|---|---|
 | 1 | T teach | wood | TNT + double tap (L1 hand) | O01 Ranger Lookout (o1) | — | AG | ready |
-| 2 | T | wood | BLAST: two posts side by side (L2 hand) | O02 Hop Kiln (o2) | brick piers/cottages → timber posts (timber oast) | AG | convert (+ Khai O02 A/B/C) |
-| 3 | T | wood | the side you open is the side it falls to | O07 Pit Head (o9) | steel headframe + concrete feet + brick cottages → timber trestle and timber | AG | convert |
-| 4 | R teach | + brick | brick card: wood folds, brick shields | E04 Market Hall | heavy tiled roof `hard7t` → plain timber roof; glass clerestory → timber; drop7 off; expert wins in 1 blast; TNT 19 → re-tune | AG | convert |
+| 2 | T | wood | BLAST: two feet side by side, then BLAST (L2 hand) | O07 Pit Head (o9) | steel headframe + concrete feet + brick cottages → timber trestle and timber | AG | convert |
+| 3 | T | wood | one TNT on timber folds a whole section | E04 Market Hall | brick arcade → timber stall row; heavy tiled roof `hard7t` → plain timber roof; glass clerestory → timber; drop7 off; 1 blast; tutorial TNT | AG | convert |
+| 4 | R teach | + brick | brick card: one pier cracks, its neighbour drops it | O02 Hop Kiln (o2) | — (wired at 10 TNT, D-blast-O23) | AG | ready |
 | 5 | N | wood brick | two legs side by side tip it (tip rule) | E02 Shot Tower | RC-in-brick legs → brick; cistern `hard7v` → plain; drop7 off; 1 blast | AG | convert |
 | 6 | N | wood brick | the frame stands on brick piers | O15 Gas Works (o19) | steel guide frame → timber frame | AG | convert |
 | **7** | **H** | (exception) | first labelled Hard: blue + arch | o7 Grand Arch (brick, concrete, blue) | none: placed as-is (launch exception, D-blast-L50 hard) | AG | as-is |
-| 8 | R teach | + concrete | concrete card: grey columns, one TNT each | O03 Airfield Tower (o3) | — | AG | ready (wire after Khai O02/O03 A/B/C) |
+| 8 | R teach | + concrete | concrete card: grey columns, one TNT each | O03 Airfield Tower (o3) | — (wired at 10 TNT, D-blast-O23) | AG | ready |
 | 9 | N | wood brick concrete | aim: fall it onto the boiler house | E06 Boiler Stack | RC legs → brick; drop7 off; 1 blast | AG | convert |
 | 10 | N | same | one span leans on the next | O13 Monorail Station (o15) | steel viaduct → concrete | AG | convert |
 | **11** | **H** | (exception) | Hard: blue beside a dome | o16 Dome Hall (wood, concrete, blue) | none: placed as-is | AG | as-is |
@@ -83,8 +83,8 @@ Status: **ready** · **as-is** (hard, launch exception) · **convert** (members/
 
 \* There is no heavy-piece card yet. It is a proposal under D-blast-NONEW (designer 23/11, proposal 2), so Khai has to approve it before slot 50 is built as a teach level.
 
-**Totals:** ready 5 (1, 8, 15, 16, 40) · as-is 10 (hard/boss) · convert 17 · rebuild 6 · rebuild + convert 7 · NEW 5.
-**Conversions: 24 levels.** The most common are steel → concrete/timber (10), heavy → plain (8), "steps" → one blast (8), dark/RC → concrete or brick (7) and drop7 off (7).
+**Totals:** ready 6 (1, 4, 8, 15, 16, 40) · as-is 10 (hard/boss) · convert 16 · rebuild 6 · rebuild + convert 7 · NEW 5.
+**Conversions: 23 levels.** The most common are steel → concrete/timber (10), heavy → plain (8), "steps" → one blast (8), dark/RC → concrete or brick (7) and drop7 off (7).
 Hard order: H 7, 11, 14, 19, 29 · SH 34, 39, 44 · B 24, 49. H1–H5 are unchanged. Only their slots move (from ORDER1123 19/31/45/48/51 to 19/14/34/39/44).
 
 ## 2. Hard levels placed as-is (launch exception, D-blast-L50 hard)
@@ -157,7 +157,7 @@ The heroes avoid every existing landmark type (OLD-POLISH list + E01–E10).
 
 ## 6. What follows from this plan (not done here)
 
-1. Lead/Khai: confirm boss 24/49 (or the alternative in §0), the rotate treatment, the heavy card (slot 50) and O02/O03 A/B/C.
-2. Agents-Game: 24 conversions + 6 rebuilds, early slots first (1–23, then 25–33). Each is re-gated on its bar, then re-checked with `check-order.js` under the new launch table.
+1. Lead/Khai: confirm boss 24/49 (or the alternative in §0), the rotate treatment, and the heavy card (slot 50). O02/O03 are settled by D-blast-O23 (brick teach 4, concrete teach 8, 10 TNT).
+2. Agents-Game: 23 conversions + 6 rebuilds, early slots first (1–23, then 25–33). Each is re-gated on its bar, then re-checked with `check-order.js` under the new launch table.
 3. 5 NEW levels (37, 38, 46, 47, 48).
 4. Then a new `PLACE` + `INTRO_AT` (cards at 1/2/4/8/12/15/16/20/25/30/35/40/45/50) and a save migration as before. No change to H1–H5 data.
