@@ -1,0 +1,93 @@
+[
+ {
+  "name": "Ice Rink",
+  "bp": "E11",
+  "tier": "N",
+  "slot": 37,
+  "f": 7,
+  "kind": "scene",
+  "hero": "A",
+  "heroId": "G7-E11",
+  "teaches": "shield-drums",
+  "target": 0.85,
+  "yaw": 0.1,
+  "d": 1,
+  "fillMax": 0.73,
+  "hard7": true,
+  "hit7": {
+   "keys": [],
+   "drums": true
+  },
+  "sf": [],
+  "pattern": "shield then drums: a brick colonnade hides a row of red drums and the rink hall's front columns; open the colonnade, then the drums fold the bays forward",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7xRink",
+    "x": 0,
+    "z": -1.8,
+    "n": 3,
+    "bw": 2.9,
+    "hz": 4.6,
+    "ph": 5,
+    "ch": 2.4,
+    "hold": 2,
+    "upSep": 1,
+    "bg0": 151
+   },
+   {
+    "id": "B",
+    "kind": "g7arcade",
+    "x": 0,
+    "z": 5.95,
+    "n": 6,
+    "len": 17.599999999999998,
+    "d": 1.1,
+    "pw": 1.2,
+    "h1": 5.2,
+    "h2": 3.6,
+    "bg": 155
+   }
+  ],
+  "tanks": [
+   [
+    -7.2,
+    3.8
+   ],
+   [
+    0,
+    3.8
+   ],
+   [
+    7.2,
+    3.8
+   ]
+  ],
+  "charges": {
+   "tnt": 40
+  },
+  "tip": "",
+  "ftip": "Open the shield first. Then let the drums work.",
+  "sol": [
+   [
+    "tnt",
+    "B:z+",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "B:z+",
+    0,
+    3
+   ],
+   [
+    "tnt",
+    "B:z+",
+    0,
+    5
+   ]
+  ],
+  "tntStart": 9
+ }
+]

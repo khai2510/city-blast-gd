@@ -1,0 +1,200 @@
+{
+ "when": "2026-11-23T23:44:51.688Z",
+ "bp": "E11",
+ "name": "Ice Rink",
+ "slot": 37,
+ "bar": "N",
+ "steps": true,
+ "rest": {
+  "dead": 0,
+  "moved": 0,
+  "bonds": [
+   394,
+   394
+  ],
+  "list": [],
+  "keys": {
+   "concrete": 48,
+   "mdC": 18,
+   "cpan": 14,
+   "mglass": 12,
+   "g7roofL": 3,
+   "bk": 20,
+   "bkw": 6,
+   "tank": 3,
+   "rail": 1,
+   "awn2": 1
+  },
+  "mass": {
+   "A": 388516,
+   "B": 172889,
+   "null": 2075
+  },
+  "members": 126,
+  "pad": {
+   "x": [
+    -8.8,
+    8.8
+   ],
+   "z": [
+    -6.4,
+    6.5
+   ],
+   "rmax": 10.9,
+   "at": "bk@B"
+  }
+ },
+ "cal": [
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 97,
+   "used": 7,
+   "left": 33,
+   "waves": 2,
+   "firstWave": 67,
+   "keep": 0,
+   "estSec": 24,
+   "log": "bld4=67 bld3=97"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 97,
+   "used": 7,
+   "left": 33,
+   "waves": 2,
+   "firstWave": 69,
+   "keep": 0,
+   "estSec": 23,
+   "log": "bld4=69 bld3=97"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 97,
+   "used": 7,
+   "left": 33,
+   "waves": 2,
+   "firstWave": 69,
+   "keep": 0,
+   "estSec": 23,
+   "log": "bld4=69 bld3=97"
+  }
+ ],
+ "fair": [
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 86,
+   "used": 7,
+   "left": 2,
+   "waves": 2,
+   "firstWave": 65,
+   "keep": 0,
+   "estSec": 23,
+   "log": "bld4=65 bld3=86"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 98,
+   "used": 7,
+   "left": 2,
+   "waves": 2,
+   "firstWave": 69,
+   "keep": 0,
+   "estSec": 23,
+   "log": "bld4=69 bld3=98"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 86,
+   "used": 7,
+   "left": 2,
+   "waves": 2,
+   "firstWave": 65,
+   "keep": 0,
+   "estSec": 23,
+   "log": "bld4=65 bld3=86"
+  }
+ ],
+ "tnt": 9,
+ "sol": {
+  "pct": 30,
+  "win": false,
+  "res": "plan",
+  "placed": 3,
+  "keep": 0
+ },
+ "oneBomb": {
+  "pct": 23,
+  "collapse": 30,
+  "at": "concrete@A:f0",
+  "tried": 16
+ },
+ "lazy": {
+  "pct": 92,
+  "collapse": 100
+ },
+ "allFoot": {
+  "pct": 41,
+  "used": 9,
+  "collapse": 46,
+  "keep": 0
+ },
+ "footOnly": {
+  "pct": 68,
+  "waves": 2,
+  "left": 0,
+  "keep": 0
+ },
+ "oneWave": {
+  "pct": 81,
+  "used": 9,
+  "reach": 88,
+  "collapse": 83
+ },
+ "curve": [
+  {
+   "n": 1,
+   "pct": 4,
+   "collapse": 4
+  },
+  {
+   "n": 2,
+   "pct": 25,
+   "collapse": 27
+  },
+  {
+   "n": 3,
+   "pct": 25,
+   "collapse": 27
+  },
+  {
+   "n": 4,
+   "pct": 25,
+   "collapse": 27
+  },
+  {
+   "n": 6,
+   "pct": 29,
+   "collapse": 31
+  },
+  {
+   "n": 8,
+   "pct": 60,
+   "collapse": 65
+  },
+  {
+   "n": 12,
+   "pct": 56,
+   "collapse": 62
+  }
+ ],
+ "jump": 31,
+ "verdict": "PASS",
+ "issues": [],
+ "reported": []
+}
