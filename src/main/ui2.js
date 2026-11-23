@@ -14,9 +14,13 @@
 //     No text under 16 px in the screens this pass touches (pre-level tile labels, protected tags, the win "+N" is 32 px).
 //  C  Colour slips: no green "CLEARED" fill on the meter tag / notch (gold), boss = orange / Hard = purple on the meter cap,
 //     the pre-level card and the BLAST row; prices never red.
-//  W  The win gets the VFX budget (Smash Fest spends it on the win, not the hit): the existing feel Q7 confetti is strengthened:
-//     the same pieces (#feelLay .cf, the same three colours) also rain over the whole width for 1.8 s, bigger, when the meter
-//     passes (with the CLEARED! stamp) or at the latest on the win result; the existing "+N" is 32 px. Reduce motion: none (as Q7).
+//  W  The win gets the VFX budget (Smash Fest spends it on the win, not the hit): the existing feel Q7 confetti is strengthened
+//     when the meter passes (with the CLEARED! stamp) or at the latest on the win result; the existing "+N" is 32 px.
+//     FW-1123 (Owner 23/11 "more colours, from 3 corners, one after another"): the full-width rain became 6 firework bursts
+//     fired in sequence, 280 ms apart (bottom-left, bottom-right, top-centre, twice): a rocket rises from each bottom corner and
+//     pops, the top-centre shell pops in the open sky above the card; pieces fly out and fall, all gone by ~2.5 s. 9 bright
+//     hues (no sky blue, no purple / gold royal scheme), 3 per burst; the Q7 stamp pieces take the same palette. Same .cf
+//     pieces in the same #feelLay layer, WAAPI only, 154 pieces. No new sound (none fits a pop). Reduce motion: none (as Q7).
 //  S  Upgrades gets its own backdrop (the title no longer floats over the building). The Shop tab stays "coming soon".
 //  P  Pre-level popup: the Home Play under it is hidden (one primary button per screen), Play 72 px tall, tile labels 16 px.
 //  E  Settings: "Restart from Level 1" is a quiet text link (no red row among the toggles).
@@ -31,6 +35,8 @@ var H = document.documentElement, BODY = document.body;
 H.classList.add("ui2");
 if(QS.get("dev") === "0") H.classList.add("dev0");            // the LV picker button: on by default again (Owner 21/11 "cho t phần chọn được level"; hidden since 14/11 = ?dev=1 only); ?dev=0 hides it
 var U = "var(--us)";
+// W the win firework palette (FW-1123): 9 bright hues that read on the blue sky and the cream card; no sky blue, no purple / gold
+var FWC = ["#FF3B47", "#FF8A1F", "#FFEA3A", "#A6F03A", "#16D27A", "#22E3D3", "#FF4FB8", "#FF7A59", "#FFFFFF"];
 var css = [
   // ---- H1 top row: pause | [cap + meter]
   "html.ui2 body #top #meter{left:calc(var(--ux) + 318 * " + U + ");top:calc(var(--ut) + 43 * " + U + ");width:calc(400 * " + U + ");height:calc(50 * " + U + ");border-radius:calc(25 * " + U + ")}",
@@ -72,7 +78,12 @@ var css = [
   // ---- W win: "+N" 32 px by the pill; the strengthened Q7 confetti pieces
   "html.ui2 body #uicPlus{font-size:32px!important}",
   "html.ui2 body #top #coinPill{top:calc(var(--ut) + 122 * " + U + ")!important}",   // the meter row is taken: the coin pill (blast / win only) hangs under it
-  "html.ui2 #feelLay .cf.u2{width:12px;height:18px}",
+  "html.ui2 #feelLay .cf.u2{width:11px;height:16px;box-shadow:inset 0 0 0 1px rgba(17,32,92,.25)}",
+  "html.ui2 #feelLay .cf.u2.d{width:11px;height:11px;border-radius:50%}",                       // round sparks
+  "html.ui2 #feelLay .cf.u2.rk{width:6px;height:22px;margin:-11px 0 0 -3px;border-radius:3px;box-shadow:0 0 6px 2px rgba(255,255,255,.75)}",   // the rising rocket
+  "html.ui2 #feelLay .cf.u2.fl{width:64px;height:64px;margin:-32px 0 0 -32px;border-radius:50%;box-shadow:none}",                 // the pop flash
+  // the Q7 stamp pieces (v13-feel, 3 colours inline) take the firework palette
+].concat(FWC.map(function(c, i){ return "html.ui2 #feelLay .cf:not(.u2):nth-child(" + FWC.length + "n+" + (i + 1) + "){background:" + c + "!important}"; })).concat([
   // ---- S Upgrades backdrop
   "html.ui2 body #shop{background:linear-gradient(180deg,#5AA8F8 0%,#2E74E6 55%,#1C4DB6 100%)!important}",
   // ---- L lose card: the PASS tag (small text) becomes the same notch as in play; the tip loses its third surface colour
@@ -132,7 +143,7 @@ var css = [
   "html.ui2 body.ulMenu #toast{bottom:calc(var(--sa-b) + var(--ul-tabh) + 18px)}",   // "coming soon" toasts sit between the raised Play and the tab bar
   "@keyframes u2Taxi{0%{transform:translate(-195px,704px) rotate(36deg)}40%{transform:translate(805px,1634px) rotate(36deg)}100%{transform:translate(805px,1634px) rotate(36deg)}}",
   // reduce motion: no extra confetti (as Q7)
-].join("\n");
+]).join("\n");
 var st = document.createElement("style"); st.id = "ui2Css"; st.textContent = css; document.head.appendChild(st);
 
 // ---- G tab bar: the flat tab icons -> glossy 3D raster icons (Owner 14/11 v49 feedback "not 3D enough"; Figma "Home elements (14/11)",
@@ -157,24 +168,58 @@ var place2 = placeCharge; placeCharge = function(){ var r = place2.apply(this, a
 var pick = document.getElementById("bPick");
 if(pick) new MutationObserver(function(){ BODY.classList.toggle("u2Pick", !pick.classList.contains("hidden")); }).observe(pick, { attributes:true, attributeFilter:["class"] });
 
-// ---- W the existing Q7 confetti, strengthened: the same .cf pieces in the same #feelLay layer and colours, a full-width rain
-var FX = { fired:false, n:0, pieces:0 };
-var Q7C = ["#FFB400", "#FF6A1A", "#FFF4DC"];
+// ---- W the existing Q7 confetti, strengthened (FW-1123): 6 firework bursts in sequence from 3 points, the .cf pieces in #feelLay.
+// Every piece is made at once and scheduled with its WAAPI delay (no timers to cancel; the frames are reproducible for checks).
+//   order  bottom-left, bottom-right, top-centre, bottom-left, bottom-right, top-centre; one every FW.gap ms
+//   corner rocket: rises FW.rise ms from the bottom corner to its pop point (left / right third, 31-36 % down), then pops
+//   top-centre: a shell that pops FW.fuse ms after its turn high in the open sky (20 % down: under the top HUD row, above the card)
+//   pop: a white flash + FW.per pieces (3 hues per burst, 40 % round sparks) fly out, slow, fall and fade in FW.life ms
+// Top-centre, not bottom-centre: a third rocket from the bottom middle would climb through the win card and its buttons;
+// the sky above the card is the one empty area, and three points (two low, one high) frame the card as a triangle.
+var FX = { fired:false, n:0, pieces:0, bursts:[] };
+var FW = { gap:280, rise:320, fuse:110, life:950, per:24, order:["bl", "br", "tc", "bl", "br", "tc"] };
 function fxLevel(){ FX.fired = false; }
+function fxPiece(lay, cls, bg, frames, delay, dur, ease){
+  var e = document.createElement("i"); e.className = "cf u2" + (cls ? " " + cls : ""); if(bg) e.style.background = bg; lay.appendChild(e);
+  var an = e.animate(frames, { duration:dur, delay:delay, easing:ease || "linear", fill:"both" });
+  an.onfinish = an.oncancel = function(){ if(e.parentNode) e.parentNode.removeChild(e); };
+  return 1;
+}
 function fxWin(){
   if(FX.fired) return; FX.fired = true; FX.n++;
   var lay = document.getElementById("feelLay"); if(!lay || !lay.animate || REDUCED || H.classList.contains("rm")) return;
-  var W = innerWidth, Hh = innerHeight;
-  for(var i=0;i<96;i++){
-    var e = document.createElement("i"); e.className = "cf u2"; e.style.background = Q7C[i % 3]; if(i % 3 === 2) e.style.boxShadow = "inset 0 0 0 1px rgba(17,32,92,.25)"; lay.appendChild(e);
-    var x = Math.random()*W, y = -30 - Math.random()*Hh*0.25, dx = (Math.random() - 0.5)*120, fall = Hh*(0.55 + Math.random()*0.5), rot = (Math.random() - 0.5)*1080, d = 1500 + Math.random()*600, dl = Math.random()*350;
-    (function(e){ var an = e.animate([
-      { transform:"translate(" + x + "px," + y + "px) rotate(0deg)", opacity:1 },
-      { transform:"translate(" + (x + dx*0.5) + "px," + (y + fall*0.5) + "px) rotate(" + rot*0.5 + "deg)", opacity:1, offset:0.5 },
-      { transform:"translate(" + (x + dx) + "px," + (y + fall) + "px) rotate(" + rot + "deg)", opacity:0 }
-    ], { duration:d, delay:dl, easing:"cubic-bezier(.3,.5,.6,1)", fill:"both" }); an.onfinish = an.oncancel = function(){ if(e.parentNode) e.parentNode.removeChild(e); }; })(e);
-  }
-  FX.pieces += 96;
+  var W = innerWidth, Hh = innerHeight, S = Math.min(1.25, Math.max(0.8, Math.min(W, Hh)/400)), n = 0, sb = 0;
+  try{ sb = parseFloat(getComputedStyle(H).getPropertyValue("--sa-b")) || 0; }catch(e){}
+  var T = function(x, y, r, sc){ return "translate(" + x.toFixed(1) + "px," + y.toFixed(1) + "px) rotate(" + (r || 0).toFixed(0) + "deg) scale(" + (sc == null ? 1 : sc) + ")"; };
+  FX.bursts = [];
+  FW.order.forEach(function(k, b){
+    var t0 = b*FW.gap, side = k === "bl" ? -1 : k === "br" ? 1 : 0, j = (Math.random() - 0.5);
+    var px = side ? W*(0.5 + side*(0.3 + j*0.06)) : W*(0.5 + j*0.12), py = side ? Hh*(0.31 + Math.random()*0.05) : Hh*0.2, pop = t0 + (side ? FW.rise : FW.fuse);
+    if(side){                                   // the rocket: from the corner, tilted toward its pop point, decelerating
+      var sx = side < 0 ? W*0.05 : W*0.95, sy = Hh - sb - 24, ang = Math.atan2(px - sx, sy - py)*180/Math.PI;
+      n += fxPiece(lay, "rk", "#FFF4DC", [
+        { transform:T(sx, sy, ang, 0.8), opacity:0 }, { transform:T(sx, sy, ang, 0.8), opacity:1, offset:0.05 },
+        { transform:T(px, py, ang, 1), opacity:1, offset:0.97 }, { transform:T(px, py, ang, 1), opacity:0 }
+      ], t0, FW.rise, "cubic-bezier(.2,.6,.4,1)");
+    }
+    n += fxPiece(lay, "fl", "radial-gradient(closest-side,#FFFFFF,rgba(255,250,220,.7) 45%,rgba(255,250,220,0))", [
+      { transform:T(px, py, 0, 0.3), opacity:0 }, { transform:T(px, py, 0, 0.6), opacity:1, offset:0.15 }, { transform:T(px, py, 0, 1.6), opacity:0 }
+    ], pop, 300, "ease-out");
+    var cols = [FWC[(b*3) % FWC.length], FWC[(b*3 + 1) % FWC.length], FWC[(b*3 + 2) % FWC.length]];
+    for(var i=0;i<FW.per;i++){
+      var a = (i + Math.random()*0.8)/FW.per*Math.PI*2, v = (125 + Math.random()*45)*S, dx = Math.cos(a)*v, dy = Math.sin(a)*v*0.85,
+          g = (150 + Math.random()*90)*S, rot = (Math.random() - 0.5)*900, life = FW.life - Math.random()*160;
+      n += fxPiece(lay, i % 5 < 2 ? "d" : "", cols[i % 3], [
+        { transform:T(px, py, 0, 0.4), opacity:0 },
+        { transform:T(px, py, 0, 0.6), opacity:1, offset:0.02 },
+        { transform:T(px + dx*0.82, py + dy*0.82, rot*0.3, 1.05), opacity:1, offset:0.3 },
+        { transform:T(px + dx, py + dy + g*0.35, rot*0.65, 1), opacity:1, offset:0.62 },
+        { transform:T(px + dx*1.08, py + dy + g, rot, 0.85), opacity:0 }
+      ], pop, life, "cubic-bezier(.15,.55,.45,1)");
+    }
+    FX.bursts.push({ k:k, at:t0, pop:pop, x:Math.round(px), y:Math.round(py), cols:cols });
+  });
+  FX.pieces += n;
 }
 // the moment: the meter passes (feel Q7 bumps the coin pill with the stamp) ... or at the latest the win result
 var bump2 = bumpPill; bumpPill = function(){ var r = bump2.apply(this, arguments); try{ if(screen === "game" && (phase === "boom" || phase === "settle") && meterOn === true) fxWin(); }catch(e){} return r; };
@@ -192,7 +237,7 @@ window.__blast.ui2 = {
     o.items = Object.keys(o).filter(function(k){ return o[k] === true && !(k === "level" && o.meter); }).length + o.shields;   // the level pill is the meter's cap: one item
     return o;
   },
-  fx:function(){ return { fired:FX.fired, n:FX.n, pieces:FX.pieces, live:document.querySelectorAll("#feelLay .cf.u2").length }; }
+  fx:function(){ return { fired:FX.fired, n:FX.n, pieces:FX.pieces, live:document.querySelectorAll("#feelLay .cf.u2").length, bursts:FX.bursts }; }
 };
 })(); }catch(e){ console.error("main/ui2.js", e); }
 
