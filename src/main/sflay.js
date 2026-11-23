@@ -14,6 +14,8 @@
   //      height), centred between the top row and the booster columns. Only main/frame.js's opening config (CF) is changed, per level.
   //      Hard levels (L.hard7, frame.js F4 "whole lot") and boss levels (frame.js F5 guard) keep main's CF untouched.
   //      23/11: so do the easy pack and the rebuilt old levels (frame.js F6 CAM-HARD, the hard camera; ?camhard=0 = front-on as before).
+  //      23/11 CAM-ALL (frame.js F7): every non-hard level now takes the hard camera, so S6 no longer applies (?camall=0 = S6 on the
+  //      untouched old levels as before).
   // #bottom stays a real bottom band (only its height and children move): every layer that reads #bottom's top (intro spotlight field
   // targets, R20 probe, the camera's play area through botH) keeps working; the TNT card leaves the band with position:fixed.
   // Test API window.__blast.sflay: on(), geo(), rects(), cam, frameDefault, fit(), wig.

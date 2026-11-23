@@ -69,7 +69,7 @@ const layout = async (p, W, H, tag) => {
   const INFO = await (async () => { const p = await open('', seed({})); const o = await p.evaluate(() => { const lv = window.__blast.levels(), isH = (i) => !!(window.LV7O && LV7O.isH && LV7O.isH(i));
     let wl = 12; try { wl = window.__blast.intro.lockLv('wreck') || wl; } catch (e) {}
     let bl = 3; try { bl = window.__blast.intro.sched().find(e => e.id === 'brick').lv || bl; } catch (e) {}
-    return { bl, n: lv.length, boss: lv.findIndex((x, i) => x.boss && !isH(i)), hard: lv.findIndex((x, i) => isH(i)), plain: lv.findIndex((x, i) => i >= wl && !x.boss && !isH(i) && !x.keep), wl, front: lv.map((x, i) => ({ i, o: window.LV7O ? LV7O.orig1(i) : i + 1, b: !!x.boss, h: isH(i), ch: !!(window.__blast.frame.camHard && window.__blast.frame.camHard(i)) })).filter(q => !q.b && !q.h && !q.ch && q.o !== 4 && q.o !== 5 && q.i !== 2 && q.i !== 24 && q.i >= 5).slice(0, 3).map(q => q.i) }; });
+    return { bl, n: lv.length, boss: lv.findIndex((x, i) => x.boss && !isH(i)), hard: lv.findIndex((x, i) => isH(i)), plain: lv.findIndex((x, i) => i >= wl && !x.boss && !isH(i) && !x.keep), wl, front: lv.map((x, i) => ({ i, o: window.LV7O ? LV7O.orig1(i) : i + 1, b: !!x.boss, h: isH(i), ch: !!(window.__blast.frame.camHard && window.__blast.frame.camHard(i)) })).filter(q => !q.b && !q.h && (!q.ch || (window.__blast.frame.camAll && window.__blast.frame.camAll() && q.o > 0)) && q.o !== 4 && q.o !== 5 && q.i !== 2 && q.i !== 24 && q.i >= 5).slice(0, 3).map(q => q.i) }; });
     await close(p); return o; })();
   console.log('levels: ' + INFO.n + ' · Ball unlock L' + INFO.wl + ' · Brick card L' + INFO.bl + ' · first hard L' + (INFO.hard + 1) + ' · first boss L' + (INFO.boss + 1) + ' · plain after Ball L' + (INFO.plain + 1));
 
@@ -173,8 +173,11 @@ const layout = async (p, W, H, tag) => {
     const cam = async (i, q) => { const p = await open(q || '', seed({ level: i })); await playIn(p); await openDone(p); await p.waitForTimeout(600);
       const o = await p.evaluate(() => ({ log: window.__blast.sflay.camLog ? window.__blast.sflay.camLog().last : null, fr: window.__blast.frame.state(), m: window.__blast.frame.measure ? window.__blast.frame.measure() : null, cf: Object.assign({}, window.__blast.frame.cfg()) }));
       o.p = p; return o; };
-    const fr = []; for (const i of INFO.front) { const o = await cam(i); const off = o.fr ? Math.abs(((o.fr.yawOpen % (Math.PI / 2)) + Math.PI / 2) % (Math.PI / 2)) : 9; fr.push({ L: i + 1, off: +Math.min(off, Math.PI / 2 - off).toFixed(3), pitch: o.cf.pitch, kept: o.log && o.log.kept }); if (i === INFO.front[0]) await shot(o.p, 'sf-cam-L' + (i + 1)); await close(o.p); }
-    item('SF10', 'Ordinary levels open front-on (yaw on a face, pitch 0.12) through frame.js\'s own opening', fr.every(f => f.off < 0.02 && f.pitch === 0.12 && !f.kept), JSON.stringify(fr));
+    const fr = []; let all = false; for (const i of INFO.front) { const o = await cam(i); all = await o.p.evaluate(() => !!(window.__blast.frame.camAll && window.__blast.frame.camAll())); const off = o.fr ? Math.abs(((o.fr.yawOpen % (Math.PI / 2)) + Math.PI / 2) % (Math.PI / 2)) : 9; fr.push({ L: i + 1, off: +Math.min(off, Math.PI / 2 - off).toFixed(3), pitch: o.cf.pitch, kept: o.log && o.log.kept, ch: !!(o.fr && o.fr.ch) }); if (i === INFO.front[0]) await shot(o.p, 'sf-cam-L' + (i + 1)); await close(o.p); }
+    // CAM-ALL (frame.js F7, 23/11): every non-hard level takes the hard camera (front face, pitch 0.26, whole lot); S6 steps aside (kept)
+    if (!fr.length) item('SF10', 'Ordinary levels: at least one level to check', false, '[]');
+    else if (all) item('SF10', 'Ordinary levels open front-on (yaw on a face) through frame.js F7 CAM-ALL (the hard camera, pitch 0.26; sflay S6 steps aside)', fr.every(f => f.off < 0.02 && f.pitch === 0.26 && f.kept && f.ch), JSON.stringify(fr));
+    else item('SF10', 'Ordinary levels open front-on (yaw on a face, pitch 0.12) through frame.js\'s own opening', fr.every(f => f.off < 0.02 && f.pitch === 0.12 && !f.kept), JSON.stringify(fr));
     for (const [i, id, what] of [[INFO.hard, 'SF11', 'hard'], [INFO.boss, 'SF12', 'boss']]) {
       const o = await cam(i, SA); await shot(o.p, 'sf-cam-' + what + '-L' + (i + 1));
       const lot = await o.p.evaluate(() => { const fs = window.__blast.frame.state(), g = window.__blast.sflay.geo(); return { fs, top: g.top, bot: g.bot }; });

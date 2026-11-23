@@ -52,10 +52,31 @@
     // zooms: the engine's refit() on a turn (dist = fitDist of the new face) keeps the opening dist and zoom while this framing holds.
     // The distance is never below the lot fit, so the camera stays outside every building. ?camhard=0 = as before (F4 on L.hard7).
     var CAMHARD = Qf.get("camhard") !== "0";
+    // F7 CAM-ALL (23/11/2026, Khai D-blast-CAMALL: "every current level's camera like the hard levels": front-on first). Measured on the
+    //    hard levels (levels-gd/CAM-ALL/CAM-ALL.md): the opening stands at the level's own near-frontal yaw for the whole intro (no
+    //    automatic turn; only the +-0.06 rad idle sway), pitch CF.pitch, the whole lot, a CF.dur s ease-out cubic zoom-in from CF.wide x,
+    //    input live as soon as the drop-in ends (phase "plan"). F6 now covers EVERY level that is not a Mac hard level: the easy pack and
+    //    the rebuilt old levels as before (their own yaw), and the untouched old levels and the bosses too. Those have no near-frontal
+    //    level yaw (engine defaults 0.55 / HINT_YAW / L.yaw 0.65-1.15): the camera stands on the NEAREST FACE (baseYaw and defYaw set
+    //    to it, so BLAST, the collapse drift, resetFraming and the R22 re-frame all stay on that face, as on a hard level). The OVR /
+    //    sflay S6 per-level yaws (L3 GD-38 0.85, L25 GD-33 4.0) give way: the whole lot is in view from the front (CAM-ALL.md).
+    //    ?camall=0 = F6 on E / O only, as CAM-HARD 23/11 (and ?camhard=0 = as before both). By default (Lead 23/11, D-blast-PAD; ?cam45=0 = off, as the hard levels measure):
+    //    after the zoom-in the view turns from the front to 45 degrees (CF.turnDur s ease-in-out; the one distance covers both).
+    var CAMALL = CAMHARD && Qf.get("camall") !== "0", CAM45 = CAMALL && Qf.get("cam45") !== "0";
+    // F8 PAD (23/11/2026, Khai D-blast-PAD, CAM-ALL.md §2): on every non-hard level (not a Mac hard level, not a boss: their content
+    //    stays) the yellow sand pad is widened by PADK (?padk=, default 1.2; ?pad=0 = off): the lot shader's world-space edge radius
+    //    (LA_LOT.r 25 m) is scaled through a uniform, the lawn ring round it (bushes, lamps, Figma trees) and the back road / row
+    //    (fence, lamps, trees) are pushed out by the same margin. The camera's look-at / turn pivot is the pad's CENTRE (world 0, 0),
+    //    on bosses too when their lot is centred on the pad (<= PIV_TOL m); the one distance holds the whole pad and the lot on all 4
+    //    faces and through the 45-degree turn. API.padOut() lists building members standing outside the pad (check-pad.js).
+    var PADON = CAMALL && Qf.get("pad") !== "0", PADK = PADON ? Math.max(1, +(Qf.get("padk") || 1.2)) : 1, PIV_TOL = 1.5;
+    CF.turnDur = +(Qf.get("turndur") || 1.2);
     var isCH = function(p){ if(!CAMHARD || !HARD) return false; if(p == null) p = levelIdx; var O = window.LV7O, Lv = typeof LEVELS !== "undefined" ? LEVELS[p] : null;
-      if(!O || !O.on || !Lv || Lv.boss || (O.isH && O.isH(p))) return false; return !!((O.isE && O.isE(p)) || (O.isO && O.isO(p))); };
+      if(!O || !O.on || !Lv || (O.isH && O.isH(p))) return false; if(CAMALL) return true;
+      if(Lv.boss) return false; return !!((O.isE && O.isE(p)) || (O.isO && O.isO(p))); };
+    var ownYaw = function(p){ var O = window.LV7O; if(p == null) p = levelIdx; return !!(O && ((O.isE && O.isE(p)) || (O.isO && O.isO(p)))); };   // E / O: the level's own near-frontal yaw
     var FR = { on:!OFF, cf:CF, S:null, W:0, n:0 };
-    var API = window.__blast.frame = { on:function(){ return FR.on; }, camHard:function(p){ return !OFF && isCH(p); }, cfg:function(){ return CF; }, state:function(){ var S = FR.S; return S ? { lv:S.lv, live:S.live, W:+FR.W.toFixed(3), zOpen:+S.zOpen.toFixed(4), zFrom:+S.zFrom.toFixed(4), t:+S.t.toFixed(2), easing:S.t < S.dur, hard:!!S.hard, ch:!!S.ch, D:+S.D.toFixed(2), D0:S.D0 ? +S.D0.toFixed(2) : null, frz:FR.frz || 0, yawOpen:+S.yawOpen.toFixed(3), yawD:+S.yawD.toFixed(3), sx:Math.round(S.sx), sy:Math.round(S.sy), fitW:S.fitW, fitH:S.fitH, bind:S.bind, guard:!!S.guard, guardN:S.guardN || 0, refit:!!S.refit, sxT:Math.round(S.sxT), syT:Math.round(S.syT), fixN:S.fixN || 0, settled:!(S.t < S.dur) && Math.abs(S.sx - S.sxT) < 1 && Math.abs(S.sy - S.syT) < 1 && (!(R22 && (S.refit || S.hard || S.gpts)) || (S.fixN || 0) >= 40) } : null; }, measure:null };
+    var API = window.__blast.frame = { on:function(){ return FR.on; }, camHard:function(p){ return !OFF && isCH(p); }, camAll:function(){ return CAMALL; }, cam45:function(){ return CAM45; }, cfg:function(){ return CF; }, state:function(){ var S = FR.S; return S ? { lv:S.lv, live:S.live, W:+FR.W.toFixed(3), zOpen:+S.zOpen.toFixed(4), zFrom:+S.zFrom.toFixed(4), t:+S.t.toFixed(2), easing:S.t < S.dur, hard:!!S.hard, ch:!!S.ch, all:!!S.all, boss:!!(L && L.boss), piv:!!S.piv, padK:S.padK || 1, turn:+(S.turn || 0).toFixed(3), D:+S.D.toFixed(2), D0:S.D0 ? +S.D0.toFixed(2) : null, frz:FR.frz || 0, yawOpen:+S.yawOpen.toFixed(3), yawD:+S.yawD.toFixed(3), sx:Math.round(S.sx), sy:Math.round(S.sy), fitW:S.fitW, fitH:S.fitH, bind:S.bind, guard:!!S.guard, guardN:S.guardN || 0, refit:!!S.refit, sxT:Math.round(S.sxT), syT:Math.round(S.syT), fixN:S.fixN || 0, settled:!(S.t < S.dur) && Math.abs(S.sx - S.sxT) < 1 && Math.abs(S.sy - S.syT) < 1 && (!(R22 && (S.refit || S.hard || S.gpts)) || (S.fixN || 0) >= 40) } : null; }, measure:null };
     var TILT = CF.tilt;   // v14-monument.js updateCamera: the view levels out by TILT x close when zoomed in (pitch - TILT x tiltK)
     var _pc = new THREE.PerspectiveCamera(GAME_FOV, 1, 0.1, 4000), _v = new THREE.Vector3(), _q = new THREE.Quaternion(), _h = new THREE.Vector3();
     var heroIds = function(){ return String((L && L.hero) || "A").split(","); };
@@ -92,11 +113,11 @@
         S.sxT = Math.max(lx1 - VW + SIDE_PX, Math.min(lx0 - SIDE_PX, S.sxT)); S.syT = Math.max(ly1 - (VH - A.b), Math.min(ly0 - A.t, S.syT)); S.guardN = it; }
       S.key = [VW, VH, A.t, A.b, yw.toFixed(3), focusY.toFixed(2)].join(); };
     // F6: one distance for the 4 faces (and the sway): the lot (S.lpts) fitted on both sides of the main building's projected centre
-    var fitCH = function(S){ var A = area(), y0 = baseYaw + S.yawD, D = 6, q, s, it, d, g, h, c, k;
-      for(q=0;q<4;q++) for(s=-1;s<=1;s++){ var yw = y0 + q*Math.PI/2 + s*0.06; d = Math.max(6, S.D || dist);
+    var fitCH = function(S){ var A = area(), y0 = baseYaw + (S.turn ? S.yaw0D || 0 : S.yawD), D = 6, q, s, it, d, g, h, c, k, tn = S.turn ? 4 : 1;   // F7 ?cam45=1: the turn's yaws too
+      for(q=0;q<4;q++) for(var u=0;u<tn;u++) for(s=-1;s<=1;s++){ var yw = y0 + q*Math.PI/2 + (S.turn || 0)*u/3 + s*0.06; d = Math.max(6, S.D || dist);
         for(it=0; it<16; it++){ g = ndc(S.lpts, yw, S.pitch, d, S.hx, focusY, S.hz); h = ndc(S.cpts, yw, S.pitch, d, S.hx, focusY, S.hz); c = (h.x0 + h.x1)/2;
           k = Math.max(Math.max(c - g.x0, g.x1 - c)*VW/2/(VW/2 - SIDE_PX), (g.y1 - g.y0)/2*VH/(FILL_HH*A.h)); d = Math.max(6, d*k); if(Math.abs(k - 1) < 0.002) break; }
-        if(!q && !s) S.D0 = d; D = Math.max(D, d); }
+        if(!q && !s && !u) S.D0 = d; D = Math.max(D, d); }
       S.D = D; };
     // F6: the view offset for the current yaw at the fixed distance: the main building centred across, the lot centred in the play height
     var placeCH = function(S){ var A = area(), yw = baseYaw + S.yawD, d = S.D, g = ndc(S.lpts, yw, S.pitch, d, S.hx, focusY, S.hz), h = ndc(S.cpts, yw, S.pitch, d, S.hx, focusY, S.hz);
@@ -104,14 +125,51 @@
       var lx0 = (1 + g.x0)/2*VW, lx1 = (1 + g.x1)/2*VW; S.sxT = Math.max(lx1 - VW + SIDE_PX, Math.min(lx0 - SIDE_PX, S.sxT));   // the lot stays inside the sides
       S.fitH = +((g.y1 - g.y0)/2*VH/A.h).toFixed(3); S.fitW = +((g.x1 - g.x0)/2).toFixed(3); S.bind = "lot4";
       S.key = [VW, VH, A.t, A.b, yw.toFixed(3), focusY.toFixed(2)].join(); S.kfit = [VW, VH, A.t, A.b, focusY.toFixed(2)].join(); };
+    // ---- F8 PAD: the sand pad (base levelart: the lot mesh, world-space edge at LA_LOT.r with a +-1.45 m wobble; fallback: the r 16
+    // canvas pad scaled by L.lotK)
+    var padLA = (function(){ try{ return !!(LA && LA.ground); }catch(e){ return false; } })(), padR0 = padLA ? LA_LOT.r : 16, padK = 1, padU = { value:1 };
+    var road0 = (function(){ try{ return LA_ROAD.z; }catch(e){ return -31; } })();
+    var padWob = function(a){ return 0.75*Math.sin(a*5.0 + 1.3) + 0.45*Math.sin(a*11.0 + 0.4) + 0.25*Math.sin(a*23.0 + 2.1); };
+    var padEdge = function(a, k){ return padLA ? k*(padR0 + 0.35 - padWob(a)) : 16*k*((L && L.lotK) || 1); };   // the visible edge, world metres from 0, 0 (a = atan2(z, x))
+    var padIn = function(x, z, k){ var a = Math.atan2(z, x); return padLA ? Math.hypot(x, z)/k + padWob(a) <= padR0 - 0.28 : Math.hypot(x, z) <= 15.55*k*((L && L.lotK) || 1); };   // on the sand (fade midpoint)
+    if(padLA && lot && lot.material && lot.material.onBeforeCompile){ var pob = lot.material.onBeforeCompile;
+      lot.material.onBeforeCompile = function(sh){ pob(sh); sh.uniforms.uPadK = padU;
+        sh.fragmentShader = sh.fragmentShader.replace("#include <common>", "#include <common>\nuniform float uPadK;").replace("laR = length(vLaW)", "laR = length(vLaW)/uPadK"); };
+      lot.material.customProgramCacheKey = function(){ return "la-lot1-padk"; }; lot.material.needsUpdate = true; }
+    var padFor = function(p){ var O = window.LV7O, Lv = typeof LEVELS !== "undefined" ? LEVELS[p] : null; if(!PADON || OFF || !O || !O.on || !Lv || Lv.boss || (O.isH && O.isH(p))) return 1; return PADK; };
+    var padApply = function(){ padK = padFor(levelIdx); padU.value = padK;
+      try{ var lk = (L && L.lotK) || 1; lot.scale.setScalar(padLA ? Math.max(lk, padK) : lk*padK); }catch(e){}
+      try{ LA_ROAD.z = road0 - padR0*(padK - 1); if(laRoad && laRoad.children[0]) laRoad.children[0].position.z = LA_ROAD.z; }catch(e){} };
+    // the lawn ring (bushes, lamps, benches, hydrants), the Figma trees and the back row move out with the edge (base laKeepOut, then this)
+    try{ if(typeof laKeepOut === "function"){ var lko0 = laKeepOut;
+      laKeepOut = function(set){ var r = lko0.apply(this, arguments);
+        try{ var m = set && set.prop && set.prop.userData.rows ? set.prop : null; if(!m) return r; var dM = padR0*(padK - 1), arr = m.instanceMatrix.array, m0 = m.userData.m0, cy = Math.cos(laYaw), sy = Math.sin(laYaw), ch = false;
+          m.userData.rows.forEach(function(e, i){ var x, z;
+            if(e[4] === 0 || e[4] === 2){ var rr = Math.hypot(e[0], e[1]); if(rr < padR0 - 3) return; var f = (rr + dM)/rr; x = e[0]*f; z = e[1]*f; }
+            else if(e[4] === 3){ x = e[9]*cy - (e[10] + dM)*sy; z = -e[9]*sy - (e[10] + dM)*cy; }
+            else return;
+            if(m0[i*16 + 12] !== x || m0[i*16 + 14] !== z){ m0[i*16 + 12] = x; m0[i*16 + 14] = z; ch = true; }
+            if(arr[i*16] !== 0 || arr[i*16 + 5] !== 0){ if(arr[i*16 + 12] !== x || arr[i*16 + 14] !== z){ arr[i*16 + 12] = x; arr[i*16 + 14] = z; ch = true; } } });
+          if(ch) m.instanceMatrix.needsUpdate = true; FR.ring = (FR.ring || 0) + 1; }catch(e){ console.error("main/frame.js F8 ring", e); }
+        return r; }; } }catch(e){}
+    var padPts = function(k){ var P = [], n = 72; for(var i=0;i<n;i++){ var a = i/n*Math.PI*2, R = padEdge(a, k); P.push(Math.cos(a)*R, 0, Math.sin(a)*R); } return new Float32Array(P); };
+    // the pivot: the pad centre, when the lot is centred on the pad (always on the widened levels; a boss only within PIV_TOL m)
+    var pivotPad = function(G){ if(!PADON || OFF || !G) return null; var wide = padK > 1;
+      if(!wide && Math.hypot(G.hx, G.hz) > PIV_TOL) return null; var pp = padPts(padK), all = new Float32Array(G.pts.length + pp.length); all.set(G.pts); all.set(pp, G.pts.length); return { pad:pp, all:all }; };
     var openCH = function(){ var G = heroPts(true), C = heroPts(false, [heroIds()[0]]) || heroPts(false); if(!G || !C) return false;
-      var S = { lv:levelIdx + 1, hard:false, ch:true, pts:C.pts, cpts:C.pts, lpts:G.pts, hx:C.hx, hz:C.hz, yawD:0, yawOpen:baseYaw, pitch:CF.pitch, fillH:FILL_HH, fillW:Math.max(0.5, (VW - 2*SIDE_PX)/VW),
+      var y00 = baseYaw, face = Math.round(baseYaw/(Math.PI/2))*(Math.PI/2), own = ownYaw();
+      if(!own) C = G;   // F7: an old level / boss: the LOT is centred (its main building is not on the lot's axis: centring it cost 1.7x the distance on L3)
+      var PV = pivotPad(G);   // F8: the pad's centre is the pivot (look-at + turn), the whole pad in the fit
+      if(PV){ C = { pts:PV.pad, hx:0, hz:0 }; G = { pts:PV.all, hx:G.hx, hz:G.hz }; }
+      if(!own && Math.abs(baseYaw - face) > 1e-4){ baseYaw = defYaw = face; rfz0(); }   // F7: an old level / boss stands on its nearest face (as a hard level on its own yaw)
+      var S = { lv:levelIdx + 1, hard:false, ch:true, all:!own, piv:!!PV, padK:padK, yaw00:y00, pts:C.pts, cpts:C.pts, lpts:G.pts, hx:C.hx, hz:C.hz, yawD:0, yawOpen:baseYaw, pitch:CF.pitch, fillH:FILL_HH, fillW:Math.max(0.5, (VW - 2*SIDE_PX)/VW),
         live:true, t:0, dur:REDUCED ? 0 : CF.dur, D:dist, sx:0, sy:0, sxSp:{v:0}, sySp:{v:0} };
+      if(CAM45){ S.turn = (own ? (baseYaw - face < 0 ? -1 : 1) : (y00 - face < 0 ? -1 : 1))*Math.PI/4 - (own ? baseYaw - face : 0); S.yaw0D = 0; S.tt = 0; if(REDUCED) S.yawD = S.turn; }   // F7 ?cam45=1: front -> 45 degrees
       fitCH(S); placeCH(S);
       S.zOpen = S.D/dist; S.zFrom = REDUCED ? S.zOpen : S.zOpen*CF.wide; S.zEnd = Math.max(1, S.zFrom + 0.25); zMax = Math.max(zMax, S.zEnd);
       S.closeO = window.__blast.m14 && window.__blast.m14.flags().cam ? Math.max(0, Math.min(1, (1 - S.zOpen)/0.45)) : 0;
       S.sx = S.sxT; S.sy = S.syT; FR.S = S; FR.W = 1; FR.n++;
-      zoomT = zoomK = S.zFrom; zoomSp.v = 0; camDist = dist; distSp.v = 0; yaw = baseYaw; yawSp.v = 0; return true; };
+      zoomT = zoomK = S.zFrom; zoomSp.v = 0; camDist = dist; distSp.v = 0; yaw = baseYaw + S.yawD; yawSp.v = 0; return true; };
     var openLevel = function(){ FR.S = null; FR.W = 0;
       if(manual || screen !== "game" || !L || !blocks.length) return;
       if(isCH() && openCH()) return;   // F6
@@ -129,7 +187,7 @@
       zoomT = zoomK = S.zFrom; zoomSp.v = 0; camDist = dist; distSp.v = 0; yaw = yawOpen; yawSp.v = 0; };
     if(!OFF){   // ?frame=0: nothing below runs (the measure API stays, for before / after shots)
     var sl0 = startLevel;
-    startLevel = function(){ var r = sl0.apply(this, arguments); try{ openLevel(); }catch(e){ FR.S = null; console.error("main/frame.js", e); } return r; };
+    startLevel = function(){ var r = sl0.apply(this, arguments); try{ padApply(); }catch(e){ console.error("main/frame.js F8", e); } try{ openLevel(); }catch(e){ FR.S = null; console.error("main/frame.js", e); } return r; };
     var stop = function(){ if(FR.S) FR.S.live = false; };
     var da0 = detonateAll; detonateAll = function(){ stop(); return da0.apply(this, arguments); };   // BLAST: back to the whole-lot framing (v14 resets zoom / pan)
     var rf0 = resetFraming; resetFraming = function(){ stop(); return rf0.apply(this, arguments); };
@@ -138,7 +196,7 @@
       if(!(S && S.ch && S.live && FR.W > 0 && !b && screen === "game" && (phase === "plan" || phase === "build"))) return rfz0.apply(this, arguments);
       var d0 = dist, zt = zoomT, zk = zoomK, zx = zMax, r = rfz0.apply(this, arguments);
       dist = d0; zoomLimits(frameBox()); zMax = Math.max(zMax, zx); zoomT = zt; zoomK = zk; FR.frz = (FR.frz || 0) + 1; return r; };
-    renderer.domElement.addEventListener("pointerdown", function(){ var S = FR.S; if(S && S.t < S.dur){ S.t = S.dur; zoomT = clampZoom(zoomK); } }, { capture:true, passive:true });   // a touch ends the ease where it is
+    renderer.domElement.addEventListener("pointerdown", function(){ var S = FR.S; if(S && S.t < S.dur){ S.t = S.dur; zoomT = clampZoom(zoomK); } if(S && S.turn && !S.turnDone){ S.turnDone = true; } }, { capture:true, passive:true });   // F7: a touch also stops the ?cam45 turn where it is   // a touch ends the ease where it is
     var myX = null, myY = null, inX = 0, inY = 0, wSp = { v:0 };
     var uc0 = updateCamera;
     updateCamera = function(rdt){
@@ -160,6 +218,8 @@
         S.fixN = (S.fixN || 0) + 1; if(!ddx && !ddy && kz <= 1.01) S.fixN = 40; }
       // F2: the ease (game time of the render loop, capped like the rest of the camera)
       if(S.live && S.t < S.dur){ S.t = Math.min(S.dur, S.t + rdt); var e = 1 - Math.pow(1 - S.t/S.dur, 3); zoomT = zoomK = S.zFrom + (S.zOpen - S.zFrom)*e; zoomSp.v = 0; }
+      // F7 ?cam45=1: once the zoom-in is over, the view turns from the front to 45 degrees (ease-in-out), stopped by any touch
+      if(S.turn && S.live && !S.turnDone && S.t >= S.dur){ S.tt = Math.min(CF.turnDur, S.tt + rdt); var et = S.tt/CF.turnDur; et = et < 0.5 ? 4*et*et*et : 1 - Math.pow(-2*et + 2, 3)/2; S.yawD = S.yaw0D + S.turn*et; if(S.tt >= CF.turnDur) S.turnDone = true; }
       // F3: the weight (state x zoom: the whole-lot zoom 1 = no framing)
       var wz = Math.max(0, Math.min(1, (S.zEnd - zoomK)/(S.zEnd - Math.max(S.zFrom, S.zOpen + 0.05)))), wt = S.live && (phase === "build" || phase === "plan" || phase === "count") ? wz : 0;
       if(S.refit && S.dur > 0) wt = Math.min(wt, 1 - Math.pow(1 - Math.min(1, S.t/S.dur), 3));   // F5 (b): the look-at / offset ease in with the zoom
@@ -193,12 +253,22 @@
       var ch = isCH(), lotLv = isHard() || !!L.boss || ch, H = remPts(lotLv); if(!H) return null;
       var S = { lv:levelIdx + 1, hard:lotLv, refit:true, pts:H.pts, hx:H.hx, hz:H.hz, yawD:0, yawOpen:baseYaw, pitch:pitch, fillH:FILL_HH, fillW:Math.max(0.5, (VW - 2*SIDE_PX)/VW),
         live:true, t:0, dur:REDUCED ? 0 : 0.5, D:dist, sx:0, sy:0, sxSp:{v:0}, sySp:{v:0}, closeO:0 };
-      if(ch){ S.ch = true; S.cpts = S.lpts = H.pts; fitCH(S); placeCH(S); zMax = Math.max(zMax, S.D/dist + 0.25); } else solve(S, true);   // F6: what still counts, one distance for the 4 faces
+      if(ch){ S.ch = true; var P0 = FR.S; if(P0 && P0.ch && P0.turn){ S.turn = P0.turn; S.yaw0D = P0.yaw0D; S.yawD = P0.yawD; S.turnDone = true; }   // F7: the ?cam45 view is kept
+        // F8: the R22 re-frame keeps zooming onto what still counts (UX-71), not onto the pad
+        S.cpts = S.lpts = H.pts; fitCH(S); placeCH(S); zMax = Math.max(zMax, S.D/dist + 0.25); } else solve(S, true);   // F6: what still counts, one distance for the 4 faces
       S.zOpen = clampZoom(S.D/dist); S.zFrom = REDUCED ? S.zOpen : zoomK; S.zEnd = Math.max(1, S.zFrom, S.zOpen) + 0.25;
       S.sx = S.sxT; S.sy = S.syT; FR.S = S; FR.W = 0; FR.n++; FR.refits = (FR.refits || 0) + 1;
       if(REDUCED){ zoomT = zoomK = S.zOpen; zoomSp.v = 0; }
       return { zOpen:+S.zOpen.toFixed(3), zFrom:+S.zFrom.toFixed(3), fitW:S.fitW, fitH:S.fitH, bind:S.bind };
     };
+    // F8 test API: the pad now (centre, k, edge radii) and the building members whose footprint leaves it (at rest, spawn pose)
+    API.pad = function(){ var e = []; for(var i=0;i<8;i++) e.push(+padEdge(i*Math.PI/4, padK).toFixed(2)); return { on:PADON, la:padLA, k:padK, kNext:PADK, R0:padR0, centre:[+lot.position.x.toFixed(2), +lot.position.z.toFixed(2)], scale:+lot.scale.x.toFixed(3), edge:e, rMin:+(padLA ? padK*(padR0 + 0.35 - 1.45) : 0).toFixed(2), rMax:+(padLA ? padK*(padR0 + 0.35 + 1.45) : 0).toFixed(2), road:(function(){ try{ return LA_ROAD.z; }catch(x){ return null; } })(), ring:FR.ring || 0 }; };
+    API.padOut = function(k){ k = k || padK; var out = [], G = heroPts(true), ids = heroIds(), c = G ? [+G.hx.toFixed(2), +G.hz.toFixed(2)] : null;
+      blocks.forEach(function(b, bi){ if(b.anchor || b.prop || b.bonus) return; var p = b.spawn || b.P, h = b.half, q = b.Q, worst = -1e9, wx = 0, wz = 0;
+        for(var cI=0;cI<4;cI++){ _v.set(cI&1 ? h[0] : -h[0], 0, cI&2 ? h[2] : -h[2]); if(q) _v.applyQuaternion(q); var x = p.x + _v.x, z = p.z + _v.z, a = Math.atan2(z, x);
+          var over = padLA ? Math.hypot(x, z) - k*(padR0 - 0.28 - padWob(a)) : Math.hypot(x, z) - 15.55*k*((L && L.lotK) || 1); if(over > worst){ worst = over; wx = x; wz = z; } }
+        if(worst > 0) out.push({ i:bi, bid:b.bid || null, keep:!!b.keep, hero:ids.indexOf(b.bid) >= 0, over:+worst.toFixed(2), at:[+wx.toFixed(1), +wz.toFixed(1)] }); });
+      return { lv:levelIdx + 1, k:k, lotCentre:c, n:out.length, out:out }; };
     // the screen box of what still counts now (refit check)
     API.measureRem = function(withKeep){ var H = remPts(withKeep == null ? (isHard() || !!(L && L.boss)) : !!withKeep); if(!H) return null; camera.updateMatrixWorld(); var A = area(), x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9, P = H.pts;
       for(var i=0;i<P.length;i+=3){ _v.set(P[i], P[i+1], P[i+2]).project(camera); var sx = (_v.x + 1)/2*VW, sy = (1 - _v.y)/2*VH; if(sx < x0) x0 = sx; if(sx > x1) x1 = sx; if(sy < y0) y0 = sy; if(sy > y1) y1 = sy; }
