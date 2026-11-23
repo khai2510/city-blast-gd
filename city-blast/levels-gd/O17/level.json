@@ -13,7 +13,6 @@
   "target": 0.85,
   "yaw": 0,
   "d": 1,
-  "hard7": true,
   "base": {
    "A": {
     "preset": "stiff-tip",
@@ -28,32 +27,44 @@
     "id": "A",
     "kind": "g7oPark",
     "x": 0,
-    "z": -6,
+    "z": 0,
     "hx": 5,
     "hz": 4,
     "h": 2.9,
     "ns": 4,
-    "heavy": 1.35
+    "heavy": 0,
+    "conv": {
+     "rc": "concrete",
+     "rcs": "concrete"
+    }
    },
    {
     "id": "B",
     "kind": "g7oWing",
     "x": -10.6,
-    "z": -6,
+    "z": 0,
     "hx": 3.4,
     "hz": 2.8,
     "side": -1,
-    "nb": 3
+    "nb": 3,
+    "conv": {
+     "rc": "concrete",
+     "rcs": "concrete"
+    }
    },
    {
     "id": "C",
     "kind": "g7oWing",
     "x": 10.6,
-    "z": -6,
+    "z": 0,
     "hx": 3.4,
     "hz": 2.8,
     "side": 1,
-    "nb": 3
+    "nb": 3,
+    "conv": {
+     "rc": "concrete",
+     "rcs": "concrete"
+    }
    }
   ],
   "charges": {
@@ -62,7 +73,7 @@
   "hint": "A:z+",
   "tip": "",
   "dud": "Not yet. Dark piers need more TNT!",
-  "ftip": "Dark piers take more TNT than grey ones.",
+  "ftip": "Break the legs. The decks come down together.",
   "lesson": {
    "check": [
     []
@@ -142,6 +153,25 @@
     ]
    ]
   },
-  "tntStart": 14
+  "tntStart": 14,
+  "batch": 2,
+  "launch": {
+   "el": [
+    "brick",
+    "concrete"
+   ],
+   "slot": 30,
+   "before": [
+    "brick",
+    "concrete",
+    "dark",
+    "heavy"
+   ]
+  },
+  "pad": {
+   "dx": 0,
+   "dz": 6,
+   "r": 16.7
+  }
  }
 ]

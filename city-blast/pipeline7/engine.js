@@ -2652,16 +2652,16 @@ try{ (function(){
       kd(top, "cone", K.white, 0, y - 0.6, 0, D*0.75, 1.6, D*0.75, Math.PI, 0, 0);
       if(P.bg) bgSet(r.n0, P.bg); return { w:2*hx + 5, d:2*hx + 5 };
     };
-    // ---- O33 g7oLattice "Rivet Depot" (F03): a lattice tower in grey concrete (no steel before slot 40): four legs per storey that
+    // ---- O33 g7oLattice "Rivet Depot" (F03): a lattice tower in plain grey concrete (no steel before slot 40; no steel paint, so it never reads as steel): four legs per storey that
     // step in as it rises, open storeys, X-bracing and rivet plates drawn as decor, a platform with a rail and a beacon mast on top.
     V5_PARTS.g7oLattice = function(P){
       var hx = P.hx || 3.4, ns = P.ns || 4, SH = P.sh || 3.6, st = [];
-      for(var q = 0; q < ns; q++) st.push({ h:SH, hx:hx - 0.4 - q*(P.taper || 0.45), nx:2, nz:2, pw:0.6, mw:0.6, skin:"open", tp:K.cranePaint, dress:function(s2, y){ var w = s2.s.hx - 0.3; [[1, 0], [-1, 0], [0, 1], [0, -1]].forEach(function(f){ var X = !!f[0], hd = dk2(s2, f[0]*w, f[1]*w);
-        bar(hd, K.cranePaintD, X ? f[0]*w : -w, y + 0.2, X ? -w : f[1]*w, X ? f[0]*w : w, y + s2.h - 0.4, X ? w : f[1]*w, 0.1); bar(hd, K.cranePaintD, X ? f[0]*w : w, y + 0.2, X ? w : f[1]*w, X ? f[0]*w : -w, y + s2.h - 0.4, X ? -w : f[1]*w, 0.1); });
+      for(var q = 0; q < ns; q++) st.push({ h:SH, hx:hx - 0.4 - q*(P.taper || 0.45), nx:2, nz:2, pw:0.6, mw:0.6, skin:"open", tp:K.conc, dress:function(s2, y){ var w = s2.s.hx - 0.3; [[1, 0], [-1, 0], [0, 1], [0, -1]].forEach(function(f){ var X = !!f[0], hd = dk2(s2, f[0]*w, f[1]*w);
+        bar(hd, K.concD, X ? f[0]*w : -w, y + 0.2, X ? -w : f[1]*w, X ? f[0]*w : w, y + s2.h - 0.4, X ? w : f[1]*w, 0.1); bar(hd, K.concD, X ? f[0]*w : w, y + 0.2, X ? w : f[1]*w, X ? f[0]*w : -w, y + s2.h - 0.4, X ? -w : f[1]*w, 0.1); });
         s2.piers.forEach(function(p){ for(var k = 0; k < 3; k++) kd(p, "ibox", K.iron, p.spawn.x, y + 0.6 + k*1.1, p.spawn.z, 2*p.half[0] + 0.04, 0.08, 2*p.half[2] + 0.04); }); } });
-      var r = T2(P, { hx:hx, gh:P.gh || 4.0, gtp:K.cranePaint, st:st }), top = dk2(r.top), y = r.y, wt = st[ns - 1].hx;
-      kd(top, "box", K.cranePaintD, 0, y + 0.1, 0, 2*wt + 1.2, 0.2, 2*wt + 1.2); [[1, 0], [-1, 0], [0, 1], [0, -1]].forEach(function(f){ var X = !!f[0]; kd(top, "box", K.white, f[0]*(wt + 0.55), y + 0.7, f[1]*(wt + 0.55), X ? 0.06 : 2*wt + 1.2, 0.08, X ? 2*wt + 1.2 : 0.06); });
-      kd(top, "icyl", K.cranePaint, 0, y + 2.5, 0, 0.16, 4.8, 0.16); kd(top, "lit", 0xFF5A4A, 0, y + 5.0, 0, 0.25, 0.25, 0.25); kd(top, "ibox", K.red, 0.6, y + 4.3, 0, 1.0, 0.5, 0.03);
+      var r = T2(P, { hx:hx, gh:P.gh || 4.0, gtp:K.conc, st:st }), top = dk2(r.top), y = r.y, wt = st[ns - 1].hx;
+      kd(top, "box", K.concD, 0, y + 0.1, 0, 2*wt + 1.2, 0.2, 2*wt + 1.2); [[1, 0], [-1, 0], [0, 1], [0, -1]].forEach(function(f){ var X = !!f[0]; kd(top, "box", K.white, f[0]*(wt + 0.55), y + 0.7, f[1]*(wt + 0.55), X ? 0.06 : 2*wt + 1.2, 0.08, X ? 2*wt + 1.2 : 0.06); });
+      kd(top, "icyl", K.conc, 0, y + 2.5, 0, 0.16, 4.8, 0.16); kd(top, "lit", 0xFF5A4A, 0, y + 5.0, 0, 0.25, 0.25, 0.25); kd(top, "ibox", K.red, 0.6, y + 4.3, 0, 1.0, 0.5, 0.03);
       if(P.bg) bgSet(r.n0, P.bg); return { w:2*hx + 5, d:2*hx + 5 };
     };
     // ---- O14 g7oShell "Shell Hall" (F05): a low hall under three concrete shells. One storey: P.nx x 3 concrete legs (spaced so one

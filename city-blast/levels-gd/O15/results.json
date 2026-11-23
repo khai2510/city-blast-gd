@@ -1,33 +1,33 @@
 {
- "when": "2026-11-22T17:58:42.357Z",
+ "when": "2026-11-23T19:14:39.472Z",
  "bp": "O15",
  "name": "Gas Works",
  "tnt": 17,
  "bar": "N",
  "metrics": {
   "members": 136,
-  "hard": 16,
-  "soft": 120,
-  "hardPct": 12,
+  "hard": 0,
+  "soft": 136,
+  "hardPct": 0,
   "main": {
    "members": 37,
-   "hard": 16,
-   "soft": 21,
-   "hardPct": 43,
+   "hard": 0,
+   "soft": 37,
+   "hardPct": 0,
    "pos": {
-    "top": 8,
-    "mid": 8,
+    "top": 0,
+    "mid": 0,
     "bottom": 0,
-    "edge": 16,
+    "edge": 0,
     "core": 0,
-    "front": 4,
-    "back": 4
+    "front": 0,
+    "back": 0
    },
    "core": "no",
-   "hardLayers": 2,
-   "depthRows": 8,
-   "frontHard": 4,
-   "backHard": 4,
+   "hardLayers": 0,
+   "depthRows": 7,
+   "frontHard": 0,
+   "backHard": 0,
    "floors": 3
   },
   "stacks": 4,
@@ -39,10 +39,11 @@
   ]
  },
  "sol": {
-  "pct": 96,
+  "pct": 91,
   "win": true,
   "res": "WIN",
   "placed": [
+   "ok",
    "ok",
    "ok",
    "ok",
@@ -52,112 +53,39 @@
   "keep": 0
  },
  "oneBomb": {
-  "pct": 46,
-  "collapse": 68,
+  "pct": 27,
+  "collapse": 26,
   "at": "bk@A:f0",
   "tried": 20
  },
  "lazy": {
-  "pct": 42,
-  "collapse": 54
+  "pct": 36,
+  "collapse": 42
  },
  "fair": [
   {
    "win": true,
    "res": "WIN",
-   "pct": 97,
+   "pct": 96,
    "used": 14,
    "left": 3,
    "waves": 2,
-   "firstWave": 19,
+   "firstWave": 47,
    "keep": 0,
    "estSec": 32,
-   "log": "bld8=19 bld6=97"
-  },
-  {
-   "win": true,
-   "res": "WIN",
-   "pct": 99,
-   "used": 15,
-   "left": 2,
-   "waves": 2,
-   "firstWave": 36,
-   "keep": 0,
-   "estSec": 33,
-   "log": "bld12=36 bld3=99"
-  },
-  {
-   "win": true,
-   "res": "WIN",
-   "pct": 95,
-   "used": 14,
-   "left": 3,
-   "waves": 2,
-   "firstWave": 21,
-   "keep": 0,
-   "estSec": 32,
-   "log": "bld8=21 bld6=95"
+   "log": "bld8=47 bld6=96"
   }
  ],
- "allFoot": {
-  "pct": 95,
-  "used": 17,
-  "collapse": 100,
-  "keep": 0
+ "oneWave": {
+  "pct": 0
  },
  "footOnly": {
-  "pct": 94,
-  "waves": 1,
-  "left": 11,
-  "keep": 0
+  "pct": 0
  },
- "oneWave": {
-  "pct": 100,
-  "used": 17,
-  "reach": 116,
-  "collapse": 100
+ "allFoot": {
+  "pct": 0
  },
- "curve": [
-  {
-   "n": 1,
-   "pct": 15,
-   "collapse": 34
-  },
-  {
-   "n": 2,
-   "pct": 14,
-   "collapse": 31
-  },
-  {
-   "n": 3,
-   "pct": 9,
-   "collapse": 11
-  },
-  {
-   "n": 4,
-   "pct": 9,
-   "collapse": 11
-  },
-  {
-   "n": 6,
-   "pct": 46,
-   "collapse": 56
-  },
-  {
-   "n": 8,
-   "pct": 46,
-   "collapse": 57
-  },
-  {
-   "n": 12,
-   "pct": 46,
-   "collapse": 57
-  }
- ],
- "jump": 37,
- "verdict": "MISS",
- "issues": [
-  "allFoot 95%",
-  "footOnly 94%"
- ]
+ "curve": [],
+ "verdict": "PASS",
+ "issues": []
 }

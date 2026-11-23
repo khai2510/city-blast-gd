@@ -2,109 +2,89 @@
  {
   "name": "Pit Head",
   "bp": "O07",
-  "slot": 7,
+  "slot": 2,
   "replaces": "o9",
-  "tier": "N",
+  "tier": "T",
   "f": 12,
   "kind": "scene",
   "hero": "A,S,B,C",
   "heroId": "G7-O07",
-  "teaches": "aim",
+  "teaches": "wood",
   "target": 0.85,
   "yaw": 0,
   "d": 1,
   "base": {
-   "A": "stiff-tip",
+   "A": {
+    "preset": "weak-tip",
+    "shove": 2.5
+   },
    "*": "weak"
   },
   "sf": [],
-  "pattern": "steel on concrete + aim: two footings at the back drop the headframe across the winding house; a front fall lands in the empty yard",
+  "pattern": "timber headframe: two front feet side by side and it falls forward across the woodshed",
   "parts": [
    {
     "id": "A",
     "kind": "g7oHead",
+    "wood": 1,
     "x": 0,
-    "z": 0,
+    "z": -4.6,
     "hx": 2.6,
     "hz": 2.4,
     "ph": 3.2,
-    "lh": 5.6
+    "lh": 5
    },
    {
     "id": "S",
-    "kind": "g7oWind",
+    "kind": "g7oShed",
     "x": 0,
-    "z": -6.8,
-    "hx": 5,
-    "hz": 3.2,
-    "h": 5.4
+    "z": 5,
+    "hx": 3.6,
+    "hz": 2,
+    "h": 2.4,
+    "nx": 3
    },
    {
     "id": "B",
-    "kind": "g7oLamp",
+    "kind": "g7oCabin",
     "x": -9,
-    "z": 0,
-    "hx": 3.2,
-    "hz": 2.8,
+    "z": -4,
+    "hx": 2.8,
+    "hz": 2.4,
     "side": -1
    },
    {
     "id": "C",
-    "kind": "g7oLamp",
+    "kind": "g7oCabin",
     "x": 9,
-    "z": 0,
-    "hx": 3.2,
-    "hz": 2.8,
+    "z": -4,
+    "hx": 2.8,
+    "hz": 2.4,
     "side": 1
    }
   ],
   "charges": {
    "tnt": 40
   },
-  "hint": "A:z-",
+  "hint": "A:z+",
   "tip": "",
   "dud": "Not yet. Two legs side by side!",
-  "ftip": "It falls where the legs go. Aim it.",
+  "ftip": "Two feet side by side. Then BLAST.",
   "lesson": {
    "check": [
-    [
-     [
-      "tnt",
-      "A:z+",
-      0,
-      0
-     ],
-     [
-      "tnt",
-      "A:z+",
-      0,
-      1
-     ],
-     [
-      "tnt",
-      "B:z+",
-      0,
-      0
-     ],
-     [
-      "tnt",
-      "C:z+",
-      0,
-      0
-     ]
-    ]
+    []
    ]
   },
   "sol": [
    [
     "tnt",
-    "A:z-",
+    "A:z+",
     0,
     0
    ],
    [
     "tnt",
-    "A:z-",
+    "A:z+",
     0,
     1
    ],
@@ -131,12 +111,17 @@
    "hints": [
     [
      "A",
-     "A:z-",
+     "A:z+",
      1
     ],
     [
      "A",
-     "A:z-",
+     "A:z+",
+     1
+    ],
+    [
+     "A",
+     "S:z+",
      1
     ],
     [
@@ -151,6 +136,24 @@
     ]
    ]
   },
-  "tntStart": 8
+  "tntStart": 10,
+  "batch": 2,
+  "launch": {
+   "el": [
+    "wood"
+   ],
+   "slot": 2,
+   "before": [
+    "wood",
+    "brick",
+    "concrete",
+    "steel"
+   ]
+  },
+  "pad": {
+   "dx": 0,
+   "dz": 3.4,
+   "r": 16.2
+  }
  }
 ]

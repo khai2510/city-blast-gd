@@ -1,0 +1,159 @@
+[
+ {
+  "name": "Stack Tower",
+  "bp": "O31",
+  "slot": 0,
+  "replaces": "o31",
+  "tier": "N",
+  "f": 12,
+  "kind": "scene",
+  "hero": "A,S,B,C",
+  "heroId": "G7-O31",
+  "teaches": null,
+  "target": 0.85,
+  "yaw": 0,
+  "d": 1,
+  "base": {
+   "A": {
+    "preset": "stiff-tip",
+    "shove": 2.5
+   },
+   "*": "weak"
+  },
+  "sf": [],
+  "pattern": "stacked blocks on one storey of legs: two legs side by side and the stack pitches onto the hall",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7oStack",
+    "x": 0,
+    "z": -4.7,
+    "hx": 3.4,
+    "gh": 4,
+    "sh": 3.4,
+    "ns": 5
+   },
+   {
+    "id": "S",
+    "kind": "g7oRetort",
+    "x": 0,
+    "z": 5.9,
+    "hx": 5.6,
+    "hz": 2.2,
+    "h": 3.4
+   },
+   {
+    "id": "B",
+    "kind": "g7oWhse",
+    "x": -10.4,
+    "z": -4.7,
+    "hx": 3.2,
+    "hz": 3,
+    "nb": 3
+   },
+   {
+    "id": "C",
+    "kind": "g7oWhse",
+    "x": 10.4,
+    "z": -4.7,
+    "hx": 3.2,
+    "hz": 3,
+    "nb": 3
+   }
+  ],
+  "charges": {
+   "tnt": 40
+  },
+  "hint": "A:z+",
+  "tip": "",
+  "dud": "Not yet. Two legs side by side!",
+  "ftip": "Two legs side by side. It falls that way.",
+  "lesson": {
+   "check": [
+    []
+   ]
+  },
+  "sol": [
+   [
+    "tnt",
+    "A:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "A:z+",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "S:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "B:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "C:z+",
+    0,
+    0
+   ]
+  ],
+  "bot": {
+   "hints": [
+    [
+     "A",
+     "A:z+",
+     1
+    ],
+    [
+     "A",
+     "A:z+",
+     1
+    ],
+    [
+     "A",
+     "S:z+",
+     1
+    ],
+    [
+     "A",
+     "B:z+",
+     1
+    ],
+    [
+     "A",
+     "C:z+",
+     1
+    ]
+   ]
+  },
+  "tntStart": 14,
+  "pad": {
+   "dx": 0,
+   "dz": 3.3,
+   "r": 18.4
+  },
+  "batch": 2,
+  "launch": {
+   "el": [
+    "brick",
+    "concrete"
+   ],
+   "slot": 8,
+   "before": [
+    "wood",
+    "concrete",
+    "glass",
+    "steel",
+    "dark"
+   ]
+  }
+ }
+]

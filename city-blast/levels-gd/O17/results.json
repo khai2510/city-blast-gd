@@ -1,34 +1,34 @@
 {
- "when": "2026-11-22T20:45:34.922Z",
+ "when": "2026-11-23T19:09:44.707Z",
  "bp": "O17",
  "name": "Car Park",
  "tnt": 14,
  "bar": "N",
  "metrics": {
-  "members": 136,
-  "hard": 16,
-  "soft": 120,
-  "hardPct": 12,
+  "members": 134,
+  "hard": 0,
+  "soft": 134,
+  "hardPct": 0,
   "main": {
-   "members": 58,
-   "hard": 16,
-   "soft": 42,
-   "hardPct": 28,
+   "members": 56,
+   "hard": 0,
+   "soft": 56,
+   "hardPct": 0,
    "pos": {
-    "top": 2,
+    "top": 0,
     "mid": 0,
-    "bottom": 14,
-    "edge": 14,
-    "core": 2,
-    "front": 6,
-    "back": 6
+    "bottom": 0,
+    "edge": 0,
+    "core": 0,
+    "front": 0,
+    "back": 0
    },
-   "core": "yes",
-   "hardLayers": 3,
-   "depthRows": 4,
-   "frontHard": 6,
-   "backHard": 6,
-   "floors": 5
+   "core": "no",
+   "hardLayers": 0,
+   "depthRows": 3,
+   "frontHard": 0,
+   "backHard": 0,
+   "floors": 4
   },
   "stacks": 3,
   "parts": [
@@ -38,9 +38,9 @@
   ]
  },
  "sol": {
-  "pct": 44,
-  "win": false,
-  "res": "plan",
+  "pct": 94,
+  "win": true,
+  "res": "WIN",
   "placed": [
    "ok",
    "ok",
@@ -55,111 +55,39 @@
   "keep": 0
  },
  "oneBomb": {
-  "pct": 21,
-  "collapse": 21,
+  "pct": 18,
+  "collapse": 29,
   "at": "concrete@B:f1",
   "tried": 18
  },
  "lazy": {
-  "pct": 4,
-  "collapse": 4
+  "pct": 29,
+  "collapse": 41
  },
  "fair": [
   {
    "win": true,
    "res": "WIN",
-   "pct": 98,
-   "used": 12,
-   "left": 2,
-   "waves": 2,
-   "firstWave": 67,
-   "keep": 0,
-   "estSec": 27,
-   "log": "bld9=67 heap3=98"
-  },
-  {
-   "win": true,
-   "res": "WIN",
-   "pct": 97,
-   "used": 12,
-   "left": 2,
-   "waves": 2,
-   "firstWave": 65,
-   "keep": 0,
-   "estSec": 27,
-   "log": "bld9=65 heap3=97"
-  },
-  {
-   "win": true,
-   "res": "WIN",
    "pct": 99,
-   "used": 12,
-   "left": 2,
-   "waves": 2,
-   "firstWave": 68,
+   "used": 9,
+   "left": 5,
+   "waves": 1,
+   "firstWave": 99,
    "keep": 0,
-   "estSec": 27,
-   "log": "bld9=68 heap3=99"
+   "estSec": 18,
+   "log": "bld9=99"
   }
  ],
- "allFoot": {
-  "pct": 63,
-  "used": 14,
-  "collapse": 100,
-  "keep": 0
+ "oneWave": {
+  "pct": 0
  },
  "footOnly": {
-  "pct": 62,
-  "waves": 2,
-  "left": 2,
-  "keep": 0
+  "pct": 0
  },
- "oneWave": {
-  "pct": 65,
-  "used": 14,
-  "reach": 114,
-  "collapse": 100
+ "allFoot": {
+  "pct": 0
  },
- "curve": [
-  {
-   "n": 1,
-   "pct": 3,
-   "collapse": 3
-  },
-  {
-   "n": 2,
-   "pct": 9,
-   "collapse": 11
-  },
-  {
-   "n": 3,
-   "pct": 10,
-   "collapse": 11
-  },
-  {
-   "n": 4,
-   "pct": 43,
-   "collapse": 79
-  },
-  {
-   "n": 6,
-   "pct": 42,
-   "collapse": 79
-  },
-  {
-   "n": 8,
-   "pct": 49,
-   "collapse": 83
-  },
-  {
-   "n": 12,
-   "pct": 59,
-   "collapse": 100
-  }
- ],
- "jump": 33,
- "verdict": "MISS",
- "issues": [
-  "expert plan plan 44%"
- ]
+ "curve": [],
+ "verdict": "PASS",
+ "issues": []
 }
