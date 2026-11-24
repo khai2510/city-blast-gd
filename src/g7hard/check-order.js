@@ -24,9 +24,13 @@ const BOOSTER = ['Ball', 'Net', 'Sky'];
 const NOCARD = ['stone', 'drop', 'perblast'];   // + heavy (counted as "dark" by the audit; launch 50, no card yet: D-blast-NONEW proposal)
 // SLOTS-50 status "convert" / "rebuild" / "rebuild + convert": the level sits in its slot in its current form until its conversion lands
 // + o2 / o3: SLOTS-50 places O02 / O03 there (D-blast-O23, 10 TNT), not wired yet in release/g7-old-levels.json: the old levels stand in
-const PENDING = ['o2', 'o3', 'o9', 'E04', 'E02', 'o19', 'E06', 'o15', 'o21', 'o14', 'o13', 'o12', 'o4', 'E07', 'o5', 'o25', 'E03', 'E10', 'o34', 'o33', 'o17', 'o18',
-  'o29', 'o26', 'o11', 'E05', 'o22', 'o23', 'o27', 'o31', 'E01'];
-const NEWSLOT = [37, 38, 46, 47, 48];   // SLOTS-50 NEW-1..5: a leftover stands there as a placeholder
+const PENDING = ['o2', 'o3', 'o9', 'E04', 'E02', 'o19', 'E06', 'o15', 'o21', 'o14', 'o13', 'o12', 'o4', 'E07', 'o5', 'o25', 'E03', 'E10', 'o34', 'o33', 'o17', 'o18',   'o29', 'o26', 'o11', 'E05', 'o22', 'o23', 'o27', 'o31', 'E01'];
+// PLACE-1124 (24/11): the live re-audit (audit-live.js) finds no element before its launch on any level of this list any more; the list
+// stays only because the tester walls (WALL) are still the pre-conversion results: emptying it turns 10 stale WALL rows into FAILs.
+// PLACE-1124 (24/11): the NEW slots hold E11-E15 (no placeholder any more); the leftovers stand after 51 (o24 o32 E08 o28 E09 at 52-56):
+// beyond the 1-50 launch plan, their later elements are listed (LEFTOVER), not failed (SLOTS-50 §4: natural slots 54-74)
+const NEWSLOT = [];
+const LEFTOVER = (n) => n > 51;
 // tester walls (23/11 digest + 22/11): non-hard levels a first-timer failed, in their CURRENT form (pending / placeholder levels not judged)
 const WALL = ['o2', 'o3', 'o5', 'o11', 'o12', 'o17', 'o18', 'E01', 'E02', 'E03', 'E04', 'E05', 'E06', 'E07', 'E08', 'E09'];
 const pos = {}; ORDER.forEach((c, i) => { pos[c] = i + 1; });
@@ -45,7 +49,7 @@ Object.entries(cardsAt).forEach(([p, es]) => { if (es.length > 1) { fail++; out.
 const seq = Object.keys(CARD).filter(e => CARD[e][2]).sort((a, b) => CARD[a][2] - CARD[b][2]);
 seq.forEach((e, i) => { if (i && !(introPos[e] > introPos[seq[i - 1]])) { fail++; out.push('FAIL launch order: ' + e + ' not after ' + seq[i - 1]); } });
 const rows = [];
-ORDER.forEach((c, i) => { const n = i + 1, l = L[c], notes = [], tag = NEWSLOT.includes(n) ? 'PLACEHOLDER' : PENDING.includes(c) ? 'PENDING' : '';
+ORDER.forEach((c, i) => { const n = i + 1, l = L[c], notes = [], tag = NEWSLOT.includes(n) ? 'PLACEHOLDER' : LEFTOVER(n) ? 'LEFTOVER (after 51)' : PENDING.includes(c) ? 'PENDING' : '';
   const before = [...l.el].filter(e => !NOCARD.includes(e) && introPos[e] > n);
   if (before.length) {
     const what = before.map(e => e + ' (launch ' + (introPos[e] === Infinity ? '> 50' : introPos[e]) + ')').join(', ');
@@ -53,10 +57,13 @@ ORDER.forEach((c, i) => { const n = i + 1, l = L[c], notes = [], tag = NEWSLOT.i
     else if (tag) { known++; notes.push(tag + ': ' + what); }
     else { fail++; notes.push('FAIL before launch: ' + what); } }
   const nc = [...l.el].filter(e => NOCARD.includes(e)); if (nc.length && !l.hard) { known++; notes.push((tag || 'KNOWN') + ' no-card element: ' + nc.join(', ')); }
+  // PLACE-1124: heavy pieces (hard7v / t / p / e, audit-live.js "heavy") launch at 50 with no card: before 50 on a non-hard level = FAIL
+  if (l.heavy && n < 50 && !l.hard) { if (tag) { known++; notes.push(tag + ': heavy (launch 50)'); } else { fail++; notes.push('FAIL before launch: heavy (launch 50)'); } }
+  else if (l.heavy && !l.hard) notes.push('heavy (launch 50, no card yet)');
   const H = (k) => L[ORDER[k]].hard, ph = (k) => NEWSLOT.includes(k + 1) || PENDING.includes(ORDER[k]);
   const w = (k) => H(k) || (!ph(k) && WALL.includes(ORDER[k]));
-  const near = (ks) => ks.some(k => NEWSLOT.includes(k + 1));   // a rule broken only through a placeholder slot is reported, not failed
-  const flag = (msg, ks) => { if (near(ks)) { known++; notes.push('PLACEHOLDER ' + msg); } else { fail++; notes.push('FAIL ' + msg); } };
+  const near = (ks) => ks.some(k => NEWSLOT.includes(k + 1) || LEFTOVER(k + 1));   // a rule broken only through a placeholder / leftover slot (> 51) is reported, not failed
+  const flag = (msg, ks) => { if (near(ks)) { known++; notes.push((ks.some(k => LEFTOVER(k + 1)) ? 'LEFTOVER ' : 'PLACEHOLDER ') + msg); } else { fail++; notes.push('FAIL ' + msg); } };
   if (i && l.hard && H(i - 1)) flag('two Hard / boss in a row', [i - 1, i]);
   if (i && H(i - 1) && w(i) && !l.hard) flag('no relief after the Hard / boss before', [i - 1, i]);
   if (i >= 2 && w(i) && w(i - 1) && w(i - 2)) flag('3 hard-feeling levels in a row', [i - 2, i - 1, i]);

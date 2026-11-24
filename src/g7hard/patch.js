@@ -43,13 +43,16 @@ const HBP = { H1: 'L01v4', H2: 'L02', H3: 'L03', H4: 'L04', H5: 'L05' };
 // Net 30 · steps 35 · steel 40 · Sky 45 · heavy 50; Hard / boss as-is at 7 11 14 19 24 29 34 39 44 49). Levels still to be converted sit in
 // their slot in their current form. The 5 NEW slots (37 38 46 47 48) hold leftovers as PLACEHOLDERS (o24 o32 E08 o28 E09); o30 = 51.
 // Reasons, before / after, pending conversions: city-blast/levels-gd/ORDER-1123.md. check: src/g7hard/check-order.js.
+// PLACE-1124 (24/11, Lead): the 5 NEW levels go into their SLOTS-50 slots: E11 Ice Rink 37, E12 Telephone Exchange 38, E13 Radio Mast 46,
+// E14 Palm House 47, E15 Parachute Tower 48 (levels-gd/EASY-PACK.md "SLOTS-50"). The placeholders they replace stay in the game after 51,
+// in their old relative order: o24 52, o32 53, E08 54, o28 55, E09 56. Hards / bosses and 1-36, 39-45, 49-51 unchanged.
 const PLACE = [
   'o1', 'o9', 'E04', 'o2', 'E02', 'o19', 'o7', 'o3', 'E06', 'o15',
   'o16', 'o21', 'o14', 'H2', 'o36', 'o6', 'o13', 'o12', 'H3', 'o4',
   'E07', 'o5', 'o25', 'o10', 'E03', 'E10', 'o34', 'o33', 'o35', 'o17',
-  'o18', 'o29', 'o26', 'H5', 'o11', 'E05', 'o24', 'o32', 'H4', 'o8',
-  'o22', 'o23', 'o27', 'H1', 'o31', 'E08', 'o28', 'E09', 'o20', 'E01',
-  'o30',
+  'o18', 'o29', 'o26', 'H5', 'o11', 'E05', 'E11', 'E12', 'H4', 'o8',
+  'o22', 'o23', 'o27', 'H1', 'o31', 'E13', 'E14', 'E15', 'o20', 'E01',
+  'o30', 'o24', 'o32', 'E08', 'o28', 'E09',
 ];
 // intro cards / spotlights: card id (main/intro.js INTRO_SCHED) -> the level (code as in PLACE) that carries it; 'off' = not shown in
 // this game (its launch is after level 50). The card fires when that level is played (LV7O.introAt), wherever it stands.

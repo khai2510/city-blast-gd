@@ -21,6 +21,11 @@
 // (the level it was about to play); levels the new order puts before it stay open in the picker. best / bp follow their level as before.
 // A save from an order with fewer levels (22/11: the 41-level orders, before the easy pack) that is at or past its end has beaten
 // all of them: it goes to the first new level (41 beaten -> 42), never past it.
+// PLACE-1124 (24/11): E11-E15 take slots 37 38 46 47 48, the placeholders move to 52-56 (56 levels; E11-E15 = LV7DEFS 36 + 5 + 10..14,
+// appended after E10, so every older mark still decodes). Same rule, no code change: a save on the 51-level ORDER1123 order lands on
+// the same level (old 1-36 / 39-45 / 49-51 keep their slot; old 37 o24 -> 52, 38 o32 -> 53, 46 E08 -> 54, 47 o28 -> 55, 48 E09 -> 56);
+// a save past its end (all 51 beaten) goes to the first level it never had, E11 at 37. Checked by a simulation of this block for
+// every old slot (levels-gd/ORDER-1123.md "PLACE-1124").
 var LV7O = (function(){
   var Q = location.search, on = !/[?&]lv7=0(&|$)/.test(Q), NB = LEVELS.length, NHD = __NH__, NE = __NE__, NH = NHD + NE, SLOTS = __SLOTS__;   // NH = every g7 level
   var R = [], i;                                                           // the play order: slot -> appended index

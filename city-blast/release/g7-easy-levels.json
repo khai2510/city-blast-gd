@@ -1033,5 +1033,439 @@
    ]
   ],
   "tntStart": 8
+ },
+ {
+  "name": "Ice Rink",
+  "bp": "E11",
+  "tier": "N",
+  "slot": 37,
+  "f": 7,
+  "kind": "scene",
+  "hero": "A",
+  "heroId": "G7-E11",
+  "teaches": "shield-drums",
+  "target": 0.85,
+  "yaw": 0.1,
+  "d": 1,
+  "fillMax": 0.73,
+  "hard7": true,
+  "hit7": {
+   "keys": [],
+   "drums": true
+  },
+  "sf": [],
+  "pattern": "shield then drums: a brick colonnade hides a row of red drums and the rink hall's front columns; open the colonnade, then the drums fold the bays forward",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7xRink",
+    "x": 0,
+    "z": -1.8,
+    "n": 3,
+    "bw": 2.9,
+    "hz": 4.6,
+    "ph": 5,
+    "ch": 2.4,
+    "hold": 2,
+    "upSep": 1,
+    "bg0": 151
+   },
+   {
+    "id": "B",
+    "kind": "g7arcade",
+    "x": 0,
+    "z": 5.95,
+    "n": 6,
+    "len": 17.599999999999998,
+    "d": 1.1,
+    "pw": 1.2,
+    "h1": 5.2,
+    "h2": 3.6,
+    "bg": 155
+   }
+  ],
+  "tanks": [
+   [
+    -7.2,
+    3.8
+   ],
+   [
+    0,
+    3.8
+   ],
+   [
+    7.2,
+    3.8
+   ]
+  ],
+  "charges": {
+   "tnt": 9
+  },
+  "tip": "",
+  "ftip": "Open the shield first. Then let the drums work.",
+  "sol": [
+   [
+    "tnt",
+    "B:z+",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "B:z+",
+    0,
+    3
+   ],
+   [
+    "tnt",
+    "B:z+",
+    0,
+    5
+   ]
+  ],
+  "tntStart": 9
+ },
+ {
+  "name": "Telephone Exchange",
+  "bp": "E12",
+  "tier": "N",
+  "slot": 38,
+  "f": 7,
+  "kind": "scene",
+  "hero": "A",
+  "heroId": "G7-E12",
+  "teaches": "blocks",
+  "target": 0.85,
+  "yaw": 0.1,
+  "d": 1,
+  "fillMax": 0.73,
+  "hard7": true,
+  "sf": [],
+  "pattern": "separate blocks: the upper block rides down on the lower one and lands whole; lower block first (it lands in place), then the upper; a blast up high throws it at the school",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7xExch",
+    "x": -1.2,
+    "z": 0,
+    "hx": 4.2,
+    "hz": 4.2,
+    "nl": 2,
+    "nu": 3,
+    "sh": 3.2,
+    "ux": 2.8,
+    "uz": 2.8,
+    "hold": -1,
+    "bg": 161
+   },
+   {
+    "id": "B",
+    "kind": "g7kiosk",
+    "x": -10.7,
+    "z": 0,
+    "hx": 1.9,
+    "mat": "wood",
+    "bg": 165
+   }
+  ],
+  "keeps": [
+   {
+    "kind": "keep6",
+    "x": 9.4,
+    "z": 0,
+    "floors": 2,
+    "cx": 3,
+    "cz": 2,
+    "name": "the school",
+    "role": "school",
+    "fixType": "school"
+   }
+  ],
+  "keep": {
+   "name": "the school",
+   "sides": [],
+   "type": "school",
+   "role": "school",
+   "full": 1
+  },
+  "tanks": [],
+  "charges": {
+   "tnt": 10
+  },
+  "tip": "",
+  "ftip": "Lower block first. The upper one lands safe.",
+  "sol": [
+   [
+    "tnt",
+    "A:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "A:z+",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "A:z+",
+    0,
+    2
+   ]
+  ],
+  "tntStart": 10
+ },
+ {
+  "name": "Radio Mast",
+  "bp": "E13",
+  "tier": "N",
+  "slot": 46,
+  "f": 7,
+  "kind": "scene",
+  "hero": "A",
+  "heroId": "G7-E13",
+  "teaches": "steel-steps",
+  "target": 0.85,
+  "yaw": 0.1,
+  "d": 1,
+  "fillMax": 0.73,
+  "hard7": true,
+  "hit7": {
+   "keys": [
+    "wpost",
+    "wwall",
+    "mdW",
+    "g7roofL"
+   ],
+   "armor": 0.001,
+   "f": 3,
+   "reach": 1
+  },
+  "sf": [],
+  "pattern": "steel + steps: a steel mast on grey concrete plinths; cut two plinths side by side and it falls across the timber hall; the steel on the ground takes a second blast",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7xMast",
+    "x": 0,
+    "z": -4.8,
+    "hx": 2.6,
+    "ph": 2.2,
+    "n": 4,
+    "sh": 4,
+    "hold": 2,
+    "bg": 171
+   },
+   {
+    "id": "B",
+    "kind": "g7gshed",
+    "x": 0,
+    "z": 4.8,
+    "hx": 5,
+    "hz": 2.6,
+    "nx": 4,
+    "side": 1,
+    "bg": 172
+   },
+   {
+    "id": "C",
+    "kind": "g7kiosk",
+    "x": -7.2,
+    "z": -4.8,
+    "hx": 1.8,
+    "mat": "wood",
+    "bg": 173
+   },
+   {
+    "id": "D",
+    "kind": "g7kiosk",
+    "x": 7.2,
+    "z": -4.8,
+    "hx": 1.8,
+    "mat": "wood",
+    "bg": 174
+   }
+  ],
+  "tanks": [],
+  "charges": {
+   "tnt": 15
+  },
+  "tip": "",
+  "ftip": "TNT cannot cut steel. Cut what holds it.",
+  "sol": [
+   [
+    "tnt",
+    "A:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "A:z+",
+    0,
+    1
+   ]
+  ],
+  "tntStart": 15
+ },
+ {
+  "name": "Palm House",
+  "bp": "E14",
+  "tier": "N",
+  "slot": 47,
+  "f": 7,
+  "kind": "scene",
+  "hero": "A",
+  "heroId": "G7-E14",
+  "teaches": "steel-drums",
+  "target": 0.85,
+  "yaw": 0.1,
+  "d": 1,
+  "fillMax": 0.73,
+  "hard7": true,
+  "hit7": {
+   "keys": [],
+   "drums": true
+  },
+  "sf": [],
+  "pattern": "steel + drums: red drums by the front bases of a steel-and-glass palm house; the drums break the concrete bases, never the steel; the frame takes a second blast",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7xPalm",
+    "x": 0,
+    "z": -0.5,
+    "hx": 5,
+    "hz": 3.6,
+    "bh": 1.4,
+    "sh": 4.4,
+    "hold": 1.2,
+    "bg": 181
+   },
+   {
+    "id": "B",
+    "kind": "g7kiosk",
+    "x": -9,
+    "z": -0.5,
+    "hx": 1.8,
+    "mat": "wood",
+    "bg": 182
+   },
+   {
+    "id": "C",
+    "kind": "g7kiosk",
+    "x": 9,
+    "z": -0.5,
+    "hx": 1.8,
+    "mat": "wood",
+    "bg": 183
+   }
+  ],
+  "tanks": [
+   [
+    -4.4,
+    3.7
+   ],
+   [
+    0,
+    3.7
+   ],
+   [
+    4.4,
+    3.7
+   ]
+  ],
+  "charges": {
+   "tnt": 12
+  },
+  "tip": "",
+  "ftip": "Drums cannot cut steel either. Hit the bases.",
+  "sol": [],
+  "tntStart": 12
+ },
+ {
+  "name": "Parachute Tower",
+  "bp": "E15",
+  "tier": "N",
+  "slot": 48,
+  "f": 7,
+  "kind": "scene",
+  "hero": "A",
+  "heroId": "G7-E15",
+  "teaches": "steel-aim",
+  "target": 0.85,
+  "yaw": 0.1,
+  "d": 1,
+  "fillMax": 0.73,
+  "hard7": true,
+  "sf": [],
+  "pattern": "aim + steel: a steel tower on concrete feet between a timber hall (target) and a school (blue); two feet side by side on the hall side lay it along the hall; the steel takes a second blast",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7xChute",
+    "x": 1.6,
+    "z": 0,
+    "hx": 3,
+    "fh": 2.4,
+    "n": 4,
+    "sh": 3.8,
+    "hold": 2,
+    "bg": 191
+   },
+   {
+    "id": "B",
+    "kind": "g7boil",
+    "x": -8.65,
+    "z": 0,
+    "n": 2,
+    "bw": 2.4,
+    "hz": 3.2,
+    "ph": 5,
+    "bg0": 192
+   }
+  ],
+  "keeps": [
+   {
+    "kind": "keep6",
+    "x": 10.8,
+    "z": 0,
+    "floors": 2,
+    "cx": 3,
+    "cz": 2,
+    "name": "the school",
+    "role": "school",
+    "fixType": "school"
+   }
+  ],
+  "keep": {
+   "name": "the school",
+   "sides": [],
+   "type": "school",
+   "role": "school",
+   "full": 1
+  },
+  "tanks": [],
+  "charges": {
+   "tnt": 11
+  },
+  "tip": "",
+  "ftip": "Steel falls where you open it. Keep blue clear.",
+  "sol": [
+   [
+    "tnt",
+    "A:x-",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "A:x-",
+    0,
+    1
+   ]
+  ],
+  "tntStart": 11
  }
 ]
