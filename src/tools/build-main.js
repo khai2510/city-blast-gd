@@ -66,6 +66,9 @@ const STEPS = [
   // ---- Mac (Khai 22/11: "chạy design polish cho game, theo royal smash, h2h compared"): visual-only layer, LAST; city-blast/rs-look/README.md
   { id: 'rs-look', what: 'H2H Royal Smash visual layer (Mac): BLAST shine sweep + TNT count bump (deck, locked discs, gloss and lot tint removed per Khai 22/11); view only, ?rs=0 = off', run: ['../city-blast/rs-look/patch.js', '$IN', '$OUT'],
     src: ['../city-blast/rs-look/patch.js', '../city-blast/rs-look/rs.css', '../city-blast/rs-look/rs.js', '../city-blast/rs-look/rs-main.js'], marks: ['<!-- rs-look -->', '// ---- rs-look (Mac', '// ---- rs-look in main()'] },
+  // ---- Agents-Game (PERF-1124, Khai 24/11 "TestFlight build 9 giật"): dev-only fps meter + probe, LAST (wraps the final animate / physicsFrame / render); off unless ?fps=1 or 5 taps on the Level pill
+  { id: 'perf2', what: 'perf pass 2 (PERF-1124): S1 identical frames are not redrawn (scene signature), S2 charge sprite programs + particle atlas ready before the first TNT / BLAST, S3 no 2nd fixed step on a frame that cannot afford it, S4 unchanged poses not re-uploaded; same picture, same physics; ?perf2=0 = off', run: ['main/perf2-patch.js', '$IN', '$OUT'], src: ['main/perf2-patch.js', 'main/perf2.js'], marks: ['<!-- main/perf2.js -->', '// ---- main/perf2.js', '// ---- end main/perf2.js'] },
+  { id: 'fps', what: 'hidden fps meter (PERF-1124): ?fps=1 or 5 quick taps on the Level pill = fps (1 s) + worst frame + ms render / physics, top centre; off by default; window.__blastPerf.meter = the headless probe', run: ['main/fps-patch.js', '$IN', '$OUT'], src: ['main/fps-patch.js', 'main/fps.js'], marks: ['<!-- main/fps.js -->', '// ---- main/fps.js', '// ---- end main/fps.js'] },
 ];
 if (process.argv.includes('--list')) { STEPS.forEach((s, i) => console.log(String(i + 1).padStart(2) + '. ' + s.id.padEnd(15) + s.what)); process.exit(0); }
 const OUT = path.resolve(process.argv[2] || G('checkpoints', 'index-main.html'));
