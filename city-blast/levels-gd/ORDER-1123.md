@@ -1,4 +1,4 @@
-# ORDER-1123: the play order of the 51 levels (23/11)
+# ORDER-1123: the play order (23/11; 56 levels since PLACE-1124, 24/11)
 
 Khai 23/11: "sắp xếp lại level xong rồi gửi lên TestFlight". Then **D-blast-LAUNCH** (launch schedule), the Hard exemption (Khai 23/11: Hard / boss
 levels are placed as-is, even with later elements) and **D-blast-L50**: slots 1–50 follow the blueprint **`SLOTS-50.md`** exactly (044f48d).
@@ -134,3 +134,115 @@ level it never had. `src/g7hard/export-easy.js` keeps its EASY list (the data or
 | check-sflay | 16 PASS, 0 FAIL, 0 page errors |
 | check-camhard (3, 14, 19, 25, 39, 44, 50) | 7 PASS, 0 FAIL, 0 errors |
 | page errors | 0 in the final run; the first run (before error tagging) logged 11 × "Cannot read properties of undefined (reading 'setMatrixAt')", not reproduced since |
+
+## 7. PLACE-1124 (24/11): the five NEW levels in their slots, 56 levels
+
+Lead 24/11: E11–E15 (easy pack "SLOTS-50", `EASY-PACK.md`) go into the NEW slots of `SLOTS-50.md` §5; the placeholders stay in the game
+after 51, in their old relative order. Hard levels (7, 11, 14, 19, 29, 34, 39, 44) and bosses (24, 49) do not move; 51 stays o30.
+Wired in `src/g7hard/patch.js` `PLACE`; `release/g7-easy-levels.json` re-exported (E01–E15; E01–E10 rows byte-identical, E11–E15
+appended in data order, so save marks and seeds keep their meaning). `INTRO_AT` unchanged (no card moves).
+
+**Saves** (`order-early.js`, same rule as e8191ca, no code change): a save on the 51-level ORDER1123 order lands on the same level.
+Old 1–36, 39–45, 49–51 keep their slot; old 37 o24 → 52, 38 o32 → 53, 46 E08 → 54, 47 o28 → 55, 48 E09 → 56 (levels before it stay
+open in the picker, as in §5). A save past the old end (all 51 beaten) goes to the first level it never had: E11 at 37. Checked by running
+the built `LV7O` block in Node for every old slot 1–52 (all on the same level; best / bp follow their level).
+
+**Order audit re-run on the live game.** `src/g7hard/sweep-live.js` loads every slot of the build (save on the slot, Play), reads the
+member keys of every live body and the level fields; `src/g7hard/audit-live.js` maps keys to elements (table in its header: `g7bk` =
+brick as EASY-PACK says, `md*` = the mill deck in its material, roofs / decor not elements) and rewrote `order-audit.json` for all 56
+levels ("live" = the keys read). "dark" is now dark RC only (launch 60); heavy pieces are their own flag `heavy` (launch 50, no card),
+and `check-order.js` fails a non-hard level with heavy before 50. Steps: the level's own gate (easy pack: `results-slots50.json`
+"steps"; old-polish: `teaches`); trap / per-blast / drop on Hard levels and never-rebuilt levels: the 22/11 row.
+
+**D-blast-LAUNCH, slots 1–50: no violation.** No non-hard level in 1–50 shows an element before its launch slot. Every element ahead of
+its slot is on a Hard / boss level (the launch exception): 7 o7 concrete, blue · 11 o16 blue · 14 H2 barrels, steps, dark, stone,
+per-blast · 19 H3 steps, dark · 24 o10 steel · 29 o35 trap · 34 H5 steps, dark, per-blast · 39 H4 dark, stone, per-blast ·
+44 H1 heavy, dark, drop. E01 at 50 has heavy = its launch slot (no heavy card yet, D-blast-NONEW proposal).
+
+| # | Was | Level | Tier | Elements (live) | Before launch | Status |
+|---|---|---|---|---|---|---|
+| 1 | = | o1 Ranger Lookout (O01) | T | wood | — | ok |
+| 2 | = | o9 Pit Head (O07) | N | wood | — | ok |
+| 3 | = | E04 Market Hall | N | wood | — | ok |
+| 4 | = | o2 Hop Kiln (O02) | T | wood, brick | — | ok |
+| 5 | = | E02 Shot Tower | N | wood, brick | — | ok |
+| 6 | = | o19 Gas Works (O15) | N | wood, brick | — | ok |
+| 7 | = | o7 Grand Arch | H | brick, concrete, blue | concrete (8), blue (15) | as-is (Hard exempt) |
+| 8 | = | o3 Airfield Tower (O03) | N | wood, brick, concrete | — | ok |
+| 9 | = | E06 Boiler Stack | N | brick, concrete | — | ok |
+| 10 | = | o15 Monorail Station (O13) | N | concrete | — | ok |
+| 11 | = | o16 Dome Hall | H | wood, concrete, blue | blue (15) | as-is (Hard exempt) |
+| 12 | = | o21 Drive-in (O12) | R | wood, concrete | — | ok |
+| 13 | = | o14 Pier Pavilion (O10) | N | wood, brick, concrete | — | ok |
+| 14 | = | H2 Watch Keep | H | brick, concrete, dark, stone, barrels, steps, perblast | dark (60), stone (90), barrels (25), steps (35), perblast (100) | as-is (Hard exempt) |
+| 15 | = | o36 Fire Station (O04) | R | wood, brick, blue | — | ok |
+| 16 | = | o6 Valley Station (O05) | N | wood, concrete, blue | — | ok |
+| 17 | = | o13 Floodlit Stand (O09) | R | concrete | — | ok |
+| 18 | = | o12 Roadside Motel (O18) | N | wood, brick, concrete | — | ok |
+| 19 | = | H3 Grand Stage | H | concrete, dark, blue, steps | dark (60), steps (35) | as-is (Hard exempt) |
+| 20 | = | o4 Needle Court (O04B) | N | wood, brick, concrete, glass, blue | — | ok |
+| 21 | = | E07 Bathhouse | N | wood, brick, glass, blue | — | ok |
+| 22 | = | o5 Doorstop Corner (O05B) | N | wood, brick, glass, blue | — | ok |
+| 23 | = | o25 Glass Point (O25) | R | wood, brick, concrete, glass | — | ok |
+| 24 | = | o10 Lift Bridge | B | brick, concrete, steel, blue | steel (40) | as-is (Hard exempt) |
+| 25 | = | E03 Tram Depot | N | wood, brick, glass, barrels | — | ok |
+| 26 | = | E10 Rail Terminus | N | wood, brick, barrels, blue | — | ok |
+| 27 | = | o34 Tock Yard (O34) | N | wood, brick, barrels | — | ok |
+| 28 | = | o33 Rivet Depot (O33) | N | brick, concrete, barrels | — | ok |
+| 29 | = | o35 Dome Works | H | concrete, barrels, blue, trap | trap (80) | as-is (Hard exempt) |
+| 30 | = | o17 Car Park (O17) | R | brick, concrete | — | ok |
+| 31 | = | o18 Library (O19) | N | brick, concrete, blue | — | ok |
+| 32 | = | o29 Old Tock Row (O29) | N | wood, brick | — | ok |
+| 33 | = | o26 The Bullet (O26) | N | wood, brick, concrete, glass | — | ok |
+| 34 | = | H5 Glass Spine | SH | concrete, glass, dark, steps, perblast | dark (60), steps (35), perblast (100) | as-is (Hard exempt) |
+| 35 | = | o11 Shell Hall | R | wood, concrete, blue, steps | — | ok |
+| 36 | = | E05 Star Dome | N | wood, brick, concrete, glass, steps | — | ok |
+| 37 | new | E11 Ice Rink | N | brick, concrete, glass, barrels, steps | — | ok |
+| 38 | new | E12 Telephone Exchange | N | wood, concrete, blue, steps | — | ok |
+| 39 | = | H4 Canal Row | SH | wood, concrete, dark, stone, blue, steps, perblast | dark (60), stone (90), perblast (100) | as-is (Hard exempt) |
+| 40 | = | o8 Harbour Crane (O06) | R | wood, brick, concrete, steel | — | ok |
+| 41 | = | o22 The Pencil (O22) | N | wood, brick, concrete, blue | — | ok |
+| 42 | = | o23 Tube Bundle (O23) | N | wood, brick, concrete | — | ok |
+| 43 | = | o27 The Splinter (O27) | N | wood, brick, concrete, glass | — | ok |
+| 44 | = | H1 Five Eaves | SH | wood, brick, concrete, dark, barrels, steps, drop, heavy | dark (60), drop (70), heavy (50) | as-is (Hard exempt) |
+| 45 | = | o31 Stack Tower (O31) | R | brick, concrete | — | ok |
+| 46 | new | E13 Radio Mast | N | wood, concrete, steel, steps | — | ok |
+| 47 | new | E14 Palm House | N | wood, concrete, glass, steel, barrels, steps | — | ok |
+| 48 | new | E15 Parachute Tower | N | brick, concrete, steel, blue, steps | — | ok |
+| 49 | = | o20 Big Bow | B | concrete, steel, blue | — | as-is (Hard exempt) |
+| 50 | = | E01 Long Legs | N | wood, concrete, glass, barrels, steps, heavy | — | ok |
+| 51 | = | o30 Sky Steps | B | wood, concrete, glass, steel, blue | — | as-is (Hard exempt) |
+| 52 | 37 | o24 Deco Needle | H | wood, concrete, blue | — | leftover (after 51) |
+| 53 | 38 | o32 Sky Saucer | N | concrete, glass, steel, dark, barrels | dark (60) | leftover (after 51) |
+| 54 | 46 | E08 Grain Elevator | N | wood, brick, concrete, glass, dark, steps, heavy | dark (60) | leftover (after 51) |
+| 55 | 47 | o28 Sister Spires | H | wood, concrete, glass, steel, blue | — | leftover (after 51) |
+| 56 | 48 | E09 High Cistern | N | wood, brick, steel, steps, heavy | — | leftover (after 51) |
+
+### The `setMatrixAt` page error (found and fixed, 24/11)
+
+"Cannot read properties of undefined (reading 'setMatrixAt')" (11 × in the first ORDER1123 run; the camera agent's checks on L24 before
+ORDER1123 and L45 after it, both the OLD Stack Tower o31; `check-r22` lists it as KNOWN). Stack (prebuild probe on the 18:04 build and on
+the current build with `?oldlv=1`): `impactHit → failMember (g7 / levels6 / materials-fx wrappers) → fragment → writeMatrix → b.im.setMatrixAt`.
+Cause: the game prebuilds the next level in a background world on idle frames (`pbStep`, title / plan / result screens). Its members only get
+their instanced mesh (`b.im`) when `buildInstances` adopts them. The old o31 loses a member to an impact during that presettle, so
+`writeMatrix` ran on a member with no mesh: the throw broke the slice and came back every frame (intermittent: it only shows when the idle
+prebuild reaches that step before Play is tapped, so a fast tap or a lighter machine hid it). The level is no longer in the game (o31 is
+replaced in place by the O31 rebuild, old batch 2), which is why it stopped; it is still there with `?oldlv=1`, and any future level that
+breaks a member while it settles would bring it back.
+Fix (`city-blast/pipeline7/engine.js`, block "PLACE-1124 prebuild draw guard"; no `frame.js` change): `writeMatrix` skips a member that has
+no mesh yet (buildInstances writes every matrix when the level is adopted; physics and presettle are unchanged, the same as a level built in place).
+Proof: prebuild probe (`test.prebuild` of every slot) on the current build with `?oldlv=1`: before slot 45 THROW, after 0; default build 0.
+
+### Checks (PLACE-1124 build, `w-place3.html`, main 27af4ec + this work; Chrome one at a time under the lock)
+
+| Check | Result |
+|---|---|
+| `check-order.js` | PASS (cards on their launch slots; 14 EXCEPTION / KNOWN / LEFTOVER listed; 52–56 two-Hard / relief notes reported as LEFTOVER) |
+| loadcheck | ok=true, 0 errors |
+| `sweep-live.js` all 56 slots (save on the slot, Play, 4 swipes, 1 TNT by real tap, BLAST) | 0 page / console errors; all 56 blasted (9 re-run with the hand / next-member tap) |
+| prebuild probe, every slot (default and `?oldlv=1`) | 0 throws, 0 page errors (before the guard: slot 45 with `?oldlv=1` threw) |
+| `check-camhard` 37 38 45 46 47 48 | 6 PASS, 0 errors |
+| `check-pad` all | 0 page errors; violations L14 Watch Keep, L39 Canal Row (Mac Hard levels, known) |
+| `check-sflay` × 3 | 3 × 0 FAIL; SF4 (L1 double-tap lesson) PASS 3/3 |
+| `check-r22` | C1 PASS; the run then stops at C1b ("nothing to tap: #rRescue", the near-miss card shows no +1 TNT rescue on that level): reported, not fixed here |
+| save migration (Node run of the built `LV7O` block) | every old slot 1–51 on the same level; past the end → E11 (37) |

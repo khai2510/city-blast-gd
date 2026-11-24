@@ -2860,6 +2860,15 @@ try{ (function(){
   })();
 
 
+  // ---- PLACE-1124 (24/11) prebuild draw guard: the "Cannot read properties of undefined (reading 'setMatrixAt')" page error.
+  // The next level is prebuilt in a background world while the player is on the title / plan / result screen (pbStep: blocks
+  // swapped in, presettled with fixedStep). Its members get their instanced mesh (b.im) only when buildInstances adopts them. A
+  // member that breaks during that presettle (impactHit -> failMember -> fragment -> writeMatrix) was drawn with b.im undefined:
+  // the throw left the slice half done and recurred every frame (old Stack Tower o31 before its O31 rebuild: 4-12 errors per load,
+  // camera checks L24 / L45). No mesh = nothing to draw yet (buildInstances writes every matrix on adoption), so skip it; the
+  // physics and the presettle are the same as a level built in place (there b.im exists).
+  var wmPb = writeMatrix; writeMatrix = function(b, yOff){ if(!b || !b.im) return; return wmPb(b, yOff); };
+
   // ---- levels -----------------------------------------------------------------------------------------------------
   var DEF = LV7.levels = [];
   LV7.add = function(l){ DEF.push(l); };
