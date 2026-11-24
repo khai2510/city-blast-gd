@@ -1,0 +1,95 @@
+[
+ {
+  "name": "Radio Mast",
+  "bp": "E13",
+  "tier": "N",
+  "slot": 46,
+  "f": 7,
+  "kind": "scene",
+  "hero": "A",
+  "heroId": "G7-E13",
+  "teaches": "steel-steps",
+  "target": 0.85,
+  "yaw": 0.1,
+  "d": 1,
+  "fillMax": 0.73,
+  "hard7": true,
+  "hit7": {
+   "keys": [
+    "wpost",
+    "wwall",
+    "mdW",
+    "g7roofL"
+   ],
+   "armor": 0.001,
+   "f": 3,
+   "reach": 1
+  },
+  "sf": [],
+  "pattern": "steel + steps: a steel mast on grey concrete plinths; cut two plinths side by side and it falls across the timber hall; the steel on the ground takes a second blast",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7xMast",
+    "x": 0,
+    "z": -4.8,
+    "hx": 2.6,
+    "ph": 2.2,
+    "n": 4,
+    "sh": 4,
+    "hold": 2,
+    "bg": 171
+   },
+   {
+    "id": "B",
+    "kind": "g7gshed",
+    "x": 0,
+    "z": 4.8,
+    "hx": 5,
+    "hz": 2.6,
+    "nx": 4,
+    "side": 1,
+    "bg": 172
+   },
+   {
+    "id": "C",
+    "kind": "g7kiosk",
+    "x": -7.2,
+    "z": -4.8,
+    "hx": 1.8,
+    "mat": "wood",
+    "bg": 173
+   },
+   {
+    "id": "D",
+    "kind": "g7kiosk",
+    "x": 7.2,
+    "z": -4.8,
+    "hx": 1.8,
+    "mat": "wood",
+    "bg": 174
+   }
+  ],
+  "tanks": [],
+  "charges": {
+   "tnt": 40
+  },
+  "tip": "",
+  "ftip": "TNT cannot cut steel. Cut what holds it.",
+  "sol": [
+   [
+    "tnt",
+    "A:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "A:z+",
+    0,
+    1
+   ]
+  ],
+  "tntStart": 15
+ }
+]
