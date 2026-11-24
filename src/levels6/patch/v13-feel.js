@@ -411,12 +411,7 @@ try{ (function(){
   spawnCoins = function(pos3, n, each){
     if(!FEEL.q5 || manual || screen !== "game") return spawnCoins0(pos3, n, each);
     var now = performance.now(), one = 0;
-    // FIX-1124 (UX-92, tester round 24/11): on the wave that decides the attempt (no TNT left, or the last wave) no coin flies while the
-    // meter is under PASS: a failed blast showed a coin stream and then paid nothing. The coins are held as the others (same totals) and
-    // stream to the pill after the rest if the blast wins.
-    var q5Short = (phase === "boom" || phase === "settle") && (stockLeft() === 0 || wave >= maxWaves) && !!L && pct < (L.target || 0.85);
-    if(q5Short) ST.coinsMuted = (ST.coinsMuted || 0) + 1;
-    if(!q5Short && q5.shown < Q5.max && now - q5.last >= Q5.gap){ one = 1; q5.shown++; q5.last = now; ST.coinsShown++; spawnCoins0(pos3, 1, each); }
+    if(q5.shown < Q5.max && now - q5.last >= Q5.gap){ one = 1; q5.shown++; q5.last = now; ST.coinsShown++; spawnCoins0(pos3, 1, each); }
     var rest = n - one; if(rest <= 0) return;
     addCoins(each*rest, false); q5.hold += each*rest; q5.held += rest; ST.coinsHeld += rest;
   };
@@ -513,7 +508,7 @@ try{ (function(){
     mark("finish");
     if(!manual && lastResult){
       if(lastResult.ok && FEEL.q7) stampGo();                                   // a win the 0.5 s rule has not announced yet
-      if(FEEL.q5){ if(lastResult.ok) q5Stream(Math.min(Q5.stream, q5.held), true); else q5Stream(0, false); q5.held = 0; }   // FIX-1124 (UX-92): a fail streams no coins (it pays none)
+      if(FEEL.q5){ if(lastResult.ok) q5Stream(Math.min(Q5.stream, q5.held), true); else q5Stream(Math.min(6, q5.held), false); q5.held = 0; }
     }
     return r;
   };
