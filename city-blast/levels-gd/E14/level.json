@@ -1,0 +1,77 @@
+[
+ {
+  "name": "Palm House",
+  "bp": "E14",
+  "tier": "N",
+  "slot": 47,
+  "f": 7,
+  "kind": "scene",
+  "hero": "A",
+  "heroId": "G7-E14",
+  "teaches": "steel-drums",
+  "target": 0.85,
+  "yaw": 0.1,
+  "d": 1,
+  "fillMax": 0.73,
+  "hard7": true,
+  "hit7": {
+   "keys": [],
+   "drums": true
+  },
+  "sf": [],
+  "pattern": "steel + drums: red drums by the front bases of a steel-and-glass palm house; the drums break the concrete bases, never the steel; the frame takes a second blast",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7xPalm",
+    "x": 0,
+    "z": -0.5,
+    "hx": 5,
+    "hz": 3.6,
+    "bh": 1.4,
+    "sh": 4.4,
+    "hold": 1.2,
+    "bg": 181
+   },
+   {
+    "id": "B",
+    "kind": "g7kiosk",
+    "x": -9,
+    "z": -0.5,
+    "hx": 1.8,
+    "mat": "wood",
+    "bg": 182
+   },
+   {
+    "id": "C",
+    "kind": "g7kiosk",
+    "x": 9,
+    "z": -0.5,
+    "hx": 1.8,
+    "mat": "wood",
+    "bg": 183
+   }
+  ],
+  "tanks": [
+   [
+    -4.4,
+    3.7
+   ],
+   [
+    0,
+    3.7
+   ],
+   [
+    4.4,
+    3.7
+   ]
+  ],
+  "charges": {
+   "tnt": 40
+  },
+  "tip": "",
+  "ftip": "Drums cannot cut steel either. Hit the bases.",
+  "sol": [],
+  "tntStart": 12
+ }
+]

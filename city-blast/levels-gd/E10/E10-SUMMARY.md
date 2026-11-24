@@ -49,3 +49,24 @@ Mechanics (3, all taught before): tip rule, red drums (`tanks` + `hit7.drums`), 
 - Budget 14 TNT, machine spare 4.
 - The blue is at a safe distance: it teaches "what stays" only through a careless blast or a back tip very close to it. Moving it 1.5 m closer makes the back tip lose (r3); say if E10 should press harder.
 - The fail line "Read it first: which legs, which side, what stays." is the only text.
+
+## SLOTS-50 (23/11, D-blast-L50 / D-blast-LAUNCH / D-blast-PAD): play slot 26
+
+Converted: RC legs → brick, heavy gables / turret off (HV 0), no drop7, lot centred (was lopsided), one blast.
+
+| | |
+|---|---|
+| Elements before | wood, brick, dark RC legs, heavy gables/turret, drums, blue, steps, drop7 |
+| Elements after (read from the built level) | wood, brick, drums, blue |
+| Bar | Normal before 35: oneBomb < 70 %, fair 3/3, spare >= 2, the expert plan (sol) wins in ONE blast; blasts, time, curve, allFoot / footOnly reported (no heavy piece before 50) |
+| TNT | **8** |
+| Expert plan (`sol`, one blast) | WIN 86 % (8 TNT) |
+| fair, 3 seeds | 3/3 · spare 2/2/2 · blasts 1/1/1 · 14/13/13 s |
+| oneBomb / lazy | 60 % / 62 % |
+| allFoot / footOnly / oneWave | 82 % / 89 % / 78 % |
+| curve (n TNT at the main foot: %) | 1:2 2:48 3:48 4:46 6:46 8:48 12:48 (max jump +46) |
+| at rest (8 s) | 0 dead, 0 moved, bonds 312→312 |
+| pad (D-blast-PAD) | lot centred on (0, 0), farthest corner 12.7 m (pad 15.55 m today, ~18.7 m widened) |
+| verdict | **PASS** · reported: est 14/13/13 s; curve jump +46; allFoot 82%; footOnly 89% |
+
+Gate: `gate.mjs` (one Chrome session, test build on main's 31-polish base, `results-slots50.json`, 2026-11-23T21:59 UTC). Shots: `shot-open.jpg`, `shot-blast1-mid.jpg`, `shot-blast1.jpg` (the expert plan / first blast) (393 × 852, test build).

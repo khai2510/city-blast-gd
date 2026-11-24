@@ -3,6 +3,7 @@
   "name": "Bathhouse",
   "bp": "E07",
   "tier": "N",
+  "slot": 21,
   "f": 7,
   "kind": "scene",
   "hero": "A",
@@ -13,13 +14,6 @@
   "d": 1,
   "fillMax": 0.73,
   "hard7": true,
-  "drop7": {
-   "keys": [
-    "mdB"
-   ],
-   "fall": 1.5,
-   "armor": 0.97
-  },
   "sf": [],
   "pattern": "restraint: a domed bathhouse on 8 piers between two colonnade wings, a school (blue) behind the right wing at a generous gap; small blasts drop the dome into the hall, a big blast or a tip back-right reaches the school",
   "parts": [
@@ -27,16 +21,16 @@
     "id": "A",
     "kind": "g7bath",
     "x": 0,
-    "z": 0,
+    "z": 2.3,
     "hx": 5,
     "hz": 5,
     "dr": 4,
     "ph": 6.5,
     "hold": 1.6,
-    "domeKey": "hard7t",
+    "domeKey": "g7roofD",
     "dq": 2.6,
     "oneDome": 1,
-    "atticKey": "hard7t",
+    "atticKey": "mdB",
     "allGlass": 1,
     "bg": 111
    },
@@ -44,26 +38,26 @@
     "id": "B",
     "kind": "g7colo",
     "x": -8.6,
-    "z": 0,
+    "z": 2.3,
     "hx": 1.8,
     "hz": 4.2,
     "side": -1,
     "mat": "brick",
     "pw": 0.7,
-    "roofKey": "hard7t",
+    "roofKey": "g7roofL",
     "bg": 115
    },
    {
     "id": "C",
     "kind": "g7colo",
     "x": 8.6,
-    "z": 0,
+    "z": 2.3,
     "hx": 1.8,
     "hz": 4.2,
     "side": 1,
     "mat": "brick",
     "pw": 0.7,
-    "roofKey": "hard7t",
+    "roofKey": "g7roofL",
     "bg": 116
    }
   ],
@@ -71,7 +65,7 @@
    {
     "kind": "keep6",
     "x": 7,
-    "z": -7.9,
+    "z": -5.6,
     "floors": 2,
     "cx": 3,
     "cz": 2,
@@ -93,7 +87,74 @@
   },
   "tip": "",
   "ftip": "Small blasts drop it in place. Keep blue clear.",
-  "sol": [],
-  "tntStart": 18
+  "sol": [
+   [
+    "tnt",
+    "A:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "A:z+",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "A:z+",
+    0,
+    2
+   ],
+   [
+    "tnt",
+    "A:x-",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "A:x+",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "B:x-",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "B:x-",
+    0,
+    2
+   ],
+   [
+    "tnt",
+    "C:x+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "C:x+",
+    0,
+    2
+   ],
+   [
+    "tnt",
+    "B:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "C:z+",
+    0,
+    0
+   ]
+  ],
+  "tntStart": 14
  }
 ]

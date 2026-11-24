@@ -1,0 +1,115 @@
+{
+ "when": "2026-11-23T19:49:03.927Z",
+ "bp": "O05B",
+ "name": "Doorstop Corner",
+ "tnt": 12,
+ "bar": "N",
+ "metrics": {
+  "members": 166,
+  "hard": 0,
+  "soft": 166,
+  "hardPct": 0,
+  "main": {
+   "members": 77,
+   "hard": 0,
+   "soft": 77,
+   "hardPct": 0,
+   "pos": {
+    "top": 0,
+    "mid": 0,
+    "bottom": 0,
+    "edge": 0,
+    "core": 0,
+    "front": 0,
+    "back": 0
+   },
+   "core": "no",
+   "hardLayers": 0,
+   "depthRows": 8,
+   "frontHard": 0,
+   "backHard": 0,
+   "floors": 5
+  },
+  "stacks": 4,
+  "parts": [
+   "A",
+   "S",
+   "B",
+   "C"
+  ]
+ },
+ "sol": {
+  "pct": 95,
+  "win": true,
+  "res": "WIN",
+  "placed": [
+   "ok",
+   "ok",
+   "ok",
+   "ok",
+   "ok"
+  ],
+  "waves": 1,
+  "keep": 0
+ },
+ "oneBomb": {
+  "pct": 54,
+  "collapse": 55,
+  "at": "bk@A:f1",
+  "tried": 20
+ },
+ "lazy": {
+  "pct": 47,
+  "collapse": 48
+ },
+ "fair": [
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 98,
+   "used": 8,
+   "left": 4,
+   "waves": 2,
+   "firstWave": 49,
+   "keep": 0,
+   "estSec": 24,
+   "log": "bld2=49 bld6=98"
+  }
+ ],
+ "oneWave": {
+  "pct": 0
+ },
+ "footOnly": {
+  "pct": 0
+ },
+ "allFoot": {
+  "pct": 0
+ },
+ "curve": [],
+ "faces": [
+  {
+   "right": 1,
+   "face": "z-",
+   "first": 54,
+   "keep1": 0,
+   "pct": 97,
+   "win": true,
+   "res": "WIN",
+   "used": 5,
+   "keep": 0
+  },
+  {
+   "right": 0,
+   "face": "z+",
+   "first": 48,
+   "keep1": 22,
+   "pct": 48,
+   "win": false,
+   "res": "LOSE collateral",
+   "used": 2,
+   "keep": 22
+  }
+ ],
+ "verdict": "PASS",
+ "issues": []
+}

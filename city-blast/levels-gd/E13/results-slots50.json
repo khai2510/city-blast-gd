@@ -1,0 +1,163 @@
+{
+ "when": "2026-11-24T00:13:43.167Z",
+ "bp": "E13",
+ "name": "Radio Mast",
+ "slot": 46,
+ "bar": "N",
+ "steps": true,
+ "rest": {
+  "dead": 0,
+  "moved": 0,
+  "bonds": [
+   454,
+   454
+  ],
+  "list": [],
+  "keys": {
+   "concrete": 8,
+   "mdS": 5,
+   "steel": 16,
+   "wpost": 36,
+   "mdW": 10,
+   "wwall": 36,
+   "g7roofL": 3
+  },
+  "mass": {
+   "A": 152278,
+   "B": 72682,
+   "C": 29539,
+   "D": 29539
+  },
+  "members": 114,
+  "pad": {
+   "x": [
+    -9,
+    9
+   ],
+   "z": [
+    -7.4,
+    7.4
+   ],
+   "rmax": 11.2,
+   "at": "wpost@C"
+  }
+ },
+ "fair": [
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 95,
+   "used": 12,
+   "left": 3,
+   "waves": 2,
+   "firstWave": 43,
+   "keep": 0,
+   "estSec": 29,
+   "log": "bld6=43 bld6=95"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 90,
+   "used": 11,
+   "left": 4,
+   "waves": 2,
+   "firstWave": 46,
+   "keep": 0,
+   "estSec": 29,
+   "log": "bld10=46 bld1=90"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 93,
+   "used": 10,
+   "left": 5,
+   "waves": 2,
+   "firstWave": 37,
+   "keep": 0,
+   "estSec": 28,
+   "log": "bld6=37 bld4=93"
+  }
+ ],
+ "tnt": 15,
+ "sol": {
+  "pct": 40,
+  "win": false,
+  "res": "plan",
+  "placed": 2,
+  "keep": 0
+ },
+ "oneBomb": {
+  "pct": 54,
+  "collapse": 64,
+  "at": "concrete@A:f0",
+  "tried": 20
+ },
+ "lazy": {
+  "pct": 68,
+  "collapse": 73
+ },
+ "allFoot": {
+  "pct": 96,
+  "used": 15,
+  "collapse": 98,
+  "keep": 0
+ },
+ "footOnly": {
+  "pct": 90,
+  "waves": 2,
+  "left": 3,
+  "keep": 0
+ },
+ "oneWave": {
+  "pct": 92,
+  "used": 15,
+  "reach": 96,
+  "collapse": 95
+ },
+ "curve": [
+  {
+   "n": 1,
+   "pct": 49,
+   "collapse": 54
+  },
+  {
+   "n": 2,
+   "pct": 51,
+   "collapse": 55
+  },
+  {
+   "n": 3,
+   "pct": 57,
+   "collapse": 62
+  },
+  {
+   "n": 4,
+   "pct": 59,
+   "collapse": 64
+  },
+  {
+   "n": 6,
+   "pct": 56,
+   "collapse": 62
+  },
+  {
+   "n": 8,
+   "pct": 79,
+   "collapse": 85
+  },
+  {
+   "n": 12,
+   "pct": 79,
+   "collapse": 85
+  }
+ ],
+ "jump": 23,
+ "verdict": "PASS",
+ "issues": [],
+ "reported": [
+  "allFoot 96%",
+  "footOnly 90%"
+ ]
+}

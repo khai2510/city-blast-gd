@@ -1,0 +1,465 @@
+{
+ "when": "2026-11-23T21:44:42.964Z",
+ "bp": "E07",
+ "name": "Bathhouse",
+ "slot": 21,
+ "bar": "N",
+ "steps": false,
+ "rest": {
+  "dead": 0,
+  "moved": 0,
+  "bonds": [
+   345,
+   345
+  ],
+  "list": [],
+  "keys": {
+   "bk": 32,
+   "mdB": 8,
+   "mglass": 8,
+   "bkw": 8,
+   "g7roofD": 1,
+   "mdW": 4,
+   "g7roofL": 2,
+   "keep:kwall": 8,
+   "keep:kwin": 9,
+   "keep:kroof": 1,
+   "keep:kplate": 2,
+   "keep:kcap": 1,
+   "keep:kroofN": 2,
+   "keep:kroofW": 4
+  },
+  "mass": {
+   "A": 268666,
+   "B": 45964,
+   "C": 45964
+  },
+  "members": 63,
+  "pad": {
+   "x": [
+    -10.4,
+    10.4
+   ],
+   "z": [
+    -7.4,
+    7.3
+   ],
+   "rmax": 12.5,
+   "at": "kcap@keep"
+  }
+ },
+ "cal": [
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 86,
+   "used": 11,
+   "left": 29,
+   "waves": 3,
+   "firstWave": 76,
+   "keep": 0,
+   "estSec": 33,
+   "log": "bld5=76 bld2=79 bld4=86"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 89,
+   "used": 11,
+   "left": 29,
+   "waves": 2,
+   "firstWave": 78,
+   "keep": 0.04,
+   "estSec": 27,
+   "log": "bld8=78 bld3=89"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 86,
+   "used": 12,
+   "left": 28,
+   "waves": 4,
+   "firstWave": 74,
+   "keep": 0,
+   "estSec": 41,
+   "log": "bld5=74 bld1=76 bld4=83 bld2=86"
+  }
+ ],
+ "fair": [
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 91,
+   "used": 11,
+   "left": 3,
+   "waves": 2,
+   "firstWave": 81,
+   "keep": 0.04,
+   "estSec": 26,
+   "log": "bld8=81 bld3=91"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 92,
+   "used": 11,
+   "left": 3,
+   "waves": 3,
+   "firstWave": 76,
+   "keep": 0,
+   "estSec": 33,
+   "log": "bld5=76 bld2=78 bld4=92"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 95,
+   "used": 11,
+   "left": 3,
+   "waves": 2,
+   "firstWave": 83,
+   "keep": 0,
+   "estSec": 26,
+   "log": "bld8=83 bld3=95"
+  }
+ ],
+ "tnt": 14,
+ "solTry": [
+  {
+   "sol": [
+    [
+     "tnt",
+     "A:z+",
+     0,
+     0
+    ],
+    [
+     "tnt",
+     "A:z+",
+     0,
+     1
+    ],
+    [
+     "tnt",
+     "A:z+",
+     0,
+     2
+    ],
+    [
+     "tnt",
+     "B:z+",
+     0,
+     0
+    ],
+    [
+     "tnt",
+     "B:z+",
+     0,
+     1
+    ],
+    [
+     "tnt",
+     "C:z+",
+     0,
+     0
+    ],
+    [
+     "tnt",
+     "C:z+",
+     0,
+     1
+    ]
+   ],
+   "r": {
+    "pct": 60,
+    "win": false,
+    "keep": 0
+   }
+  },
+  {
+   "sol": [
+    [
+     "tnt",
+     "A:z+",
+     0,
+     0
+    ],
+    [
+     "tnt",
+     "A:z+",
+     0,
+     1
+    ],
+    [
+     "tnt",
+     "A:z+",
+     0,
+     2
+    ],
+    [
+     "tnt",
+     "A:x-",
+     0,
+     1
+    ],
+    [
+     "tnt",
+     "A:x+",
+     0,
+     1
+    ],
+    [
+     "tnt",
+     "B:z+",
+     0,
+     0
+    ],
+    [
+     "tnt",
+     "B:z+",
+     0,
+     1
+    ],
+    [
+     "tnt",
+     "C:z+",
+     0,
+     0
+    ],
+    [
+     "tnt",
+     "C:z+",
+     0,
+     1
+    ]
+   ],
+   "r": {
+    "pct": 62,
+    "win": false,
+    "keep": 0
+   }
+  },
+  {
+   "sol": [
+    [
+     "tnt",
+     "A:z+",
+     0,
+     0
+    ],
+    [
+     "tnt",
+     "A:z+",
+     0,
+     1
+    ],
+    [
+     "tnt",
+     "A:z+",
+     0,
+     2
+    ],
+    [
+     "tnt",
+     "A:x-",
+     0,
+     1
+    ],
+    [
+     "tnt",
+     "A:x+",
+     0,
+     1
+    ],
+    [
+     "tnt",
+     "B:x-",
+     0,
+     0
+    ],
+    [
+     "tnt",
+     "B:x-",
+     0,
+     2
+    ],
+    [
+     "tnt",
+     "C:x+",
+     0,
+     0
+    ],
+    [
+     "tnt",
+     "C:x+",
+     0,
+     2
+    ],
+    [
+     "tnt",
+     "B:z+",
+     0,
+     0
+    ],
+    [
+     "tnt",
+     "C:z+",
+     0,
+     0
+    ]
+   ],
+   "r": {
+    "pct": 89,
+    "win": true,
+    "keep": 0
+   }
+  }
+ ],
+ "solPick": [
+  [
+   "tnt",
+   "A:z+",
+   0,
+   0
+  ],
+  [
+   "tnt",
+   "A:z+",
+   0,
+   1
+  ],
+  [
+   "tnt",
+   "A:z+",
+   0,
+   2
+  ],
+  [
+   "tnt",
+   "A:x-",
+   0,
+   1
+  ],
+  [
+   "tnt",
+   "A:x+",
+   0,
+   1
+  ],
+  [
+   "tnt",
+   "B:x-",
+   0,
+   0
+  ],
+  [
+   "tnt",
+   "B:x-",
+   0,
+   2
+  ],
+  [
+   "tnt",
+   "C:x+",
+   0,
+   0
+  ],
+  [
+   "tnt",
+   "C:x+",
+   0,
+   2
+  ],
+  [
+   "tnt",
+   "B:z+",
+   0,
+   0
+  ],
+  [
+   "tnt",
+   "C:z+",
+   0,
+   0
+  ]
+ ],
+ "sol": {
+  "pct": 89,
+  "win": true,
+  "res": "WIN",
+  "placed": 11,
+  "keep": 0
+ },
+ "oneBomb": {
+  "pct": 22,
+  "collapse": 22,
+  "at": "bk@A:f1",
+  "tried": 18
+ },
+ "lazy": {
+  "pct": 70,
+  "collapse": 75
+ },
+ "allFoot": {
+  "pct": 88,
+  "used": 14,
+  "collapse": 94,
+  "keep": 11
+ },
+ "footOnly": {
+  "pct": 92,
+  "waves": 1,
+  "left": 8,
+  "keep": 11
+ },
+ "oneWave": {
+  "pct": 99,
+  "used": 14,
+  "reach": 49,
+  "collapse": 99
+ },
+ "curve": [
+  {
+   "n": 1,
+   "pct": 5,
+   "collapse": 5
+  },
+  {
+   "n": 2,
+   "pct": 65,
+   "collapse": 85
+  },
+  {
+   "n": 3,
+   "pct": 66,
+   "collapse": 87
+  },
+  {
+   "n": 4,
+   "pct": 67,
+   "collapse": 83
+  },
+  {
+   "n": 6,
+   "pct": 56,
+   "collapse": 78
+  },
+  {
+   "n": 8,
+   "pct": 74,
+   "collapse": 87
+  },
+  {
+   "n": 12,
+   "pct": 84,
+   "collapse": 88
+  }
+ ],
+ "jump": 60,
+ "verdict": "PASS",
+ "issues": [],
+ "reported": [
+  "curve jump +60"
+ ]
+}

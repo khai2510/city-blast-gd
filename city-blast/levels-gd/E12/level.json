@@ -1,0 +1,93 @@
+[
+ {
+  "name": "Telephone Exchange",
+  "bp": "E12",
+  "tier": "N",
+  "slot": 38,
+  "f": 7,
+  "kind": "scene",
+  "hero": "A",
+  "heroId": "G7-E12",
+  "teaches": "blocks",
+  "target": 0.85,
+  "yaw": 0.1,
+  "d": 1,
+  "fillMax": 0.73,
+  "hard7": true,
+  "sf": [],
+  "pattern": "separate blocks: the upper block rides down on the lower one and lands whole; lower block first (it lands in place), then the upper; a blast up high throws it at the school",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7xExch",
+    "x": -1.2,
+    "z": 0,
+    "hx": 4.2,
+    "hz": 4.2,
+    "nl": 2,
+    "nu": 3,
+    "sh": 3.2,
+    "ux": 2.8,
+    "uz": 2.8,
+    "hold": -1,
+    "bg": 161
+   },
+   {
+    "id": "B",
+    "kind": "g7kiosk",
+    "x": -10.7,
+    "z": 0,
+    "hx": 1.9,
+    "mat": "wood",
+    "bg": 165
+   }
+  ],
+  "keeps": [
+   {
+    "kind": "keep6",
+    "x": 9.4,
+    "z": 0,
+    "floors": 2,
+    "cx": 3,
+    "cz": 2,
+    "name": "the school",
+    "role": "school",
+    "fixType": "school"
+   }
+  ],
+  "keep": {
+   "name": "the school",
+   "sides": [],
+   "type": "school",
+   "role": "school",
+   "full": 1
+  },
+  "tanks": [],
+  "charges": {
+   "tnt": 40
+  },
+  "tip": "",
+  "ftip": "Lower block first. The upper one lands safe.",
+  "sol": [
+   [
+    "tnt",
+    "A:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "A:z+",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "A:z+",
+    0,
+    2
+   ]
+  ],
+  "tntStart": 10
+ }
+]

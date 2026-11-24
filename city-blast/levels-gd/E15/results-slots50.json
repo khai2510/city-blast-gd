@@ -1,0 +1,206 @@
+{
+ "when": "2026-11-24T00:05:50.391Z",
+ "bp": "E15",
+ "name": "Parachute Tower",
+ "slot": 48,
+ "bar": "N",
+ "steps": true,
+ "rest": {
+  "dead": 0,
+  "moved": 0,
+  "bonds": [
+   301,
+   301
+  ],
+  "list": [],
+  "keys": {
+   "concrete": 8,
+   "mdS": 5,
+   "steel": 16,
+   "bk": 16,
+   "mdB": 4,
+   "bkw": 12,
+   "g7roofL": 2,
+   "keep:kwall": 8,
+   "keep:kwin": 9,
+   "keep:kroof": 1,
+   "keep:kplate": 2,
+   "keep:kcap": 1,
+   "keep:kroofN": 2,
+   "keep:kroofW": 4
+  },
+  "mass": {
+   "A": 146471,
+   "B": 164404
+  },
+  "members": 63,
+  "pad": {
+   "x": [
+    -13.5,
+    13.9
+   ],
+   "z": [
+    -3.2,
+    3.2
+   ],
+   "rmax": 14,
+   "at": "kcap@keep"
+  }
+ },
+ "cal": [
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 98,
+   "used": 9,
+   "left": 31,
+   "waves": 2,
+   "firstWave": 71,
+   "keep": 0,
+   "estSec": 24,
+   "log": "bld6=71 bld3=98"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 97,
+   "used": 9,
+   "left": 31,
+   "waves": 2,
+   "firstWave": 71,
+   "keep": 0,
+   "estSec": 24,
+   "log": "bld6=71 bld3=97"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 100,
+   "used": 9,
+   "left": 31,
+   "waves": 2,
+   "firstWave": 73,
+   "keep": 0,
+   "estSec": 24,
+   "log": "bld6=73 bld3=100"
+  }
+ ],
+ "fair": [
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 100,
+   "used": 9,
+   "left": 2,
+   "waves": 2,
+   "firstWave": 73,
+   "keep": 0,
+   "estSec": 24,
+   "log": "bld6=73 bld3=100"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 97,
+   "used": 9,
+   "left": 2,
+   "waves": 2,
+   "firstWave": 71,
+   "keep": 0,
+   "estSec": 24,
+   "log": "bld6=71 bld3=97"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 97,
+   "used": 9,
+   "left": 2,
+   "waves": 2,
+   "firstWave": 71,
+   "keep": 0,
+   "estSec": 24,
+   "log": "bld6=71 bld3=97"
+  }
+ ],
+ "tnt": 11,
+ "sol": {
+  "pct": 50,
+  "win": false,
+  "res": "plan",
+  "placed": 2,
+  "keep": 0
+ },
+ "oneBomb": {
+  "pct": 13,
+  "collapse": 13,
+  "at": "bk@B:f0",
+  "tried": 18
+ },
+ "lazy": {
+  "pct": 49,
+  "collapse": 50
+ },
+ "allFoot": {
+  "pct": 88,
+  "used": 11,
+  "collapse": 99,
+  "keep": 0
+ },
+ "footOnly": {
+  "pct": 86,
+  "waves": 2,
+  "left": 0,
+  "keep": 0
+ },
+ "oneWave": {
+  "pct": 93,
+  "used": 11,
+  "reach": 52,
+  "collapse": 99
+ },
+ "curve": [
+  {
+   "n": 1,
+   "pct": 2,
+   "collapse": 2
+  },
+  {
+   "n": 2,
+   "pct": 35,
+   "collapse": 53
+  },
+  {
+   "n": 3,
+   "pct": 53,
+   "collapse": 64
+  },
+  {
+   "n": 4,
+   "pct": 52,
+   "collapse": 56
+  },
+  {
+   "n": 6,
+   "pct": 51,
+   "collapse": 56
+  },
+  {
+   "n": 8,
+   "pct": 54,
+   "collapse": 55
+  },
+  {
+   "n": 12,
+   "pct": 54,
+   "collapse": 55
+  }
+ ],
+ "jump": 33,
+ "verdict": "PASS",
+ "issues": [],
+ "reported": [
+  "allFoot 88%",
+  "footOnly 86%"
+ ]
+}

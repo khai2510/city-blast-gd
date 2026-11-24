@@ -50,3 +50,24 @@ Hero position (for a later camera preset): part A (bath hall) at x 0, z 0, 10 ×
 - The plan's "a big blast throws debris towards the blue" shows as the big foot plays (allFoot / footOnly) hurting the school; eight bombs on the piers alone drop the hall straight down.
 - oneWave 100 % (reported only, as on every easy level).
 - Fail line (ours): "Small blasts drop it in place. Keep blue clear." The game's own blue-hit card says "Hit the side away from it." (base game text).
+
+## SLOTS-50 (23/11, D-blast-L50 / D-blast-LAUNCH / D-blast-PAD): play slot 21
+
+Converted: dome hard7t → plain g7roofD (breaks up on landing), attic → mdB, wing roofs → g7roofL, no drop7, lot centred, one blast.
+
+| | |
+|---|---|
+| Elements before | wood, brick, glass, heavy dome/attic/roofs, blue, steps, drop7 |
+| Elements after (read from the built level) | wood, brick, glass, blue |
+| Bar | Normal before 35: oneBomb < 70 %, fair 3/3, spare >= 2, the expert plan (sol) wins in ONE blast; blasts, time, curve, allFoot / footOnly reported (no heavy piece before 50) |
+| TNT | **14** |
+| Expert plan (`sol`, one blast) | WIN 89 % (11 TNT) |
+| fair, 3 seeds | 3/3 · spare 3/3/3 · blasts 2/3/2 · 26/33/26 s |
+| oneBomb / lazy | 22 % / 70 % |
+| allFoot / footOnly / oneWave | 88 % / 92 % / 99 % |
+| curve (n TNT at the main foot: %) | 1:5 2:65 3:66 4:67 6:56 8:74 12:84 (max jump +60) |
+| at rest (8 s) | 0 dead, 0 moved, bonds 345→345 |
+| pad (D-blast-PAD) | lot centred on (0, 0), farthest corner 12.5 m (pad 15.55 m today, ~18.7 m widened) |
+| verdict | **PASS** · reported: curve jump +60 |
+
+Gate: `gate.mjs` (one Chrome session, test build on main's 31-polish base, `results-slots50.json`, 2026-11-23T21:44 UTC). Shots: `shot-open.jpg`, `shot-blast1-mid.jpg`, `shot-blast1.jpg` (the expert plan / first blast) (393 × 852, test build).

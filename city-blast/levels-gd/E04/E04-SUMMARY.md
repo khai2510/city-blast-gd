@@ -45,3 +45,24 @@
 - The arcade hides the timber posts at the foot, but the upper posts and the clerestory show above it. A player can bomb the timber over the arcade; the shield slows a player down, it does not lock anything.
 - "Roofs still count" is the third use of "heavy pieces still count" in Chapter 1 (E01, E03, E04; E02 and E06 also have heavy pieces). It is what keeps one blast from winning on these easy levels. Khai may want a different second read later in the pack.
 - The fail line "Wood falls easy. Brick chips. Roofs still count." is the only text.
+
+## SLOTS-50 (23/11, D-blast-L50 / D-blast-LAUNCH / D-blast-PAD): play slot 3
+
+Converted: brick arcade → timber stall row (g7arcade mat wood), weigh houses dropped (tutorial budget, pad), glass clerestory → boarded timber (clere), tiled roof hard7t → plain g7tile, no drop7, one blast, 6 TNT (K2).
+
+| | |
+|---|---|
+| Elements before | wood, brick, glass, heavy roof, steps, drop7 |
+| Elements after (read from the built level) | wood |
+| Bar | tutorial (slot 1-3): oneBomb < 70 %, the expert plan wins in one blast with >= 1 spare, fair 3/3; bot spare, allFoot, footOnly, time reported |
+| TNT | **6** |
+| Expert plan (`sol`, one blast) | WIN 89 % (5 TNT) |
+| fair, 3 seeds | 3/3 · spare 0/0/0 · blasts 1/1/1 · 13/13/13 s |
+| oneBomb / lazy | 62 % / 100 % |
+| allFoot / footOnly / oneWave | 25 % / 25 % / 90 % |
+| curve (n TNT at the main foot: %) | 1:35 2:19 3:30 4:30 6:51 8:55 12:65 (max jump +21) |
+| at rest (8 s) | 0 dead, 0 moved, bonds 421→421 |
+| pad (D-blast-PAD) | lot centred on (0, 0), farthest corner 12.1 m (pad 15.55 m today, ~18.7 m widened) |
+| verdict | **PASS** · reported: est 13/13/13 s; fair bot spare 0 (the bot spends 3 a building a blast: tutorial bar = the expert plan keeps 1 of 6, OLD-POLISH O01 precedent) |
+
+Gate: `gate.mjs` (one Chrome session, test build on main's 31-polish base, `results-slots50.json`, 2026-11-23T16:37 UTC). Shots: `shot-open.jpg`, `shot-blast1-mid.jpg`, `shot-blast1.jpg` (the expert plan / first blast) (393 × 852, test build).

@@ -11,7 +11,14 @@ const ROOT = path.join(__dirname, '..', '..'), GD = path.join(ROOT, 'city-blast'
 const OUT = path.join(ROOT, 'city-blast', 'release', 'g7-easy-levels.json');
 // ORDER1123 (23/11): this list is the DATA order (LV7DEFS appended index 36 + 5 + k: the save mark "s:" and the level seeds key on it),
 // kept as it was. The PLAY order is PLACE in patch.js only (ORDER1123: E04 3 · E02 5 · E06 9 · E07 21 · E03 25 · E10 26 · E05 36 · E08 46 · E09 48 · E01 50).
-const EASY = ['E01', 'E02', 'E03', 'E04', 'E06', 'E05', 'E07', 'E08', 'E09', 'E10'];   // the finished easy levels, data order (never reorder: saves / seeds)
+// 23/11 SLOTS-50 §5: E11-E15 appended (data order only; their play slots 37 38 46 47 48 go into PLACE, the order agent's)
+const EASY0 = ['E01', 'E02', 'E03', 'E04', 'E06', 'E05', 'E07', 'E08', 'E09', 'E10',
+  'E11', 'E12', 'E13', 'E14', 'E15'];   // the finished easy levels, data order (never reorder: saves / seeds)
+// E11-E15 go into the release data once PLACE (patch.js) lists them (patch.js stops the build when PLACE does not place every
+// g7 level), or with EASY_ALL=1: appended in data order, so adding them never moves E01-E10.
+const placed = fs.readFileSync(path.join(__dirname, 'patch.js'), 'utf8').match(/const PLACE = \[([\s\S]*?)\];/);
+const inPlace = (c) => !!placed && new RegExp("'" + c + "'").test(placed[1]);
+const EASY = EASY0.filter((c, i) => i < 10 || process.env.EASY_ALL === '1' || inPlace(c));
 const fail = (m) => { console.error('export-easy: ' + m); process.exit(1); };
 const out = EASY.map(e => {
   const a = JSON.parse(fs.readFileSync(path.join(GD, e, 'level.json'), 'utf8'));

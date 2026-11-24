@@ -1,5 +1,5 @@
 {
- "when": "2026-11-23T16:34:44.765Z",
+ "when": "2026-11-23T19:23:14.764Z",
  "bp": "O03",
  "name": "Airfield Tower",
  "tnt": 10,
@@ -74,18 +74,87 @@
    "keep": 0,
    "estSec": 19,
    "log": "bld10=95"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 99,
+   "used": 10,
+   "left": 0,
+   "waves": 1,
+   "firstWave": 99,
+   "keep": 0,
+   "estSec": 19,
+   "log": "bld10=99"
+  },
+  {
+   "win": true,
+   "res": "WIN",
+   "pct": 97,
+   "used": 10,
+   "left": 0,
+   "waves": 1,
+   "firstWave": 97,
+   "keep": 0,
+   "estSec": 19,
+   "log": "bld10=97"
   }
  ],
- "oneWave": {
-  "pct": 0
+ "allFoot": {
+  "pct": 96,
+  "used": 10,
+  "collapse": 100,
+  "keep": 0
  },
  "footOnly": {
-  "pct": 0
+  "pct": 95,
+  "waves": 1,
+  "left": 4,
+  "keep": 0
  },
- "allFoot": {
-  "pct": 0
+ "oneWave": {
+  "pct": 98,
+  "used": 10,
+  "reach": 158,
+  "collapse": 100
  },
- "curve": [],
+ "curve": [
+  {
+   "n": 1,
+   "pct": 1,
+   "collapse": 1
+  },
+  {
+   "n": 2,
+   "pct": 48,
+   "collapse": 55
+  },
+  {
+   "n": 3,
+   "pct": 50,
+   "collapse": 56
+  },
+  {
+   "n": 4,
+   "pct": 53,
+   "collapse": 56
+  },
+  {
+   "n": 6,
+   "pct": 62,
+   "collapse": 72
+  },
+  {
+   "n": 8,
+   "pct": 61,
+   "collapse": 74
+  },
+  {
+   "n": 12,
+   "pct": 61,
+   "collapse": 74
+  }
+ ],
  "verdict": "MISS",
  "issues": [
   "spare 0"

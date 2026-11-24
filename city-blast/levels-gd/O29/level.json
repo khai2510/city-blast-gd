@@ -1,0 +1,153 @@
+[
+ {
+  "name": "Old Tock Row",
+  "bp": "O29",
+  "slot": 0,
+  "replaces": "o29",
+  "tier": "N",
+  "f": 12,
+  "kind": "scene",
+  "hero": "A,S,B,C",
+  "heroId": "G7-O29",
+  "teaches": null,
+  "target": 0.85,
+  "yaw": 0,
+  "d": 1,
+  "base": {
+   "A": {
+    "preset": "stiff-tip",
+    "shove": 2.5
+   },
+   "*": "weak"
+  },
+  "sf": [],
+  "pattern": "domino: the clock tower tips forward into the first house, the row of houses falls one onto the next",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7oClock",
+    "x": 0,
+    "z": -6.5,
+    "hx": 2.6,
+    "gh": 3.8,
+    "sh": 3.2,
+    "ns": 3
+   },
+   {
+    "id": "S",
+    "kind": "g7oRowH",
+    "x": 0,
+    "z": 4.1,
+    "hx": 2.4,
+    "hz": 1.6,
+    "nb": 2,
+    "mat": "wood",
+    "n": 3,
+    "gap": 1,
+    "k": 0,
+    "bg": 111
+   },
+   {
+    "id": "B",
+    "kind": "g7oCott",
+    "x": -9.8,
+    "z": -5.9,
+    "hx": 3.2,
+    "hz": 2.8,
+    "side": -1
+   },
+   {
+    "id": "C",
+    "kind": "g7oCott",
+    "x": 9.8,
+    "z": -5.9,
+    "hx": 3.2,
+    "hz": 2.8,
+    "side": 1
+   }
+  ],
+  "charges": {
+   "tnt": 40
+  },
+  "hint": "A:z+",
+  "tip": "",
+  "dud": "Not yet. Two legs side by side!",
+  "ftip": "One push. Let it fall into the row.",
+  "lesson": {
+   "check": [
+    []
+   ]
+  },
+  "sol": [
+   [
+    "tnt",
+    "A:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "A:z+",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "B:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "C:z+",
+    0,
+    0
+   ]
+  ],
+  "bot": {
+   "hints": [
+    [
+     "A",
+     "A:z+",
+     1
+    ],
+    [
+     "A",
+     "A:z+",
+     1
+    ],
+    [
+     "A",
+     "B:z+",
+     1
+    ],
+    [
+     "A",
+     "C:z+",
+     1
+    ]
+   ]
+  },
+  "tntStart": 19,
+  "pad": {
+   "dx": 0,
+   "dz": 2.5,
+   "r": 18.4
+  },
+  "batch": 2,
+  "launch": {
+   "el": [
+    "wood",
+    "brick"
+   ],
+   "slot": 4,
+   "before": [
+    "wood",
+    "brick",
+    "concrete",
+    "glass",
+    "steel"
+   ]
+  }
+ }
+]

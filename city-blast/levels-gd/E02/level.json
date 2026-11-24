@@ -3,6 +3,7 @@
   "name": "Shot Tower",
   "bp": "E02",
   "tier": "N",
+  "slot": 5,
   "f": 7,
   "kind": "scene",
   "hero": "A",
@@ -23,13 +24,6 @@
    "armor": 0.001,
    "f": 3,
    "reach": 1
-  },
-  "drop7": {
-   "keys": [
-    "mdB"
-   ],
-   "fall": 1.5,
-   "armor": 0.97
   },
   "sf": [],
   "pattern": "tip: a tall tower on 8 legs; two legs side by side gone = it lies down that way; a long goods shed on each side is the target",
@@ -52,14 +46,18 @@
     ],
     "hopW": 2.6,
     "hopH": 2.2,
-    "cis": 2.8
+    "cis": 2.8,
+    "legKey": "g7bk",
+    "postKey": "g7bk",
+    "deck0Key": "g7bk",
+    "heavyKey": "g7roofL"
    },
    {
     "id": "B",
     "kind": "g7gshed",
-    "x": -12.9,
+    "x": -10.2,
     "z": 0,
-    "hx": 7,
+    "hx": 4.8,
     "hz": 4,
     "nx": 5,
     "side": -1,
@@ -68,9 +66,9 @@
    {
     "id": "C",
     "kind": "g7gshed",
-    "x": 12.9,
+    "x": 10.2,
     "z": 0,
-    "hx": 7,
+    "hx": 4.8,
     "hz": 4,
     "nx": 5,
     "side": 1,
@@ -82,8 +80,33 @@
    "tnt": 40
   },
   "tip": "",
-  "ftip": "Neighbouring legs tip it. Heavy pieces still count.",
-  "sol": [],
-  "tntStart": 23
+  "ftip": "Two legs side by side tip it.",
+  "sol": [
+   [
+    "tnt",
+    "A:x+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "A:x+",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "B:z+",
+    0,
+    1
+   ],
+   [
+    "tnt",
+    "B:z+",
+    0,
+    3
+   ]
+  ],
+  "tntStart": 11
  }
 ]
