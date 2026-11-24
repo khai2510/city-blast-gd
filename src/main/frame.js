@@ -70,13 +70,19 @@
     //    on bosses too when their lot is centred on the pad (<= PIV_TOL m); the one distance holds the whole pad and the lot on all 4
     //    faces and through the 45-degree turn. API.padOut() lists building members standing outside the pad (check-pad.js).
     var PADON = CAMALL && Qf.get("pad") !== "0", PADK = PADON ? Math.max(1, +(Qf.get("padk") || 1.2)) : 1, PIV_TOL = 1.5;
+    // F9 CAM-ZOOM (23/11/2026, Khai D-blast-PAD asked only: pivot = pad centre, buildings inside the pad, pad a bit wider; holding the
+    //    WHOLE pad on screen put the camera ~2x farther, buildings tiny): the one distance now fits the BUILDINGS (every member that counts,
+    //    blue ones included), seen from the pad-centre pivot (held at the middle of the screen across), on all 4 faces + sway + the
+    //    45-degree turn. The pad edge may run off the screen. Pivot, pad x1.2, front-on start, zoom-in, turn: as F7 / F8.
+    //    ?camfit=pad = the F8 whole-pad framing (49c23ba).
+    var FITPAD = Qf.get("camfit") === "pad";
     CF.turnDur = +(Qf.get("turndur") || 1.2);
     var isCH = function(p){ if(!CAMHARD || !HARD) return false; if(p == null) p = levelIdx; var O = window.LV7O, Lv = typeof LEVELS !== "undefined" ? LEVELS[p] : null;
       if(!O || !O.on || !Lv || (O.isH && O.isH(p))) return false; if(CAMALL) return true;
       if(Lv.boss) return false; return !!((O.isE && O.isE(p)) || (O.isO && O.isO(p))); };
     var ownYaw = function(p){ var O = window.LV7O; if(p == null) p = levelIdx; return !!(O && ((O.isE && O.isE(p)) || (O.isO && O.isO(p)))); };   // E / O: the level's own near-frontal yaw
     var FR = { on:!OFF, cf:CF, S:null, W:0, n:0 };
-    var API = window.__blast.frame = { on:function(){ return FR.on; }, camHard:function(p){ return !OFF && isCH(p); }, camAll:function(){ return CAMALL; }, cam45:function(){ return CAM45; }, cfg:function(){ return CF; }, state:function(){ var S = FR.S; return S ? { lv:S.lv, live:S.live, W:+FR.W.toFixed(3), zOpen:+S.zOpen.toFixed(4), zFrom:+S.zFrom.toFixed(4), t:+S.t.toFixed(2), easing:S.t < S.dur, hard:!!S.hard, ch:!!S.ch, all:!!S.all, boss:!!(L && L.boss), piv:!!S.piv, padK:S.padK || 1, turn:+(S.turn || 0).toFixed(3), D:+S.D.toFixed(2), D0:S.D0 ? +S.D0.toFixed(2) : null, frz:FR.frz || 0, yawOpen:+S.yawOpen.toFixed(3), yawD:+S.yawD.toFixed(3), sx:Math.round(S.sx), sy:Math.round(S.sy), fitW:S.fitW, fitH:S.fitH, bind:S.bind, guard:!!S.guard, guardN:S.guardN || 0, refit:!!S.refit, sxT:Math.round(S.sxT), syT:Math.round(S.syT), fixN:S.fixN || 0, settled:!(S.t < S.dur) && Math.abs(S.sx - S.sxT) < 1 && Math.abs(S.sy - S.syT) < 1 && (!(R22 && (S.refit || S.hard || S.gpts)) || (S.fixN || 0) >= 40) } : null; }, measure:null };
+    var API = window.__blast.frame = { on:function(){ return FR.on; }, camFit:function(){ return FITPAD ? "pad" : "lot"; }, camHard:function(p){ return !OFF && isCH(p); }, camAll:function(){ return CAMALL; }, cam45:function(){ return CAM45; }, cfg:function(){ return CF; }, state:function(){ var S = FR.S; return S ? { lv:S.lv, live:S.live, W:+FR.W.toFixed(3), zOpen:+S.zOpen.toFixed(4), zFrom:+S.zFrom.toFixed(4), t:+S.t.toFixed(2), easing:S.t < S.dur, hard:!!S.hard, ch:!!S.ch, all:!!S.all, boss:!!(L && L.boss), piv:!!S.piv, padK:S.padK || 1, turn:+(S.turn || 0).toFixed(3), D:+S.D.toFixed(2), D0:S.D0 ? +S.D0.toFixed(2) : null, frz:FR.frz || 0, yawOpen:+S.yawOpen.toFixed(3), yawD:+S.yawD.toFixed(3), sx:Math.round(S.sx), sy:Math.round(S.sy), fitW:S.fitW, fitH:S.fitH, bind:S.bind, guard:!!S.guard, guardN:S.guardN || 0, refit:!!S.refit, sxT:Math.round(S.sxT), syT:Math.round(S.syT), fixN:S.fixN || 0, settled:!(S.t < S.dur) && Math.abs(S.sx - S.sxT) < 1 && Math.abs(S.sy - S.syT) < 1 && (!(R22 && (S.refit || S.hard || S.gpts)) || (S.fixN || 0) >= 40) } : null; }, measure:null };
     var TILT = CF.tilt;   // v14-monument.js updateCamera: the view levels out by TILT x close when zoomed in (pitch - TILT x tiltK)
     var _pc = new THREE.PerspectiveCamera(GAME_FOV, 1, 0.1, 4000), _v = new THREE.Vector3(), _q = new THREE.Quaternion(), _h = new THREE.Vector3();
     var heroIds = function(){ return String((L && L.hero) || "A").split(","); };
@@ -160,7 +166,7 @@
       var y00 = baseYaw, face = Math.round(baseYaw/(Math.PI/2))*(Math.PI/2), own = ownYaw();
       if(!own) C = G;   // F7: an old level / boss: the LOT is centred (its main building is not on the lot's axis: centring it cost 1.7x the distance on L3)
       var PV = pivotPad(G);   // F8: the pad's centre is the pivot (look-at + turn), the whole pad in the fit
-      if(PV){ C = { pts:PV.pad, hx:0, hz:0 }; G = { pts:PV.all, hx:G.hx, hz:G.hz }; }
+      if(PV){ if(FITPAD){ C = { pts:PV.pad, hx:0, hz:0 }; G = { pts:PV.all, hx:G.hx, hz:G.hz }; } else C = { pts:new Float32Array([0, 0, 0]), hx:0, hz:0 }; }   // F9: the buildings only, centred on the pivot
       if(!own && Math.abs(baseYaw - face) > 1e-4){ baseYaw = defYaw = face; rfz0(); }   // F7: an old level / boss stands on its nearest face (as a hard level on its own yaw)
       var S = { lv:levelIdx + 1, hard:false, ch:true, all:!own, piv:!!PV, padK:padK, yaw00:y00, pts:C.pts, cpts:C.pts, lpts:G.pts, hx:C.hx, hz:C.hz, yawD:0, yawOpen:baseYaw, pitch:CF.pitch, fillH:FILL_HH, fillW:Math.max(0.5, (VW - 2*SIDE_PX)/VW),
         live:true, t:0, dur:REDUCED ? 0 : CF.dur, D:dist, sx:0, sy:0, sxSp:{v:0}, sySp:{v:0} };
@@ -196,7 +202,9 @@
       if(!(S && S.ch && S.live && FR.W > 0 && !b && screen === "game" && (phase === "plan" || phase === "build"))) return rfz0.apply(this, arguments);
       var d0 = dist, zt = zoomT, zk = zoomK, zx = zMax, r = rfz0.apply(this, arguments);
       dist = d0; zoomLimits(frameBox()); zMax = Math.max(zMax, zx); zoomT = zt; zoomK = zk; FR.frz = (FR.frz || 0) + 1; return r; };
-    renderer.domElement.addEventListener("pointerdown", function(){ var S = FR.S; if(S && S.t < S.dur){ S.t = S.dur; zoomT = clampZoom(zoomK); } if(S && S.turn && !S.turnDone){ S.turnDone = true; } }, { capture:true, passive:true });   // F7: a touch also stops the ?cam45 turn where it is   // a touch ends the ease where it is
+    renderer.domElement.addEventListener("pointerdown", function(){ var S = FR.S; if(S && S.t < S.dur){ S.t = S.dur; zoomT = clampZoom(zoomK); } if(S && S.turn && !S.turnDone){ S.turnDone = true;
+        // F9: stop the view where it IS (the engine's yaw lags the turn by up to ~15 deg; left alone it kept turning after the touch, twice as far on screen now the camera is close: the L1 double-tap missed its TNT)
+        if(S.live && FR.W > 0.98){ var sw = 0; try{ sw = ballAim ? 0 : 0.06*Math.sin(swayT*0.35); }catch(e){} S.yawD = (yaw - sw - baseYaw)/FR.W; yawSp.v = 0; } } }, { capture:true, passive:true });   // F7: a touch also stops the ?cam45 turn where it is   // a touch ends the ease where it is
     var myX = null, myY = null, inX = 0, inY = 0, wSp = { v:0 };
     var uc0 = updateCamera;
     updateCamera = function(rdt){
