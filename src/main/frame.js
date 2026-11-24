@@ -83,6 +83,18 @@
     var ownYaw = function(p){ var O = window.LV7O; if(p == null) p = levelIdx; return !!(O && ((O.isE && O.isE(p)) || (O.isO && O.isO(p)))); };   // E / O: the level's own near-frontal yaw
     var FR = { on:!OFF, cf:CF, S:null, W:0, n:0 };
     var API = window.__blast.frame = { on:function(){ return FR.on; }, camFit:function(){ return FITPAD ? "pad" : "lot"; }, camHard:function(p){ return !OFF && isCH(p); }, camAll:function(){ return CAMALL; }, cam45:function(){ return CAM45; }, cfg:function(){ return CF; }, state:function(){ var S = FR.S; return S ? { lv:S.lv, live:S.live, W:+FR.W.toFixed(3), zOpen:+S.zOpen.toFixed(4), zFrom:+S.zFrom.toFixed(4), t:+S.t.toFixed(2), easing:S.t < S.dur, hard:!!S.hard, ch:!!S.ch, all:!!S.all, boss:!!(L && L.boss), piv:!!S.piv, padK:S.padK || 1, turn:+(S.turn || 0).toFixed(3), D:+S.D.toFixed(2), D0:S.D0 ? +S.D0.toFixed(2) : null, frz:FR.frz || 0, yawOpen:+S.yawOpen.toFixed(3), yawD:+S.yawD.toFixed(3), sx:Math.round(S.sx), sy:Math.round(S.sy), fitW:S.fitW, fitH:S.fitH, bind:S.bind, guard:!!S.guard, guardN:S.guardN || 0, refit:!!S.refit, sxT:Math.round(S.sxT), syT:Math.round(S.syT), fixN:S.fixN || 0, settled:!(S.t < S.dur) && Math.abs(S.sx - S.sxT) < 1 && Math.abs(S.sy - S.syT) < 1 && (!(R22 && (S.refit || S.hard || S.gpts)) || (S.fixN || 0) >= 40) } : null; }, measure:null };
+    // F10 FIX-1124 (24/11/2026, tester round UX-88 / UX-91 / U-1 / U-12): API.opening() = the level's opening shot is still moving: the
+    //    F2 zoom-in, the F7 front -> 45-degree turn, or the engine's yaw still more than 1 degree behind it (it lags the turn). False once
+    //    a touch stopped it (pointerdown below), after a blast / refit, off the game screen, and 8 s after the level start at the latest
+    //    (never holds a lesson back for good). main/intro.js holds its cards / spotlights / swipe lesson and main/tap2.js the L1 / L2 hand
+    //    until it is false. API.holdSway(on): the +-0.06 rad idle sway stops where it is while on (the L1 "Double-tap!" target stays still).
+    FR.t0 = 0; FR.hold = null;
+    API.opening = function(){ var S = FR.S; if(OFF || !S || !S.live || S.refit || screen !== "game") return false;
+      if(performance.now() - FR.t0 > 8000) return false;
+      if(S.t < S.dur || (S.turn && !S.turnDone)) return true;
+      if(S.ch && FR.W > 0.5){ var sw = 0; try{ sw = ballAim ? 0 : 0.06*Math.sin(swayT*0.35); }catch(e){} if(Math.abs(yaw - (baseYaw + S.yawD*FR.W + sw)) > Math.PI/180) return true; }
+      return false; };
+    API.holdSway = function(on){ var h = null; try{ h = on ? (FR.hold != null ? FR.hold : swayT) : null; }catch(e){} FR.hold = h; return FR.hold != null; };
     var TILT = CF.tilt;   // v14-monument.js updateCamera: the view levels out by TILT x close when zoomed in (pitch - TILT x tiltK)
     var _pc = new THREE.PerspectiveCamera(GAME_FOV, 1, 0.1, 4000), _v = new THREE.Vector3(), _q = new THREE.Quaternion(), _h = new THREE.Vector3();
     var heroIds = function(){ return String((L && L.hero) || "A").split(","); };
@@ -193,7 +205,7 @@
       zoomT = zoomK = S.zFrom; zoomSp.v = 0; camDist = dist; distSp.v = 0; yaw = yawOpen; yawSp.v = 0; };
     if(!OFF){   // ?frame=0: nothing below runs (the measure API stays, for before / after shots)
     var sl0 = startLevel;
-    startLevel = function(){ var r = sl0.apply(this, arguments); try{ padApply(); }catch(e){ console.error("main/frame.js F8", e); } try{ openLevel(); }catch(e){ FR.S = null; console.error("main/frame.js", e); } return r; };
+    startLevel = function(){ FR.t0 = performance.now(); FR.hold = null; var r = sl0.apply(this, arguments); try{ padApply(); }catch(e){ console.error("main/frame.js F8", e); } try{ openLevel(); }catch(e){ FR.S = null; console.error("main/frame.js", e); } return r; };
     var stop = function(){ if(FR.S) FR.S.live = false; };
     var da0 = detonateAll; detonateAll = function(){ stop(); return da0.apply(this, arguments); };   // BLAST: back to the whole-lot framing (v14 resets zoom / pan)
     var rf0 = resetFraming; resetFraming = function(){ stop(); return rf0.apply(this, arguments); };
@@ -209,6 +221,7 @@
     var uc0 = updateCamera;
     updateCamera = function(rdt){
       var S = FR.S, game = screen === "game" && phase !== "title";
+      if(FR.hold != null){ if(game && phase === "plan") swayT = FR.hold - (rdt || 0); else FR.hold = null; }   // F10: the idle sway held (the inner camera adds rdt back)
       if(S && S.ch && S.live && game && zMax < S.zEnd) zMax = S.zEnd;   // F6: a later zoomLimits() must not pull the one distance in
       if(!S || !game){ if(myX !== null && camera.view){ camera.setViewOffset(VW, VH, inX, inY, VW, VH); } myX = myY = null; FR.W = 0; return uc0(rdt); }
       // F5 (b): once the ease is over, read the box off the camera as the last frame drew it (sway, clearance, pan and every later

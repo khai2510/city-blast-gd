@@ -61,7 +61,9 @@ const INTRO_AT = {
   blast:'o9',                  // 2 Pit Head (O07): "Tap to place. BLAST" goes with the L2 hand (slot-keyed, tap2.js)
   brick:'o2', concrete:'o3',   // 4 Stripey Point / O02, 8 Old Tock / O03
   wreck:'o21',                 // 12 Drive-in (O12), the rest level after Hard 11
-  keep:'o36',                  // 15 Fire Station (O04), after Hard 14
+  keep:'o7',                   // FIX-1124 (UX-89 / U-4, tester round 24/11): 7 Grand Arch, the FIRST level with protected members (7 and 11
+                               // stood before the card's launch slot 15 Fire Station and the player lost to an untold rule); a Hard by
+                               // tier, but an old level (o7, not Mac data): the card is the existing "New: Blue Building" + look spotlight
   rotate:'o6',                 // 16 Valley Station (O05): "Swipe to turn" (a control)
   glass:'o4',                  // 20 Needle Court, after Hard 19
   barrels:'E03',               // 25 Tram Depot, after boss 24 (an easy-pack level: cards are allowed on g7 levels that are not Hard)

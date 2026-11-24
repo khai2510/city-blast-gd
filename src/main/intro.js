@@ -114,6 +114,9 @@ var css = document.createElement("style"); css.id = "introCss"; css.textContent 
   "#inRip{position:absolute;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;border:5px solid var(--in-light);box-sizing:border-box;pointer-events:none;opacity:0;animation:inRipple 1.2s ease-out infinite}",
   "#inPing{position:fixed;z-index:95;width:20px;height:20px;margin:-10px 0 0 -10px;border-radius:50%;border:5px solid var(--in-light);pointer-events:none;animation:inPing .45s ease-out forwards}",
   "html body #bottom .bst.bst.inGot{animation:inGot .3s cubic-bezier(.2,.9,.3,1.3) both}",
+  // FIX-1124 (GD-84 b): a swallowed tap during a booster's forced use, from the 2nd on: the existing pop + the existing gold glow of the L2 BLAST (tap2.js t2Glow), on the booster
+  "html body #bottom .bst.bst.inNudge{animation:inGot .3s cubic-bezier(.2,.9,.3,1.3) both,t2Glow .8s ease-in-out .3s 3}",
+  "#inHole.inNo{animation:t2No .35s ease-in-out}",
   "@keyframes inSpin{to{transform:rotate(360deg)}}",
   "@keyframes inFade{from{opacity:0}to{opacity:1}}",
   "@keyframes inFadeOut{to{opacity:0}}",
@@ -135,7 +138,7 @@ var css = document.createElement("style"); css.id = "introCss"; css.textContent 
   "@keyframes inRipple{0%,50%{transform:scale(.3);opacity:0}52%{transform:scale(.3);opacity:.9}100%{transform:scale(1.6);opacity:0}}",
   "@keyframes inPing{from{transform:scale(1);opacity:1}to{transform:scale(5);opacity:0}}",
   // reduce motion: no spin / sparkles / loops; the card just fades
-  "html.rm #inCard .inRays,html.rm #inCard .inIc::after,html.rm #inCard .inDisc,html.rm #inCard .inDisc img,html.rm #inCard .inS,html.rm #inCard .inT,html.rm #inCard .inB,html.rm #inHole,html.rm #inHand,html.rm #inPing,html.rm #inDim,html.rm body #bottom .bst.bst.inGot{animation:none!important}",
+  "html.rm body #bottom .bst.bst.inNudge,html.rm #inHole.inNo,html.rm #inCard .inRays,html.rm #inCard .inIc::after,html.rm #inCard .inDisc,html.rm #inCard .inDisc img,html.rm #inCard .inS,html.rm #inCard .inT,html.rm #inCard .inB,html.rm #inHole,html.rm #inHand,html.rm #inPing,html.rm #inDim,html.rm body #bottom .bst.bst.inGot{animation:none!important}",
   "html.rm #inCard .inSpk,html.rm #inRip{display:none}",
   "html.rm #inCard:not(.hidden) .inBox,html.rm #inCard.out .inBox{animation:inFade .15s ease-out both!important}html.rm #inCard.out .inBox{animation-name:inFadeOut!important}",
   "@media (prefers-reduced-motion:reduce){#inCard .inRays,#inCard .inIc::after,#inCard .inDisc,#inCard .inDisc img,#inCard .inS,#inCard .inT,#inCard .inB,#inHole,#inHand,#inPing,#inDim,body #bottom .bst.bst.inGot{animation:none!important}#inCard .inSpk,#inRip{display:none}#inCard:not(.hidden) .inBox{animation:inFade .15s ease-out both!important}#inCard.out .inBox{animation:inFadeOut .15s both!important}}",
@@ -220,11 +223,17 @@ function inQueue(i){
       // it only when the save has reached it (old saves / a level skipped). Once claimed it is never queued again: the forced first use
       // belongs to the level it was claimed on only and ends on use or when that level ends (inClear), so it never carries into L13+.
       if(s.c) return;
-      if(n === e.lv || (n > e.lv && (save.level|0) >= e.lv - 1)) q.push(e);
+      // FIX-1124 (GD-84 c, tester round 24/11): a jump (?lv= / the Level picker) to a later slot showed the EARLIEST unclaimed booster
+      // card there (Ball on 22 / 24 / 30 / 45, Net on 50) and stacked it with the slot's own card. Now the card shows on its own level
+      // only; a later level the save has reached gets the same free uses quietly (no card, no forced use), so the booster is not lost.
+      if(n === e.lv) q.push(e);
+      else if(n > e.lv && (save.level|0) >= e.lv - 1) inQuiet(e);
     } else if(n === e.lv && (!s.c || !s.f)) q.push(e);
   });
   return q.filter(function(e){ return e.how !== "swipe"; }).concat(q.filter(function(e){ return e.how === "swipe"; }));   // a swipe lesson waits for the level's cards
 }
+function inQuiet(e){ var sv = bstSave(); if(!save.bseen) save.bseen = {}; save.bseen[e.k] = 1; sv[e.k] = (sv[e.k] || 0) + INTRO_FREE; B2.granted.push(e.k + "@quiet");
+  inS(e.id).c = 1; inS(e.id).f = 1; writeSave(); IN.log.push("quiet:" + e.id); try{ bstBarBuild(); }catch(x){} }
 var sl0 = startLevel;
 startLevel = function(i){
   inClear();
@@ -233,8 +242,13 @@ startLevel = function(i){
   if(IN.on && !manual){ IN.q = inQueue(levelIdx); IN.lv = levelIdx; inNext(); inLookStart(); }
   return r;
 };
+// FIX-1124 (UX-88 / UX-91 / U-12, tester round 24/11): the level's cards (and a spotlight / swipe lesson with no card) wait for the
+// opening camera (main/frame.js F7: front-on, zoom-in, 45-degree turn) to end or to be stopped by a touch, and for planning: the
+// opening shot is seen, and a spotlight never sits on a target that is still turning. frame.js opening() caps the wait (8 s).
+function inOpening(){ try{ var F = window.__blast.frame; return !!(F && F.opening && F.opening()); }catch(x){ return false; } }
 function inNext(){
   if(!IN.q.length || screen !== "game" || levelIdx !== IN.lv) return;
+  if(phase !== "plan" || inOpening()){ clearTimeout(IN.ot); IN.ot = setTimeout(inNext, 100); return; }
   var e = IN.q[0], s = inS(e.id);
   if(e.how === "swipe"){ inSwipe(e, 0); return; }
   if(!s.c) inCard(e); else inForcedWait(e, 0);
@@ -334,9 +348,25 @@ function inTarget(e, keep){
 ["pointerdown", "pointermove", "pointerup", "touchstart", "touchmove", "touchend", "mousedown", "mouseup", "wheel", "contextmenu"].forEach(function(ev){
   dim.addEventListener(ev, function(x){ x.stopPropagation(); if(ev === "touchmove" && x.cancelable) x.preventDefault(); }, { passive:false });   // no preventDefault on touchstart / end: the tap must still become a click
 });
+// FIX-1124 (GD-84 a): once a TNT is placed, a tap on BLAST is never swallowed, by a spotlight / forced use (dim) or a card: it ends
+// that step (saved: a booster card is claimed, its forced use and a material's forced tap are done) and fires BLAST.
+function inBlastHit(cx, cy){
+  if(phase !== "plan" || screen !== "game" || placedCount() < 1) return false;
+  var b = $("blast"); if(!b || b.disabled) return false; var r = b.getBoundingClientRect(), cs = getComputedStyle(b);
+  if(!r.width || cs.display === "none" || cs.visibility === "hidden" || +cs.opacity < 0.1) return false;
+  return cx >= r.left - 4 && cx <= r.right + 4 && cy >= r.top - 4 && cy <= r.bottom + 4;
+}
+function inBlastNow(){ IN.log.push("blastThrough"); IN.blastN = (IN.blastN || 0) + 1; setTimeout(function(){ var b = $("blast"); if(b && phase === "plan" && placedCount() > 0) b.click(); }, 0); }
+card.addEventListener("click", function(x){
+  var e = IN.card; if(!e || !inBlastHit(x.clientX, x.clientY)) return;
+  x.stopPropagation(); x.preventDefault();
+  if(e.kind === "booster") $("inBtn").click(); else { IN.card = null; inCardOut(e); inMark(e.id, "c"); }   // the gift is kept (Claim)
+  IN.log.push("cardBlast:" + e.id); inDone(e); inBlastNow();
+}, true);
 dim.addEventListener("click", function(x){
   x.stopPropagation(); x.preventDefault();
   var e = IN.forced, t = IN.t; if(!e || !t) return;
+  if(inBlastHit(x.clientX, x.clientY)){ clearTimeout(IN.lt); inRelease(); IN.log.push("dimBlast:" + e.id); inDone(e); inBlastNow(); return; }
   if(e.look){ clearTimeout(IN.lt); inRelease(); IN.log.push("lookTap:" + e.id); inDone(e); return; }
   var pb = e.kind === "booster" && $("pauseBtn") ? $("pauseBtn").getBoundingClientRect() : null;   // GD-76: Pause (the way out of the level) is never swallowed:
   if(pb && pb.width && x.clientX >= pb.left - 4 && x.clientX <= pb.right + 4 && x.clientY >= pb.top - 4 && x.clientY <= pb.bottom + 4){   // it ends the forced use (saved)
@@ -344,7 +374,8 @@ dim.addEventListener("click", function(x){
   if(Math.hypot(x.clientX - t.x, x.clientY - t.y) > t.r + 6){
     if(e.place && phase === "plan" && IN.pass && IN.pass(x.clientX, x.clientY, e)){ inRelease(); audioInit(); IN.log.push("pass:" + e.id); onTap(x.clientX, x.clientY); inDone(e); return; }   // R20 (polish.js GD-43): a tap on another valid member places there, the hand goes
     IN.log.push("blocked"); IN.blocked = (IN.blocked || 0) + 1; IN.fb = (IN.fb || 0) + 1;
-    if(IN.fb >= 2 && t.btn){ t.btn.classList.remove("inGot"); void t.btn.offsetWidth; t.btn.classList.add("inGot"); setTimeout(function(){ t.btn.classList.remove("inGot"); }, 400); }   // GD-76: from the 2nd swallowed tap the booster pops (existing inGot)
+    if(IN.fb >= 2 && t.btn){ var nb = t.btn, ho = $("inHole"); nb.classList.remove("inGot", "inNudge"); ho.classList.remove("inNo"); void nb.offsetWidth; nb.classList.add("inNudge"); ho.classList.add("inNo"); IN.nudge = (IN.nudge || 0) + 1; IN.log.push("nudge:" + e.id);
+      clearTimeout(IN.nt); IN.nt = setTimeout(function(){ nb.classList.remove("inNudge"); ho.classList.remove("inNo"); }, 2800); }   // GD-76: from the 2nd swallowed tap the booster pops (existing inGot); FIX-1124 GD-84 b: + the existing gold glow (3 beats) and the ring shake of the L1 spotlight
     return; }
   inRelease(); audioInit();
   var p = document.createElement("div"); p.id = "inPing"; p.style.left = Math.round(t.x) + "px"; p.style.top = Math.round(t.y) + "px"; document.body.appendChild(p); setTimeout(function(){ p.remove(); }, 500);
@@ -358,7 +389,7 @@ function inDone(e){ inMark(e.id, "f"); if(IN.q[0] === e) IN.q.shift(); setTimeou
 // GD-76 (23/11): a claimed booster whose forced first use is pending or showing when the level ends / retries / is left: that use is
 // done (saved), so the spotlight that swallows every other tap never comes back on a later level.
 function inEndForced(){ var e = IN.forced || IN.q[0]; if(e && e.kind === "booster" && inS(e.id).c && !inS(e.id).f){ inMark(e.id, "f"); IN.log.push("forcedEnd:" + e.id); } }
-function inClear(){ inEndForced(); IN.fb = 0; clearTimeout(IN.wt); clearTimeout(IN.outT); clearTimeout(IN.lt); inSwipeOff(); inMomOff(); inRelease(); IN.card = null; IN.q = []; card.classList.add("hidden"); card.classList.remove("out", "fly"); }
+function inClear(){ inEndForced(); IN.fb = 0; clearTimeout(IN.wt); clearTimeout(IN.ot); clearTimeout(IN.outT); clearTimeout(IN.lt); inSwipeOff(); inMomOff(); inRelease(); IN.card = null; IN.q = []; card.classList.add("hidden"); card.classList.remove("out", "fly"); }
 // leaving the level (Home, map, result) closes whatever is open; it shows again next time (not marked done)
 var show0 = show; show = function(id){ if(id === "title" || id === "result" || id === "shop") inClear(); return show0.apply(this, arguments); };
 
@@ -513,8 +544,9 @@ window.__blast.intro = {
   sched:function(){ return JSON.parse(JSON.stringify(INTRO_SCHED)); },
   on:function(){ return IN.on; },
   state:function(){ var h = IN.t; return { on:IN.on, card:IN.card ? IN.card.id : null, forced:IN.forced ? IN.forced.id : null, hole:IN.forced && h ? { x:h.x, y:h.y, r:h.r } : null,
-    queue:IN.q.map(function(e){ return e.id; }), swipe:IN.sw ? IN.sw.id : null, moment:IN.mo ? IN.mo.id : null, blocked:IN.blocked || 0, log:IN.log.slice(-30), seen:JSON.parse(JSON.stringify(save.intro || {})), l1:document.body.classList.contains("inL1") }; },
+    queue:IN.q.map(function(e){ return e.id; }), nudge:IN.nudge || 0, blastN:IN.blastN || 0, swipe:IN.sw ? IN.sw.id : null, moment:IN.mo ? IN.mo.id : null, blocked:IN.blocked || 0, log:IN.log.slice(-30), seen:JSON.parse(JSON.stringify(save.intro || {})), l1:document.body.classList.contains("inL1") }; },
   lockLv:function(k){ return boosterLv(k); },
+  busy:function(){ return IN.on && (IN.q.length > 0 || !!IN.card || !!IN.forced); },   // FIX-1124: a card / spotlight is up or still to come on this level (tap2.js holds the L1 / L2 hand)
   setPass:function(f){ IN.pass = typeof f === "function" ? f : null; }   // main/polish.js R20
 };
 })(); }catch(e){ console.error("main/intro.js", e); }

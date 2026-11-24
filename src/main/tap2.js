@@ -246,6 +246,11 @@
         if(tutRef()) return;
         if(manual || screen !== "game" || levelIdx > 1 || tutDone(levelIdx) || wave > 1 ){ setMode(""); tutStep(null); return levelIdx > 1 || !tutDone(levelIdx) ? sh0.apply(this, arguments) : hand(null); }
         if(inCardEl && !inCardEl.classList.contains("hidden")){ setMode(""); hand(null); tutStep(null); return; }   // under an intro card: no hand
+        // FIX-1124 (UX-88 / U-1, tester round 24/11): the L1 "Double-tap!" dim / ring / hand / label and the L2 hand wait for the opening camera
+        // (main/frame.js F10 opening(): the zoom-in and the 45-degree turn over, or stopped by a touch) and for the level's intro cards
+        // (L2 "New: BLAST"): the prompt never shows on a target that is still turning, and the turn is seen as the opening shot
+        var F10 = window.__blast.frame, IA10 = window.__blast.intro;
+        if((F10 && F10.opening && F10.opening()) || (IA10 && IA10.busy && IA10.busy())){ setMode(""); hand(null); tutStep(null); return; }
         var n = placedCount(), pt = null, m;
         if(levelIdx === 0){
           if(phase === "plan"){ if(n === 0){ m = solM(0); if(m){ var s0 = toScreen(v5HandPoint(m)); pt = s0.on ? s0 : null; if(pt){ MAG.pt = pt; MAG.b = m; } } }
@@ -314,7 +319,8 @@
         var on = !!pt && tutL1();
         if(levelIdx === 0 && TUT.sawPlan && phase !== "plan" && phase !== "count" && !tutDone(0) && screen === "game" && !manual) tutMark(0);   // the first blast ends the lesson
         if(levelIdx === 0 && phase === "plan") TUT.sawPlan = true;
-        if(on !== TUT.on){ TUT.on = on; tDim.classList.toggle("hidden", !on); tLbl.classList.toggle("hidden", !on); if(on) T2.log.push("tut:l1"); }
+        if(on !== TUT.on){ TUT.on = on; tDim.classList.toggle("hidden", !on); tLbl.classList.toggle("hidden", !on); if(on) T2.log.push("tut:l1");
+          try{ var F10 = window.__blast.frame; if(F10 && F10.holdSway) F10.holdSway(on); }catch(e){} }   // FIX-1124: the camera's idle sway is held while the L1 prompt is up (the ring stays put)
         if(!on){ TUT.pt = null; return; }
         TUT.pt = pt; TUT.n = n | 0;
         var h = $("t2Hole"), d = TUT.r*2;

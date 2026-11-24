@@ -1054,3 +1054,26 @@ window.__blast.polish = {
   camNow:P.camNow, mapFit:mapFit, lockchips:LOCKCHIPS, flat:function(){ return siteFlat(); }
 };
 })(); }catch(e){ console.error("main/polish.js", e); }
+// ---- FIX-1124 (UX-92, tester round 24/11, Agents-Game): no "TIMBER!" on a blast that is going to fail. On the wave that decides the
+// attempt (no TNT left, or the last wave) the TIMBER call (the caption, the recorded shout, its 3-tap haptic) waits until the meter
+// reaches PASS; if it never does, it is dropped (the slow-mo and the vignette of that moment stay: only the reward words go). Earlier
+// waves (planning comes back) keep the call at the lean as before. The coin stream of a failing deciding wave: levels6 v13-feel.js Q5.
+// ?timber=0 = as before.
+try{ (function(){
+  if(/[?&]timber=0(&|$)/.test(location.search)) return;
+  var TB = { pend:null, held:0, late:0, drop:0 };
+  var deciding = function(){ return !manual && screen === "game" && (phase === "boom" || phase === "settle") && (stockLeft() === 0 || wave >= maxWaves) && !!L; };
+  var short = function(){ return deciding() && pct < (L.target || 0.85); };
+  var pop0 = popText, snd0 = snd, hg0 = hg;
+  popText = function(t){ if(String(t).indexOf("TIMBER") === 0 && short()){ TB.pend = { t0:gameT, snd:null, hg:null }; TB.held++; return; } return pop0.apply(this, arguments); };
+  snd = function(name, p){ if(name === "timber" && TB.pend && !TB.pend.snd){ TB.pend.snd = [name, p]; return null; } return snd0.apply(this, arguments); };
+  hg = function(m){ if(m === "timber" && TB.pend && !TB.pend.hg){ TB.pend.hg = [].slice.call(arguments); return; } return hg0.apply(this, arguments); };
+  var go = function(){ var P = TB.pend; TB.pend = null; TB.late++;
+    pop0("TIMBER!"); if(P.hg) hg0.apply(null, P.hg); if(P.snd) snd0(P.snd[0], Object.assign({}, P.snd[1] || {}, { duration:Math.max(0.4, (slowLeft || 0)) })); };
+  var lh0 = updateLiveHUD;
+  updateLiveHUD = function(){ var r = lh0.apply(this, arguments);
+    if(TB.pend){ if(screen !== "game" || (phase !== "boom" && phase !== "settle")){ TB.pend = null; TB.drop++; } else if(pct >= (L.target || 0.85)) go(); }
+    return r; };
+  var sl0 = startLevel; startLevel = function(){ TB.pend = null; return sl0.apply(this, arguments); };
+  window.__blast.timber = function(){ return { pend:!!TB.pend, held:TB.held, late:TB.late, drop:TB.drop }; };
+})(); }catch(e){ console.error("main/polish.js FIX-1124", e); }

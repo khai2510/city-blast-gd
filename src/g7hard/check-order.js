@@ -20,6 +20,11 @@ const L = Object.fromEntries(Object.entries(A).map(([c, l]) => [c, Object.assign
 // element / booster -> [card id in INTRO_SCHED, the level that carries it originally, launch slot (SLOTS-50; 0 = after 50, card off)]
 const CARD = { wood:['timber','o1',1], brick:['brick','o3',4], concrete:['concrete','o4',8], Ball:['wreck','o11',12], blue:['keep','o5',15], glass:['glass','o25',20],
   barrels:['barrels','o32',25], Net:['net','o21',30], steps:['steps','o11',35], steel:['steel','o8',40], Sky:['sky','o31',45], dark:['rc','o17',0], trap:['trap','o35',0] };
+// FIX-1124 (UX-89, tester round 24/11): the protect card goes on the FIRST level that has protected members, wherever it stands
+// (Hard or not): a rule the player can lose to is told before it can be met. Its launch slot is that level (7 Grand Arch now).
+const FIRST_BLUE = ORDER.findIndex(c => L[c] && L[c].el.has('blue')) + 1;
+if (FIRST_BLUE > 0) CARD.blue[2] = FIRST_BLUE;
+const CARD_ON_HARD_OK = ['blue'];
 const BOOSTER = ['Ball', 'Net', 'Sky'];
 const NOCARD = ['stone', 'drop', 'perblast'];   // + heavy (counted as "dark" by the audit; launch 50, no card yet: D-blast-NONEW proposal)
 // SLOTS-50 status "convert" / "rebuild" / "rebuild + convert": the level sits in its slot in its current form until its conversion lands
@@ -41,7 +46,7 @@ const introPos = {}; for (const [e, [id, lv]] of Object.entries(CARD)) introPos[
 for (const [e, [id, , want]] of Object.entries(CARD)) {
   const got = introPos[e], okk = want ? got === want : got === Infinity;
   if (!okk) fail++; out.push((okk ? 'ok   ' : 'FAIL ') + 'card ' + e + ' (' + id + ') on ' + (got === Infinity ? 'off' : 'L' + got) + ', launch ' + (want || 'after 50: off'));
-  if (got !== Infinity && L[ORDER[got - 1]].hard) { fail++; out.push('FAIL card ' + e + ' on a Hard / boss'); }
+  if (got !== Infinity && L[ORDER[got - 1]].hard) { if (CARD_ON_HARD_OK.includes(e)) { known++; out.push('ok   card ' + e + ' on a Hard (FIX-1124 UX-89: first level with protected members)'); } else { fail++; out.push('FAIL card ' + e + ' on a Hard / boss'); } }
 }
 const cardsAt = {}; for (const [e, p] of Object.entries(introPos)) if (p !== Infinity) (cardsAt[p] = cardsAt[p] || []).push(e);
 Object.entries(cardsAt).forEach(([p, es]) => { if (es.length > 1) { fail++; out.push('FAIL L' + p + ' carries ' + es.length + ' cards: ' + es.join(', ')); } });
