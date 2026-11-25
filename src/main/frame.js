@@ -214,7 +214,22 @@
       if(!(S && S.ch && S.live && FR.W > 0 && !b && screen === "game" && (phase === "plan" || phase === "build"))) return rfz0.apply(this, arguments);
       var d0 = dist, zt = zoomT, zk = zoomK, zx = zMax, r = rfz0.apply(this, arguments);
       dist = d0; zoomLimits(frameBox()); zMax = Math.max(zMax, zx); zoomT = zt; zoomK = zk; FR.frz = (FR.frz || 0) + 1; return r; };
-    renderer.domElement.addEventListener("pointerdown", function(){ var S = FR.S; if(S && S.t < S.dur){ S.t = S.dur; zoomT = clampZoom(zoomK); } if(S && S.turn && !S.turnDone){ S.turnDone = true;
+    // F11 FIX-1125 (25/11/2026, tester round UX-98: one tap 1.3 s into L7 left the view front-on for the whole level, on L15 it stopped
+    //    mid-turn): a touch no longer stops the opening between poses. It ends the zoom-in at its END zoom (S.zOpen, not where it was)
+    //    and plays the rest of the front -> 45-degree turn in FF_S seconds (same ease curve, faster), so the view always reaches the
+    //    pose a no-touch run ends on. The tap that does this (its pointerdown came while the zoom-in or the turn was still running, in
+    //    planning) is not used (API.eatTap, called by main/polish.js FX25 at the top of onTap): it was aimed at a view that is about to
+    //    turn (the F9 double-tap miss). Later taps, also during the short yaw lag, place as usual. ?ff=0 = the F9 stop.
+    var FF_ON = Qf.get("ff") !== "0", FF_S = 0.2;
+    API.eatTap = function(){ var t = FR.downOpen; FR.downOpen = null; if(!FF_ON || t == null || phase !== "plan") return false; if(performance.now() - t > 2500) return false; FR.eaten = (FR.eaten || 0) + 1; return true; };
+    API.ffState = function(){ var S = FR.S; return { on:FF_ON, ff:!!(S && S.ffK), ffK:S && S.ffK ? +S.ffK.toFixed(2) : 0, eaten:FR.eaten || 0, touches:FR.touches || 0 }; };
+    renderer.domElement.addEventListener("pointerdown", function(){ var S = FR.S;
+      FR.downOpen = null; try{ if(phase === "plan" && S && S.live && (S.t < S.dur || (S.turn && !S.turnDone))){ FR.downOpen = performance.now(); FR.touches = (FR.touches || 0) + 1; } }catch(e){}   // only the touch that moves the camera on (not the yaw lag after it)
+      if(FF_ON){
+        if(S && S.live && S.t < S.dur){ S.t = S.dur; zoomT = clampZoom(S.zOpen); }   // the zoom eases on to its end pose
+        if(S && S.live && S.turn && !S.turnDone && !S.ffK) S.ffK = Math.max(1, (CF.turnDur - (S.tt || 0))/FF_S);   // the turn finishes in FF_S s
+        return; }
+      if(S && S.t < S.dur){ S.t = S.dur; zoomT = clampZoom(zoomK); } if(S && S.turn && !S.turnDone){ S.turnDone = true;
         // F9: stop the view where it IS (the engine's yaw lags the turn by up to ~15 deg; left alone it kept turning after the touch, twice as far on screen now the camera is close: the L1 double-tap missed its TNT)
         if(S.live && FR.W > 0.98){ var sw = 0; try{ sw = ballAim ? 0 : 0.06*Math.sin(swayT*0.35); }catch(e){} S.yawD = (yaw - sw - baseYaw)/FR.W; yawSp.v = 0; } } }, { capture:true, passive:true });   // F7: a touch also stops the ?cam45 turn where it is   // a touch ends the ease where it is
     var myX = null, myY = null, inX = 0, inY = 0, wSp = { v:0 };
@@ -240,7 +255,7 @@
       // F2: the ease (game time of the render loop, capped like the rest of the camera)
       if(S.live && S.t < S.dur){ S.t = Math.min(S.dur, S.t + rdt); var e = 1 - Math.pow(1 - S.t/S.dur, 3); zoomT = zoomK = S.zFrom + (S.zOpen - S.zFrom)*e; zoomSp.v = 0; }
       // F7 ?cam45=1: once the zoom-in is over, the view turns from the front to 45 degrees (ease-in-out), stopped by any touch
-      if(S.turn && S.live && !S.turnDone && S.t >= S.dur){ S.tt = Math.min(CF.turnDur, S.tt + rdt); var et = S.tt/CF.turnDur; et = et < 0.5 ? 4*et*et*et : 1 - Math.pow(-2*et + 2, 3)/2; S.yawD = S.yaw0D + S.turn*et; if(S.tt >= CF.turnDur) S.turnDone = true; }
+      if(S.turn && S.live && !S.turnDone && S.t >= S.dur){ S.tt = Math.min(CF.turnDur, S.tt + rdt*(S.ffK || 1)); var et = S.tt/CF.turnDur; et = et < 0.5 ? 4*et*et*et : 1 - Math.pow(-2*et + 2, 3)/2; S.yawD = S.yaw0D + S.turn*et; if(S.tt >= CF.turnDur) S.turnDone = true; }
       // F3: the weight (state x zoom: the whole-lot zoom 1 = no framing)
       var wz = Math.max(0, Math.min(1, (S.zEnd - zoomK)/(S.zEnd - Math.max(S.zFrom, S.zOpen + 0.05)))), wt = S.live && (phase === "build" || phase === "plan" || phase === "count") ? wz : 0;
       if(S.refit && S.dur > 0) wt = Math.min(wt, 1 - Math.pow(1 - Math.min(1, S.t/S.dur), 3));   // F5 (b): the look-at / offset ease in with the zoom

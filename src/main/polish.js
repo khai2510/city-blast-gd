@@ -943,7 +943,7 @@ function armedK(){ if(typeof ballAim !== "undefined" && ballAim && !ballLive) re
 function xSync(){
   var k = screen === "game" && (phase === "plan" || phase === "build") && !manual ? armedK() : null, ch = k ? document.querySelector('#bbar .bst[data-k="' + k + '"]') : null, r = ch ? ch.getBoundingClientRect() : null;
   if(!r || !r.width){ xb.classList.add("hidden"); return; }
-  xb.style.left = Math.round(Math.max(4, r.left - 18)) + "px"; xb.style.top = Math.round(Math.max(4, r.top - 18)) + "px"; xb.classList.remove("hidden"); }
+  xb.style.left = Math.round(Math.max(16, Math.min(innerWidth - 16 - 48, r.left - 18))) + "px"; xb.style.top = Math.round(Math.max(16, r.top - 18)) + "px"; xb.classList.remove("hidden"); }   // FIX-1125 UX-99: 16 px from the screen edges
 xb.addEventListener("click", function(e){ e.stopPropagation(); e.preventDefault(); var k = armedK(); R22.xTap++; lg22("x:" + k);
   try{ snd("ui_tap"); }catch(x){}
   if(k === "wreck"){ if(!refund("x")){ ballAimOff(); } }
@@ -1042,6 +1042,60 @@ var cm22 = $("cityMap"); if(cm22){ var mpT = 0; new MutationObserver(function(){
 P.r22map = mapPill; P.r22pill = pillFix;
 })();
 
+
+// ---- FX25 FIX-1125 (tester round 25/11/2026, feedback/2026-11-25, group A; ?fx25=0 = off). Bug fixes only, no new feature, no feel change.
+//  O1  UX-98 the tap that cuts the opening shot short (main/frame.js F11: the turn now finishes in 0.2 s instead of freezing) places
+//      nothing: it was aimed at a view that is about to turn. frame.js eatTap() says which tap that was (its pointerdown came while
+//      the zoom-in or the turn still ran, in planning); every other tap and onTap caller (intro, R22 build-tap replay) is untouched.
+//  W1  U-5 / UX Bug 1 the Wrecking Ball said nothing when it did nothing: (a) a refused swing (spot hidden from the ball's side, too close
+//      to a blue building, blocked, protected) only turned the reticle red: its reason went to toast(), which uiclean mutes in a level,
+//      and bstTap had already cleared the aim prompt (ring + "Tap to swing") before the throw was refused, so the ring stayed red on
+//      the refused spot with no words for the rest of the aim. Now the reason shows in the aim tip under the red ring, and 1.4 s later
+//      the ring and "Tap to swing" come back on the spot a swing accepts. (b) after a swing, ballLive holds until the building has
+//      settled (up to BALL.settleMax 6 s of game time after the hit, ~1-2 s of it with the ball already winched out of view): every tap
+//      in that time was swallowed in silence (18 taps on the tester's slow browser). The wait is unchanged (rules / physics); a tap in
+//      it now says so in the existing toast ("Swinging…", then "Wait until it stops moving").
+//  W2  UX-99 the aim tip (a child of the reticle, centred under it) is kept 16 px inside the screen sides (Level 48: it started at x 3).
+(function(){
+if(QS.get("fx25") === "0") return;
+var FX = { eat:0, refused:0, wait:0, why:null, restore:0, clamp:0, log:[] };
+function lgx(s){ FX.log.push(s); if(FX.log.length > 30) FX.log.shift(); lg(s); }
+P.fx25 = function(){ var tip = $("bAimTip"), tr = tip && !tip.classList.contains("hidden") && tip.offsetWidth ? tip.getBoundingClientRect() : null;
+  return { eat:FX.eat, refused:FX.refused, wait:FX.wait, why:FX.why, restore:FX.restore, clamp:FX.clamp, tip:tr ? { x:Math.round(tr.left), r:Math.round(tr.right), y:Math.round(tr.top), text:tip.innerText } : null, log:FX.log.slice() }; };
+// O1
+var oto = onTap; onTap = function(x, y){
+  try{ var F = window.__blast.frame; if(screen === "game" && !manual && F && F.eatTap && F.eatTap()){ FX.eat++; lgx("eat:" + Math.round(x) + "," + Math.round(y)); return; } }catch(e){}
+  return oto.apply(this, arguments); };
+// W1
+var say = function(msg){ var t = $("toast"); if(!t) return; t.textContent = msg; t.classList.add("on");
+  try{ clearTimeout(toastTimer); toastTimer = setTimeout(function(){ t.classList.remove("on"); }, 1700); }catch(e){ setTimeout(function(){ t.classList.remove("on"); }, 1700); } };
+var word = null, to25 = toast; toast = function(m){ if(word !== null && typeof m === "string") word = m; return to25.apply(this, arguments); };
+var tok = 0;
+if(typeof bstTap === "function" && typeof ballStats !== "undefined"){ var bt25 = bstTap; bstTap = function(x, y){
+  var aim = false; try{ aim = !!ballAim; }catch(e){}
+  if(!aim) return bt25.apply(this, arguments);
+  if(ballLive){ FX.wait++; var sw = ballLive.hitT < 0; say(sw ? "Swinging…" : "Wait until it stops moving"); lgx("wait:" + (sw ? "swing" : "settle")); return true; }
+  var r0 = ballStats.refused, o, w; word = "";
+  try{ o = bt25.apply(this, arguments); } finally { w = word; word = null; }
+  if(ballStats.refused > r0 && ballAim && !ballLive){
+    FX.refused++; FX.why = w || "Can't swing at that spot"; lgx("refused:" + FX.why);
+    var tip = $("bAimTip"); if(tip){ tip.classList.remove("r22two"); tip.textContent = FX.why; tip.classList.remove("hidden"); }
+    var my = ++tok; setTimeout(function(){ if(my !== tok) return; try{ if(screen === "game" && ballAim && !ballLive && !ballSug){ ballRet(true); ballSuggest(); FX.restore++; lgx("restore"); } }catch(e){} }, 1400); }
+  else tok++;
+  return o; }; }
+// W2
+var M = 16;
+function clampTip(){ try{ var ret = $("bRet"), tip = $("bAimTip");
+  if(ret && tip && !ret.classList.contains("hidden") && !tip.classList.contains("hidden") && tip.offsetWidth){
+    // in the reticle's own px (it pulses to x1.08 about its centre, the tip with it): screen left = cx + K*(dx - w/2) >= M, right <= W - M
+    var rr = ret.getBoundingClientRect(), cx = rr.left + rr.width/2, w = tip.offsetWidth, K = 1.08, lo = (M - cx)/K + w/2, hi = (innerWidth - M - cx)/K - w/2, dx = 0;
+    if(lo > hi) dx = (lo + hi)/2; else if(lo > 0) dx = lo; else if(hi < 0) dx = hi;
+    dx = Math.round(dx); var tf = dx ? "translateX(calc(-50% + " + dx + "px))" : "";
+    if(tip.style.transform !== tf){ tip.style.transform = tf; if(dx) FX.clamp++; } } }catch(e){}
+  requestAnimationFrame(clampTip); }
+requestAnimationFrame(clampTip);
+})();
+
 window.__blast.polish = {
   prot:function(){ return P.prot(); }, r18:function(){ return P.r18(); }, r19:function(){ return P.r19 ? P.r19() : { on:false }; }, r19skew:function(v){ return P.r19skew ? P.r19skew(v) : null; }, r19disarm:function(w){ return P.r19disarm ? P.r19disarm(w) : null; }, r19copy:function(){ return P.r19copy ? P.r19copy() : null; }, r20:function(){ return P.r20 ? P.r20() : { on:false }; }, r20probe:function(st){ return P.r20probe ? P.r20probe(st) : null; }, r21:function(){ return P.r21 ? P.r21() : { on:false }; }, r22:function(){ return P.r22 ? P.r22() : { on:false }; }, r22map:function(){ return P.r22map ? P.r22map() : null; }, r22pill:function(){ return P.r22pill ? P.r22pill() : null; }, r20ux51:function(){ return P.r20ux51 ? P.r20ux51() : null; }, kdDrift:function(){ return P.kdDrift(); }, kdHosts:function(){ return P.kdHosts(); }, pads:function(){ return P.pads(); }, kWord:function(s, tip){ return kWord(s, tip); },
   mapTitle:mapTitle, goal:function(){ var mp = $("mPass"); if(!mp) return null; var cs = getComputedStyle(mp, "::after"); return { text:mp.getAttribute("data-pol"), fs:parseFloat(cs.fontSize), display:cs.display, content:cs.content }; },
@@ -1051,6 +1105,7 @@ window.__blast.polish = {
   home:function(){ return { runs:HC.runs, last:HC.last, lock:HC.lock }; }, anyTap:function(){ return P.anyTap || 0; },
   win:function(){ var c = P.win.cam; return { n:P.win.n, stamp:P.win.stamp, plus:P.win.plus, camN:P.win.camN, cam:c ? { off:Math.round(c.off), k:+c.k.toFixed(2), sy0:Math.round(c.sy0) } : null, home:P.win.home, plusAt:P.win.plusAt || null, camBy:P.win.camBy || (P.win.camN ? "polish" : null), lookM:P.win.lookM || null, camDone:P.win.camDone == null ? null : P.win.camDone }; },
   demo:function(){ return { shown:P.demo.shown, on:P.demo.until > performance.now(), miss:P.demo.miss, frames:P.demo.frames || 0, pt:P.demo.pt || null }; },
+  fx25:function(){ return P.fx25 ? P.fx25() : null; },
   camNow:P.camNow, mapFit:mapFit, lockchips:LOCKCHIPS, flat:function(){ return siteFlat(); }
 };
 })(); }catch(e){ console.error("main/polish.js", e); }

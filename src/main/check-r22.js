@@ -70,7 +70,8 @@ const fail = async (p) => { await p.evaluate(() => window.__blast.test.setStock(
     item('B1', 'UX-70: the chip tap arms the Ball (stock 1 -> 0 as before); a 48 x 48 ✕ sits on the chip\'s top-left corner; the tip reads "Tap to swing" / "Tap the chip to cancel"',
       w0 === 1 && w1 === 0 && a1.ball.aim && a1.x && a1.x.w >= 48 && a1.x.h >= 48 && /Tap the chip to cancel/.test(a1.tip || '') && a1.tip.split('\n').length === 2, JSON.stringify({ w0, w1, x: a1.x, tip: a1.tip }));
     const ch = await rect(p, '#bbar .bst[data-k="wreck"]'), x = a1.x;
-    item('B2', 'the ✕ overlaps the chip\'s top-left corner and stays on screen', !!(ch && x && x.x < ch.x && x.x + x.w > ch.x && x.y < ch.y && x.y + x.h > ch.y && x.x >= 0 && x.y >= 0), JSON.stringify({ ch, x }));
+    // FIX-1125 UX-99 (tester 25/11): the ✕ stays 16 px inside the screen sides, so on a chip 12-14 px from the edge it sits on the chip's top corner instead of past its left edge
+    item('B2', 'the ✕ overlaps the chip\'s top corner and stays 16 px inside the screen (UX-99)', !!(ch && x && x.x < ch.x + ch.w && x.x + x.w > ch.x && x.y < ch.y && x.y + x.h > ch.y && x.x >= 16 && x.x + x.w <= VW - 16 && x.y >= 16), JSON.stringify({ ch, x }));
     await tap(p, '#r22X'); await p.waitForTimeout(600);
     const a2 = await p.evaluate(() => window.__blast.polish.r22()), w2 = await wk(p);
     item('B3', 'BUG-1: the ✕ disarms and gives the unswung use back (stock 0 -> 1, chip back to its count)', w2 === 1 && !a2.ball.aim && a2.ball.left === 0 && !a2.x && a2.refund === 1, JSON.stringify({ w2, ball: a2.ball, refund: a2.refund }));

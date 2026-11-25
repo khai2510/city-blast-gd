@@ -83,8 +83,8 @@
       // would cover the Net above the Ball or the end of BLAST beside Sky Strike)
       // (18 px above it, flush with the screen side); its hit area is its round shape (clip-path), so a tap on the chip's centre still
       // reaches the chip (R22: a 2nd chip tap cancels too)
-      "html.sfl body #r22X#r22X{top:auto!important;bottom:calc(var(--sfB) + var(--sfBs) - 30px)!important;left:calc(var(--sfSide) - 14px)!important;right:auto!important;clip-path:circle(calc(50% + 4px))}",
-      "html.sfl.sfXsky body #r22X#r22X{left:auto!important;right:calc(var(--sfSide) - 14px)!important}",
+      "html.sfl body #r22X#r22X{top:auto!important;bottom:calc(var(--sfB) + var(--sfBs) - 30px)!important;left:max(16px, calc(var(--sfSide) - 14px))!important;right:auto!important;clip-path:circle(calc(50% + 4px))}",
+      "html.sfl.sfXsky body #r22X#r22X{left:auto!important;right:max(16px, calc(var(--sfSide) - 14px))!important}   /* FIX-1125 UX-99: the ✕ stays 16 px inside the screen sides */",
       // the collateral line (fixed, under the top row)
       B + " #collat#collat{top:var(--sfTipT)!important}"
     ].join("\n");
