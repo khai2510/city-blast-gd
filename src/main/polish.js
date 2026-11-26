@@ -1096,6 +1096,90 @@ function clampTip(){ try{ var ret = $("bRet"), tip = $("bAimTip");
 requestAnimationFrame(clampTip);
 })();
 
+// ---- FX26 FIX-1126 (tester round 26/11/2026, feedback/2026-11-26, group A; ?fx26=0 = off). Bug fixes / state fixes only: no new rule,
+//      screen, button, price, reward or text (every word below is a line the game already has).
+//  R1  UX-105 a tap off the building (sky, grass, or a protected building the ray finds no member on) with the Ball armed turned the
+//      reticle red where the tap was and left it there for good, still reading "Tap to swing" (bstTap's no-member path counts no refusal,
+//      so FX25 W1 never put it back). Now it goes the FX25 W1 way: the reason in the aim tip under the red ring ("Tap the building", or
+//      the Ball's own "Protected! Swing at the target building." when the tap ray hits a protected building), and 1.4 s later the white
+//      ring and "Tap to swing" come back on the spot a swing accepts. The loose toast of that tap is cleared (the tip already says it).
+//  R2  UX-106 BLAST with the Ball still armed: the reticle and its tip stayed over the collapse. They are hidden while the blast runs
+//      (any phase but plan / build) and come back (ring + "Tap to swing" on a fresh spot) when planning resumes with the Ball still out.
+//      The aim itself, the swings left and the ✕ (R22 hides it outside plan / build already) are unchanged.
+//  R3  UX-109 the R22 cancel ✕ (48 x 48 tap target, same place, same R22 / sflay rules: >= 16 px inside the screen, clear of the Net and
+//      BLAST) is drawn as a 26 px badge in the top-left corner of its tap area, on the chip's rim, so the armed chip's icon and count stay
+//      visible. The rest of the tap area is transparent (a tap there cancels, as a tap on the armed chip itself does).
+//  R4  U-2 the "Get more" sheet's buy button was disabled when coins are short but kept the green "go" look (uiclean B1 forces the green
+//      with !important): it now takes the game's own disabled-button look (--off tokens, as .big:disabled). Price and pack unchanged.
+//  R5  U-4 Safety Net: it works (fixed fences go up on the first BLAST, 1 use spent then), but the arm / disarm / can't-arm line is a
+//      toast() and uiclean mutes toast() in a level, so arming said nothing. The same line now shows in the toast as the game wrote it
+//      ("Safety Net up on BLAST · catches rubble, not buildings", "Safety Net off", "Nothing to protect on this level", "No room for a net here").
+(function(){
+if(QS.get("fx26") === "0") return;
+document.documentElement.classList.add("fx26");
+var FX = { off:0, prot:0, restore:0, boomHide:0, boomBack:0, net:0, netWhy:null, log:[] };
+function lgx(s){ FX.log.push(s); if(FX.log.length > 30) FX.log.shift(); lg(s); }
+var st26 = document.createElement("style"); st26.id = "fx26Css";
+st26.textContent = [
+  // R2
+  "html.fx26.fx26boom body #bRet{display:none!important}",
+  // R3: the badge sits in the top-left corner of the 48 px tap area (inside R22's round hit clip), on the chip's rim
+  "html.fx26 body #r22X#r22X{background:transparent!important;box-shadow:none!important}",
+  "html.fx26 body #r22X#r22X::before{content:'';position:absolute;left:1px;top:1px;width:26px;height:26px;border-radius:50%;background:var(--coral,#FF5A3C);box-shadow:0 2px 0 var(--coral-d,#C23A20),0 0 0 2px #fff;pointer-events:none}",
+  "html.fx26 body #r22X#r22X svg{position:absolute;left:6px;top:6px;width:16px;height:16px;z-index:1}",
+  // R4: the game's own disabled look (.big:disabled tokens), over uiclean B1's forced green
+  "html.fx26 body .bov .bcard .big.mint:disabled{--ol2:var(--off-ol);background:linear-gradient(180deg,#D9D2C8 0%,var(--off) 62%)!important;box-shadow:0 0 0 3px var(--off-rim),inset 0 -5px 0 var(--off-rim)!important;border-color:var(--off-rim)!important;color:#6B6152!important;-webkit-text-stroke:0 transparent!important;text-shadow:none!important;cursor:default}",
+  "html.fx26 body .bov .bcard .big.mint:disabled:active{transform:none}",
+  // R5: the Net line is longer than one row at 375-393 px (r19 keeps toasts on one line): it may wrap, inside the 16 px sides
+  "html.fx26 body:not(.ulMenu) #toast.fx26wrap{white-space:normal!important;width:max-content;max-width:calc(100vw - 32px)!important;text-align:center}"
+].join("\n");
+document.head.appendChild(st26);
+var say = function(msg, ms){ var t = $("toast"); if(!t) return; t.textContent = msg; t.classList.add("on");
+  try{ clearTimeout(toastTimer); toastTimer = setTimeout(function(){ t.classList.remove("on"); }, ms || 1700); }catch(e){ setTimeout(function(){ t.classList.remove("on"); }, ms || 1700); } };
+var word = null, to26 = toast; toast = function(m){ if(word !== null && typeof m === "string") word = m; var t = $("toast"); if(t) t.classList.remove("fx26wrap"); return to26.apply(this, arguments); };
+// R1
+var _bx = new THREE.Box3(), _bc = new THREE.Vector3(), _bh = new THREE.Vector3();
+function protHit(x, y){ try{
+  ndc.x = ((x - VX)/VW)*2 - 1; ndc.y = -((y - VY)/VH)*2 + 1; ray.setFromCamera(ndc, camera);
+  for(var i=0;i<blocks.length;i++){ var b = blocks[i]; if(!b.keep || b.dead) continue;
+    _bc.set(b.P.x, b.P.y, b.P.z); _bh.set(b.half[0], b.half[1], b.half[2]); _bx.min.copy(_bc).sub(_bh); _bx.max.copy(_bc).add(_bh);
+    if(ray.ray.intersectsBox(_bx)) return true; } }catch(e){} return false; }
+var tok = 0;
+if(typeof bstTap === "function" && typeof ballStats !== "undefined"){ var bt26 = bstTap; bstTap = function(x, y){
+  var aim = false; try{ aim = !!ballAim && !ballLive; }catch(e){}
+  if(!aim) return bt26.apply(this, arguments);
+  var r0 = ballStats.refused, o, w; word = "";
+  try{ o = bt26.apply(this, arguments); } finally { w = word; word = null; }
+  var ret = $("bRet");
+  if(ballAim && !ballLive && ballStats.refused === r0 && ret && ret.classList.contains("bad")){
+    var pr = protHit(x, y), why = pr ? "Protected! Swing at the target building." : (w || "Tap the building");
+    FX.off++; if(pr) FX.prot++; lgx("off:" + why);
+    var tip = $("bAimTip"); if(tip){ tip.classList.remove("r22two"); tip.textContent = why; tip.classList.remove("hidden"); }
+    var t = $("toast"); if(t && w && t.textContent === w) t.classList.remove("on");
+    var my = ++tok; setTimeout(function(){ if(my !== tok) return; try{ var r = $("bRet"); if(screen === "game" && phase === "plan" && ballAim && !ballLive && r && r.classList.contains("bad")){ ballRet(true); ballSuggest(); FX.restore++; lgx("restore"); } }catch(e){} }, 1400); }
+  else tok++;
+  return o; }; }
+// R2
+var boomOn = false;
+function boomSync(){ var on = false;
+  try{ on = screen === "game" && !!ballAim && phase !== "plan" && phase !== "build"; }catch(e){}
+  if(on !== boomOn){ boomOn = on; document.documentElement.classList.toggle("fx26boom", on);
+    if(on){ FX.boomHide++; tok++; lgx("boom:hide"); }
+    else { try{ if(screen === "game" && phase === "plan" && ballAim && !ballLive){ ballRet(true); ballSuggest(); FX.boomBack++; lgx("boom:back"); } }catch(e){} } }
+  requestAnimationFrame(boomSync); }
+requestAnimationFrame(boomSync);
+// R5
+if(typeof bstTapBtn === "function"){ var tb26 = bstTapBtn; bstTapBtn = function(k){
+  if(k !== "net") return tb26.apply(this, arguments);
+  var o, w; word = ""; try{ o = tb26.apply(this, arguments); } finally { w = word; word = null; }
+  if(w && /net|protect/i.test(w)){ FX.net++; FX.netWhy = w; lgx("net:" + w); say(w, 2600); var t = $("toast"); if(t) t.classList.add("fx26wrap"); }
+  return o; }; }
+P.fx26 = function(){ var tip = $("bAimTip"), ret = $("bRet"), t = $("toast");
+  return { off:FX.off, prot:FX.prot, restore:FX.restore, boomHide:FX.boomHide, boomBack:FX.boomBack, net:FX.net, netWhy:FX.netWhy,
+    ret:ret ? { shown:!ret.classList.contains("hidden") && getComputedStyle(ret).display !== "none", bad:ret.classList.contains("bad") } : null,
+    tip:tip && !tip.classList.contains("hidden") && tip.offsetWidth ? tip.innerText : null, toast:t && t.classList.contains("on") ? t.textContent : null, log:FX.log.slice() }; };
+})();
+
 window.__blast.polish = {
   prot:function(){ return P.prot(); }, r18:function(){ return P.r18(); }, r19:function(){ return P.r19 ? P.r19() : { on:false }; }, r19skew:function(v){ return P.r19skew ? P.r19skew(v) : null; }, r19disarm:function(w){ return P.r19disarm ? P.r19disarm(w) : null; }, r19copy:function(){ return P.r19copy ? P.r19copy() : null; }, r20:function(){ return P.r20 ? P.r20() : { on:false }; }, r20probe:function(st){ return P.r20probe ? P.r20probe(st) : null; }, r21:function(){ return P.r21 ? P.r21() : { on:false }; }, r22:function(){ return P.r22 ? P.r22() : { on:false }; }, r22map:function(){ return P.r22map ? P.r22map() : null; }, r22pill:function(){ return P.r22pill ? P.r22pill() : null; }, r20ux51:function(){ return P.r20ux51 ? P.r20ux51() : null; }, kdDrift:function(){ return P.kdDrift(); }, kdHosts:function(){ return P.kdHosts(); }, pads:function(){ return P.pads(); }, kWord:function(s, tip){ return kWord(s, tip); },
   mapTitle:mapTitle, goal:function(){ var mp = $("mPass"); if(!mp) return null; var cs = getComputedStyle(mp, "::after"); return { text:mp.getAttribute("data-pol"), fs:parseFloat(cs.fontSize), display:cs.display, content:cs.content }; },
@@ -1105,7 +1189,7 @@ window.__blast.polish = {
   home:function(){ return { runs:HC.runs, last:HC.last, lock:HC.lock }; }, anyTap:function(){ return P.anyTap || 0; },
   win:function(){ var c = P.win.cam; return { n:P.win.n, stamp:P.win.stamp, plus:P.win.plus, camN:P.win.camN, cam:c ? { off:Math.round(c.off), k:+c.k.toFixed(2), sy0:Math.round(c.sy0) } : null, home:P.win.home, plusAt:P.win.plusAt || null, camBy:P.win.camBy || (P.win.camN ? "polish" : null), lookM:P.win.lookM || null, camDone:P.win.camDone == null ? null : P.win.camDone }; },
   demo:function(){ return { shown:P.demo.shown, on:P.demo.until > performance.now(), miss:P.demo.miss, frames:P.demo.frames || 0, pt:P.demo.pt || null }; },
-  fx25:function(){ return P.fx25 ? P.fx25() : null; },
+  fx25:function(){ return P.fx25 ? P.fx25() : null; }, fx26:function(){ return P.fx26 ? P.fx26() : null; },
   camNow:P.camNow, mapFit:mapFit, lockchips:LOCKCHIPS, flat:function(){ return siteFlat(); }
 };
 })(); }catch(e){ console.error("main/polish.js", e); }
