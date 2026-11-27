@@ -1180,6 +1180,142 @@ P.fx26 = function(){ var tip = $("bAimTip"), ret = $("bRet"), t = $("toast");
     tip:tip && !tip.classList.contains("hidden") && tip.offsetWidth ? tip.innerText : null, toast:t && t.classList.contains("on") ? t.textContent : null, log:FX.log.slice() }; };
 })();
 
+// ---- FX27 FIX-1127 (tester round 27/11/2026, feedback/2026-11-27, group A; ?fx27=0 = off). Bug / state fixes only: no new rule,
+//      screen, button, price, reward, TNT count, Ball strength or text (every word shown is a line the game already has).
+//  N1  GD-104 Safety Net: netPlan put the neighbour fence at the midpoint between the blue building's inner edge and the target's
+//      x extent with no overlap check; when the blue building stands behind the target inside its x range (21, 55) the 3 m fixed
+//      fence went up inside a building and shoved it on BLAST ("HIT A BLUE BUILDING!"). Now a fence (street or neighbour) is only
+//      planned when its box stands clear of every building (blue or target: every live member that is not ground / prop); any other
+//      fence is left out of the plan. With no fence left the Net cannot be armed (no use spent; the game's own line "Nothing to
+//      protect on this level", or "No room for a net here" when a side is too tight), the pre-level pick is not armed either.
+//  B1  GD-106 Wrecking Ball ring on a refused side (no prompt spot, ballSug null): the ring was drawn white and ready at the default
+//      spot. Now its look says what a tap on it does: it reads the same checks as ballThrow at the ring (member under it, protected,
+//      too close, can't reach, blocked) and is drawn in its refused (red) look when a tap there would not swing, white when it would.
+//      The tip follows the same truth: the side's own reason ("Street side · swipe" ...) under a red ring; "Tap to swing" only when a
+//      tap there swings (on 55 the old tip said "Street side · swipe" while a tap on the ring threw). Re-read after a swipe settles.
+//  C1  GD-109 / GD-77 soft-lock: in planning with TNT left, nothing placed and no member a tap could place on from any of the four
+//      views (all down / gone / under the stage), no rule ended the level (waveEnd ends on stock 0 / verdict only): the player sat in
+//      plan with TNT and nothing to do. The level now ends with its result card (finish(), the same verdict / card as an end on stock 0),
+//      after 2 checks 1 s apart, never in the test harness (manual), never while a booster is armed or live.
+//  U1  UX-112 Map: the HARD ribbon of the current (not done) hard level sits on the node's lower rim, half outside, the number 6 px up.
+//  U2  UX-113 the Ball aim tip ("Protected! Swing at the target building.") may wrap and stays 16 px inside the screen at 375 / 393.
+//  U3  UX-114 near-miss card: the "+1 TNT" rescue button takes the width of the primary "Try Again" button above it.
+//  U4  U-8 while a dimmed sheet / card (Get more, booster cards, pre-level, pause, result) is open, the dev "Level" button sits under
+//      the dim and takes no taps (it opened the level picker through the "Get more" sheet).
+(function(){
+if(QS.get("fx27") === "0") return;
+document.documentElement.classList.add("fx27");
+var FX = { netDrop:0, netKeep:0, ringBad:0, ringOk:0, ring:null, lock:0, lockWhy:null, rescW:0, modal:false, force:0, log:[] };
+function lgx(s){ FX.log.push(s); if(FX.log.length > 40) FX.log.shift(); lg(s); }
+var st27 = document.createElement("style"); st27.id = "fx27Css";
+st27.textContent = [
+  // U1
+  "html.fx27 body .cmN.hard:not(.lock):not(.done):not(.boss){padding-bottom:30px}",
+  "html.fx27 body .cmN.hard:not(.lock):not(.done):not(.boss) .hd{top:auto;bottom:-14px}",
+  // U2: the tip is a child of the 72 px reticle (which pulses to x1.08): its own width, wrapping inside 16 px sides
+  "html.fx27 body #bAimTip{white-space:normal;width:max-content;max-width:calc((100vw - 32px)/1.08);box-sizing:border-box;text-align:center}",
+  // U4
+  "html.fx27.fx27modal body #lvBtn{z-index:44!important;pointer-events:none!important}"
+].join("\n");
+document.head.appendChild(st27);
+var _b3 = new THREE.Box3(), _b4 = new THREE.Box3(), _q3 = new THREE.Vector3(), _q4 = new THREE.Vector3();
+// world AABB of a member at its current pose (rotated half extents)
+function boxOf(b, out){ var q = b.Q, x = q.x, y = q.y, z = q.z, w = q.w, h = b.half;
+  var m00 = 1 - 2*(y*y + z*z), m01 = 2*(x*y - w*z), m02 = 2*(x*z + w*y), m10 = 2*(x*y + w*z), m11 = 1 - 2*(x*x + z*z), m12 = 2*(y*z - w*x), m20 = 2*(x*z - w*y), m21 = 2*(y*z + w*x), m22 = 1 - 2*(x*x + y*y);
+  _q3.set(Math.abs(m00)*h[0] + Math.abs(m01)*h[1] + Math.abs(m02)*h[2], Math.abs(m10)*h[0] + Math.abs(m11)*h[1] + Math.abs(m12)*h[2], Math.abs(m20)*h[0] + Math.abs(m21)*h[1] + Math.abs(m22)*h[2]);
+  _q4.set(b.P.x, b.P.y, b.P.z); out.min.copy(_q4).sub(_q3); out.max.copy(_q4).add(_q3); return out; }
+// N1
+function fenceClear(f){ _b3.min.set(f.x0, 0, f.z0); _b3.max.set(f.x1, f.h, f.z1);
+  for(var i=0;i<blocks.length;i++){ var b = blocks[i]; if(b.anchor || b.prop || b.dead || !b.half) continue;
+    boxOf(b, _b4); if(_b4.min.y > f.h) continue;   // above the fence top (a deck over the street) is not "inside"
+    if(_b3.intersectsBox(_b4)) return { key:b.key, keep:!!b.keep }; }
+  return null; }
+if(typeof netPlan === "function"){ var np27 = netPlan; netPlan = function(){ var pl = np27.apply(this, arguments);
+  return pl.filter(function(f){ if(f.tight) return true; var hit = fenceClear(f); if(!hit){ FX.netKeep++; return true; }
+    FX.netDrop++; lgx("net:drop " + (f.x0).toFixed(2) + ".." + (f.x1).toFixed(2) + " in " + hit.key + (hit.keep ? "(blue)" : "")); return false; }); }; }
+// B1
+var _bc = new THREE.Vector3();
+function ringWould(){ var r = $("bRet"); if(!r || r.classList.contains("hidden")) return null;
+  var x = parseFloat(r.style.left), y = parseFloat(r.style.top); if(!isFinite(x) || !isFinite(y)) return null;
+  var h = null; try{ h = (typeof b2Snap === "function" && b2Snap(x, y)) || pick(x, y); }catch(e){ return null; }
+  if(!h) return { ok:false, why:"none" };
+  if(h.block.keep) return { ok:false, why:"protected" };
+  for(var q=0;q<blocks.length;q++){ var kb = blocks[q]; if(!kb.keep || kb.anchor) continue; if(nearestPoint(kb, h.point, _bc).distanceTo(h.point) < BALL.keepGap) return { ok:false, why:"tooclose" }; }
+  var pl; try{ pl = ballPlan(h.point); }catch(e){ return null; }
+  if(pl.bad) return { ok:false, why:pl.bad.hidden ? "hidden" : "blocked" };
+  return { ok:true, why:"ok", key:h.block.key };
+}
+var ringMine = false, ringTip = null, ringTok = 0, sugTxt = null;
+function setFirst(tip, txt){ if(tip.querySelector("br") && tip.firstChild && tip.firstChild.nodeType === 3) tip.firstChild.textContent = txt; else tip.textContent = txt; }
+function ringSync(){ try{
+  var r = $("bRet"), tip = $("bAimTip"); if(!r) return;
+  if(!(screen === "game" && phase === "plan" && ballAim && !ballLive)) return;
+  if(ballSug){ if(ringMine){ r.classList.remove("bad"); ringMine = false; } FX.ring = { sug:true }; return; }
+  if(tip && ringTip !== null && tip.textContent !== ringTip && !/^Tap to swing|swipe|Swipe|Steel shrugs|No safe spot/.test(tip.textContent)) return;   // a refusal's reason is on show (FX25 W1 / FX26 R1): leave it
+  var w = ringWould(); if(!w) return;
+  FX.ring = { sug:false, ok:w.ok, why:w.why, key:w.key || null, tip:tip ? tip.textContent : null };
+  if(!w.ok){ if(!r.classList.contains("bad")){ r.classList.add("bad"); FX.ringBad++; lgx("ring:bad " + w.why); } ringMine = true;
+    if(tip && sugTxt && /^Tap to swing/.test(tip.textContent)) setFirst(tip, sugTxt);   // an earlier read (camera still turning) said "Tap to swing": back to the side's reason
+    ringTip = tip ? tip.textContent : null; }
+  else { if(ringMine || r.classList.contains("bad")){ r.classList.remove("bad"); } ringMine = false; FX.ringOk++;
+    if(tip && !/^Tap to swing/.test(tip.textContent)){ lgx("ring:ok tip " + tip.textContent); setFirst(tip, "Tap to swing"); } ringTip = tip ? tip.textContent : null; }
+}catch(e){} }
+function ringLater(){ var my = ++ringTok; ringSync(); [450, 1100, 2000, 3200].forEach(function(ms){ setTimeout(function(){ if(my === ringTok) ringSync(); }, ms); }); }
+if(typeof ballSuggest === "function"){ var su27 = ballSuggest; ballSuggest = function(){ var o = su27.apply(this, arguments); ringTip = null;
+  try{ var t = $("bAimTip"); sugTxt = t ? (t.firstChild && t.firstChild.nodeType === 3 ? t.firstChild.textContent : t.textContent) : null; }catch(e){ sugTxt = null; }
+  ringLater(); return o; }; }
+// C1
+var _lc = null;
+function hostCount(){ var tc = _lc || (_lc = camera.clone()); var cam0 = camera, n = 0, best = null;
+  var dx = cam0.position.x - focus.x, dz = cam0.position.z - focus.z, cy = cam0.position.y;
+  // the four views at the farthest pinch-out zoom (a piece that rolled out of frame can still be reached by zooming out)
+  var d0 = Math.hypot(dx, cy - camFocusY, dz), far = 1; try{ if(d0 > 0.1 && isFinite(zMax*dist)) far = Math.max(1, zMax*dist/d0); }catch(e){}
+  var live = blocks.filter(function(b){ return !b.dead && b.rb && !b.anchor && !b.keep && !b.prop && !b.bonus && !b.rack && !(b.def && b.def.decor); });
+  if(!live.length) return { live:0, ok:0 };
+  try{
+    for(var k=0;k<4 && !best;k++){ var a = k*Math.PI/2, ca = Math.cos(a), sa = Math.sin(a);
+      tc.copy(cam0); tc.position.set(focus.x + (dx*ca + dz*sa)*far, camFocusY + (cy - camFocusY)*far, focus.z + (-dx*sa + dz*ca)*far); tc.lookAt(focus.x, camFocusY, focus.z); tc.updateMatrixWorld(); tc.updateProjectionMatrix();
+      camera = tc;
+      for(var i=0;i<live.length;i++){ var b = live[i]; _bc.set(b.P.x, b.P.y, b.P.z).project(tc); if(_bc.z > 1 || Math.abs(_bc.x) > 0.98 || Math.abs(_bc.y) > 0.98) continue;
+        var h = pick(VX + (_bc.x + 1)/2*VW, VY + (1 - _bc.y)/2*VH); if(h && !h.block.keep && !h.block.anchor && !h.block.rack && !h.block.dead){ best = h.block; n++; break; } } }
+  } finally { camera = cam0; }
+  return { live:live.length, ok:n, key:best ? best.key : null };
+}
+var lockN = 0;
+function lockCheck(){ try{
+  var armed = (typeof ballAim !== "undefined" && (ballAim || ballLive)) || (typeof skyArmed !== "undefined" && (skyArmed || skyLive));
+  if(screen === "game" && phase === "plan" && !manual && wave >= 2 && stockLeft() > 0 && placedCount() === 0 && !armed && !(typeof bstHold === "function" && bstHold())){
+    var hc = hostCount();
+    if(FX.force > 0){ FX.force--; hc = { live:hc.live, ok:0, forced:true }; }
+    if(!hc.ok){ lockN++; FX.lockWhy = { live:hc.live, n:lockN, pct:+(score()*100).toFixed(1), left:stockLeft() };
+      if(lockN >= 2){ lockN = 0; FX.lock++; lgx("lock:end live " + hc.live + " left " + stockLeft() + " pct " + (score()*100).toFixed(1)); finish(); } }
+    else lockN = 0;
+  } else lockN = 0;
+}catch(e){ lockN = 0; } }
+setInterval(lockCheck, 1000);
+// U3
+function rescW(){ try{ var a = $("rNext"), b = $("rRescue"); if(!a || !b) return; if(b.classList.contains("hidden") || !a.offsetWidth){ if(b.style.width){ ["width", "max-width", "min-width"].forEach(function(k){ b.style.removeProperty(k); }); } return; }
+  var w = a.getBoundingClientRect().width, wb = b.getBoundingClientRect().width;
+  if(Math.abs(wb - w) > 0.5){ b.style.setProperty("box-sizing", "border-box", "important"); b.style.setProperty("width", w + "px", "important"); b.style.setProperty("max-width", w + "px", "important"); b.style.setProperty("min-width", "0", "important"); FX.rescW++; } }catch(e){} }
+if(typeof showResult === "function"){ var sr27 = showResult; showResult = function(){ var o = sr27.apply(this, arguments); rescW(); setTimeout(rescW, 60); setTimeout(rescW, 400); return o; }; }
+window.addEventListener("resize", function(){ setTimeout(rescW, 120); });
+var rs27 = $("result"), rsQ = false; if(rs27) new MutationObserver(function(){ if(rsQ) return; rsQ = true; requestAnimationFrame(function(){ rsQ = false; rescW(); }); }).observe(rs27, { attributes:true, attributeFilter:["class"], subtree:true, childList:true });
+// U4
+var MODAL = [".bov:not(.hidden)", "#bPick:not(.hidden)", "#result:not(.hidden)", "#pauseM:not(.hidden)", "#cityMap:not(.hidden)", "#shop:not(.hidden)", "#lvPanel.on"];
+function modalSync(){ var on = false;
+  try{ for(var i=0;i<MODAL.length && !on;i++){ var els = document.querySelectorAll(MODAL[i]); for(var j=0;j<els.length;j++){ var e = els[j]; if(e.id === "lvPanel") continue; if(e.getClientRects().length && getComputedStyle(e).display !== "none" && getComputedStyle(e).visibility !== "hidden"){ on = true; break; } } } }catch(e){}
+  if(on !== FX.modal){ FX.modal = on; document.documentElement.classList.toggle("fx27modal", on); } }
+new MutationObserver(function(){ modalSync(); }).observe(document.body, { attributes:true, attributeFilter:["class", "style"], subtree:true });
+modalSync();
+P.fx27 = function(){ var r = $("bRet"), tip = $("bAimTip"), lv = $("lvBtn");
+  return { netDrop:FX.netDrop, netKeep:FX.netKeep, ringBad:FX.ringBad, ringOk:FX.ringOk, ring:FX.ring, lock:FX.lock, lockWhy:FX.lockWhy, rescW:FX.rescW, modal:FX.modal,
+    ret:r ? { shown:!r.classList.contains("hidden"), bad:r.classList.contains("bad"), x:parseFloat(r.style.left), y:parseFloat(r.style.top) } : null,
+    tip:tip && !tip.classList.contains("hidden") && tip.offsetWidth ? (function(){ var b = tip.getBoundingClientRect(); return { text:tip.innerText, x:Math.round(b.left), r:Math.round(b.right), w:Math.round(b.width), h:Math.round(b.height) }; })() : null,
+    lvBtn:lv ? { pe:getComputedStyle(lv).pointerEvents, z:getComputedStyle(lv).zIndex } : null, hosts:function(){ return hostCount(); }, log:FX.log.slice() }; };
+// test only (check scripts): the next 2 lock checks read "no member a tap could place on", to drive C1's end without a staged scene
+P.fx27force = function(){ FX.force = 2; return true; };
+})();
+
 window.__blast.polish = {
   prot:function(){ return P.prot(); }, r18:function(){ return P.r18(); }, r19:function(){ return P.r19 ? P.r19() : { on:false }; }, r19skew:function(v){ return P.r19skew ? P.r19skew(v) : null; }, r19disarm:function(w){ return P.r19disarm ? P.r19disarm(w) : null; }, r19copy:function(){ return P.r19copy ? P.r19copy() : null; }, r20:function(){ return P.r20 ? P.r20() : { on:false }; }, r20probe:function(st){ return P.r20probe ? P.r20probe(st) : null; }, r21:function(){ return P.r21 ? P.r21() : { on:false }; }, r22:function(){ return P.r22 ? P.r22() : { on:false }; }, r22map:function(){ return P.r22map ? P.r22map() : null; }, r22pill:function(){ return P.r22pill ? P.r22pill() : null; }, r20ux51:function(){ return P.r20ux51 ? P.r20ux51() : null; }, kdDrift:function(){ return P.kdDrift(); }, kdHosts:function(){ return P.kdHosts(); }, pads:function(){ return P.pads(); }, kWord:function(s, tip){ return kWord(s, tip); },
   mapTitle:mapTitle, goal:function(){ var mp = $("mPass"); if(!mp) return null; var cs = getComputedStyle(mp, "::after"); return { text:mp.getAttribute("data-pol"), fs:parseFloat(cs.fontSize), display:cs.display, content:cs.content }; },
@@ -1189,7 +1325,7 @@ window.__blast.polish = {
   home:function(){ return { runs:HC.runs, last:HC.last, lock:HC.lock }; }, anyTap:function(){ return P.anyTap || 0; },
   win:function(){ var c = P.win.cam; return { n:P.win.n, stamp:P.win.stamp, plus:P.win.plus, camN:P.win.camN, cam:c ? { off:Math.round(c.off), k:+c.k.toFixed(2), sy0:Math.round(c.sy0) } : null, home:P.win.home, plusAt:P.win.plusAt || null, camBy:P.win.camBy || (P.win.camN ? "polish" : null), lookM:P.win.lookM || null, camDone:P.win.camDone == null ? null : P.win.camDone }; },
   demo:function(){ return { shown:P.demo.shown, on:P.demo.until > performance.now(), miss:P.demo.miss, frames:P.demo.frames || 0, pt:P.demo.pt || null }; },
-  fx25:function(){ return P.fx25 ? P.fx25() : null; }, fx26:function(){ return P.fx26 ? P.fx26() : null; },
+  fx25:function(){ return P.fx25 ? P.fx25() : null; }, fx26:function(){ return P.fx26 ? P.fx26() : null; }, fx27:function(){ return P.fx27 ? P.fx27() : null; }, fx27hosts:function(){ var f = P.fx27 && P.fx27(); return f ? f.hosts() : null; }, fx27force:function(){ return P.fx27force ? P.fx27force() : null; },
   camNow:P.camNow, mapFit:mapFit, lockchips:LOCKCHIPS, flat:function(){ return siteFlat(); }
 };
 })(); }catch(e){ console.error("main/polish.js", e); }
