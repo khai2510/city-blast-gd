@@ -1333,8 +1333,9 @@ P.fx27force = function(){ FX.force = 2; return true; };
 //      it now also runs in the same task as the change (MutationObserver, before paint).
 //  L1  UX-118 Level 1 lesson: a tap outside the spotlight (swallowed, as before) also replays the spotlight's two ripples, pulses the
 //      ring and nudges the hand once. No new element, no words.
-//  P1  U-9 the "Pick Your Boosters" card on a Hard / Boss level is skipped when nothing on it can be picked (every unlocked booster
-//      at 0 and its pack not affordable). Before any unlock (all locked, X8 / frame 6d) it still shows as before.
+//  P1  U-9 the "Pick Your Boosters" card on a Hard / Boss level the player has already played (save.best) is skipped when nothing on
+//      it can be picked (every unlocked booster at 0 and its pack not affordable). The first visit still opens with it (GD-68), and
+//      before any unlock (all locked, X8 / frame 6d) it shows as before.
 (function(){
 if(QS.get("fx29") === "0") return;
 document.documentElement.classList.add("fx29");
@@ -1422,7 +1423,7 @@ function clampNow(){ try{ var ret = $("bRet"), tip = $("bAimTip");
 function pickable(k){ try{ return bstUnlocked(k) && (bstHave(k) || save.coins >= (BOOST[k].price || 1e9)); }catch(e){ return true; } }
 if(typeof bstWants === "function"){ var bw29 = bstWants; bstWants = function(i){ var w = bw29.apply(this, arguments);
   try{ if(w && !BST_ALL){ var Lv = LEVELS[i] || {}, ks = BOOST_ORDER.filter(function(k){ return BOOST[k] && !BOOST[k].hidden; });
-    if((isHard(Lv) || Lv.boss) && ks.some(function(k){ return bstUnlocked(k); }) && !ks.some(pickable)){ FX.skip++; lgx("pick:skip " + (i + 1)); return false; } } }catch(e){}
+    if((isHard(Lv) || Lv.boss) && save.best && save.best[i] != null && ks.some(function(k){ return bstUnlocked(k); }) && !ks.some(pickable)){ FX.skip++; lgx("pick:skip " + (i + 1)); return false; } } }catch(e){}
   return w; }; }
 // W1
 var plusEl = $("uicPlus"), stampEl = $("feelStamp");
