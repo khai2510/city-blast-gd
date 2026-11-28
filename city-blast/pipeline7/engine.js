@@ -2006,7 +2006,7 @@ try{ (function(){
     // members is decor on the member that carries it. The same call gives the same mill (no random part).
     V5_PARTS.g7oMill = function(P){
       var n0 = blocks.length, MT = api.mat("wood"), hx0 = P.hx || 2.3, LH = P.lh || 4.8, SH = P.sh || 3.3, nS = P.ns || 4, TP = P.tp == null ? 0.2 : P.tp, y = 0, s, q, sts = [];
-      var bdA = 0xE6C08A, bdB = 0xDDB37A, capC = 0x5B4A3E, capD = 0x45372D, cloth = 0xF6EEDC;
+      var bdA = 0xF0D2A0, bdB = 0xE7C590, capC = 0x5B4A3E, capD = 0x45372D, cloth = 0xFBF6EA;
       var base = addBlock(0, -0.25, 0, 2*hx0 + 3.4, 0.5, 2*hx0 + 3.4, "base", {anchor:true});
       kd(base, "icyl", K.gravel, 0, 0.03, 0, 2*hx0 + 3.2, 0.06, 2*hx0 + 3.2); kd(base, "icyl", K.gravelD, 0, 0.05, 0, 2*hx0 + 0.6, 0.04, 2*hx0 + 0.6);
       // the trestle: four legs, footings, X-braces (decor on the two legs of a face: they go when a leg goes)
@@ -2049,15 +2049,18 @@ try{ (function(){
       // the cap: a light roof body (member) under a dark dome with eaves and a finial; the wind shaft, hub and four sails at the front
       var hxc = hx0 - 0.1 - (nS - 1)*TP, at = mem("g7roofL", 0, y + 0.35, 0, 2*hxc - 0.1, 0.7, 2*hxc - 0.1, nS + 1, null, null, capC); at.tint = capC;
       kd(at, "box", capD, 0, y + 0.74, 0, 2*hxc + 1.0, 0.16, 2*hxc + 1.0); kd(at, "dome", capC, 0, y + 0.8, 0, 2*hxc + 0.7, 2.3, 2*hxc + 0.7); kd(at, "icyl", capD, 0, y + 3.2, 0, 0.14, 0.7, 0.14); kd(at, "sph", K.gold, 0, y + 3.6, 0, 0.3, 0.3, 0.3);
-      var hy = y + 1.25, zs = hxc + 1.45, R = P.sail || 5.6, a0 = P.a0 == null ? 0.33 : P.a0, W = 1.25, r1 = 1.5;
-      kd(at, "icyl", K.woodD, 0, hy, hxc + 0.55, 0.42, 1.9, 0.42, Math.PI/2, 0, 0); kd(at, "icyl", K.iron, 0, hy, zs, 0.9, 0.3, 0.9, Math.PI/2, 0, 0); kd(at, "icyl", K.gold, 0, hy, zs + 0.18, 0.4, 0.12, 0.4, Math.PI/2, 0, 0);
-      for(var k = 0; k < 4; k++){ var a = a0 + k*Math.PI/2, dx = Math.cos(a), dy = Math.sin(a), nx = -dy, ny = dx;
-        bar(at, K.woodD, 0, hy, zs, dx*R, hy + dy*R, zs, 0.2);                                                             // the stock
-        H.kq(at, "box", cloth, dx*(r1 + R)/2 + nx*W/2, hy + dy*(r1 + R)/2 + ny*W/2, zs - 0.02, R - r1, W, 0.05, 0, 0, a);   // the cloth
-        bar(at, K.wood, dx*r1 + nx*W, hy + dy*r1 + ny*W, zs + 0.05, dx*R + nx*W, hy + dy*R + ny*W, zs + 0.05, 0.11);        // the outer rail
-        bar(at, K.wood, dx*r1 + nx*W*0.5, hy + dy*r1 + ny*W*0.5, zs + 0.05, dx*R + nx*W*0.5, hy + dy*R + ny*W*0.5, zs + 0.05, 0.07);
-        for(q = 0; q <= 6; q++){ var rr = r1 + (R - r1)*q/6; bar(at, K.wood, dx*rr, hy + dy*rr, zs + 0.05, dx*rr + nx*W, hy + dy*rr + ny*W, zs + 0.05, 0.09); } }
-      bar(at, K.woodD, 0, y + 0.9, -hxc - 0.2, 0, LH + 1.3, -gw - 0.9, 0.16); bar(at, K.woodD, -0.9, y + 0.7, -hxc + 0.2, 0, LH + 4.2, -gw - 0.35, 0.1); bar(at, K.woodD, 0.9, y + 0.7, -hxc + 0.2, 0, LH + 4.2, -gw - 0.35, 0.1);   // the tail pole and its braces
+      // P.syaw turns the sails (and the tail pole behind them) about the mill's axis: 0 = they face z+, PI/4 = the x+ z+ corner
+      var hy = y + 1.25, SY = P.syaw || 0, cs = Math.cos(SY), sn = Math.sin(SY), zs = hxc + 1.45 + 0.2*Math.abs(Math.sin(2*SY)), R = P.sail || 5.4, a0 = P.a0 == null ? 0.33 : P.a0, W = 1.4, r1 = 1.5;
+      var px = function(u, w){ return u*cs + w*sn; }, pz = function(u, w){ return -u*sn + w*cs; };
+      var sbar = function(c, u0, v0, w0, u1, v1, w1, t){ bar(at, c, px(u0, w0), v0, pz(u0, w0), px(u1, w1), v1, pz(u1, w1), t); };
+      H.kq(at, "icyl", K.woodD, px(0, zs/2), hy, pz(0, zs/2), 0.42, zs, 0.42, SY, Math.PI/2, 0); H.kq(at, "icyl", K.iron, px(0, zs), hy, pz(0, zs), 0.9, 0.3, 0.9, SY, Math.PI/2, 0); H.kq(at, "icyl", K.gold, px(0, zs + 0.18), hy, pz(0, zs + 0.18), 0.4, 0.12, 0.4, SY, Math.PI/2, 0);
+      for(var k = 0; k < 4; k++){ var a = a0 + k*Math.PI/2, dx = Math.cos(a), dy = Math.sin(a), nx = -dy, ny = dx, uc = dx*(r1 + R)/2 + nx*W*0.4;
+        sbar(K.woodD, 0, hy, zs, dx*R, hy + dy*R, zs, 0.2);                                                                 // the stock
+        H.kq(at, "box", cloth, px(uc, zs + 0.1), hy + dy*(r1 + R)/2 + ny*W*0.4, pz(uc, zs + 0.1), R - r1 - 0.2, W*0.72, 0.05, SY, 0, a);   // the cloth, furled a little: the lattice shows at the outer edge
+        sbar(K.wood, dx*r1 + nx*W, hy + dy*r1 + ny*W, zs + 0.05, dx*R + nx*W, hy + dy*R + ny*W, zs + 0.05, 0.11);            // the outer rail
+        for(q = 0; q <= 5; q++){ var rr = r1 + (R - r1)*q/5; sbar(K.wood, dx*rr, hy + dy*rr, zs + 0.05, dx*rr + nx*W, hy + dy*rr + ny*W, zs + 0.05, 0.08); } }
+      var tw = -(gw + 0.9)*(1 + 0.3*Math.abs(Math.sin(2*SY)));
+      sbar(K.woodD, 0, y + 0.9, -hxc - 0.2, 0, LH + 1.3, tw, 0.16); sbar(K.woodD, -0.9, y + 0.7, -hxc + 0.2, 0, LH + 4.2, tw*0.86, 0.1); sbar(K.woodD, 0.9, y + 0.7, -hxc + 0.2, 0, LH + 4.2, tw*0.86, 0.1);   // the tail pole and its braces
       LV7.g7info = Object.assign(LV7.g7info || {}, { mill:{ members:blocks.length - n0, top:hy + R } });
       if(P.bg) bgSet(n0, P.bg); return { w:2*hx0 + 3.4, d:2*hx0 + 3.4 };
     };
