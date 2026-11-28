@@ -26,7 +26,7 @@ One new build step, `polish2` (`src/main/polish2.js` + `polish2-patch.js`, last 
 
 No member is added, moved, resized or re-keyed; no TNT count, tip, camera or rule changes; hero shapes untouched (D-blast-HERO-PROC). Nothing new in kind (D-blast-NONEW).
 
-| Slot | Level (tier) | Before | After | Silhouette (decor height) | Story | p2 pieces · rmax | Shot |
+| Slot | Level (tier) | Before | After | Silhouette (top with roof decor, about) | Story | p2 pieces · rmax | Shot |
 |---|---|---|---|---|---|---|---|
 | 7 | Grand Arch (H) | C a bare brick box 9 m on the street; B a bare concrete tower behind | C = corner shop house (shopfront, awnings, shuttered windows, parapet, 2 chimneys, water tank); B = office tower (ribbon windows, stair hut, AC, mast) | C 9 → 12.9 m (tank), B 20.6 → 25.6 m (mast) | C on a kerbed island in the street (lamp, bench, bollards); hospital forecourt with ambulance bay + hedge, school yard with fence + flag, tram-stop paving | 594 · 21.7 m | `shots/L07-before-after.jpg` |
 | 11 | Dome Hall (H) | two bare timber frames 16 m; hospital alone in the yard | two timber gate towers (board walls, shuttered windows, braces, shingle spires with vanes) | 16 → 20.9 m | hospital forecourt on the hall's axis: paving, path to the front, hedges, ambulance bay, trees in a pair | 370 · 15.9 m | `shots/L11-before-after.jpg` |
@@ -55,8 +55,8 @@ Decor has no body, so the proof is the physics fingerprint (`levels-gd/PERF-1124
 | 49 | 285 | `314e7cfc 594 97.28` | `314e7cfc 594 97.28` | same |
 | 51 | 203 | `144acf56 710 44.869` | `144acf56 710 44.869` | same |
 | 52 | 275 | `b5324c18 550 93.343` | `b5324c18 550 93.343` | same |
-| 53 | 427 | `e19a1652 720 16.577` | @H53@ | @S53@ |
-| 55 | 305 | `f9f1ba37 995 1.201` | @H55@ | @S55@ |
+| 53 | 427 | `e19a1652 720 16.577` | `e19a1652 720 16.577` | same |
+| 55 | 305 | `f9f1ba37 995 1.201` | `f9f1ba37 995 1.201` | same |
 | 12 (not touched) | 125 | `dc33769f 180 0.005` | `dc33769f 180 0.005` | same |
 
 Global physprof hashes: `dc33769f@180` (12), `b5324c18@550` (52), `e19a1652@720` (53): unchanged although 52 and 53 are dressed.
