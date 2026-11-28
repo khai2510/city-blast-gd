@@ -239,7 +239,7 @@ startLevel = function(i){
   inClear();
   var r = sl0.apply(this, arguments);
   document.body.classList.toggle("inL1", IN.on && !manual && levelIdx === 0);
-  if(IN.on && !manual){ IN.q = inQueue(levelIdx); IN.lv = levelIdx; inNext(); inLookStart(); }
+  if(IN.on && !manual){ IN.q = inQueue(levelIdx); IN.lv = levelIdx; inPreCarry(); inNext(); inLookStart(); }
   return r;
 };
 // FIX-1124 (UX-88 / UX-91 / U-12, tester round 24/11): the level's cards (and a spotlight / swipe lesson with no card) wait for the
@@ -286,6 +286,7 @@ $("inBtn").addEventListener("click", function(){
   IN.card = null; inCardOut(e);
   if(e.kind === "booster"){ var sv = bstSave(); save.bseen[e.k] = 1; sv[e.k] = (sv[e.k] || 0) + INTRO_FREE; B2.granted.push(e.k + "@intro"); bstBarBuild(); }
   inMark(e.id, "c"); IN.log.push("ok:" + e.id);
+  if(IN.pre){ inPreNext(e); return; }   // INTROFIRST: shown before the level; its spotlight / forced use comes in the level
   inForcedWait(e, 0);
 });
 // ---- forced first use / first tap
@@ -389,7 +390,7 @@ function inDone(e){ inMark(e.id, "f"); if(IN.q[0] === e) IN.q.shift(); setTimeou
 // GD-76 (23/11): a claimed booster whose forced first use is pending or showing when the level ends / retries / is left: that use is
 // done (saved), so the spotlight that swallows every other tap never comes back on a later level.
 function inEndForced(){ var e = IN.forced || IN.q[0]; if(e && e.kind === "booster" && inS(e.id).c && !inS(e.id).f){ inMark(e.id, "f"); IN.log.push("forcedEnd:" + e.id); } }
-function inClear(){ inEndForced(); IN.fb = 0; clearTimeout(IN.wt); clearTimeout(IN.ot); clearTimeout(IN.outT); clearTimeout(IN.lt); inSwipeOff(); inMomOff(); inRelease(); IN.card = null; IN.q = []; card.classList.add("hidden"); card.classList.remove("out", "fly"); }
+function inClear(){ inEndForced(); IN.fb = 0; if(IN.pre){ IN.log.push("preDrop:" + (IN.pre.i + 1)); IN.pre = null; } card.classList.remove("inPre"); clearTimeout(IN.wt); clearTimeout(IN.ot); clearTimeout(IN.outT); clearTimeout(IN.lt); inSwipeOff(); inMomOff(); inRelease(); IN.card = null; IN.q = []; card.classList.add("hidden"); card.classList.remove("out", "fly"); }
 // leaving the level (Home, map, result) closes whatever is open; it shows again next time (not marked done)
 var show0 = show; show = function(id){ if(id === "title" || id === "result" || id === "shop") inClear(); return show0.apply(this, arguments); };
 
@@ -540,7 +541,53 @@ function inLook(e, n, lv){
     if(performance.now() - IN.moT > 3600){ inMomEnd(e, "time"); return; }
     IN.moRaf = requestAnimationFrame(loop); })();
 }
+// ---- INTROFIRST (Khai D-blast-INTROFIRST, 28/11/2026: "the tab that shows an obstacle / booster must appear BEFORE the level is
+// played, not after the level has opened"). Every intro CARD of a level ("New: <thing>", "<Booster> Unlocked!" + Claim x2) shows when
+// the player starts the level (Home Play / map node / result Next / Shop Play: all go through bstPlay; the wrap is main/polish.js
+// FX30, outermost, so it also comes before the Hard / Boss "Pick Your Boosters" sheet), over the screen the tap came from, before
+// startLevel builds the 3D. Got It / Claim -> the next card of that level, or the level starts with its normal opening camera. Same
+// card, text and art; only the moment moves. What needs the 3D stays in the level, after the opening: the material spotlight / forced
+// tap (inForcedWait via inQueue: the card is done, its tap is not), a booster's forced first use (carried by inPreCarry: inQueue
+// never re-queues a claimed booster), swipe / wave / look lessons. A replay never re-shows a card (save.intro[id].c), a jump that skips
+// bstPlay (?lv= picker, Restart) falls back to the in-level card. The card swallows taps while it fades, and for 450 ms after Got It
+// no tap reaches the screen under it (no tap-through onto Home / the map / the new level). ?introfirst=0 = off (today's flow).
+var IFIRST = QS.get("introfirst") !== "0";
+IN.pre = null; IN.preDone = null; IN.shieldT = 0; IN.shieldN = 0; IN.preN = 0;
+if(IFIRST){ var pcss = document.createElement("style"); pcss.id = "inPreCss"; pcss.textContent = "#inCard.out.inPre{pointer-events:auto}"; document.head.appendChild(pcss);
+  ["pointerdown", "pointerup", "touchstart", "touchend", "mousedown", "mouseup", "click"].forEach(function(t){
+    window.addEventListener(t, function(ev){ if(performance.now() >= IN.shieldT) return; ev.stopPropagation(); if(ev.cancelable) ev.preventDefault(); if(t === "pointerdown") IN.shieldN++; }, { capture:true, passive:false }); }); }
+function inPreDue(i){
+  if(!IFIRST || !IN.on || manual || i == null || !LEVELS[i]) return [];
+  var q = []; try{ q = inQueue(i); }catch(x){ return []; }
+  return q.filter(function(e){ return e.how === "card" && !inS(e.id).c; });
+}
+function inFirst(i, go){
+  if(IN.pre) return true;                                    // a card for a level is already up: a second Play tap does nothing
+  var q = inPreDue(i); if(!q.length) return false;
+  IN.pre = { i:i, q:q.slice(), go:go, done:[] }; IN.preN++; IN.lv = -1;
+  IN.log.push("pre:" + (i + 1) + ":" + q.map(function(e){ return e.id; }).join("+"));
+  inCard(q[0]); card.classList.add("inPre");
+  return true;
+}
+function inPreNext(e){
+  var P = IN.pre; P.done.push(e); P.q.shift(); IN.shieldT = performance.now() + 450;
+  setTimeout(function(){
+    if(IN.pre !== P) return;
+    if(P.q.length){ inCard(P.q[0]); card.classList.add("inPre"); return; }
+    IN.pre = null; IN.preDone = { i:P.i, q:P.done }; IN.log.push("preGo:" + (P.i + 1));
+    card.classList.add("hidden"); card.classList.remove("out", "fly", "inPre");
+    try{ P.go(); }catch(x){ console.error("intro first", x); }
+  }, 340);                                                   // after the card's own exit (240 ms; 320 ms flying into a slot)
+}
+// a booster claimed on the card before the level: its forced first use belongs to that level (inQueue skips claimed boosters)
+function inPreCarry(){
+  var pd = IN.preDone; IN.preDone = null; if(!pd || pd.i !== levelIdx) return;
+  pd.q.slice().reverse().forEach(function(e){ if(e.kind === "booster" && !inS(e.id).f && IN.q.indexOf(e) < 0){ IN.q.unshift(e); IN.log.push("carry:" + e.id); } });
+}
 window.__blast.intro = {
+  first:function(i, go){ return inFirst(i, go); },
+  pre:function(){ return { on:IFIRST && IN.on, open:!!IN.pre, lv:IN.pre ? IN.pre.i + 1 : null, queue:IN.pre ? IN.pre.q.map(function(e){ return e.id; }) : [], n:IN.preN, shield:IN.shieldN }; },
+  due:function(i){ return inPreDue(i).map(function(e){ return e.id; }); },
   sched:function(){ return JSON.parse(JSON.stringify(INTRO_SCHED)); },
   on:function(){ return IN.on; },
   state:function(){ var h = IN.t; return { on:IN.on, card:IN.card ? IN.card.id : null, forced:IN.forced ? IN.forced.id : null, hole:IN.forced && h ? { x:h.x, y:h.y, r:h.r } : null,
