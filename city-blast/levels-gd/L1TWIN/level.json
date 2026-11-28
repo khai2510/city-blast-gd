@@ -1,0 +1,108 @@
+[
+ {
+  "name": "Twin Mills",
+  "bp": "L1TWIN",
+  "slot": 1,
+  "replaces": "o1",
+  "tier": "T",
+  "f": 9,
+  "kind": "scene",
+  "hero": "A,B",
+  "heroId": "G7-L1TWIN",
+  "teaches": "wood",
+  "target": 0.85,
+  "yaw": 0,
+  "d": 1,
+  "base": {
+   "A": {
+    "preset": "weak-tip",
+    "shove": 2.5
+   },
+   "B": {
+    "preset": "weak-tip",
+    "shove": 2.5
+   },
+   "*": "weak"
+  },
+  "sf": [],
+  "pattern": "tutorial: two mills exactly alike; one leg gone and a mill falls forward; the hand shows the first, the second is the player's",
+  "parts": [
+   {
+    "id": "A",
+    "kind": "g7oMill",
+    "x": -6.2,
+    "z": 0,
+    "hx": 2.3,
+    "lh": 4.8,
+    "sh": 3.3,
+    "ns": 4,
+    "lw": 1,
+    "tp": 0.2,
+    "sail": 5.6
+   },
+   {
+    "id": "B",
+    "kind": "g7oMill",
+    "x": 6.2,
+    "z": 0,
+    "hx": 2.3,
+    "lh": 4.8,
+    "sh": 3.3,
+    "ns": 4,
+    "lw": 1,
+    "tp": 0.2,
+    "sail": 5.6
+   }
+  ],
+  "charges": {
+   "tnt": 40
+  },
+  "hint": "A:z+",
+  "tip": "",
+  "noWords": 1,
+  "aid": {
+   "tip": false
+  },
+  "dbl": 1,
+  "ftip": "A post holds a building up. Hit the posts.",
+  "lesson": {
+   "check": [
+    []
+   ]
+  },
+  "sol": [
+   [
+    "tnt",
+    "A:z+",
+    0,
+    0
+   ],
+   [
+    "tnt",
+    "B:z+",
+    0,
+    0
+   ]
+  ],
+  "bot": {
+   "hints": [
+    [
+     "A",
+     "A:z+",
+     1
+    ],
+    [
+     "A",
+     "B:z+",
+     1
+    ]
+   ]
+  },
+  "tntStart": 4,
+  "pad": {
+   "dx": 0,
+   "dz": 0,
+   "r": 11.3
+  }
+ }
+]
