@@ -100,7 +100,7 @@ const layout = async (p, W, H, tag) => {
   // ================= SF4 L1 from a fresh save: the teach spotlight and hand in the play area (not on a corner button), the lesson won by real taps
   if (want('l1')) {
     const p = await open('', null);
-    await playIn(p); await p.waitForTimeout(2500);
+    await playIn(p); await p.waitForFunction(() => { const t = window.__blast.tap2.tut(); return t.l1 && t.hole; }, null, { timeout: 60000, polling: 200 }).catch(() => {}); await p.waitForTimeout(900);   // L1TWIN: the lesson waits for the opening camera (FIX-1124); a fixed 2.5 s was too short on a busy machine
     const a = await p.evaluate(() => ({ hand: window.__blast.tap2.hand(), tut: window.__blast.tap2.tut(), nb: window.__blast.tap2.noBlast() })), r = await SF(p), g = await p.evaluate(() => window.__blast.sflay.geo());
     const hole = a.tut && a.tut.hole, bandTop = 852 - g.band, hb = await rect(p, '#t2Lbl');
     const okPos = a.hand.on && hole && hole.y < bandTop && hole.y > g.top && !['wreck', 'net', 'sky', 'tnt', 'gear'].some(k => inside(hole, r[k], 4)) && (!hb || !['tnt', 'gear', 'level', 'wreck', 'net', 'sky'].some(k => ovl({ x: hb.x, y: hb.y, r: hb.x + hb.w, b: hb.y + hb.h }, r[k])));

@@ -66,7 +66,16 @@ and a miss costs one TNT of the two or three left.
 
 ## Standard checks
 
-See the status block at the end (filled in after the merge with main).
+On the build with origin/main `17e38e1` merged (no newer commit on main at hand-in), sources `50ff1d1ae36f`, 38 steps:
+
+- `games/blast/tools/loadcheck.js`: ok=true, 0 errors.
+- `src/main/check-sflay.js`: **16 PASS / 0 FAIL**, 0 page errors (full run 15 + SF4, which timed out on its fixed 2.5 s wait, re-run alone after the wait fix: PASS). **SF4 was changed** (the only assert that held the old L1): it said
+  "tap, then double tap wins L1"; it now says "the lesson drops mill A (not a win, no hand left), one double tap on a leg of mill B
+  wins", and waits for the lesson to show instead of a fixed 2.5 s.
+- `src/g7hard/check-order.js`: **PASS** (slot 1 is still wood only).
+- `src/main/check-r22.js`: **23 PASS / 0 FAIL** by section (`boost` 7, `refit` 2, `open` 8, `retry` 2, `card` 1, `pill` 2, `map` 1).
+- `levels-gd/PERF-1124/physprof.js` slots 12 / 52 / 53: `dc33769f 180 0.005`, `b5324c18 550 93.343`, `e19a1652 720 16.577` = unchanged
+  (slot 1 is not one of them).
 
 ## Files
 
