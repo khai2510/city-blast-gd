@@ -37,6 +37,11 @@ if(QS.get("dev") === "0") H.classList.add("dev0");            // the LV picker b
 var U = "var(--us)";
 // W the win firework palette (FW-1123): 9 bright hues that read on the blue sky and the cream card; no sky blue, no purple / gold
 var FWC = ["#FF3B47", "#FF8A1F", "#FFEA3A", "#A6F03A", "#16D27A", "#22E3D3", "#FF4FB8", "#FF7A59", "#FFFFFF"];
+// FX28 (Khai 28/11, D-blast-FIREWORK2 "sặc sỡ hơn nữa, đa dạng màu sắc hơn nữa ... nhiều gấp đôi"): 10 fully saturated hues across the whole
+// wheel (hot pink, red, orange, gold, lime, green, cyan, electric blue, violet, magenta) + white glitter, 4 hues per burst, twice the bursts.
+// ?fx28=0 = exactly the FW-1123 show above (palette, 6 bursts, 154 pieces, no pool).
+var FX28 = QS.get("fx28") !== "0";
+if(FX28) FWC = ["#FF1A8C", "#FF2424", "#FF7A00", "#FFC800", "#A8FF00", "#00E85C", "#00E1FF", "#2F5BFF", "#9B30FF", "#FF2EF0"];
 var css = [
   // ---- H1 top row: pause | [cap + meter]
   "html.ui2 body #top #meter{left:calc(var(--ux) + 318 * " + U + ");top:calc(var(--ut) + 43 * " + U + ");width:calc(400 * " + U + ");height:calc(50 * " + U + ");border-radius:calc(25 * " + U + ")}",
@@ -82,6 +87,10 @@ var css = [
   "html.ui2 #feelLay .cf.u2.d{width:11px;height:11px;border-radius:50%}",                       // round sparks
   "html.ui2 #feelLay .cf.u2.rk{width:6px;height:22px;margin:-11px 0 0 -3px;border-radius:3px;box-shadow:0 0 6px 2px rgba(255,255,255,.75)}",   // the rising rocket
   "html.ui2 #feelLay .cf.u2.fl{width:64px;height:64px;margin:-32px 0 0 -32px;border-radius:50%;box-shadow:none}",                 // the pop flash
+  // FX28: white glitter (small round, glowing; flickers by opacity only) and a coloured core under each pop flash
+  "html.ui2 #feelLay .cf.u2.gl{width:7px;height:7px;margin:-3.5px 0 0 -3.5px;border-radius:50%;box-shadow:0 0 5px 2px rgba(255,255,255,.85)}",
+  "html.ui2 #feelLay .cf.u2.x28:not(.rk):not(.fl):not(.gl){box-shadow:inset 0 0 0 1px rgba(17,32,92,.3)}",
+  "html.ui2 #feelLay .cf.u2.x28.d:not(.gl){box-shadow:inset 0 0 0 1px rgba(17,32,92,.3),0 0 4px 1px rgba(255,255,255,.55)}",
   // the Q7 stamp pieces (v13-feel, 3 colours inline) take the firework palette
 ].concat(FWC.map(function(c, i){ return "html.ui2 #feelLay .cf:not(.u2):nth-child(" + FWC.length + "n+" + (i + 1) + "){background:" + c + "!important}"; })).concat([
   // ---- S Upgrades backdrop
@@ -176,9 +185,16 @@ if(pick) new MutationObserver(function(){ BODY.classList.toggle("u2Pick", !pick.
 //   pop: a white flash + FW.per pieces (3 hues per burst, 40 % round sparks) fly out, slow, fall and fade in FW.life ms
 // Top-centre, not bottom-centre: a third rocket from the bottom middle would climb through the win card and its buttons;
 // the sky above the card is the one empty area, and three points (two low, one high) frame the card as a triangle.
-var FX = { fired:false, n:0, pieces:0, bursts:[] };
+var FX = { fired:false, n:0, pieces:0, bursts:[], cost:0 };
 var FW = { gap:280, rise:320, fuse:110, life:950, per:24, order:["bl", "br", "tc", "bl", "br", "tc"] };
-function fxLevel(){ FX.fired = false; }
+// FX28: twice the shots (12 bursts, 8 rockets, 12 flashes, 12 x 24 pieces = 308 pieces, was 154) in about the same time (gap 150 ms, all gone
+// by ~2.7 s, was ~2.5 s); the pop points spread wider so the bursts do not stack. Pieces come from a pool (made once, hidden with
+// display:none between shows: no layer, no style cost while idle), so a win creates no DOM nodes. Same WAAPI transform / opacity only.
+var FW28 = { gap:150, rise:320, fuse:110, life:980, per:24, glit:4, order:["bl", "br", "tc", "bl", "br", "tc", "bl", "br", "tc", "bl", "br", "tc"] };
+var POOL = [], POOLN = 0;
+function fxPool(lay, n){ if(!FX28 || !lay) return; var fr = document.createDocumentFragment();
+  for(; POOLN < n; POOLN++){ var e = document.createElement("i"); e.style.display = "none"; fr.appendChild(e); POOL.push(e); } lay.appendChild(fr); }
+function fxLevel(){ FX.fired = false; if(FX28 && POOLN < 330){ var lay = document.getElementById("feelLay"); if(lay) setTimeout(function(){ fxPool(lay, 330); }, 0); } }
 function fxPiece(lay, cls, bg, frames, delay, dur, ease){
   var e = document.createElement("i"); e.className = "cf u2" + (cls ? " " + cls : ""); if(bg) e.style.background = bg; lay.appendChild(e);
   var an = e.animate(frames, { duration:dur, delay:delay, easing:ease || "linear", fill:"both" });
@@ -186,7 +202,73 @@ function fxPiece(lay, cls, bg, frames, delay, dur, ease){
   return 1;
 }
 function fxWin(){
-  if(FX.fired) return; FX.fired = true; FX.n++;
+  if(FX.fired) return;
+  var c0 = performance.now(); if(FX28) fxWin28(fxWin.hold); else fxWin0(); FX.cost = +(performance.now() - c0).toFixed(2);
+}
+function fxGet(lay, cls, bg){
+  var e = POOL.pop(); if(!e){ e = document.createElement("i"); POOLN++; lay.appendChild(e); }
+  e.className = "cf u2 x28" + (cls ? " " + cls : ""); e.style.background = bg || ""; e.style.display = ""; return e;
+}
+function fxPiece28(lay, cls, bg, frames, delay, dur, ease){
+  var e = fxGet(lay, cls, bg), an = e.animate(frames, { duration:dur, delay:delay, easing:ease || "linear", fill:"both" });
+  an.onfinish = an.oncancel = function(){ an.onfinish = an.oncancel = null; e.style.display = "none"; try{ an.cancel(); }catch(x){} POOL.push(e); };
+  return 1;
+}
+// Each burst's pieces are taken from the pool and started at its own turn (a timer per burst; WAAPI delays inside the burst), so the
+// JS cost is spread over 12 small slices (~1/12 each) instead of one 300-animation frame. hold = all at once (checks / frame shots only).
+function fxWin28(hold){
+  FX.fired = true; FX.n++; FX.slice = 0;
+  var lay = document.getElementById("feelLay"); if(!lay || !lay.animate || REDUCED || H.classList.contains("rm")) return;
+  fxPool(lay, 330);
+  var W = innerWidth, Hh = innerHeight, S = Math.min(1.25, Math.max(0.8, Math.min(W, Hh)/400)), sb = 0, NC = FWC.length;
+  try{ sb = parseFloat(getComputedStyle(H).getPropertyValue("--sa-b")) || 0; }catch(e){}
+  var T = function(x, y, r, sc){ return "translate(" + x.toFixed(1) + "px," + y.toFixed(1) + "px) rotate(" + (r || 0).toFixed(0) + "deg) scale(" + (sc == null ? 1 : sc) + ")"; };
+  FX.bursts = [];
+  var off = Math.floor(Math.random()*NC);
+  FW28.order.forEach(function(k, b){
+    var T0 = b*FW28.gap, t0 = hold ? T0 : 0, side = k === "bl" ? -1 : k === "br" ? 1 : 0, j = (Math.random() - 0.5), round = Math.floor(b/3);
+    // corner pops alternate inner / outer and high / low each round; the top shell walks left, right, centre-left, centre-right
+    var px = side ? W*(0.5 + side*((round % 2 ? 0.22 : 0.33) + j*0.08)) : W*(0.5 + [-0.16, 0.16, -0.05, 0.05][round % 4] + j*0.06),
+        py = side ? Hh*((round % 2 ? 0.25 : 0.34) + Math.random()*0.05) : Hh*(0.15 + Math.random()*0.07), pop = t0 + (side ? FW28.rise : FW28.fuse);
+    // 4 hues per burst, spread round the wheel (b*3 apart, +2 / +5 / +7), so neighbours in time never share a colour family
+    var h0 = (off + b*3) % NC, cols = [FWC[h0], FWC[(h0 + 2) % NC], FWC[(h0 + 5) % NC], FWC[(h0 + 7) % NC]];
+    var go = function(){ var m = 0, c1 = performance.now();
+    if(side){
+      var sx = side < 0 ? W*0.05 : W*0.95, sy = Hh - sb - 24, ang = Math.atan2(px - sx, sy - py)*180/Math.PI;
+      m += fxPiece28(lay, "rk", cols[0], [
+        { transform:T(sx, sy, ang, 0.8), opacity:0 }, { transform:T(sx, sy, ang, 0.8), opacity:1, offset:0.05 },
+        { transform:T(px, py, ang, 1), opacity:1, offset:0.97 }, { transform:T(px, py, ang, 1), opacity:0 }
+      ], t0, FW28.rise, "cubic-bezier(.2,.6,.4,1)");
+    }
+    m += fxPiece28(lay, "fl", "radial-gradient(closest-side,#FFFFFF," + cols[1] + "B3 45%," + cols[1] + "00)", [
+      { transform:T(px, py, 0, 0.3), opacity:0 }, { transform:T(px, py, 0, 0.6), opacity:1, offset:0.15 }, { transform:T(px, py, 0, 1.7), opacity:0 }
+    ], pop, 300, "ease-out");
+    // two shells per burst: colours 0 / 1 fly out fast (outer ring), 2 / 3 slower (inner ring) = a two-tone peony; the white glitter
+    // pieces flicker (opacity keyframes) as they fall
+    for(var i=0;i<FW28.per;i++){
+      var gl = i < FW28.glit, ci = i % 4, outer = ci < 2,
+          a = (i + Math.random()*0.8)/FW28.per*Math.PI*2, v = (outer ? 135 + Math.random()*45 : 80 + Math.random()*35)*S*(gl ? 0.75 : 1), dx = Math.cos(a)*v, dy = Math.sin(a)*v*0.85,
+          g = (150 + Math.random()*90)*S, rot = (Math.random() - 0.5)*900, life = FW28.life - Math.random()*160;
+      if(gl) m += fxPiece28(lay, "gl", "#FFFFFF", [
+        { transform:T(px, py, 0, 0.4), opacity:0 }, { transform:T(px, py, 0, 0.6), opacity:1, offset:0.02 },
+        { transform:T(px + dx*0.8, py + dy*0.8, 0, 1), opacity:1, offset:0.3 }, { opacity:0.15, offset:0.42 }, { opacity:1, offset:0.52 },
+        { opacity:0.2, offset:0.64 }, { transform:T(px + dx, py + dy + g*0.5, 0, 1), opacity:1, offset:0.76 }, { transform:T(px + dx*1.05, py + dy + g, 0, 0.7), opacity:0 }
+      ], pop, life + 120, "cubic-bezier(.15,.55,.45,1)");
+      else m += fxPiece28(lay, i % 5 < 2 ? "d" : "", cols[ci], [
+        { transform:T(px, py, 0, 0.4), opacity:0 },
+        { transform:T(px, py, 0, 0.6), opacity:1, offset:0.02 },
+        { transform:T(px + dx*0.82, py + dy*0.82, rot*0.3, 1.05), opacity:1, offset:0.3 },
+        { transform:T(px + dx, py + dy + g*0.35, rot*0.65, 1), opacity:1, offset:0.62 },
+        { transform:T(px + dx*1.08, py + dy + g, rot, 0.85), opacity:0 }
+      ], pop, life, "cubic-bezier(.15,.55,.45,1)");
+    }
+    FX.pieces += m; FX.slice = Math.max(FX.slice || 0, +(performance.now() - c1).toFixed(2)); };
+    if(hold || !b) go(); else setTimeout(go, T0);
+    FX.bursts.push({ k:k, at:T0, pop:pop - t0 + T0, x:Math.round(px), y:Math.round(py), cols:cols, n:(side ? 2 : 1) + FW28.per });
+  });
+}
+function fxWin0(){
+  FX.fired = true; FX.n++;
   var lay = document.getElementById("feelLay"); if(!lay || !lay.animate || REDUCED || H.classList.contains("rm")) return;
   var W = innerWidth, Hh = innerHeight, S = Math.min(1.25, Math.max(0.8, Math.min(W, Hh)/400)), n = 0, sb = 0;
   try{ sb = parseFloat(getComputedStyle(H).getPropertyValue("--sa-b")) || 0; }catch(e){}
@@ -237,7 +319,9 @@ window.__blast.ui2 = {
     o.items = Object.keys(o).filter(function(k){ return o[k] === true && !(k === "level" && o.meter); }).length + o.shields;   // the level pill is the meter's cap: one item
     return o;
   },
-  fx:function(){ return { fired:FX.fired, n:FX.n, pieces:FX.pieces, live:document.querySelectorAll("#feelLay .cf.u2").length, bursts:FX.bursts }; }
+  fx:function(){ return { fx28:FX28, fired:FX.fired, n:FX.n, pieces:FX.pieces, per:(FX28 ? FW28 : FW).per, cost:FX.cost, slice:FX.slice || FX.cost, pool:POOLN,
+    live:[].filter.call(document.querySelectorAll("#feelLay .cf.u2"), function(e){ return e.style.display !== "none"; }).length, bursts:FX.bursts }; },
+  replay:function(hold){ FX.fired = false; fxWin.hold = !!hold; try{ fxWin(); } finally { fxWin.hold = false; } return { cost:FX.cost, pieces:FX.pieces }; }   // checks / shots only: play the win show again now
 };
 })(); }catch(e){ console.error("main/ui2.js", e); }
 
