@@ -378,7 +378,7 @@ P.flat = null;
 function siteFlat(){ var h = 0; try{ h = standingHeight(); }catch(e){ return null; } var lim = Math.min(3, Math.max(1.6, buildingH*0.3));
   P.flat = { sh:+h.toFixed(2), bh:+(+buildingH || 0).toFixed(2), lim:+lim.toFixed(2), flat:h <= lim }; return P.flat; }
 var ftFlat = failTip; failTip = function(r){ var t = ftFlat.apply(this, arguments);
-  try{ if(!r || r.code !== "pct" || !L || (window.LV7O && LV7O.isH && LV7O.isH(levelIdx)) || /heavy pieces/i.test(String(t || ""))) return t;
+  try{ if(!r || r.code !== "pct" || !L || (window.LV7O && LV7O.isH && LV7O.isH(levelIdx)) || (QS.get("fx29") === "0" ? /heavy pieces/i : /heavy piece/i).test(String(t || ""))) return t;   // FX29 GD-115: "heavy piece" (56's own line is singular)
     var f = siteFlat(); if(f && f.flat && buildingH > 0){ lg("flatTip:" + f.sh + "/" + f.bh); return FLAT_TIP; } }catch(e){}
   return t; };
 var lt17 = levelTip; levelTip = function(){ return kWord(lt17.apply(this, arguments), true); };
@@ -1314,6 +1314,143 @@ P.fx27 = function(){ var r = $("bRet"), tip = $("bAimTip"), lv = $("lvBtn");
     lvBtn:lv ? { pe:getComputedStyle(lv).pointerEvents, z:getComputedStyle(lv).zIndex } : null, hosts:function(){ return hostCount(); }, log:FX.log.slice() }; };
 // test only (check scripts): the next 2 lock checks read "no member a tap could place on", to drive C1's end without a staged scene
 P.fx27force = function(){ FX.force = 2; return true; };
+})();
+
+// ---- FX29 FIX-1128 (tester round 28/11/2026, feedback/2026-11-28, group A; ?fx29=0 = off). Bug / state fixes only: no new rule,
+//      screen, button, price, reward, TNT count, Ball strength, level order or text (every word shown is a line the game already has).
+//  F1  GD-115 the generic flat-site fail line skipped a level whose own line names "heavy pieces" but not 56's "Bring the heavy piece
+//      down first. Then crack it." (singular): the test is now /heavy piece/i (in place, polish.js 23/11 block). Only E09 (56) changes.
+//  N2  GD-113 Safety Net on a level with a blue building where FX27 N1 dropped every fence (21, 7): the chip said "Nothing to protect
+//      on this level" beside the blue building. netPlan now keeps a "tight" marker there (no fence is built from it: netBuild, the
+//      pre-level pick and the fail card read !tight only), so the game's own line "No room for a net here" is the one shown.
+//  B2  GD-114 / U-10 Wrecking Ball: when no side of the four has a swing spot (no prompt spot, and the ring spot refused under each
+//      side's settled aim camera), the red ring's tip no longer says "· swipe": it shows the Ball's own refusal line "Can't reach that
+//      spot from here". A side that can swing keeps "Tap to swing" (FX27 B1 unchanged); the ✕ still cancels.
+//  W1  UX-117 win: the "+N" sat on "CLEARED!" and the stream crossed it. The stamp is drawn above the coin layer, the "+N" starts
+//      under the stamp's lower edge (>= 14 px) 0.4 s after it is called, and flies to the pill only once the stamp has faded.
+//      TIMBER! / the coin rain / the stamp timing are unchanged (D-blast-TIMBER).
+//  T1  UX-119 the Ball tip's edge clamp (FX25 W2) ran one frame after a text change (the tip showed one frame off by up to 65 px):
+//      it now also runs in the same task as the change (MutationObserver, before paint).
+//  L1  UX-118 Level 1 lesson: a tap outside the spotlight (swallowed, as before) also replays the spotlight's two ripples, pulses the
+//      ring and nudges the hand once. No new element, no words.
+//  P1  U-9 the "Pick Your Boosters" card on a Hard / Boss level is skipped when nothing on it can be picked (every unlocked booster
+//      at 0 and its pack not affordable). Before any unlock (all locked, X8 / frame 6d) it still shows as before.
+(function(){
+if(QS.get("fx29") === "0") return;
+document.documentElement.classList.add("fx29");
+var FX = { net:0, all:0, allN:0, plus:0, clamp:0, nudge:0, skip:0, log:[] };
+function lgx(s){ FX.log.push(s); if(FX.log.length > 40) FX.log.shift(); lg(s); }
+var st29 = document.createElement("style"); st29.id = "fx29Css";
+st29.textContent = [
+  // W1: the stamp over the coin / confetti layer (#feelLay 58) and the "+N"
+  "html.fx29 body #feelStamp{z-index:61}"
+].join("\n");
+document.head.appendChild(st29);
+// N2
+if(typeof netPlan === "function"){ var np29 = netPlan; netPlan = function(){ var pl = np29.apply(this, arguments);
+  try{ if(!pl.some(function(f){ return !f.tight; }) && !pl.length && blocks.some(function(b){ return b.keep && !b.anchor && !b.dead; })){ pl = pl.concat([{ tight:true, side:0, fx29:true }]); FX.net++; } }catch(e){}
+  return pl; }; }
+// B2
+var REFUSE = "Can't reach that spot from here";
+var _p = new THREE.Vector3(), _c2 = new THREE.Vector3();
+function sideSug(){   // the base ballSuggest's "is there a prompt spot" for the current ballYaw, read only
+  var d = new THREE.Vector3(Math.sin(ballYaw), 0, Math.cos(ballYaw)), ax = Math.abs(d.x) > Math.abs(d.z) ? 0 : 2, sg = Math.sign(ax ? d.z : d.x) || 1;
+  var cx = 0, cz = 0, n = 0, c = [];
+  blocks.forEach(function(b){ if(b.keep || b.anchor || b.prop || b.bonus || b.dead || !b.rb) return; cx += b.P.x; cz += b.P.z; n++; });
+  if(!n) return false; cx /= n; cz /= n;
+  var hd = ballHazDirs(cx, cz); if(ballHazard(d, hd)) return false;
+  blocks.forEach(function(b){ if(b.keep || b.anchor || b.prop || b.bonus || b.dead || !b.rb || b.floor > BALL.fl + 2 || b.def.glass || b.key === "plinth") return;
+    if((b.def.armor || 0) >= 0.5) return;
+    var lat = ax ? Math.abs(b.P.x - cx) : Math.abs(b.P.z - cz), out = ax ? (b.P.z - cz)*sg : (b.P.x - cx)*sg, pen = 0;
+    hd.forEach(function(e){ pen = Math.max(pen, (b.P.x - cx)*e[0] + (b.P.z - cz)*e[1]); });
+    if(pen > BALL.sideMax) return;
+    c.push({ b:b, s:Math.abs(b.floor - BALL.fl)*10 + lat - out*0.5 + BALL.side*pen }); });
+  c.sort(function(p, q){ return p.s - q.s; });
+  for(var i=0;i<c.length && i<24;i++){ var b = c[i].b, pt = b.P.clone();
+    if(ax) pt.z += sg*b.half[2]; else pt.x += sg*b.half[0];
+    pt.y -= 0.3*b.half[1];
+    if(ballCheck(b, pt) === "ok") return true; }
+  return false; }
+function ringOkAt(x, y){   // FX27 B1's ring test under the CURRENT global camera (no prompt spot: pick only)
+  var h = null; try{ h = pick(x, y); }catch(e){ return true; }
+  if(!h || h.block.keep) return false;
+  for(var q=0;q<blocks.length;q++){ var kb = blocks[q]; if(!kb.keep || kb.anchor) continue; if(nearestPoint(kb, h.point, _c2).distanceTo(h.point) < BALL.keepGap) return false; }
+  var pl = ballPlan(h.point); return !pl.bad; }
+function allRefused(){ var r = $("bRet"); if(!r || L.ball === false) return false;
+  var x = parseFloat(r.style.left), y = parseFloat(r.style.top); if(!isFinite(x) || !isFinite(y)) return false;
+  var y0 = ballYaw, cam0 = camera, any = false;
+  try{ for(var k=0;k<4 && !any;k++){ ballYaw = y0 + k*QTR;
+      if(sideSug()){ any = true; break; }
+      var c = ballAimCam().clone(); camera = c; if(ringOkAt(x, y)) any = true; camera = cam0; } }
+  catch(e){ any = true; } finally { ballYaw = y0; camera = cam0; }
+  return !any; }
+var allK = null, allOn = false;
+function allKey(){ var n = 0; try{ blocks.forEach(function(b){ if(!b.dead) n++; }); }catch(e){} return levelIdx + ":" + wave + ":" + ballStats.throws + ":" + n + ":" + Math.round(ballYaw*100); }
+if(typeof ballSuggest === "function"){ var su29 = ballSuggest; ballSuggest = function(){ var o = su29.apply(this, arguments);
+  try{ allOn = false; if(ballAim && !ballLive && !ballSug){ var k = allKey(); if(k !== allK){ allK = k; FX.allN++; } allOn = allRefused(); if(allOn){ FX.all++; lgx("ball:all-refused " + k); } } }catch(e){ allOn = false; }
+  allSync(); return o; }; }
+function allSync(){ try{
+  if(!allOn || !(screen === "game" && phase === "plan" && ballAim && !ballLive && !ballSug)) return;
+  var r = $("bRet"), tip = $("bAimTip"); if(!r || !tip || r.classList.contains("hidden")) return;
+  if(!r.classList.contains("bad")) return;   // FX27 B1 read this side's ring as one that swings: leave it
+  var t = tip.firstChild && tip.firstChild.nodeType === 3 ? tip.firstChild.textContent : tip.textContent;
+  if(/ · swipe$|^Swipe to swing|^Tap to swing/.test(t)){
+    if(tip.querySelector("br") && tip.firstChild && tip.firstChild.nodeType === 3) tip.firstChild.textContent = REFUSE; else tip.textContent = REFUSE; }
+}catch(e){} }
+setInterval(allSync, 150);
+// T1: FX25 W2's clamp, run in the same task as the change (same maths: reticle px, pulse x1.08, 16 px sides)
+function clampNow(){ try{ var ret = $("bRet"), tip = $("bAimTip");
+  if(!(ret && tip && !ret.classList.contains("hidden") && !tip.classList.contains("hidden") && tip.offsetWidth)) return;
+  var rr = ret.getBoundingClientRect(), cx = rr.left + rr.width/2, w = tip.offsetWidth, K = 1.08, M = 16, lo = (M - cx)/K + w/2, hi = (innerWidth - M - cx)/K - w/2, dx = 0;
+  if(lo > hi) dx = (lo + hi)/2; else if(lo > 0) dx = lo; else if(hi < 0) dx = hi;
+  dx = Math.round(dx); var tf = dx ? "translateX(calc(-50% + " + dx + "px))" : "";
+  if(tip.style.transform !== tf){ tip.style.transform = tf; FX.clamp++; } }catch(e){} }
+(function(){ var tip = $("bAimTip"), ret = $("bRet"); if(!tip || !ret) return; var busy = false;
+  var mo = new MutationObserver(function(){ if(busy) return; busy = true; clampNow(); busy = false; });
+  mo.observe(tip, { childList:true, characterData:true, subtree:true, attributes:true, attributeFilter:["class"] });
+  mo.observe(ret, { attributes:true, attributeFilter:["class", "style"] }); })();
+// L1
+(function(){ var hole = $("t2Hole"); if(!hole) return;
+  new MutationObserver(function(){ if(!hole.classList.contains("no")) return;
+    var now = performance.now(); if(now - (FX.nudgeT || 0) < 250) return; FX.nudgeT = now; FX.nudge++; lgx("l1:nudge");
+    if(document.documentElement.classList.contains("rm") || (typeof REDUCED !== "undefined" && REDUCED)) return;
+    ["t2Rip1", "t2Rip2"].forEach(function(id){ var e = $(id); if(!e) return; e.style.animation = "none"; void e.offsetWidth; e.style.animation = ""; });
+    try{ hole.animate([{ scale:"1" }, { scale:"1.16", offset:0.4 }, { scale:"1" }], { duration:420, easing:"ease-out" }); }catch(e){}
+    var hd = $("hand"); try{ if(hd && !hd.classList.contains("hidden")) hd.animate([{ translate:"0 0" }, { translate:"-6px -12px", offset:0.35 }, { translate:"0 0" }], { duration:420, easing:"ease-out" }); }catch(e){}
+  }).observe(hole, { attributes:true, attributeFilter:["class"] }); })();
+// P1
+function pickable(k){ try{ return bstUnlocked(k) && (bstHave(k) || save.coins >= (BOOST[k].price || 1e9)); }catch(e){ return true; } }
+if(typeof bstWants === "function"){ var bw29 = bstWants; bstWants = function(i){ var w = bw29.apply(this, arguments);
+  try{ if(w && !BST_ALL){ var Lv = LEVELS[i] || {}, ks = BOOST_ORDER.filter(function(k){ return BOOST[k] && !BOOST[k].hidden; });
+    if((isHard(Lv) || Lv.boss) && ks.some(function(k){ return bstUnlocked(k); }) && !ks.some(pickable)){ FX.skip++; lgx("pick:skip " + (i + 1)); return false; } } }catch(e){}
+  return w; }; }
+// W1
+var plusEl = $("uicPlus"), stampEl = $("feelStamp");
+if(plusEl && stampEl && plusEl.animate){ var pa29 = plusEl.animate, ELA = Element.prototype.animate;
+  plusEl.animate = function(k, o){ var a = pa29.apply(this, arguments);
+    try{
+      var sa = stampEl.getAnimations ? stampEl.getAnimations().filter(function(x){ return x.playState === "running" || x.playState === "pending"; }) : [];
+      if(!sa.length || document.documentElement.classList.contains("rm") || (typeof REDUCED !== "undefined" && REDUCED)) return a;
+      var tEl = sa[0].currentTime || 0, left = Math.max(0, 1500 - tEl);
+      var sb = stampEl.offsetTop + stampEl.offsetHeight, ph = plusEl.offsetHeight || 40;
+      var L0 = parseFloat(plusEl.style.left) || 0, T0 = parseFloat(plusEl.style.top) || 0;
+      var cy = sb + 14 + 16 + ph/2, dx = innerWidth/2 - L0, dy = cy - T0;   // + 16: the stamp's -5 deg tilt and its 1.06 fade-out scale
+      a.cancel(); FX.plus++;
+      // appear 0.4 s on, under the stamp; hold there until the stamp has faded (its 1.5 s run), then fly to the pill as before (400 ms)
+      var hold = Math.max(1000, left + 60), D = hold + 400, s = function(x, y, c){ return "translate(" + x + "px," + y + "px) " + c; };
+      var kf = [
+        { opacity:0, transform:s(dx, dy, "translate(-50%,-50%) scale(.6)"), offset:0 },
+        { opacity:0, transform:s(dx, dy, "translate(-50%,-50%) scale(.6)"), offset:400/D, easing:"cubic-bezier(.2,.9,.3,1.2)" },
+        { opacity:1, transform:s(dx, dy, "translate(-50%,-50%) scale(1)"), offset:580/D },
+        { opacity:1, transform:s(dx, dy, "translate(-50%,-50%) scale(1)"), offset:hold/D, easing:"cubic-bezier(.5,0,.75,0)" },
+        { opacity:1, transform:s(0, 0, "translate(-100%,-50%) scale(.7)"), offset:(hold + 370)/D },
+        { opacity:0, transform:s(0, 0, "translate(-100%,-50%) scale(.7)"), offset:1 }];
+      FX.plusAt = { cy:Math.round(cy), stampBottom:sb, tStamp:Math.round(tEl), stampLeft:Math.round(left) };
+      return ELA.call(plusEl, kf, { duration:D, fill:"both" });
+    }catch(e){ return a; } }; }
+window.__blast.fx29 = function(){ var r = $("bRet"), tip = $("bAimTip"), tb = tip && !tip.classList.contains("hidden") && tip.offsetWidth ? tip.getBoundingClientRect() : null;
+  return { net:FX.net, all:FX.all, allN:FX.allN, allOn:allOn, plus:FX.plus, plusAt:FX.plusAt || null, clamp:FX.clamp, nudge:FX.nudge, skip:FX.skip,
+    ret:r ? { shown:!r.classList.contains("hidden"), bad:r.classList.contains("bad") } : null, tip:tb ? { text:tip.innerText, x:Math.round(tb.left), r:Math.round(tb.right) } : null, log:FX.log.slice() }; };
 })();
 
 window.__blast.polish = {
