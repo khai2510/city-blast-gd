@@ -53,7 +53,10 @@ on the second, same sources `a56f08f3bd0c`; 7 and 4 re-run for the shots).
   card shrinks (the existing material-card exit). The chip pop then happens in the level as the forced use starts.
 
 ## Checks (final build)
-Build `node src/tools/build-main.js` (38 steps, sources `a56f08f3bd0c` before the merge; re-run after the merge, see below).
+**Final build after merging origin/main (L1TWIN `bdeb7fb`), sources `5ad390af448f`:** loadcheck ok / 0 errors; check-sflay
+**16 PASS / 0 FAIL** (with L1TWIN's new SF4); check-order **PASS**; check-r22 **23 PASS / 0 FAIL** (one full run); physprof
+`dc33769f 180 0.005`, `b5324c18 550 93.343`, `e19a1652 720 16.577` = unchanged; check-introfirst L2 + L4 6/0.
+Before the merge (sources `a56f08f3bd0c`), the same checks:
 - `games/blast/tools/loadcheck.js`: **ok=true, 0 errors**.
 - `src/main/check-sflay.js`: **16 PASS / 0 FAIL**, 0 page errors (15/1 on the full run: SF4, the L1 double-tap lesson, read the
   hand once while it was off; L1 has no card and no code path here touches it; ONLY=l1 re-run 2× on this build: PASS both times).
