@@ -63,10 +63,10 @@ const seedDone = `(()=>{try{if(!sessionStorage.getItem('l1Seed')){sessionStorage
       if (first) await shot(p, '5-mill-A-down-B-alone');
       if (!leg) throw new Error('no visible point on the front-left leg of mill B');
       await dtap(p, leg.x, leg.y);
-      await p.waitForFunction(() => window.__blast.state().phase !== 'plan', null, { timeout: 15000, polling: 100 }); s = await st(p); log('blast 2', s); r.tntUsedB = 3 - (s.tnt == null ? 0 : s.tnt);
+      await p.waitForFunction(() => window.__blast.state().phase !== 'plan', null, { timeout: 15000, polling: 100 }); s = await st(p); log('blast 2', s); r.tntUsedB = r.afterA.tnt - (s.tnt == null ? 0 : s.tnt);
       if (first) { await p.waitForTimeout(1500); await shot(p, '6-mill-B-falling'); }
       const won = await p.waitForFunction(() => { const q = window.__blast.state(); return q.screen === 'result' || (q.result && q.result.ok != null) ? { screen: q.screen, ok: q.result ? q.result.ok : null, pct: q.result ? q.result.pct : q.pct } : null; }, null, { timeout: 240000, polling: 200 }).then(h => h.jsonValue());
-      r.won = won; await p.waitForTimeout(first ? 2600 : 600); if (first) await shot(p, '7-win'); if (first) { await p.waitForTimeout(2500); await shot(p, '7b-win-card'); }
+      r.won = won; if (first) { await p.waitForTimeout(250); await shot(p, '7-win'); await p.waitForTimeout(700); await shot(p, '7b-win'); await p.waitForTimeout(900); await shot(p, '7c-win'); } await p.waitForTimeout(1500);
       r.save = await p.evaluate((k) => { try { return JSON.parse(localStorage.getItem(k)).level; } catch (e) { return null; } }, K);
       r.ok = !!(r.lesson && r.placed1 && r.alone && won && won.ok === true && r.save >= 1 && !p.errs.length);
     } catch (e) { r.err = e.message.slice(0, 300); r.ok = false; try { await shot(p, 'err-run' + n); r.at = await st(p); } catch (e2) {} }

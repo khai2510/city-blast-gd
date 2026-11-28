@@ -24,6 +24,7 @@ const lvl = {
   sol: [T('A:z+', 0, 0), T('B:z+', 0, 0)],
   bot: { hints: [['A', 'A:z+', 1], ['A', 'B:z+', 1]] }
 };
+lvl.solW = [[lvl.sol[0]], [lvl.sol[1]]];   // the lesson as played, one mill a blast (read by the R-11 determinism tool only)
 lvl.tntStart = E('TNT', 4);
 centre(lvl);
 writeFileSync(new URL('./level.json', import.meta.url), JSON.stringify([lvl], null, 1));
