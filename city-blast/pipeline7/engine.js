@@ -1998,6 +1998,72 @@ try{ (function(){
       kd(base, "icyl", K.log, -hx*0.6, 0.35, hz + 0.9, 0.7, 0.7, 0.7); kd(base, "ibox", K.iron, -hx*0.6, 0.85, hz + 0.9, 0.06, 0.5, 0.06);
       if(P.bg) bgSet(n0, P.bg); return { w:2*hx + 2.5, d:2*hz + 2.5 };
     };
+    // ---- L1TWIN g7oMill (Agents-Game 28/11, Khai D-blast-L1TWIN: "two windmills, exactly alike"): a timber smock mill on an open
+    // trestle. Four chunky legs (wpost) on stone footings with X-braces; a stage (gallery) with a white rail round the top of the
+    // trestle; P.ns boarded storeys (corner posts + a wwall panel a face) that step in by P.tp a storey, dressed with weatherboards
+    // that thin out upwards (the taper), white windows and a red door on the stage; a dark cap (g7roofL) with a dome, the wind
+    // shaft, a hub and FOUR lattice sails with cream cloths at the front (z+); a tail pole at the back. Everything above the
+    // members is decor on the member that carries it. The same call gives the same mill (no random part).
+    V5_PARTS.g7oMill = function(P){
+      var n0 = blocks.length, MT = api.mat("wood"), hx0 = P.hx || 2.3, LH = P.lh || 4.8, SH = P.sh || 3.3, nS = P.ns || 4, TP = P.tp == null ? 0.2 : P.tp, y = 0, s, q, sts = [];
+      var bdA = 0xF0D2A0, bdB = 0xE7C590, capC = 0x5B4A3E, capD = 0x45372D, cloth = 0xFBF6EA;
+      var base = addBlock(0, -0.25, 0, 2*hx0 + 3.4, 0.5, 2*hx0 + 3.4, "base", {anchor:true});
+      kd(base, "icyl", K.gravel, 0, 0.03, 0, 2*hx0 + 3.2, 0.06, 2*hx0 + 3.2); kd(base, "icyl", K.gravelD, 0, 0.05, 0, 2*hx0 + 0.6, 0.04, 2*hx0 + 0.6);
+      // the trestle: four legs, footings, X-braces (decor on the two legs of a face: they go when a leg goes)
+      var st0 = H.boxSt({ y0:0, h:LH, hx:hx0, hz:hx0, nx:2, nz:2, pw:P.lw || 1.0, mw:0.46, fl:0, MT:MT, deck:"mdW", skin:"open", dk:0.32, tp:K.woodD, td:K.wood });
+      sts.push(st0);
+      st0.piers.forEach(function(p){ kd(p, "box", K.stone, p.spawn.x, 0.3, p.spawn.z, 2*p.half[0] + 0.42, 0.6, 2*p.half[2] + 0.42); kd(p, "box", K.stoneD, p.spawn.x, 0.66, p.spawn.z, 2*p.half[0] + 0.2, 0.12, 2*p.half[2] + 0.2);
+        kd(p, "box", K.wood, p.spawn.x, LH - 0.62, p.spawn.z, 2*p.half[0] + 0.16, 0.3, 2*p.half[2] + 0.16); });
+      [[1, 0], [-1, 0], [0, 1], [0, -1]].forEach(function(f){ var a = hx0 - 0.5, p1 = H.near(st0.piers, f[0] ? f[0]*hx0 : -hx0, f[1] ? f[1]*hx0 : -hx0), p2 = H.near(st0.piers, f[0] ? f[0]*hx0 : hx0, f[1] ? f[1]*hx0 : hx0);
+        var X0 = f[0] ? f[0]*a : -a, Z0 = f[1] ? f[1]*a : -a, X1 = f[0] ? f[0]*a : a, Z1 = f[1] ? f[1]*a : a;
+        bar(p1, K.wood, X0, 0.9, Z0, X1, LH - 0.9, Z1, 0.16); bar(p2, K.wood, X1, 0.9, Z1, X0, LH - 0.9, Z0, 0.16); });
+      // flour sacks and a millstone under the trestle (on the pad: they stay when the mill goes)
+      [[-0.5, 0.25, -0.3], [0.35, 0.25, -0.45], [-0.1, 0.72, -0.4]].forEach(function(c, j){ kd(base, "ibox", j % 2 ? K.creamD : K.cream, c[0], c[1], c[2], 0.8, 0.46, 0.55); });
+      kd(base, "icyl", K.stone, 0.75, 0.55, 0.55, 1.1, 0.22, 1.1, Math.PI/2 - 0.3, 0, 0); kd(base, "icyl", K.stoneD, 0.75, 0.55, 0.62, 0.3, 0.26, 0.3, Math.PI/2 - 0.3, 0, 0);
+      y = LH;
+      // the stage: a plank gallery round the trestle top, a white rail, struts down to the legs, a ladder on the right
+      var dk0 = st0.decks[0], gw = hx0 + 0.95;
+      kd(dk0, "box", K.woodL, 0, y - 0.1, 0, 2*gw, 0.18, 2*gw); kd(dk0, "box", K.woodD, 0, y - 0.24, 0, 2*gw - 0.3, 0.12, 2*gw - 0.3);
+      [[1, 0], [-1, 0], [0, 1], [0, -1]].forEach(function(f){ var X = !!f[0], e = gw - 0.06; kd(dk0, "box", K.white, f[0]*e, y + 0.98, f[1]*e, X ? 0.1 : 2*gw, 0.1, X ? 2*gw : 0.1); kd(dk0, "box", K.white, f[0]*e, y + 0.52, f[1]*e, X ? 0.06 : 2*gw, 0.06, X ? 2*gw : 0.06);
+        for(q = -2; q <= 2; q++) kd(dk0, "box", K.white, X ? f[0]*e : q*e/2, y + 0.5, X ? q*e/2 : f[1]*e, 0.09, 1.0, 0.09); });
+      st0.piers.forEach(function(p){ var sx = Math.sign(p.spawn.x), sz = Math.sign(p.spawn.z); bar(p, K.woodD, p.spawn.x + sx*0.3, LH - 1.7, p.spawn.z + sz*0.3, sx*(gw - 0.15), LH - 0.3, sz*(gw - 0.15), 0.14); });
+      [-0.32, 0.32].forEach(function(o){ bar(dk0, K.woodD, gw + 1.5, 0.05, -0.9 + o, gw - 0.05, y - 0.05, -0.9 + o, 0.1); });
+      for(q = 1; q <= 8; q++) kd(dk0, "ibox", K.woodL, gw + 1.5 - q*1.55/9, q*(y - 0.1)/9, -0.9, 0.3, 0.07, 0.62);
+      // the boarded body: weatherboards on every face, thicker at the foot of a storey (the next storey steps in by TP)
+      var NB = 5, board = function(w, hh){ for(var b = 0; b < NB; b++){ var t = 0.07 + TP*(1 - (b + 0.5)/NB), L2 = 2*Math.max(w.half[0], w.half[2]); onF(w, "box", b % 2 ? bdB : bdA, 0, -hh/2 + (b + 0.5)*hh/NB, L2 + 0.95 + 2*t, hh/NB + 0.02, t); } };
+      var offAt = function(v, hh){ return 0.07 + TP*(1 - Math.max(0, Math.min(1, (v + hh/2)/hh))); };
+      var mwin = function(w, u, v, ww, hh, wh, lit){ var o = offAt(v - hh/2, wh) + 0.02; onF(w, "box", K.white, u, v, ww + 0.26, hh + 0.26, o + 0.05); onF(w, "box", lit ? K.lit : K.glassD, u, v, ww, hh, o + 0.08);
+        onF(w, "ibox", K.white, u, v, 0.07, hh, o + 0.1); onF(w, "ibox", K.white, u, v, ww, 0.07, o + 0.1); onF(w, "box", K.woodD, u, v - hh/2 - 0.16, ww + 0.44, 0.1, o + 0.16); };
+      for(s = 1; s <= nS; s++){ var hx = hx0 - 0.1 - (s - 1)*TP;
+        var st = H.boxSt({ y0:y, h:SH, hx:hx, hz:hx, nx:2, nz:2, pw:0.44, mw:0.4, fl:s, MT:MT, deck:"mdW", skin:"wall", mat:"wood", wall:"wwall", dk:0.28, tp:K.woodD, td:K.woodD, tw:bdB });
+        sts.push(st);
+        st.walls.forEach(function(w){ var hh = 2*w.half[1]; board(w, hh);
+          if(w.a1face === "z+"){
+            if(s === 1){ var o = offAt(-hh/2 + 1.0, hh) + 0.02; onF(w, "box", K.white, 0, -hh/2 + 1.08, 1.24, 2.16, o + 0.05); onF(w, "box", K.red, 0, -hh/2 + 1.02, 1.0, 2.04, o + 0.09); onF(w, "ibox", K.redD, 0, -hh/2 + 1.02, 0.06, 2.04, o + 0.11); onF(w, "ibox", K.gold, 0.3, -hh/2 + 1.0, 0.1, 0.1, o + 0.14); }
+            else if(s < nS) mwin(w, 0, 0.1, 0.8, 0.95, hh, s === 2);
+          } else if(s % 2 === 0 || w.a1face === "z-") mwin(w, 0, 0.1, 0.72, 0.9, hh, 0);
+        });
+        st.piers.forEach(function(p){ kd(p, "box", K.woodD, p.spawn.x, y + SH - 0.3, p.spawn.z, 2*p.half[0] + 0.06, 0.1, 2*p.half[2] + 0.06); });
+        kd(st.decks[0], "box", K.woodD, 0, y + SH - 0.1, 0, 2*hx + 0.5, 0.16, 2*hx + 0.5);   // the band where the next storey steps in
+        y += SH; }
+      // the cap: a light roof body (member) under a dark dome with eaves and a finial; the wind shaft, hub and four sails at the front
+      var hxc = hx0 - 0.1 - (nS - 1)*TP, at = mem("g7roofL", 0, y + 0.35, 0, 2*hxc - 0.1, 0.7, 2*hxc - 0.1, nS + 1, null, null, capC); at.tint = capC;
+      kd(at, "box", capD, 0, y + 0.74, 0, 2*hxc + 1.0, 0.16, 2*hxc + 1.0); kd(at, "dome", capC, 0, y + 0.8, 0, 2*hxc + 0.7, 2.3, 2*hxc + 0.7); kd(at, "icyl", capD, 0, y + 3.2, 0, 0.14, 0.7, 0.14); kd(at, "sph", K.gold, 0, y + 3.6, 0, 0.3, 0.3, 0.3);
+      // P.syaw turns the sails (and the tail pole behind them) about the mill's axis: 0 = they face z+, PI/4 = the x+ z+ corner
+      var hy = y + 1.25, SY = P.syaw || 0, cs = Math.cos(SY), sn = Math.sin(SY), zs = hxc + 1.45 + 0.2*Math.abs(Math.sin(2*SY)), R = P.sail || 5.4, a0 = P.a0 == null ? 0.33 : P.a0, W = 1.4, r1 = 1.5;
+      var px = function(u, w){ return u*cs + w*sn; }, pz = function(u, w){ return -u*sn + w*cs; };
+      var sbar = function(c, u0, v0, w0, u1, v1, w1, t){ bar(at, c, px(u0, w0), v0, pz(u0, w0), px(u1, w1), v1, pz(u1, w1), t); };
+      H.kq(at, "icyl", K.woodD, px(0, zs/2), hy, pz(0, zs/2), 0.42, zs, 0.42, SY, Math.PI/2, 0); H.kq(at, "icyl", K.iron, px(0, zs), hy, pz(0, zs), 0.9, 0.3, 0.9, SY, Math.PI/2, 0); H.kq(at, "icyl", K.gold, px(0, zs + 0.18), hy, pz(0, zs + 0.18), 0.4, 0.12, 0.4, SY, Math.PI/2, 0);
+      for(var k = 0; k < 4; k++){ var a = a0 + k*Math.PI/2, dx = Math.cos(a), dy = Math.sin(a), nx = -dy, ny = dx, uc = dx*(r1 + R)/2 + nx*W*0.4;
+        sbar(K.woodD, 0, hy, zs, dx*R, hy + dy*R, zs, 0.2);                                                                 // the stock
+        H.kq(at, "box", cloth, px(uc, zs + 0.1), hy + dy*(r1 + R)/2 + ny*W*0.4, pz(uc, zs + 0.1), R - r1 - 0.2, W*0.72, 0.05, SY, 0, a);   // the cloth, furled a little: the lattice shows at the outer edge
+        sbar(K.wood, dx*r1 + nx*W, hy + dy*r1 + ny*W, zs + 0.05, dx*R + nx*W, hy + dy*R + ny*W, zs + 0.05, 0.11);            // the outer rail
+        for(q = 0; q <= 5; q++){ var rr = r1 + (R - r1)*q/5; sbar(K.wood, dx*rr, hy + dy*rr, zs + 0.05, dx*rr + nx*W, hy + dy*rr + ny*W, zs + 0.05, 0.08); } }
+      var tw = -(gw + 0.9)*(1 + 0.3*Math.abs(Math.sin(2*SY)));
+      sbar(K.woodD, 0, y + 0.9, -hxc - 0.2, 0, LH + 1.3, tw, 0.16); sbar(K.woodD, -0.9, y + 0.7, -hxc + 0.2, 0, LH + 4.2, tw*0.86, 0.1); sbar(K.woodD, 0.9, y + 0.7, -hxc + 0.2, 0, LH + 4.2, tw*0.86, 0.1);   // the tail pole and its braces
+      LV7.g7info = Object.assign(LV7.g7info || {}, { mill:{ members:blocks.length - n0, top:hy + R } });
+      if(P.bg) bgSet(n0, P.bg); return { w:2*hx0 + 3.4, d:2*hx0 + 3.4 };
+    };
     // ---- O01 g7oCabin: a two-storey log cabin (a ranger's house): log walls (wwall with log courses), corner posts with log ends,
     // windows with shutters, a door under a porch roof, an upper storey and a gabled shingle roof body, a stone chimney (decor
     // on the side wall), a pine beside it. P.side = which side the chimney / pine go (mirror pair).

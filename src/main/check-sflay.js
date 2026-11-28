@@ -103,7 +103,7 @@ const layout = async (p, W, H, tag) => {
   // ================= SF4 L1 from a fresh save: the teach spotlight and hand in the play area (not on a corner button), the lesson won by real taps
   if (want('l1')) {
     const p = await open('', null);
-    await playIn(p); await p.waitForTimeout(2500);
+    await playIn(p); await p.waitForFunction(() => { const t = window.__blast.tap2.tut(); return t.l1 && t.hole; }, null, { timeout: 60000, polling: 200 }).catch(() => {}); await p.waitForTimeout(900);   // L1TWIN: the lesson waits for the opening camera (FIX-1124); a fixed 2.5 s was too short on a busy machine
     const a = await p.evaluate(() => ({ hand: window.__blast.tap2.hand(), tut: window.__blast.tap2.tut(), nb: window.__blast.tap2.noBlast() })), r = await SF(p), g = await p.evaluate(() => window.__blast.sflay.geo());
     const hole = a.tut && a.tut.hole, bandTop = 852 - g.band, hb = await rect(p, '#t2Lbl');
     const okPos = a.hand.on && hole && hole.y < bandTop && hole.y > g.top && !['wreck', 'net', 'sky', 'tnt', 'gear'].some(k => inside(hole, r[k], 4)) && (!hb || !['tnt', 'gear', 'level', 'wreck', 'net', 'sky'].some(k => ovl({ x: hb.x, y: hb.y, r: hb.x + hb.w, b: hb.y + hb.h }, r[k])));
@@ -113,10 +113,18 @@ const layout = async (p, W, H, tag) => {
     const h2 = await p.evaluate(() => window.__blast.tap2.hand()); const lbl = await p.evaluate(() => { const e = document.getElementById('t2Lbl'); return e && !e.classList.contains('hidden') ? e.textContent : null; });
     const tx = Math.round(h2.on ? h2.x : hx), ty = Math.round(h2.on ? h2.y : hy);
     await p.touchscreen.tap(tx, ty); await p.waitForTimeout(120); await p.touchscreen.tap(tx, ty);
+    // L1TWIN (28/11, D-blast-L1TWIN): the lesson's blast drops mill A only; mill B is the player's own (no hand): one double tap on its
+    // front-left leg (CDP touches with explicit timestamps: a headless double tap is too slow at low fps, LEARNINGS 24/11)
+    await p.waitForFunction(() => window.__blast.state().phase !== 'plan', null, { timeout: 30000, polling: 100 }).catch(() => {});
+    await p.waitForFunction(() => { const s = window.__blast.state(); return s.phase === 'plan' || s.screen !== 'game' || (s.result && s.result.ok != null); }, null, { timeout: 300000, polling: 300 }).catch(() => {});
+    let leg = null, same = 0; for (let k = 0; k < 120 && same < 2; k++) { const q = await p.evaluate(() => { const B = window.__blast, m = B.test.select('B:z+', 0)[0], v = m ? B.tap2.visPt(m.i) : null; return v ? { x: Math.round(v.x), y: Math.round(v.y) } : null; }); same = q && leg && Math.abs(q.x - leg.x) <= 1 && Math.abs(q.y - leg.y) <= 1 ? same + 1 : 0; leg = q; await p.waitForTimeout(500); }
+    const mid = await p.evaluate(() => { const s = window.__blast.state(), h = window.__blast.tap2.hand(), t = window.__blast.tap2.tut(); return { screen: s.screen, phase: s.phase, pct: Math.round(s.pct * 100), hand: h.on, dim: t.l1 }; });
+    if (leg && mid.screen === 'game' && mid.phase === 'plan') { const cdp = await p.context().newCDPSession(p), t0 = Date.now() / 1000, pt = [{ x: leg.x, y: leg.y, id: 1 }];
+      for (const [type, dt] of [['touchStart', 0], ['touchEnd', 0.04], ['touchStart', 0.16], ['touchEnd', 0.2]]) await cdp.send('Input.dispatchTouchEvent', { type, touchPoints: type === 'touchStart' ? pt : [], timestamp: t0 + dt }); }
     const won = await p.waitForFunction(() => { const s = window.__blast.state(); return s.screen === 'result' || (s.result && s.result.ok) || s.screen === 'title' ? { screen: s.screen, ok: s.result ? s.result.ok : null, pct: s.result ? s.result.pct : s.pct } : null; }, null, { timeout: 600000, polling: 300 }).then(h => h.jsonValue()).catch(() => null);
     const sv = await p.evaluate(() => { try { return JSON.parse(localStorage.getItem('blastRush.save.v2')).level; } catch (e) { return null; } });
-    item('SF4', 'L1 fresh save: the double-tap spotlight + hand + "Double-tap!" label sit in the play area (under the top row, above the booster band, on no corner button); the lesson played by real taps (tap, then double tap) wins L1', okPos && a.nb && !!won && won.ok !== false && sv >= 1,
-      JSON.stringify({ hole, hand: a.hand, bandTop, top: g.top, lbl, label2: lbl, won, saveLevel: sv }));
+    item('SF4', 'L1 fresh save: the double-tap spotlight + hand + "Double-tap!" label sit in the play area (under the top row, above the booster band, on no corner button); the lesson played by real taps (tap, then double tap) drops mill A (not a win yet, no hand left); one double tap on a leg of mill B wins L1', okPos && a.nb && mid.screen === 'game' && mid.phase === 'plan' && mid.pct < 85 && !mid.hand && !mid.dim && !!won && won.ok !== false && sv >= 1,
+      JSON.stringify({ hole, hand: a.hand, bandTop, top: g.top, lbl, label2: lbl, afterA: mid, won, saveLevel: sv }));
     await shot(p, 'sf-L1-won');
     await close(p);
   }
