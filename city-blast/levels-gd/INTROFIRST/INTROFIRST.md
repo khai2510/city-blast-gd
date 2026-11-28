@@ -53,7 +53,23 @@ on the second, same sources `a56f08f3bd0c`; 7 and 4 re-run for the shots).
   card shrinks (the existing material-card exit). The chip pop then happens in the level as the forced use starts.
 
 ## Checks (final build)
-CHECKS_PLACEHOLDER
+Build `node src/tools/build-main.js` (38 steps, sources `a56f08f3bd0c` before the merge; re-run after the merge, see below).
+- `games/blast/tools/loadcheck.js`: **ok=true, 0 errors**.
+- `src/main/check-sflay.js`: **16 PASS / 0 FAIL**, 0 page errors (15/1 on the full run: SF4, the L1 double-tap lesson, read the
+  hand once while it was off; L1 has no card and no code path here touches it; ONLY=l1 re-run 2× on this build: PASS both times).
+  **Assert updated:** `playIn` (used by SF5 L3 Brick / SF6 Ball unlock) taps Play and waited for `plan`; with the card now on Home
+  that wait never ends, so `playIn` first claims a pre-level card (`preCards`), and SF6's "Unlocked! card seen" also counts a card
+  claimed there (`PRE.cards`). The assert itself (card seen, then the forced first use on the Ball button) is unchanged.
+- `src/g7hard/check-order.js`: **PASS** (static; INTRO_AT not changed).
+- `src/main/check-r22.js`: **23 PASS / 0 FAIL**, section by section (`boost` 7, `refit` 2, `open` 8, `retry` 2, `card` 1, `pill` 2,
+  `map` 1). The first full run stopped at C1b with "nothing to tap: #rRescue" (the near-miss card timing at a busy lock); `refit`
+  alone passed 2/2. No check-r22 assert changed (its saves mark every intro card done).
+- Determinism (`levels-gd/PERF-1124/physprof.js` slots 12 / 52 / 53): `dc33769f 180 0.005`, `b5324c18 550 93.343`,
+  `e19a1652 720 16.577` = unchanged.
+- `check-introfirst.js`: 30 PASS / 0 FAIL (table above). Before = the same build with `?introfirst=0`: L7 card 7 s after Play,
+  L4 5 s after Play, both with `screen: game, phase: plan` (over the loaded level).
 
 ## Shots
-SHOTS_PLACEHOLDER
+- `1-L7-keep-before-after.jpg`: before = Pick sheet → level loads → card over the level; after = Map node → card → Pick sheet → level + look spotlight.
+- `2-L4-brick-before-after.jpg`: before = card over the loaded level; after = card over Home → level + brick spotlight.
+- `3-L12-ball-after.jpg`: the result card's button (the test turns the result into a win, so the button keeps its "Try Again" label while running the Next path `bstPlay(levelIdx + 1)`) → "Wrecking Ball Unlocked!" → level → forced first use on the Ball chip.

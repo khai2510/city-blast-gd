@@ -1,5 +1,5 @@
 // INTROFIRST check: real taps from Home / Map / result at 393x852 for every level that carries an intro card.
-//   flock /dev/shm/chrome.lock node if-test.js <game.html> <shots> [only levels csv]
+//   BLAST_LIBS=<libs> NODE_PATH=/opt/node22/lib/node_modules flock /dev/shm/chrome.lock node city-blast/levels-gd/INTROFIRST/check-introfirst.js <game.html> <shots> [levels csv]
 'use strict';
 const path = require('path'), fs = require('fs');
 const { chromium } = require('playwright');
