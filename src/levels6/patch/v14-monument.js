@@ -438,10 +438,10 @@ BODY_CAP = 1e9;   // Owner 12/11: no body-count limit
   // ------------------------------------------------------------------ the level: hero swapped, the surroundings moved out from under the saucer
   // (D-blast-HERO-PROC: difficulty is set by these surroundings + TNT + start camera only; the hero is never tuned for it)
   var M14_SCENE = function(old){
-    var blk = function(id, x, z, f, roof){ return { id:id, kind:"mass", x:x, z:z, tiers:[{ f:f, cx:2, cz:2, mat:"conc", skin:"alt", g:"open" }], bay:3.6, colk:1.4, st:0.35, fh:4, roof:roof }; };
+    var blk = function(id, x, z, f, roof){ return { id:id, kind:"mass", x:x, z:z, tiers:[{ f:f, cx:2, cz:2, mat:"conc", skin:"alt", g:"open" }], bay:3.6, colk:1.4, st:0.35, fh:4, roof:roof, p2:{ style:"office", canopy:1, hut:1, mast:id === "B" ? 1 : 0, sign:id === "C" ? 1 : 0 } }; };   // POLISH2 (28/11): decor-only office dress (main/polish2.js)
     // the lesson's tank tower: two storeys of open steel legs under a concrete block (the L14 crane type: 0 bonds cracked at rest; the
     // all-steel-column tower of the base L32 cracked 8-12 slab bonds at rest), loose on the side away from the barrels
-    var E = { id:"E", kind:"mass", x:0, z:-25, tiers:[{ f:2, cx:2, cz:2, mat:"steel", skin:"open" }, { f:5, cx:2, cz:2, mat:"conc", skin:"alt" }], fh:4, colk:1.2, loose:"z+", roof:{ cap:1, ac:1 } };
+    var E = { id:"E", kind:"mass", x:0, z:-25, tiers:[{ f:2, cx:2, cz:2, mat:"steel", skin:"open" }, { f:5, cx:2, cz:2, mat:"conc", skin:"alt" }], fh:4, colk:1.2, loose:"z+", roof:{ cap:1, ac:1 }, p2:{ style:"office", hut:1 } };
     return { parts:[{ id:"A", kind:"mon14", x:0, z:0 }, blk("B", 25, 0, 5, { cap:1, ac:1 }), blk("C", -25, 0, 5, { cap:1 }), E],
       tanks:[[3.2, 5.7], [5.8, 3.2], [0, 5.6], [-2.4, 5.5], [-1.35, -27.15], [1.35, -27.15], [-2.2, -26.35], [2.2, -26.35], [27.7, -1.8], [27.7, 1.8], [27.7, 0], [-27.7, 0], [-27.7, -1.8], [-27.7, 1.8], [-1.35, -22.85], [1.35, -22.85]], tnt:9 }; };   // round 5: C gets B's three barrels, the tank tower two more at its front legs (a TNT on the 'wrong' face still works)
   if(M14.hero && LEVELS[M14.lv] && LEVELS[M14.lv].heroId === "F04"){

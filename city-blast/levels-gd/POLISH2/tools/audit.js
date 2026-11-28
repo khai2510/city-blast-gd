@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 /* POLISH2 audit (D-blast-POLISH2, 28/11): per slot the opening (front) shot, the 45-degree shot, the pad check (frame.js padOut) and the
  * building inventory (per building id: footprint box, top height, members, protected / hero).
+ *   env SCALE=2 (device scale), Q='&polish2=0' (extra query: the build without the POLISH2 dress)
  *   NODE_PATH=/opt/node22/lib/node_modules BLAST_LIBS=<libs> flock /dev/shm/chrome.lock node audit.js <game.html> <slots csv|all> <outdir> [tag] */
 'use strict';
 const path = require('path'), fs = require('fs');
@@ -23,7 +24,7 @@ const tap = async (p, sel) => { const b = await rect(p, sel); if (!b) throw new 
   const slots = SLOTSa === 'all' ? Array.from({ length: NS }, (_, i) => i + 1) : SLOTSa.split(',').map(Number);
   const res = [], errs = [];
   for (const s of slots) {
-    const ctx = await browser.newContext({ viewport: { width: 393, height: 852 }, hasTouch: true, isMobile: true, deviceScaleFactor: 1 });
+    const ctx = await browser.newContext({ viewport: { width: 393, height: 852 }, hasTouch: true, isMobile: true, deviceScaleFactor: +(process.env.SCALE || 1) });
     const p = await ctx.newPage();
     p.on('pageerror', e => errs.push('L' + s + ' pageerror: ' + e.message.slice(0, 200)));
     await p.route(/fonts\.(googleapis|gstatic)\.com/, r => r.fulfill({ status: 200, body: '', contentType: 'text/css' }));
@@ -31,7 +32,7 @@ const tap = async (p, sel) => { const b = await rect(p, sel); if (!b) throw new 
     await p.route(/rapier\.mjs/, r => r.fulfill({ body: fs.readFileSync(RAPIER), contentType: 'application/javascript', headers: { 'Access-Control-Allow-Origin': '*' } }));
     await p.addInitScript(seed(s - 1));
     try {
-      await p.goto('file://' + FILE + '?x=1&sa=59,0,34,0');
+      await p.goto('file://' + FILE + '?x=1&sa=59,0,34,0' + (process.env.Q || ''));
       await p.waitForFunction(() => window.__blast && window.__blast.state, null, { timeout: 120000 }); await p.waitForTimeout(800);
       await p.waitForFunction(() => !document.getElementById('hmStudio'), null, { timeout: 15000 }).catch(() => {});
       await tap(p, '#play'); await p.waitForTimeout(1200);
@@ -51,9 +52,9 @@ const tap = async (p, sel) => { const b = await rect(p, sel); if (!b) throw new 
           e.n++; e.x0 = Math.min(e.x0, b.sx - b.hx); e.x1 = Math.max(e.x1, b.sx + b.hx); e.z0 = Math.min(e.z0, b.sz - b.hz); e.z1 = Math.max(e.z1, b.sz + b.hz); e.top = Math.max(e.top, b.sy + b.h); if (b.kp) e.keep++; e.keys[b.key] = (e.keys[b.key] || 0) + 1; e.mass += b.m; });
         const bl = Object.values(by).map(e => ({ id: e.id, n: e.n, box: [+e.x0.toFixed(1), +e.x1.toFixed(1), +e.z0.toFixed(1), +e.z1.toFixed(1)], top: +e.top.toFixed(1), keep: e.keep > 0, keys: e.keys, mass: Math.round(e.mass) }));
         return { slot: st.level, name: st.name, kind: O && O.isH(i) ? 'H' : O && O.isE(i) ? 'E' : O && O.isO(i) ? 'O' : S && S.boss ? 'boss' : 'old', tier: T.tier || null, bp: T.bp || null, tnt: st.total, lvYaw: +(st.yaw * 180 / Math.PI).toFixed(1),
-          parts: (T.parts || []).map(q => ({ part: q.part || q.t || q.type, id: q.id, x: q.x, z: q.z, rot: q.rot || q.ry || 0, keep: q.keep })), pad: F.pad(), out: F.padOut(), bodies: info.filter(b => !b.an).length, buildings: bl, calls: B.style().calls, tris: B.style().tris }; });
+          parts: (T.parts || []).map(q => ({ part: q.part || q.t || q.type, id: q.id, x: q.x, z: q.z, rot: q.rot || q.ry || 0, keep: q.keep })), pad: F.pad(), out: F.padOut(), bodies: info.filter(b => !b.an).length, buildings: bl, calls: B.style().calls, tris: B.style().tris, p2: B.polish2 || null, kd: (window.__blastPerf && window.__blastPerf.flick) ? window.__blastPerf.flick.cp : null }; });
       res.push(r);
-      console.log((r.out.n ? 'OUT ' : 'ok  ') + 'L' + r.slot + ' ' + r.name + ' [' + r.kind + ' ' + r.tier + ' ' + r.bp + '] tnt ' + r.tnt + ' bodies ' + r.bodies + ' pad r ' + r.pad.rMin + '-' + r.pad.rMax + ' | ' + r.buildings.map(b => b.id + (b.keep ? '(blue)' : '') + ' ' + b.top + 'm x' + b.box[0] + '..' + b.box[1] + ' z' + b.box[2] + '..' + b.box[3] + ' n' + b.n).join(' ; ') + (r.out.n ? ' | OUT ' + r.out.out.map(o => (o.bid || o.i) + ' +' + o.over).join(',') : ''));
+      console.log((r.out.n ? 'OUT ' : 'ok  ') + 'L' + r.slot + ' ' + r.name + ' [' + r.kind + ' ' + r.tier + ' ' + r.bp + '] tnt ' + r.tnt + ' bodies ' + r.bodies + (r.p2 ? ' p2 ' + r.p2.pieces + ' pcs rmax ' + r.p2.rmax + (r.p2.err ? ' ERR ' + r.p2.err : '') : '') + ' pad r ' + r.pad.rMin + '-' + r.pad.rMax + ' | ' + r.buildings.map(b => b.id + (b.keep ? '(blue)' : '') + ' ' + b.top + 'm x' + b.box[0] + '..' + b.box[1] + ' z' + b.box[2] + '..' + b.box[3] + ' n' + b.n).join(' ; ') + (r.out.n ? ' | OUT ' + r.out.out.map(o => (o.bid || o.i) + ' +' + o.over).join(',') : ''));
     } catch (e) { console.log('ERR L' + s + ' ' + e.message.slice(0, 160)); res.push({ slot: s, err: e.message.slice(0, 160) }); }
     await ctx.close();
   }

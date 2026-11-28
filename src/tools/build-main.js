@@ -71,6 +71,9 @@ const STEPS = [
   { id: 'fps', what: 'hidden fps meter (PERF-1124): ?fps=1 or 5 quick taps on the Level pill = fps (1 s) + worst frame + ms render / physics, top centre; off by default; window.__blastPerf.meter = the headless probe', run: ['main/fps-patch.js', '$IN', '$OUT'], src: ['main/fps-patch.js', 'main/fps.js'], marks: ['<!-- main/fps.js -->', '// ---- main/fps.js', '// ---- end main/fps.js'] },
   // ---- Agents-Game (FLICK-1128, Khai 28/11 "nó bị chớp, asset không rõ ràng"): render-only flicker fixes, LAST (wraps the final l6KdBuild / updateCamera)
   { id: 'flick', what: 'flicker pass (FLICK-1128): C1 coplanar decor faces moved 1.5 cm so one surface wins (no z-fighting stripes), C2 camera near plane follows the camera distance (depth precision); render only, same physics; ?flick=0 = off', run: ['main/flick-patch.js', '$IN', '$OUT'], src: ['main/flick-patch.js', 'main/flick.js'], marks: ['<!-- main/flick.js -->', '// ---- main/flick.js', '// ---- end main/flick.js'] },
+  // ---- Agents-Game (POLISH2, Khai D-blast-POLISH2 28/11 "các tòa nhà phụ nhìn rất chán ... sắp layout như một câu chuyện"): decor-only dress of the old levels' generic side buildings + ground pieces, LAST (wraps the final V5_PARTS.mass / keep6)
+  { id: 'polish2', what: 'side-building polish (POLISH2): P.p2 dress on generic mass parts (windows, shopfronts, floor bands, parapets, pitched roofs, roof furniture), K.p2 / P.p2 site pieces (paving, paths, fences, trees, lamps); decor only, same physics; ?polish2=0 = off', run: ['main/polish2-patch.js', '$IN', '$OUT'],
+    src: ['main/polish2-patch.js', 'main/polish2.js'], marks: ['<!-- main/polish2.js -->', '// ---- main/polish2.js', '// ---- end main/polish2.js'] },
 ];
 if (process.argv.includes('--list')) { STEPS.forEach((s, i) => console.log(String(i + 1).padStart(2) + '. ' + s.id.padEnd(15) + s.what)); process.exit(0); }
 const OUT = path.resolve(process.argv[2] || G('checkpoints', 'index-main.html'));

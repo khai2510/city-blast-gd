@@ -207,9 +207,14 @@ const LEVELS = [
   // the tower BACKWARD: each away from the tram stop.
   { name: 'Grand Arch', base: { A: 'keep', '*': 'weak' }, hero: 'A', heroId: 'F10', f: 9, tier: 'H', hard: true, kind: 'scene', arch: 'canyon', teaches: null,
     parts: [ARCH('A', 0, 4.0),
-      M('B', 0, [{ f: 6, cx: 3, cz: 2, mat: 'conc', skin: 'full', g: 'alt' }], { z: -9.6, fh: 3.4, roof: { cap: 1 } }),
-      M('C', 0, [{ f: 3, cx: 3, cz: 2, mat: 'brick', skin: 'full' }], { z: 17, fh: 3.0 })],
-    keeps: KT(['hospital', 'school', 'hospital'], [K(-17.2, -2.5, 3, 2, 4), K(17.2, -2.5, 3, 2, 4), K(0, -5.0, 1, 2, 2)]), keep: KEEP('the library'),
+      // POLISH2 (28/11, decor only: main/polish2.js): B = an office tower behind the arch, C = a corner shop house on the street; kerbs along the street
+      M('B', 0, [{ f: 6, cx: 3, cz: 2, mat: 'conc', skin: 'full', g: 'alt' }], { z: -9.6, fh: 3.4, roof: { cap: 1 }, p2: { style: 'office', hut: 1, ac: 2, mast: 1 } }),
+      M('C', 0, [{ f: 3, cx: 3, cz: 2, mat: 'brick', skin: 'full' }], { z: 17, fh: 3.0, p2: { style: 'brick', shop: 1, chim: 2, tank: 1, shut: 1,
+        site: [['isle', 0, 0.4, 9.0, 7.6], ['lamp', -3.9, 3.6], ['plant', 3.8, 3.6], ['bench', 1.4, 3.7, 1], ['post', -3.9, -2.9], ['post', 3.9, -2.9]] } })],
+    keeps: KT(['hospital', 'school', 'hospital'], [
+      Object.assign(K(-17.2, -2.5, 3, 2, 4), { p2: { site: [['pave', 1.2, 0.6, 7.2, 12.6], ['path', 2.6, 5.2, 9.5, 5.2, 1.8], ['bay', 3.4, -1.2, 2.6, 5.2, 0], ['hedge', -2.2, -5.4, -2.2, 6.4], ['tree', -1.2, 6.2, 0.9], ['lamp', 4.2, 6.2], ['post', 4.4, 2.2], ['post', 4.4, -4.2]] } }),
+      Object.assign(K(17.2, -2.5, 3, 2, 4), { p2: { site: [['pave', -1.2, 0.6, 7.2, 12.6, 0xD9D2BE], ['path', -2.6, 5.2, -9.5, 5.2, 1.8], ['fence', -4.6, -5.4, -4.6, 3.6], ['fence', -4.6, -5.4, 2.4, -5.4], ['tree', 1.2, 6.2, 0.9], ['tree', -3.2, -3.6, 0.8], ['bench', -3.4, 1.2, 0], ['flag', -3.2, 6.0]] } }),
+      Object.assign(K(0, -5.0, 1, 2, 2), { p2: { site: [['pave', 0, 0.6, 6.4, 5.6, 0xC9C2B2], ['bench', -2.4, 2.4, 1], ['lamp', 2.6, 2.4]] } })]), keep: KEEP('the library'),
     // U-2 (19/11): opening yaw 0.7 (opened at 0.5) -> 5.93: the left hospital and the school behind the arch are in sight at the opening
     // GD-22 / U-5 (20/11): TNT 12 -> 10, the expert's full plan (all 8 arch legs, one on the tower's back, one on the brick block): 96%.
     // With 10 there is no TNT for a second try at the same blast: any arch leg left out fails (7 legs 66%, 6 legs + 2 on the tower 66%
@@ -247,9 +252,14 @@ const LEVELS = [
   // TOWARDS EACH OTHER. Two blocks behind fall back.
   { name: 'Lift Bridge', base: { A: 'keep', B: 'keep', '*': 'weak' }, hero: 'A,B', heroId: 'F09', f: 12, tier: 'SH', boss: true, kind: 'scene', arch: 'complex', teaches: null,
     parts: [BTOWER('A', -9, 0, -1, 11.8), BTOWER('B', 9, 0, 1, 0),
-      M('F', 8.0, [{ f: 5, cx: 3, cz: 2, mat: 'conc', skin: 'alt' }], big({ fh: 3.2, z: -18.0, roof: { cap: 1, ac: 1 } })),
-      M('C', -8.0, [{ f: 3, cx: 3, cz: 2, mat: 'brick', skin: 'alt' }], big({ fh: 3.4, z: -18.0 }))],
-    keeps: KT(['hospital', 'hospital', 'school', 'hospital'], [K(-9, 8.9, 1, 2, 2), K(9, 8.9, 1, 2, 2), K(-19.5, 0, 2, 2, 2), K(19.5, 0, 2, 2, 2)]),
+      // POLISH2 (28/11, decor only: main/polish2.js): F = the harbour office, C = a brick bonded store behind the bridge; a quay walk joins the four protected buildings
+      M('F', 8.0, [{ f: 5, cx: 3, cz: 2, mat: 'conc', skin: 'alt' }], big({ fh: 3.2, z: -18.0, roof: { cap: 1, ac: 1 }, p2: { style: 'office', hut: 1, mast: 1, site: [['pave', 0, 3.4, 9.6, 2.4], ['plant', -3.6, 3.4], ['plant', 3.6, 3.4], ['lamp', 0, 4.2]] } })),
+      M('C', -8.0, [{ f: 3, cx: 3, cz: 2, mat: 'brick', skin: 'alt' }], big({ fh: 3.4, z: -18.0, p2: { style: 'brick', roof: 'gable', rh: 2.6, chim: 2, site: [['pave', 0, 3.4, 9.6, 2.4], ['tree', -5.4, 2.6, 0.9], ['bench', 0, 4.0, 1]] } }))],
+    keeps: KT(['hospital', 'hospital', 'school', 'hospital'], [
+      Object.assign(K(-9, 8.9, 1, 2, 2), { p2: { site: [['pave', 0, 0.8, 6.0, 6.4], ['path', 0, 4.0, 0, 8.4, 1.8], ['plant', -2.4, 3.2], ['lamp', 2.4, 3.2]] } }),
+      Object.assign(K(9, 8.9, 1, 2, 2), { p2: { site: [['pave', 0, 0.8, 6.0, 6.4], ['path', 0, 4.0, 0, 8.4, 1.8], ['plant', 2.4, 3.2], ['lamp', -2.4, 3.2]] } }),
+      Object.assign(K(-19.5, 0, 2, 2, 2), { p2: { site: [['pave', 0.6, 0.6, 5.6, 6.4, 0xD9D2BE], ['fence', -2.4, -2.6, -2.4, 3.6], ['tree', -0.6, 4.2, 0.8], ['flag', 2.6, 3.4]] } }),
+      Object.assign(K(19.5, 0, 2, 2, 2), { p2: { site: [['pave', -0.6, 0.6, 5.6, 6.4], ['bay', -0.6, 4.0, 4.4, 2.2, 1], ['hedge', 2.5, -2.6, 2.5, 3.6], ['lamp', -3.0, 3.4]] } })]),
     keep: KEEP('the school'),
     // GD-44 / U-5 (20/11): TNT 11 -> 6. The sensible fronts-first plan won the boss with 11 (96%); with 6 it lands on a blue building
     // (87%, blue 9%). Expert: one TNT on the back of each block, then the four inner legs: 91%, 0 spare
@@ -264,8 +274,11 @@ const LEVELS = [
   // slides off forward. All at once, only the hall on top can be hit: the podium stands.
   { name: 'Shell Hall', base: { A: 'keep', '*': 'weak' }, hero: 'A', heroId: 'F05', f: 10, tier: 'R', kind: 'scene', arch: 'inner', teaches: 'Blast in steps: clear what hides it, then the piers',
     parts: [SHELL('A', 0, 0),
-      M('S', 0, [{ f: 2, cx: 5, cz: 2, mat: 'wood', skin: 'alt' }], { bay: 3.6, fh: 3.2, z: 11.6 })],
-    keeps: KT(['school', 'hospital'], [K(-14.2, 0, 2, 2, 3), K(14.2, 0, 2, 2, 3)]), keep: KEEP('the school'),
+      // POLISH2 (28/11, decor only: main/polish2.js): S = the timber market shed across the hall's front (pitched shingle roof); school yard left, hospital forecourt right
+      M('S', 0, [{ f: 2, cx: 5, cz: 2, mat: 'wood', skin: 'alt' }], { bay: 3.6, fh: 3.2, z: 11.6, p2: { style: 'timber', roof: 'gable', rh: 1.9, chim: 1, site: [['pave', 0, 3.6, 17.0, 2.6], ['lamp', -8.6, 3.8], ['lamp', 8.6, 3.8], ['plant', -4.4, 4.2], ['plant', 4.4, 4.2], ['bench', 0, 4.3, 1]] } })],
+    keeps: KT(['school', 'hospital'], [
+      Object.assign(K(-14.2, 0, 2, 2, 3), { p2: { site: [['pave', 0, 1.4, 6.2, 10.4, 0xD9D2BE], ['fence', -3.1, -3.6, -3.1, 6.4], ['fence', -3.1, 6.4, 3.1, 6.4], ['tree', -1.8, 5.2, 0.8], ['flag', 2.0, 5.4], ['bench', 0.4, 5.6, 1]] } }),
+      Object.assign(K(14.2, 0, 2, 2, 3), { p2: { site: [['pave', 0, 1.4, 6.2, 10.4], ['bay', 0, 5.2, 4.8, 2.2, 1], ['hedge', 3.1, -3.6, 3.1, 6.4], ['lamp', -2.4, 6.2], ['plant', 2.2, 6.0]] } })]), keep: KEEP('the school'),
     // U-5 (20/11): TNT 7 -> 6 (expert 6, 0 spare)
     charges: { tnt: 6 }, target: 0.85, yaw: 0.55, hint: 'S:z+', tip: 'Clear the shed,\nthen the hall.', ftip: 'Shed first. Then the piers.',
     sol: [T('S:z+', 0, 0), T('S:z+', 0, 4)],

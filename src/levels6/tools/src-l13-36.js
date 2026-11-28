@@ -128,9 +128,10 @@ const LEVELS = [
   // side: each must fall AWAY from it. The hall needs its whole back row cut. 8 TNT, one blast (Owner: about 2 minutes).
   { name: 'Dome Hall', f: 10, tier: 'H', hard: true, kind: 'scene', arch: 'c4', hero: 'A', heroId: 'F14', teaches: null,
     parts: [M('A', 0, [{ f: 3, cx: 6, cz: 2, mat: 'conc', skin: 'alt' }, { f: 1, cx: 2, cz: 2, ox: 2, mat: 'conc', skin: 'full' }], HALL({ z: -12.5, loose: 1, spire: [1.3, 8], dress: { t: 'G14' } })),
-      M('B', 12, [{ f: 4, cx: 2, cz: 2, mat: 'wood', skin: 'alt' }], { bay: 3.4, fh: 4.0, z: 1 }),
-      M('C', -12, [{ f: 4, cx: 2, cz: 2, mat: 'wood', skin: 'alt' }], { bay: 3.4, fh: 4.0, z: 1 })],
-    keeps: [K(0, 0, 2, 2, 2, 'hospital')], keep: KEEP('hospital'),
+      // POLISH2 (28/11, decor only: main/polish2.js): B and C = the hall's two timber gate towers (shingle spires); the hospital gets a forecourt on the hall's axis
+      M('B', 12, [{ f: 4, cx: 2, cz: 2, mat: 'wood', skin: 'alt' }], { bay: 3.4, fh: 4.0, z: 1, p2: { style: 'timber', roof: 'pyr', rh: 3.4, vane: 1, site: [['pave', 0, 0, 6.6, 6.6], ['plant', -2.6, 2.9], ['lamp', 2.8, 3.0]] } }),
+      M('C', -12, [{ f: 4, cx: 2, cz: 2, mat: 'wood', skin: 'alt' }], { bay: 3.4, fh: 4.0, z: 1, p2: { style: 'timber', roof: 'pyr', rh: 3.4, vane: 1, site: [['pave', 0, 0, 6.6, 6.6], ['plant', 2.6, 2.9], ['lamp', -2.8, 3.0]] } })],
+    keeps: [Object.assign(K(0, 0, 2, 2, 2, 'hospital'), { p2: { site: [['pave', 0, 1.2, 7.4, 8.0], ['path', 0, 5.2, 0, 11.0, 2.2], ['bay', -2.6, 3.9, 2.4, 2.4, 1], ['hedge', -3.7, -2.6, -3.7, 5.0], ['hedge', 3.7, -2.6, 3.7, 5.0], ['lamp', 2.6, 4.6], ['tree', -6.2, 7.4, 0.9], ['tree', 6.2, 7.4, 0.9]] } })], keep: KEEP('hospital'),
     charges: { tnt: 8 }, target: 0.85, yaw: 0.35, hint: 'A:z-', tip: 'HARD. All fall away\nfrom the hospital.', ftip: 'Outer side of each. The hall: its whole back.',
     sol: [T('A:z-', 0, 0), T('A:z-', 0, 1), T('A:z-', 0, 2), T('A:z-', 0, 3), T('A:z-', 0, 4), T('A:z-', 0, 5), T('B:x+', 0, 0), T('C:x-', 0, 0)],
     bot: { hints: [['A', 'A:z+', 1], ['A', 'A:z+', 1], ['A', 'A:z+', 1], ['A', 'A:z+', 1], ['A', 'A:z+', 1], ['A', 'A:z+', 1], ['A', 'B:x+', 1], ['A', 'C:x-', 1]] }, d: 2 },
@@ -173,7 +174,10 @@ const LEVELS = [
     parts: [M('A', -13, [{ f: 3, cx: 2, cz: 4, mat: 'conc', skin: 'full', cols: { '1,1': 'none', '1,2': 'none' }, colsF: 1 }, { f: 3, cx: 2, cz: 2, oz: 0, on: 0, mat: 'conc', skin: 'full' }, { f: 3, cx: 2, cz: 2, oz: 2, on: 0, mat: 'conc', skin: 'full' }], BOW({ fh: 3.0, dress: { t: 'G32' } })),
       M('Q', 13, [{ f: 3, cx: 2, cz: 4, mat: 'conc', skin: 'full', cols: { '0,1': 'none', '0,2': 'none' }, colsF: 1 }, { f: 3, cx: 2, cz: 2, oz: 0, on: 0, mat: 'conc', skin: 'full' }, { f: 3, cx: 2, cz: 2, oz: 2, on: 0, mat: 'conc', skin: 'full' }], BOW({ fh: 3.0, dress: { t: 'G32' } })),
       { id: 'S', kind: 'arch6', x: 0, z: 0, y: 9 / 2.7, len: 22.1, wd: 2.2, n: 3, rise: 15, span: 22, az: 2.5 }],
-    keeps: [K(-13, 9.6, 2, 2, 2, 'school'), K(-13.6, -9.6, 2, 2, 2, 'school'), K(-4, -5.5, 2, 2, 2, 'hospital')], keep: KEEP('school'),
+    // POLISH2 (28/11, decor only: main/polish2.js): yards for the two schools at the west pylon, a forecourt for the hospital under the bow
+    keeps: [Object.assign(K(-13, 9.6, 2, 2, 2, 'school'), { p2: { site: [['pave', 0, 0.8, 6.4, 6.6, 0xD9D2BE], ['fence', -3.2, -2.4, -3.2, 4.0], ['fence', -3.2, 4.0, 3.2, 4.0], ['flag', 2.2, 3.2], ['tree', -2.0, 3.0, 0.8]] } }),
+      Object.assign(K(-13.6, -9.6, 2, 2, 2, 'school'), { p2: { site: [['pave', 0, 0.8, 6.4, 6.6, 0xD9D2BE], ['fence', -3.2, -2.4, -3.2, 4.0], ['bench', 1.8, 3.4, 1], ['tree', -2.0, 3.0, 0.8]] } }),
+      Object.assign(K(-4, -5.5, 2, 2, 2, 'hospital'), { p2: { site: [['pave', 0, 0.8, 6.4, 6.6], ['bay', 0, 3.4, 4.6, 2.0, 1], ['hedge', 3.2, -2.2, 3.2, 2.6], ['lamp', -2.6, 3.6]] } })], keep: KEEP('school'),
     // GD-31 (19/11): the hospital moved from behind the right pylon to between the pylons, behind the arch (in sight at the opening):
     // it now takes the left pylon's inward fall, so the visible faces alone (inner legs + front legs, 4-6 TNT) no longer win
     // GD-44 (20/11): TNT 8 -> 6 (D-blast-TNTTIGHT: the expert's spare 0-1 holds on every tier and beats the boss TNT band of 12, which would
@@ -219,10 +223,12 @@ const LEVELS = [
   // surroundings only: the protected buildings stand 11 m out, three timber blocks behind the building line. 7 TNT, one blast.
   { name: 'Deco Needle', f: 10, tier: 'H', hard: true, kind: 'scene', arch: 'plaza', hero: 'A', heroId: 'F16', teaches: null,
     parts: [M('A', 0, [{ f: 3, cx: 3, cz: 2, mat: 'conc', skin: 'alt' }, { f: 6, cx: 2, cz: 2, ox: 0.5, mat: 'conc', skin: 'alt' }], { bay: 3.2, fh: 4.0, colk: 1.3, st: 0.38, z: -3.5, dress: { t: 'G16' } }),
-      M('B', -17, [{ f: 4, cx: 3, cz: 2, mat: 'wood', skin: 'alt' }], { bay: 3.0, fh: 4.0, z: -8 }),
-      M('C', 16.5, [{ f: 4, cx: 2, cz: 2, mat: 'wood', skin: 'alt' }], { bay: 3.4, fh: 4.0, z: -8 }),
-      M('G', 0, [{ f: 3, cx: 3, cz: 2, mat: 'wood', skin: 'alt' }], { bay: 3.0, fh: 4.0, z: -14 })],
-    keeps: [K(-11, -3.5, 2, 2, 2, 'hospital'), K(11, -3.5, 2, 2, 2, 'school')], keep: KEEP('hospital'),
+      // POLISH2 (28/11, decor only: main/polish2.js): B = a timber lodging house, C = a timber watch tower, G = the old meeting hall behind the needle; forecourts on the plaza
+      M('B', -17, [{ f: 4, cx: 3, cz: 2, mat: 'wood', skin: 'alt' }], { bay: 3.0, fh: 4.0, z: -8, p2: { style: 'timber', roof: 'gable', rh: 2.6, chim: 1, site: [['pave', 0, 0.6, 9.0, 6.6], ['plant', -3.4, 3.2], ['bench', 1.0, 3.3, 1]] } }),
+      M('C', 16.5, [{ f: 4, cx: 2, cz: 2, mat: 'wood', skin: 'alt' }], { bay: 3.4, fh: 4.0, z: -8, p2: { style: 'timber', roof: 'pyr', rh: 3.4, vane: 1, site: [['pave', 0, 0.6, 6.4, 6.6], ['lamp', -2.6, 3.2]] } }),
+      M('G', 0, [{ f: 3, cx: 3, cz: 2, mat: 'wood', skin: 'alt' }], { bay: 3.0, fh: 4.0, z: -14, p2: { style: 'timber', roof: 'gable', rh: 2.4, chim: 2 } })],
+    keeps: [Object.assign(K(-11, -3.5, 2, 2, 2, 'hospital'), { p2: { site: [['pave', 0, 1.2, 6.6, 7.6], ['path', 0, 4.8, 0, 9.5, 2.0], ['bay', 0, 3.6, 4.6, 2.0, 1], ['hedge', -3.3, -2.2, -3.3, 4.6], ['lamp', 2.6, 4.2], ['tree', -4.4, 7.0, 0.9]] } }),
+      Object.assign(K(11, -3.5, 2, 2, 2, 'school'), { p2: { site: [['pave', 0, 1.2, 6.6, 7.6, 0xD9D2BE], ['path', 0, 4.8, 0, 9.5, 2.0], ['fence', 3.3, -2.2, 3.3, 4.8], ['flag', -2.4, 4.2], ['bench', 1.6, 4.2, 1], ['tree', 4.4, 7.0, 0.9]] } })], keep: KEEP('hospital'),
     street: STREET, charges: { tnt: 7 }, target: 0.85, yaw: 0.3, hint: 'A:z-', tip: 'HARD. Only one way\nis open.', ftip: 'Blast the whole back row.',
     sol: [T('A:z-', 0, 0), T('A:z-', 0, 1), T('A:z-', 0, 2), T('B:z-', 0, 1), T('C:z-', 0, 0), T('G:z-', 0, 1)],
     bot: { hints: [['A', 'A:z+', 1], ['A', 'A:z+', 1], ['A', 'A:z+', 1], ['A', 'B:z-', 1], ['A', 'C:z-', 1], ['A', 'G:z-', 1]] }, d: 2 },
@@ -275,8 +281,10 @@ const LEVELS = [
       { id: 'S', kind: 'deck6', x: -2.56, z: 2, y: 22 / 2.7, len: 5.04, wd: 2.4, n: 1, dress: { t: 'F07' } },
       { id: 'V', kind: 'deck6', x: 2.56, z: 2, y: 22 / 2.7, len: 5.04, wd: 2.4, n: 1, dress: { t: 'F07' } },
       KIT('U', -2.5, 0, [['sdeck', 0, 22 - 0.18, -2.67, 2.4, 0.36, 6.8, 4]], { base: [2, 2], fh: 4.4, dress: { t: 'G07d' } }),
-      M('F', 0, [{ f: 2, cx: 3, cz: 2, mat: 'wood', skin: 'alt' }], { bay: 3.0, fh: 3.4, z: 10.5 })],
-    keeps: [K(-7, -4.6, 2, 2, 2, 'school'), K(13, 2, 2, 2, 2, 'hospital')], keep: KEEP('school'),
+      // POLISH2 (28/11, decor only: main/polish2.js): F = the timber gatehouse in front of the spires; a school yard and a hospital forecourt
+      M('F', 0, [{ f: 2, cx: 3, cz: 2, mat: 'wood', skin: 'alt' }], { bay: 3.0, fh: 3.4, z: 10.5, p2: { style: 'timber', roof: 'gable', rh: 2.2, chim: 1, site: [['pave', 0, 0.8, 9.4, 6.8], ['lamp', -4.0, 3.6], ['lamp', 4.0, 3.6], ['plant', -2.0, 3.8], ['plant', 2.0, 3.8]] } })],
+    keeps: [Object.assign(K(-7, -4.6, 2, 2, 2, 'school'), { p2: { site: [['pave', 0, 0, 6.4, 6.0, 0xD9D2BE], ['fence', -3.2, -2.8, -3.2, 2.8], ['fence', -3.2, -2.8, 3.2, -2.8], ['tree', -2.2, -4.4, 0.8]] } }),
+      Object.assign(K(13, 2, 2, 2, 2, 'hospital'), { p2: { site: [['pave', 0, 1.0, 6.4, 7.2], ['bay', 0, 3.6, 4.6, 2.0, 1], ['hedge', 3.2, -2.2, 3.2, 4.4], ['lamp', -2.6, 4.0], ['tree', 2.2, 6.0, 0.8]] } })], keep: KEEP('school'),
     street: STREET, charges: { tnt: 8 }, target: 0.85, yaw: 0.35, hint: 'A:x-', tip: 'HARD. One way down\nfor each spire.', ftip: 'Left spire left. The others back.',
     sol: [T('A:x-', 0, 0), T('A:x-', 0, 1), T('Q:z-', 0, 0), T('Q:z-', 0, 1), T('R:z-', 0, 0), T('R:z-', 0, 1), T('F:z-', 0, 1)],
     bot: { hints: [['A', 'A:z-', 1], ['A', 'A:z-', 1], ['A', 'Q:z-', 1], ['A', 'Q:z-', 1], ['A', 'R:z-', 1], ['A', 'R:z-', 1], ['A', 'F:z-', 1]] }, d: 2 },
@@ -304,9 +312,10 @@ const LEVELS = [
   // 8 TNT, one blast.
   { name: 'Sky Steps', f: 12, tier: 'SH', boss: true, kind: 'scene', arch: 'setpiece', hero: 'A', heroId: 'F12', teaches: null,
     parts: [M('A', 0, [{ f: 4, cx: 3, cz: 2, mat: 'conc', skin: 'glass' }, { f: 4, cx: 2, cz: 2, ox: 0.5, mat: 'conc', skin: 'glass' }], { bay: 3.4, fh: 4.2, colk: 1.4, st: 0.38, dress: { t: 'G12' } }),
-      SF('Q', -13, -3, 6, 'full', { crown: { t: 'stack', s: [[0.6, 2, 'crC']], mast: 4 } }, 'z+'),
-      M('C', 10.6, [{ f: 4, cx: 2, cz: 2, mat: 'wood', skin: 'alt' }], { bay: 3.4, fh: 4.0, z: -10 })],
-    keeps: [K(8.6, 0, 2, 2, 2, 'school')], keep: KEEP('school'),
+      Object.assign(SF('Q', -13, -3, 6, 'full', { crown: { t: 'stack', s: [[0.6, 2, 'crC']], mast: 4 } }, 'z+'), { p2: { style: 'office', site: [['pave', 0, 0.4, 6.0, 6.8], ['post', -2.4, 3.2], ['post', 2.4, 3.2]] } }),   // POLISH2: the relay block (ribbon windows, parapet)
+      // POLISH2 (28/11, decor only: main/polish2.js): C = a timber watch tower behind the school; the school gets its yard
+      M('C', 10.6, [{ f: 4, cx: 2, cz: 2, mat: 'wood', skin: 'alt' }], { bay: 3.4, fh: 4.0, z: -10, p2: { style: 'timber', roof: 'pyr', rh: 3.4, vane: 1, site: [['pave', 0, 0.6, 6.4, 6.6], ['plant', -2.6, 3.2]] } })],
+    keeps: [Object.assign(K(8.6, 0, 2, 2, 2, 'school'), { p2: { site: [['pave', 0.4, 1.0, 7.0, 7.4, 0xD9D2BE], ['fence', 3.9, -2.4, 3.9, 4.6], ['fence', -2.6, 4.6, 3.9, 4.6], ['flag', 2.8, 3.6], ['bench', 0.6, 3.8, 1], ['tree', 2.6, -3.6, 0.8]] } })], keep: KEEP('school'),
     street: STREET, charges: { tnt: 8 }, target: 0.85, yaw: 0.4, hint: 'A:z-', tip: 'BOSS! Road, school,\nglass, steel.', ftip: 'Tower back. Mast back: stack.',
     sol: [T('A:z-', 0, 0), T('A:z-', 0, 1), T('A:z-', 0, 2), T('C:z-', 0, 0), T('Q:z-', 0, 0), T('Q:z-', 0, 1), T('Q:z-', 1, 0), T('Q:z-', 1, 1)],
     bot: { hints: [['A', 'A:z-', 1], ['A', 'A:z-', 1], ['A', 'A:z-', 1], ['A', 'C:z-', 1], ['A', 'Q:z+', 1, 2], ['A', 'Q:z+', 1, 2]] }, d: 2 },
@@ -362,10 +371,11 @@ const LEVELS = [
   // block down outward; the inner ones are a trap: set them off and the block falls on the school. 8 TNT, one blast.
   { name: 'Dome Works', f: 10, tier: 'H', hard: true, kind: 'scene', arch: 'c4', hero: 'A', heroId: 'F14', teaches: null,
     parts: [M('A', 0, [{ f: 3, cx: 6, cz: 2, mat: 'conc', skin: 'alt' }, { f: 1, cx: 2, cz: 2, ox: 2, mat: 'conc', skin: 'full' }], HALL({ z: -12.5, loose: 1, spire: [1.3, 8], dress: { t: 'G14', c: 0x6FB59A } })),
-      M('B', 12, [{ f: 4, cx: 2, cz: 2, mat: 'conc', skin: 'alt', g: 'open' }], big({ z: 1, roof: { cap: 1, ac: 2 } })),
-      M('C', -12, [{ f: 4, cx: 2, cz: 2, mat: 'conc', skin: 'alt', g: 'open' }], big({ z: 1, roof: { cap: 1 } }))],
+      // POLISH2 (28/11, decor only: main/polish2.js): B and C = the works' two office blocks (ribbon windows, entrance canopies, roof plant); the school gets its yard
+      M('B', 12, [{ f: 4, cx: 2, cz: 2, mat: 'conc', skin: 'alt', g: 'open' }], big({ z: 1, roof: { cap: 1, ac: 2 }, p2: { style: 'office', canopy: 1, hut: 1, mast: 1, site: [['pave', 0, 0.4, 7.4, 8.0], ['plant', -2.9, 3.6], ['lamp', 3.0, 3.8]] } })),
+      M('C', -12, [{ f: 4, cx: 2, cz: 2, mat: 'conc', skin: 'alt', g: 'open' }], big({ z: 1, roof: { cap: 1 }, p2: { style: 'office', canopy: 1, hut: 1, ac: 2, sign: 1, site: [['pave', 0, 0.4, 7.4, 8.0], ['plant', 2.9, 3.6], ['lamp', -3.0, 3.8]] } }))],
     tanks: [[14.8, -0.8], [14.8, 1.0], [14.8, 2.8], [-14.8, -0.8], [-14.8, 1.0], [-14.8, 2.8], [9.3, -0.8], [9.3, 2.8], [-9.2, -0.8], [-9.2, 2.8]],
-    keeps: [K(0, 0, 2, 2, 2, 'school')], keep: KEEP('school'),
+    keeps: [Object.assign(K(0, 0, 2, 2, 2, 'school'), { p2: { site: [['pave', 0, 1.2, 7.4, 8.0, 0xD9D2BE], ['path', 0, 5.2, 0, 11.0, 2.2], ['fence', -3.7, -2.6, -3.7, 5.2], ['fence', 3.7, -2.6, 3.7, 5.2], ['flag', 2.6, 4.4], ['bench', -2.4, 4.4, 1], ['tree', -6.2, 7.4, 0.9], ['tree', 6.2, 7.4, 0.9]] } })], keep: KEEP('school'),
     charges: { tnt: 8 }, target: 0.85, yaw: 0.35, hint: 'A:z-', tip: 'HARD. Some barrels\nare a trap.', ftip: 'Outer sides only. Mind the barrels.',
     sol: [T('A:z-', 0, 0), T('A:z-', 0, 1), T('A:z-', 0, 2), T('A:z-', 0, 3), T('A:z-', 0, 4), T('A:z-', 0, 5), T('B:x+', 0, 0), T('C:x-', 0, 0)],
     bot: { hints: [['A', 'A:z-', 1], ['A', 'A:z-', 1], ['A', 'A:z-', 1], ['A', 'A:z-', 1], ['A', 'A:z-', 1], ['A', 'A:z-', 1], ['A', 'B:x-', 1], ['A', 'C:x+', 1]] }, d: 2 },
