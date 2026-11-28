@@ -41,7 +41,10 @@ const plan = (p) => p.waitForFunction(() => window.__blast.state().phase === 'pl
 const rect = (p, sel) => p.evaluate((s) => { const e = document.querySelector(s); if (!e) return null; const r = e.getBoundingClientRect(), cs = getComputedStyle(e); return r.width > 0 && cs.display !== 'none' && cs.visibility !== 'hidden' ? { x: r.left, y: r.top, w: r.width, h: r.height } : null; }, sel);
 const tap = async (p, sel) => { const b = await rect(p, sel); if (!b) throw new Error('nothing to tap: ' + sel); await p.touchscreen.tap(b.x + b.w / 2, b.y + b.h / 2); await p.waitForTimeout(500); };
 const sheetUp = (p) => p.evaluate(() => { const e = document.getElementById('bPick'); return !!(e && !e.classList.contains('hidden') && e.getBoundingClientRect().height > 0); });
-const playIn = async (p, keepSheet) => { await tap(p, '#play'); await p.waitForTimeout(1500); const sh = await sheetUp(p); if (sh && !keepSheet) await tap(p, '#bpPlay'); if (!keepSheet || !sh) await plan(p); return sh; };
+// INTROFIRST (D-blast-INTROFIRST, 28/11): a level's intro card now shows on Home, before the level (and before the Pick sheet): Got It / Claim it
+const PRE = { cards: [] };
+const preCards = async (p) => { for (let k = 0; k < 6; k++) { const o = await p.evaluate(() => { const f = window.__blast.intro.pre ? window.__blast.intro.pre() : null, s = window.__blast.intro.state(); return f && f.open && s.card ? s.card : null; }); if (!o) return; PRE.cards.push(o); await p.waitForTimeout(500); await tap(p, '#inBtn'); await p.waitForTimeout(400); } };
+const playIn = async (p, keepSheet) => { await tap(p, '#play'); await p.waitForTimeout(1500); await preCards(p); const sh = await sheetUp(p); if (sh && !keepSheet) await tap(p, '#bpPlay'); if (!keepSheet || !sh) await plan(p); return sh; };
 const openDone = (p) => p.waitForFunction(() => { const s = window.__blast.frame.state(); return !s || !s.easing; }, null, { timeout: 120000 }).catch(() => {});
 const shot = (p, n) => p.screenshot({ path: path.join(SHOTS, n + '.jpg'), type: 'jpeg', quality: 72 });
 const IS = (p) => p.evaluate(() => window.__blast.intro.state());
@@ -140,7 +143,7 @@ const layout = async (p, W, H, tag) => {
   if (want('unlock')) {
     const p = await open(SA, seed({ level: INFO.wl - 1, bseen: {}, bst: {}, intro: done(['wreck']) }));
     await playIn(p);
-    let st = null, card = false; for (let k = 0; k < 100; k++) { st = await IS(p); if (st.card) { if (!card) { card = true; await p.waitForTimeout(500); await shot(p, 'sf-L' + INFO.wl + '-unlock-card'); } await tap(p, '#inBtn'); } else if (st.forced && st.hole) break; await p.waitForTimeout(250); }
+    let st = null, card = PRE.cards.includes('wreck'); for (let k = 0; k < 100; k++) { st = await IS(p); if (st.card) { if (!card) { card = true; await p.waitForTimeout(500); await shot(p, 'sf-L' + INFO.wl + '-unlock-card'); } await tap(p, '#inBtn'); } else if (st.forced && st.hole) break; await p.waitForTimeout(250); }
     await p.waitForTimeout(500); st = await IS(p);
     const r = await SF(p), hole = st.hole, onBall = !!hole && inside(hole, r.wreck, 2) && st.forced === 'wreck';
     const handR = await rect(p, '#inHand');

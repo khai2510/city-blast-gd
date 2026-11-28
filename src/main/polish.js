@@ -1454,6 +1454,18 @@ window.__blast.fx29 = function(){ var r = $("bRet"), tip = $("bAimTip"), tb = ti
     ret:r ? { shown:!r.classList.contains("hidden"), bad:r.classList.contains("bad") } : null, tip:tb ? { text:tip.innerText, x:Math.round(tb.left), r:Math.round(tb.right) } : null, log:FX.log.slice() }; };
 })();
 
+// ---- FX30 INTROFIRST (Khai D-blast-INTROFIRST, 28/11/2026; ?introfirst=0 = off). The level's intro cards (main/intro.js inFirst:
+//      "New: <thing>", "<Booster> Unlocked!") show when the level is started from Home / map / result / Shop (bstPlay), before the
+//      Hard / Boss "Pick Your Boosters" sheet and before the 3D is built; their dismiss runs the wrapped bstPlay (sheet or startLevel).
+//      This wrap is the outermost bstPlay (polish is the last main step; g7-hard does not wrap it).
+(function(){
+var IAF = window.__blast.intro; if(!IAF || !IAF.first || QS.get("introfirst") === "0") return;
+var bp30 = bstPlay; bstPlay = function(i){
+  var self = this, a = arguments;
+  if(!manual && IAF.first(i, function(){ bp30.apply(self, a); })){ lg("introFirst:" + (i + 1)); return; }
+  return bp30.apply(this, arguments); };
+})();
+
 window.__blast.polish = {
   prot:function(){ return P.prot(); }, r18:function(){ return P.r18(); }, r19:function(){ return P.r19 ? P.r19() : { on:false }; }, r19skew:function(v){ return P.r19skew ? P.r19skew(v) : null; }, r19disarm:function(w){ return P.r19disarm ? P.r19disarm(w) : null; }, r19copy:function(){ return P.r19copy ? P.r19copy() : null; }, r20:function(){ return P.r20 ? P.r20() : { on:false }; }, r20probe:function(st){ return P.r20probe ? P.r20probe(st) : null; }, r21:function(){ return P.r21 ? P.r21() : { on:false }; }, r22:function(){ return P.r22 ? P.r22() : { on:false }; }, r22map:function(){ return P.r22map ? P.r22map() : null; }, r22pill:function(){ return P.r22pill ? P.r22pill() : null; }, r20ux51:function(){ return P.r20ux51 ? P.r20ux51() : null; }, kdDrift:function(){ return P.kdDrift(); }, kdHosts:function(){ return P.kdHosts(); }, pads:function(){ return P.pads(); }, kWord:function(s, tip){ return kWord(s, tip); },
   mapTitle:mapTitle, goal:function(){ var mp = $("mPass"); if(!mp) return null; var cs = getComputedStyle(mp, "::after"); return { text:mp.getAttribute("data-pol"), fs:parseFloat(cs.fontSize), display:cs.display, content:cs.content }; },
